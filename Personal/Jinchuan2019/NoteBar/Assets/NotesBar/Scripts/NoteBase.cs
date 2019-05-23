@@ -10,7 +10,4 @@ abstract public class NoteBase : MonoBehaviour
     protected int duration;
     protected int id;
     protected int maxId;
-    //画面上ノーツの距離
-    [SerializeField]
-    protected float intervalSize;
 }
