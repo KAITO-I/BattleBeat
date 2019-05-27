@@ -13,15 +13,6 @@ public class InputTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.anyKey)
-        {
-            Debug.Log("plessdany");
-        }
-        if (Input.GetButton("A_1P"))
-        {
-            Debug.Log("plessd");
-            Debug.Log(Input.GetJoystickNames());
-        }
 
     }
 }
