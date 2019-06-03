@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿//==============================
+// Created by KAITO-I.
+//==============================
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -27,8 +30,8 @@ public class RythmManager : MonoBehaviour
 
     private void Start()
     {
-        this.bps        = 60f / (float) bpm;
-        this.time       = this.bps + 1;
+        this.bps = 60f / (float)bpm;
+        this.time = this.bps + 1;
         this.tempoCount = 0;
     }
 
@@ -47,7 +50,7 @@ public class RythmManager : MonoBehaviour
             {
                 this.tempoCount = 0;
                 this.bpm += tempoUpValue;
-                this.bps = 60f / (float) bpm;
+                this.bps = 60f / (float)bpm;
                 if (this.bpm >= this.maxBpm) this.tempoUpCount = -1;
             }
         }
