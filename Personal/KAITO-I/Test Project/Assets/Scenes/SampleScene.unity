@@ -1643,8 +1643,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bpm: 100
-  tempoUpValue: 10
-  tempoUpCount: -1
+  maxBpm: 150
+  tempoUpValue: 25
+  tempoUpCount: 10
   events:
     m_PersistentCalls:
       m_Calls:
