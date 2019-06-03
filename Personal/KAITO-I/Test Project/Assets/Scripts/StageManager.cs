@@ -5,7 +5,6 @@ using UnityEngine;
 public class StageManager : MonoBehaviour
 {
     private Panel[,] stage;
-    [SerializeField] bool auto;
     PanelType panelType;
 
     private void Start()
@@ -19,7 +18,6 @@ public class StageManager : MonoBehaviour
         }
 
         this.panelType = PanelType.PanelA;
-        if (!this.auto) TurnOn(this.panelType);
     }
 
     public void TurnOn(PanelType panelType)
@@ -33,12 +31,8 @@ public class StageManager : MonoBehaviour
         }
     }
 
-    private void Update()
+    public void Change()
     {
-        if (!auto && Input.GetKeyDown(KeyCode.Return))
-        {
-            panelType = panelType == PanelType.PanelA ? PanelType.PanelB : PanelType.PanelA;
-            TurnOn(panelType);
-        }
+        TurnOn(this.panelType = (this.panelType == PanelType.PanelA ? PanelType.PanelB : PanelType.PanelA));
     }
 }
