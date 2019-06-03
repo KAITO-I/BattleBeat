@@ -6,7 +6,7 @@ public class InputChange : MonoBehaviour
 {
     public Text uitex;
     PlayerNum pn;
-    public PlayerData[] players; 
+    public PlayerController[] players; 
     // Start is called before the first frame update
     void Start()
     {
