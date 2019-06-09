@@ -44,10 +44,6 @@ public class BoardManager : MonoBehaviour
         {
             _instance = this;
         }
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
         //リストの中にステージのポジションを入力
         foreach (Transform tra in Player_Plane.transform)
         {
@@ -57,6 +53,11 @@ public class BoardManager : MonoBehaviour
         {
             Pos2.Add(tra.position);
         }
+
+    }
+    // Start is called before the first frame update
+    void Start()
+    {
     }
 
     // Update is called once per frame
