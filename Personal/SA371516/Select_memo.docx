@@ -1,0 +1,14 @@
+Manager:
+Update(){
+どちらのPlayerが操作しているのか
+Butttonに合っているものをPlayerのImageに画像とテキストに名前を入れる
+二人とも確定したか確認するためのReadyを表示するようにする
+確定したらボタンの操作ができないようにする
+間違って確定を押してしまった場合の処理
+
+}
+
+OnClick(int PID){
+どっちのPlayerが選択したのかを取得
+Playerに対応したBoolの値をtrueに変更する
+}
