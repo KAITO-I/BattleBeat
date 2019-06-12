@@ -15,6 +15,12 @@ public class SelectCountroll : MonoBehaviour
     Text Player02_text;
     [SerializeField]
     Image Player02;
+    [SerializeField]
+    GameObject Text01;
+    [SerializeField]
+    GameObject Text02;
+
+    bool Click;
 
     [SerializeField]
     GameObject Ready;
@@ -36,14 +42,31 @@ public class SelectCountroll : MonoBehaviour
         button_.Select();
         BeforeButton= EventSystem.current.currentSelectedGameObject;
         Ready.SetActive(false);
+
+        Text01.SetActive(false);
+        Text02.SetActive(false);
+
+        Click = false;
+        //色を取得する
+        Color color = BeforeButton.GetComponent<Image>().color;
+        Player01.color = color;
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        //Charaが二人とも選択されたとき
+        if (Text01.activeSelf && Text02.activeSelf)
+        {
+            Ready.SetActive(true);
+            return;
+        }
+        Ready.SetActive(false);
+
         //現在のButtonがどれなのかを取得
         GameObject SelectButton = EventSystem.current.currentSelectedGameObject;
-
         //Buttonが変更された時
         if (BeforeButton != SelectButton)
         {
@@ -68,12 +91,27 @@ public class SelectCountroll : MonoBehaviour
             Color color = SelectButton.GetComponent<Image>().color;
 
             Player01.color = color;
-
-
         }
     }
     public void OnButton(int PID)
     {
-
+        Button ChangeButton = BeforeButton.GetComponent<Button>();
+        //Charaが選択されたとき、ボタンが操作できないようにする
+        if (!Click)
+        {
+            Navigation nav = new Navigation();
+            nav.mode = Navigation.Mode.None;
+            ChangeButton.navigation = nav;
+            Text01.SetActive(true);
+            Click = true;
+        }
+        else
+        {
+            Navigation nav = new Navigation();
+            nav.mode = Navigation.Mode.Vertical;
+            ChangeButton.navigation = nav;
+            Text01.SetActive(false);
+            Click = false;
+        }
     }
 }
