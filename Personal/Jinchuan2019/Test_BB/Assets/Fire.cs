@@ -22,6 +22,10 @@ public class Fire : AttackItemBase
         {
             Step1();
         }
+        else if (NowTurn == Delay+1)
+        {
+            Step2();
+        }
         else
         {
             Step0();
@@ -39,11 +43,35 @@ public class Fire : AttackItemBase
     {
         //ここに攻撃モーションを入れる
 
-
+        ChangeFloorColor(Color.red);
 
         canMakeDamage = true;
         Debug.Log("ダメージ発生のターン");
     }
+    void Step2()
+    {
+        ChangeFloorColor(Color.white);
+        canMakeDamage = false;
+    }
+    private void ChangeFloorColor(Color color)
+    {
+        foreach (var Grid in Area)
+        {
+            Vector2Int pos;
+            if (Reverse)
+            {
+                pos = new Vector2Int(2 - Grid.x, Grid.y);
+            }
+            else
+            {
+                pos = Grid;
+            }
+            var floor = BoardManager._instance.GetGameObjectAt(pos, RootID);
+            var renderer = floor.GetComponent<Renderer>();
+            renderer.material.color = color;
+        }
+    }
+
     public override void PassDamage(Player player)
     {
         player.TakeDamage(BaseDamage * DamageFactor);
@@ -68,7 +96,7 @@ public class Fire : AttackItemBase
     }
     public override bool isEnd()
     {
-        if (NowTurn >= Delay)
+        if (NowTurn > Delay)
         {
             return true;
         }

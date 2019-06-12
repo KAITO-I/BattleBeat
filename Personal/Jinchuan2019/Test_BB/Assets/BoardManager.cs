@@ -107,4 +107,16 @@ public class BoardManager : MonoBehaviour
         }
 
     }
+    public GameObject GetGameObjectAt(Vector2Int BoardPos,int id)
+    {
+        if (id == 2)
+        {
+            return Player_Plane.transform.GetChild(Stage_Pos[BoardPos.y + 1, BoardPos.x + 1]).gameObject;
+        }
+        else if(id == 1)
+        {
+            return Player_Plane2.transform.GetChild(Stage_Pos[BoardPos.y + 1, BoardPos.x + 1]).gameObject;
+        }
+        return null;
+    }
 }
