@@ -24,6 +24,14 @@ public class PlayerStatas : MonoBehaviour
     {
         
     }
+    public int GetId()
+    {
+        return id;
+    }
+    public void SetId(int i)
+    {
+        id = i;
+    }
     public int GetHP()
     {
         return hp;
