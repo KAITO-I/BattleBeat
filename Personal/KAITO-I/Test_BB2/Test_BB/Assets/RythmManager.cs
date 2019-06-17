@@ -28,7 +28,7 @@ public class RythmManager : MonoBehaviour
     private void Start()
     {
         this.bps        = 60f / (float) bpm;
-        this.time       = this.bps + 1;
+        this.time       += this.bps + 0.00001f;
         this.tempoCount = 0;
     }
 
@@ -40,9 +40,8 @@ public class RythmManager : MonoBehaviour
         {
             this.time -= this.bps;
 
+            Debug.Log("Rythm");
             events.Invoke();
-
-
 
             //テンポ上昇
             this.tempoCount++;
