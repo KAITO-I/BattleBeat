@@ -2,6 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public class Volume
+{
+    public float Master { get; set; }
+    public float BGM { get; set; }
+    public float SE { get; set; }
+    public float Voice { get; set; }
+}
+
 //==============================
 // サウンド管理
 //==============================
@@ -26,6 +34,8 @@ public class SoundManager : MonoBehaviour {
     private AudioSource bgmAS;
     private GameObject  seObj;
 
+    public Volume Volume { get; private set; }
+
     private void Awake() {
         if (this != Instance)
         {
@@ -45,6 +55,9 @@ public class SoundManager : MonoBehaviour {
         audioSource.playOnAwake = false;
         audioSource.loop        = false;
         Destroy(this.seObj);
+
+        //===== Volume =====
+        // Prefsより
     }
 
     //------------------------------
