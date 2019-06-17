@@ -19,6 +19,9 @@ public class SelectCountroll : MonoBehaviour
     int Player1;
     int Player2;
 
+    bool Player1_OK;
+    bool Player2_OK;
+
     [SerializeField]
     GameObject Text01;
     [SerializeField]
@@ -67,6 +70,9 @@ public class SelectCountroll : MonoBehaviour
 
         Player1 = 0;
         Player2 = 0;
+        Player1_OK = false;
+        Player2_OK = false;
+
         CharaObj[Player1].charaSelect(1, true);
         CharaObj[Player2].charaSelect(2, true);
         #region ============デバッグ用====================
@@ -104,7 +110,7 @@ public class SelectCountroll : MonoBehaviour
     void Test()
     {
         //1P処理
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.S)&&!Player1_OK)
         {
             CharaObj[Player1].charaSelect(1, false);
             Player1++;
@@ -118,7 +124,8 @@ public class SelectCountroll : MonoBehaviour
             Color color = Chara_[Player1].color;
             Player01.color = color;
         }
-        else if (Input.GetKeyDown(KeyCode.W)){
+        else if (Input.GetKeyDown(KeyCode.W) && !Player1_OK)
+        {
             CharaObj[Player1].charaSelect(1, false);
             Player1--;
             Player1 = Player1 % length;
@@ -133,7 +140,7 @@ public class SelectCountroll : MonoBehaviour
             Player01.color = color;
         }
         //2P処理
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        if (Input.GetKeyDown(KeyCode.DownArrow) && !Player2_OK)
         {
             CharaObj[Player2].charaSelect(2, false);
             Player2++;
@@ -149,7 +156,7 @@ public class SelectCountroll : MonoBehaviour
             Player02.color = color2;
 
         }
-        else if (Input.GetKeyDown(KeyCode.UpArrow))
+        else if (Input.GetKeyDown(KeyCode.UpArrow) && !Player2_OK)
         {
             CharaObj[Player2].charaSelect(2, false);
             Player2--;
@@ -165,28 +172,20 @@ public class SelectCountroll : MonoBehaviour
             Color color2 = Chara_[Player2].color;
             Player02.color = color2;
         }
-        //if(Input.GetKeyDown())
 
+        //選択時//渡す値を決定する
+        if (Input.GetKeyDown(KeyCode.RightShift))
+        {
+            if (!Player2_OK) Player2_OK = true;
+            else Player2_OK = false;
+        }
+        else if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            if (!Player1_OK) Player1_OK = true;
+            else Player1_OK = false;
+        }
+
+        Text01.SetActive(Player1_OK);
+        Text02.SetActive(Player2_OK);
     }
-    //public void OnButton(int PID)
-    //{
-    //    Button ChangeButton = BeforeButton.GetComponent<Button>();
-    //    //Charaが選択されたとき、ボタンが操作できないようにする
-    //    if (!Click)
-    //    {
-    //        Navigation nav = new Navigation();
-    //        nav.mode = Navigation.Mode.None;
-    //        ChangeButton.navigation = nav;
-    //        Text01.SetActive(true);
-    //        Click = true;
-    //    }
-    //    else
-    //    {
-    //        Navigation nav = new Navigation();
-    //        nav.mode = Navigation.Mode.Vertical;
-    //        ChangeButton.navigation = nav;
-    //        Text01.SetActive(false);
-    //        Click = false;
-    //    }
-    //}
 }
