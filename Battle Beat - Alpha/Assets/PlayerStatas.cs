@@ -12,7 +12,7 @@ public class PlayerStatas : MonoBehaviour
     [SerializeField] int hp;//現在HP
     [SerializeField] int sp;//現在SP
 
-    public void Init(int pnum, int )
+    //public void Init(int pnum, int )
 
     public int GetId()
     {
