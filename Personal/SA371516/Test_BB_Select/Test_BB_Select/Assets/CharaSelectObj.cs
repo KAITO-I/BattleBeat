@@ -29,7 +29,7 @@ public class CharaSelectObj : MonoBehaviour
     {
         P1select = false;
         P2select = false;
-        image.sprite = null;
+        image.sprite = Flames[3];
     }
     //(操作している人のID,キャラが選択されているか)
     public void charaSelect(int ID,bool OK)
@@ -59,7 +59,8 @@ public class CharaSelectObj : MonoBehaviour
         }
         else if (!P1select && !P2select)
         {
-            image.sprite = null;
+            image.sprite = Flames[3];   
+
         }
     }
 

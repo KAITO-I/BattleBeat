@@ -16,17 +16,27 @@ public class SelectCountroll : MonoBehaviour
     [SerializeField]
     Text Player02_text;
 
+    //キャラクターID
     int Player1;
     int Player2;
-
+    //キャラクター選択
     bool Player1_OK;
     bool Player2_OK;
+    //戻る時間
+    float Player1_Time;
+    float Player2_Time;
+    //戻る画面移動時間
+    float ReturnTime;
+    float ReturnTimeValumes;
+
+    [SerializeField]
+    Slider ReturnSlider;
 
     [SerializeField]
     GameObject Text01;
     [SerializeField]
     GameObject Text02;
-    
+
     [SerializeField]
     List<Image> Chara_;
 
@@ -44,7 +54,7 @@ public class SelectCountroll : MonoBehaviour
         "Chara3",
         "Chara4"
     };
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -63,7 +73,7 @@ public class SelectCountroll : MonoBehaviour
         }
         length = F.transform.childCount;
 
-        foreach(var c in CharaObj)
+        foreach (var c in CharaObj)
         {
             c.Init();
         }
@@ -87,30 +97,38 @@ public class SelectCountroll : MonoBehaviour
         //テキスト表示
         Player01_text.text = CharaObj[Player1].GetCharaname;
         Player02_text.text = CharaObj[Player2].GetCharaname;
+
+        //戻り時間
+        ReturnTime = 5;
+        ReturnSlider.maxValue = ReturnTime;
     }
 
     // Update is called once per frame
     void Update()
     {
         Test();
-
         //Charaが二人とも選択されたとき
         if (Text01.activeSelf && Text02.activeSelf)
         {
+            //決定ボタンを入力したら
+            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
+            {
+                Debug.Log("battleSceneへ");
+            }
             Ready.SetActive(true);
             return;
         }
         Ready.SetActive(false);
 
-        //現在のButtonがどれなのかを取得
-        GameObject SelectButton = EventSystem.current.currentSelectedGameObject;
-        //Buttonが変更された時
+        ////現在のButtonがどれなのかを取得
+        //GameObject SelectButton = EventSystem.current.currentSelectedGameObject;
+        ////Buttonが変更された時
     }
 
     void Test()
     {
         //1P処理
-        if (Input.GetKeyDown(KeyCode.S)&&!Player1_OK)
+        if (Input.GetKeyDown(KeyCode.S) && !Player1_OK)
         {
             CharaObj[Player1].charaSelect(1, false);
             Player1++;
@@ -174,18 +192,61 @@ public class SelectCountroll : MonoBehaviour
         }
 
         //選択時//渡す値を決定する
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            Player1_OK = true;
+        }
         if (Input.GetKeyDown(KeyCode.RightShift))
         {
-            if (!Player2_OK) Player2_OK = true;
-            else Player2_OK = false;
-        }
-        else if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            if (!Player1_OK) Player1_OK = true;
-            else Player1_OK = false;
+            Player2_OK = true;
         }
 
+        //×ボタンの処理
+        //長押しで画面移動処理
+        if (Input.GetKey(KeyCode.LeftControl))
+        {
+            //キャラ選択時は選択を外す
+            if (Input.GetKeyDown(KeyCode.LeftControl))
+            {
+                Player1_OK = false;
+            }
+            float difference = Time.time - Player1_Time;
+            SetSilder(difference);
+            if (difference > ReturnTime)
+            {
+                Debug.Log("一つ前の画面へ");
+            }
+        }
+        if (Input.GetKey(KeyCode.RightControl))
+        {
+            //キャラ選択時は選択を外す
+            if (Input.GetKeyDown(KeyCode.RightControl))
+            {
+                Player2_OK = false;
+            }
+            float difference = Time.time - Player2_Time;
+            SetSilder(difference);
+            if (difference > ReturnTime)
+            {
+                Debug.Log("一つ前の画面へ");
+            }
+        }
+        //両方入力されていない
+        if(!Input.GetKey(KeyCode.RightControl)&&!Input.GetKey(KeyCode.LeftControl))
+        {
+            Player1_Time = Time.time;
+            Player2_Time = Time.time;
+            //片方が入力しているとそのまま継続
+            ReturnSlider.value = 0f;
+        }
         Text01.SetActive(Player1_OK);
         Text02.SetActive(Player2_OK);
+    }
+
+    void SetSilder(float t)
+    {
+        if (t < ReturnSlider.value) return;
+        Debug.Log("asdf");
+        ReturnSlider.value = t;
     }
 }
