@@ -7,8 +7,6 @@ public class ResultManager : MonoBehaviour
 {
     [SerializeField]
     Text PlayerName,Charaname,Word;
-    [SerializeField]
-    Button[] buttons;
     //キャラクターの名前
     string[] Name=
     {
@@ -43,8 +41,6 @@ public class ResultManager : MonoBehaviour
     {
         //勝利したほうを読み込む
 
-        //ボタンを操作できるように
-        buttons[0].Select();
         //勝利したキャラの台詞を読み込む
         SetText();
     }
