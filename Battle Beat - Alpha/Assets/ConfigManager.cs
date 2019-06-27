@@ -12,37 +12,62 @@ using UnityEngine.UI;
 //==============================
 public class ConfigManager : MonoBehaviour
 {
-    [SerializeField] float defaultSoundVolume;
-    [SerializeField] Slider[] Sliders;
-    float BGM;
-    float SE;
+    [SerializeField] VolumeConfig SoundVolume;
 
-    void Start()
+    private void Start()
     {
-
-        BGM = LoadVol("BGM");
-        SE = LoadVol("SE");
-        Sliders[0].value = BGM;
-        Sliders[1].value = SE;
+        this.SoundVolume.Init();
     }
 
-    public void SetBGMVol(float f)
+    //------------------------------
+    // 音量値設定反映
+    //------------------------------
+    // [引数]
+    // float value : スライダーの値
+    //------------------------------
+    public void SetMasterVol(float value)
     {
-        BGM = f;
-        SaveVol(BGM, "BGM");
+        this.SoundVolume.SoundManager.Master = value;
     }
-    public void SetSEVol(float f)
+
+    public void SetBGMVol(float value)
     {
-        SE = f;
-        SaveVol(SE, "SE");
+        this.SoundVolume.SoundManager.BGM.Volume = value;
     }
-    public void SaveVol(float val,string key)
+
+    public void SetSEVol(float value)
     {
-        PlayerPrefs.SetFloat(key,val);
-        PlayerPrefs.Save();
+        this.SoundVolume.SoundManager.SE.Volume = value;
     }
-    public float LoadVol(string key)
+
+    public void SetVoiceVol(float value)
     {
-        return PlayerPrefs.GetFloat(key, 0.5f);
+        this.SoundVolume.SoundManager.Voice.Volume = value;
+    }
+
+    //==============================
+    // Volume値設定
+    //==============================
+    [System.Serializable]
+    class VolumeConfig
+    {
+        public SoundManager SoundManager { get; private set; }
+        [SerializeField] Slider MasterVolume;
+        [SerializeField] Slider BGMVolume;
+        [SerializeField] Slider SEVolume;
+        [SerializeField] Slider VoiceVolume;
+
+        //------------------------------
+        // 初期化
+        //------------------------------
+        public void Init()
+        {
+            this.SoundManager = SoundManager.Instance;
+            this.MasterVolume.value = this.SoundManager.Master;
+            this.BGMVolume.value    = this.SoundManager.BGM.Volume;
+            this.SEVolume.value     = this.SoundManager.SE.Volume;
+            this.VoiceVolume.value  = this.SoundManager.Voice.Volume; 
+        }
     }
 }
+

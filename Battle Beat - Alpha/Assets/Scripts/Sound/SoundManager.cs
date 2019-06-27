@@ -6,11 +6,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //==============================
-// 音量値格納
+// MasterVolumeをポインターのように扱う為のクラス
 //==============================
-public struct Volume
+public class MasterVolume
 {
+    public float Value { get; set; }
 
+    public MasterVolume(float value)
+    {
+        this.Value = value;
+    }
 }
 
 //==============================
@@ -31,106 +36,40 @@ public class SoundManager : MonoBehaviour {
     // クラス
     //==============================
     // 音量
-    [SerializeField] private float defVol; // デフォルト値
-    private float master;
+    [SerializeField] float defVol; // デフォルト音量値
+    private MasterVolume master;
     public float Master
     {
-        get { return this.master; }
+        get { return this.master.Value; }
         set
         {
-            PlayerPrefs.SetFloat("MasterVol", this.master = value);
-            PlayerPrefs.Save();
-        }
-    }
+            this.master.Value = value;
 
-    private float bgm;
-    public float BGM
-    {
-        get { return this.bgm; }
-        set
-        {
-            PlayerPrefs.SetFloat("BGMVol", this.bgm = value);
+            PlayerPrefs.SetFloat("MasterVol", value);
             PlayerPrefs.Save();
-        }
-    }
 
-    private float se;
-    public float SE
-    {
-        get { return this.se; }
-        set
-        {
-            PlayerPrefs.SetFloat("SEVol", this.se = value);
-            PlayerPrefs.Save();
-        }
-    }
-
-    private float voice;
-    public float Voice
-    {
-        get { return this.voice; }
-        set
-        {
-            PlayerPrefs.SetFloat("VoiceVol", this.voice = value);
-            PlayerPrefs.Save();
+            this.bgm.UpdateVolume();
+            this.se.UpdateVolume();
+            this.voice.UpdateVolume();
         }
     }
 
     // 再生オブジェクト
-    [SerializeField] AudioSource bgmAS;
-    [SerializeField] GameObject  seObj;
-    [SerializeField] AudioSource voiceAS;
+    [SerializeField] Sound     bgm;
+    public           Sound     BGM { get { return this.bgm; } }
+    [SerializeField] SEManager se;
+    public           SEManager SE { get { return this.se; } }
+    [SerializeField] Sound     voice;
+    public           Sound     Voice { get { return this.voice; } }
 
     private void Awake()
     {
         SoundManager.instance = this;
 
         //===== 音量初期値 =====
-        this.Master = PlayerPrefs.GetFloat("MasterVol", defVol);
-        this.BGM    = PlayerPrefs.GetFloat("BGMVol", defVol);
-        this.SE     = PlayerPrefs.GetFloat("SEVol", defVol);
-        this.Voice  = PlayerPrefs.GetFloat("VoiceVol", defVol);
-    }
-
-    //------------------------------
-    // BGM再生
-    //------------------------------
-    // [引数]
-    // AudioClip bgm : 再生するBGM
-    //------------------------------
-    public void PlayBGM(AudioClip bgm)
-    {
-        if (this.bgmAS.clip == bgm) return;
-
-        if (this.bgmAS.isPlaying) StopBGM();
-        this.bgmAS.clip = bgm;
-        this.bgmAS.Play();
-    }
-
-    //------------------------------
-    // BGM停止
-    //------------------------------
-    public void StopBGM()
-    {
-        this.bgmAS.Stop();
-    }
-
-    //------------------------------
-    // BGM音量設定
-    //------------------------------
-    public void SetBGMVolume(float volume)
-    {
-        this.bgmAS.volume = volume;
-    }
-
-    //------------------------------
-    // SE再生
-    //------------------------------
-    // [引数]
-    // AudioClip se : 再生するSE
-    //------------------------------
-    public void PlaySE(AudioClip se)
-    {
-        Instantiate(this.seObj).GetComponent<SEManager>().Play(se);
+        this.master = new MasterVolume(PlayerPrefs.GetFloat("MasterVol", defVol));
+        this.bgm.Init(master, "BGMVol", defVol);
+        this.se.Init(master, "SEVol", defVol);
+        this.voice.Init(master, "VoiceVol", defVol);
     }
 }

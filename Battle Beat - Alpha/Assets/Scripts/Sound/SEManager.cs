@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿//==============================
+// Created by KAITO-I (稲福)
+//==============================
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,14 +11,23 @@ using UnityEngine;
 public class SEManager : Sound
 {
     //------------------------------
-    // 再生
+    // 再生(override)
     //------------------------------
-    // [引数]
-    // AudioClip sound : 再生する音
-    //------------------------------
-    public override void Play(AudioClip sound)
+    public override void Play(AudioClip clip)
     {
-        this.audio.clip = sound;
-        this.audio
+        StartCoroutine(destroy(clip));
+    }
+
+    //------------------------------
+    // 再生(Coroutine)
+    //------------------------------
+    private IEnumerator destroy(AudioClip clip)
+    {
+        this.AudioSource.clip = clip;
+        this.AudioSource.Play();
+
+        yield return new WaitForSeconds(clip.length);
+
+        Destroy(this.gameObject);
     }
 }

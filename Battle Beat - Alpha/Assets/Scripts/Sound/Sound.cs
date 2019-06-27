@@ -1,34 +1,70 @@
-﻿using System.Collections;
+﻿//==============================
+// Created by KAITO-I (稲福)
+//==============================
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Sound : MonoBehaviour
 {
-    protected AudioSource audio;
-    protected float masterVol;
-    protected float eachVol;
+    protected AudioSource AudioSource;
+
+    protected MasterVolume MasterVol;
+    private   string       prefsName;
+    private   float        volume;
+    public    float        Volume
+    {
+        get { return this.volume; }
+        set
+        {
+            this.volume = value;
+
+            PlayerPrefs.SetFloat(prefsName, value);
+            PlayerPrefs.Save();
+
+            UpdateVolume();
+        }
+    }
 
     private void Awake()
     {
-        this.audio = GetComponent<AudioSource>();
+        this.AudioSource = GetComponent<AudioSource>();
     }
 
-    public void Init()
+    //------------------------------
+    // 初期化
+    //------------------------------
+    public void Init(MasterVolume masterVol, string prefsName, float defVol)
+    {
+        this.MasterVol = masterVol;
+        this.prefsName = prefsName;
+        this.volume    = PlayerPrefs.GetFloat(prefsName, defVol);
+
+        UpdateVolume();
+    }
+
+    //------------------------------
+    // 音量更新
+    //------------------------------
+    public void UpdateVolume()
+    {
+        this.AudioSource.volume = MasterVol.Value * volume;
+    }
 
     //------------------------------
     // 再生
     //------------------------------
     // [引数]
-    // AudioClip sound : 再生する音
+    // AudioClip sound : 再生する音源
     //------------------------------
-    public virtual void Play(AudioClip sound)
+    public virtual void Play(AudioClip clip)
     {
         // 既に再生していれば実行しない
-        if (this.audio.clip == sound) return;
+        if (this.AudioSource.clip == clip) return;
 
-        if (this.audio.isPlaying) Stop();
-        this.audio.clip   = sound;
-        this.audio.Play();
+        if (this.AudioSource.isPlaying) Stop();
+        this.AudioSource.clip = clip;
+        this.AudioSource.Play();
     }
 
     //------------------------------
@@ -36,18 +72,6 @@ public class Sound : MonoBehaviour
     //------------------------------
     public void Stop()
     {
-        this.audio.Stop();
-    }
-
-    //------------------------------
-    // 音量設定
-    //------------------------------
-    // [引数]
-    // float master : Master音量
-    // float each   : 各音量
-    //------------------------------
-    public void SetVolume(float master, float each)
-    {
-        this.soundMgr = soundMgr;
+        this.AudioSource.Stop();
     }
 }

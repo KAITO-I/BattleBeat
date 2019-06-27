@@ -7,6 +7,6 @@ public class Manager : MonoBehaviour
     [SerializeField] AudioClip sound;
     private void Start()
     {
-        SoundManager.Instance.PlayBGM(sound);
+        SoundManager.Instance.BGM.Play(sound);
     }
 }
