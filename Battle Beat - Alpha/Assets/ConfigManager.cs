@@ -27,7 +27,7 @@ public class ConfigManager : MonoBehaviour
     //------------------------------
     public void SetMasterVol(float value)
     {
-        this.SoundVolume.SoundManager.Master = value;
+        this.SoundVolume.SoundManager.MasterVolume = value;
     }
 
     public void SetBGMVol(float value)
@@ -63,7 +63,7 @@ public class ConfigManager : MonoBehaviour
         public void Init()
         {
             this.SoundManager = SoundManager.Instance;
-            this.MasterVolume.value = this.SoundManager.Master;
+            this.MasterVolume.value = this.SoundManager.MasterVolume;
             this.BGMVolume.value    = this.SoundManager.BGM.Volume;
             this.SEVolume.value     = this.SoundManager.SE.Volume;
             this.VoiceVolume.value  = this.SoundManager.Voice.Volume; 

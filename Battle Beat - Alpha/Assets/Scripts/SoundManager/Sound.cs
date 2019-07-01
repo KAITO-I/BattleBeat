@@ -26,16 +26,13 @@ public class Sound : MonoBehaviour
         }
     }
 
-    private void Awake()
-    {
-        this.AudioSource = GetComponent<AudioSource>();
-    }
-
     //------------------------------
     // 初期化
     //------------------------------
     public void Init(MasterVolume masterVol, string prefsName, float defVol)
     {
+        this.AudioSource = GetComponent<AudioSource>();
+
         this.MasterVol = masterVol;
         this.prefsName = prefsName;
         this.volume    = PlayerPrefs.GetFloat(prefsName, defVol);

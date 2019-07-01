@@ -284,7 +284,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 593248868}
-        m_MethodName: SetSEVol
+        m_MethodName: SetVoiceVol
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -677,10 +677,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SoundVolume:
-    MasterVolume: {fileID: 0}
-    BGMVolume: {fileID: 0}
-    SEVolume: {fileID: 0}
-    VoiceVolume: {fileID: 0}
+    MasterVolume: {fileID: 1030921060}
+    BGMVolume: {fileID: 1015806466}
+    SEVolume: {fileID: 616504889}
+    VoiceVolume: {fileID: 250149083}
 --- !u!1 &600042383
 GameObject:
   m_ObjectHideFlags: 0
@@ -1131,7 +1131,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 593248868}
-        m_MethodName: SetSEVol
+        m_MethodName: SetBGMVol
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1233,7 +1233,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 593248868}
-        m_MethodName: SetBGMVol
+        m_MethodName: SetMasterVol
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

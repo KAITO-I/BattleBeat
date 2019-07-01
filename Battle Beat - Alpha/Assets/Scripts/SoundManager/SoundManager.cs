@@ -37,13 +37,13 @@ public class SoundManager : MonoBehaviour {
     //==============================
     // 音量
     [SerializeField] float defVol; // デフォルト音量値
-    private MasterVolume master;
-    public float Master
+    private MasterVolume masterVolume;
+    public float MasterVolume
     {
-        get { return this.master.Value; }
+        get { return this.masterVolume.Value; }
         set
         {
-            this.master.Value = value;
+            this.masterVolume.Value = value;
 
             PlayerPrefs.SetFloat("MasterVol", value);
             PlayerPrefs.Save();
@@ -67,9 +67,9 @@ public class SoundManager : MonoBehaviour {
         SoundManager.instance = this;
 
         //===== 音量初期値 =====
-        this.master = new MasterVolume(PlayerPrefs.GetFloat("MasterVol", defVol));
-        this.bgm.Init(master, "BGMVol", defVol);
-        this.se.Init(master, "SEVol", defVol);
-        this.voice.Init(master, "VoiceVol", defVol);
+        this.masterVolume = new MasterVolume(PlayerPrefs.GetFloat("MasterVol", defVol));
+        this.bgm.Init(masterVolume, "BGMVol", defVol);
+        this.se.Init(masterVolume, "SEVol", defVol);
+        this.voice.Init(masterVolume, "VoiceVol", defVol);
     }
 }

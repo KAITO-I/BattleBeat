@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //==============================
-// SE専用クラス
+// SE専用クラス(Soundを継承)
 //==============================
 public class SEManager : Sound
 {
