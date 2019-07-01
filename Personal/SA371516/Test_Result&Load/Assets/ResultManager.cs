@@ -58,11 +58,20 @@ public class ResultManager : MonoBehaviour
             Word.text = Words[WinCharaID-1].Substring(0, displayCharacterCount);
             lastUpdateCharacter = displayCharacterCount;
         }
+
+        OnClick();
     }
     //シーン移動
     void OnClick()
     {
-
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            GameObject.Find("GameObject").GetComponent<SceneJump>().Jump("Test");
+        }
+        else if (Input.GetKeyDown(KeyCode.T))
+        {
+            GameObject.Find("GameObject").GetComponent<SceneJump>().Jump("LoadScene");
+        }
     }
     //テキスト変更
     void SetText()
