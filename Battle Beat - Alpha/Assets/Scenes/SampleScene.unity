@@ -153,10 +153,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01ae087420f47984aa70095a439b8b89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hp: 100
-  HpMax: 0
-  Sp: 100
-  SpMax: 0
+  Hp: 0
+  HpMax: 100
+  Sp: 0
+  SpMax: 100
   Pos: {x: 4, y: 1}
   LeftKey: 276
   RightKey: 275
@@ -173,7 +173,7 @@ MonoBehaviour:
   - {fileID: 4781102525549998572, guid: 34d7c9c37621ade4b9cfd5d838b05d36, type: 3}
   - {fileID: 3321080945623340731, guid: fddf3bc6a6fbd6d48950101fe864685c, type: 3}
   - {fileID: 4781102525549998572, guid: 20a721f928931894db48e041b33afbaa, type: 3}
-  buffPower: 2
+  buffPower: 0
   onBuff: 0
 --- !u!136 &80229036
 CapsuleCollider:
@@ -743,10 +743,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01ae087420f47984aa70095a439b8b89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hp: 100
-  HpMax: 0
-  Sp: 100
-  SpMax: 0
+  Hp: 0
+  HpMax: 100
+  Sp: 0
+  SpMax: 100
   Pos: {x: 1, y: 1}
   LeftKey: 97
   RightKey: 100
@@ -763,7 +763,7 @@ MonoBehaviour:
   - {fileID: 4781102525549998572, guid: 34d7c9c37621ade4b9cfd5d838b05d36, type: 3}
   - {fileID: 3321080945623340731, guid: fddf3bc6a6fbd6d48950101fe864685c, type: 3}
   - {fileID: 4781102525549998572, guid: 20a721f928931894db48e041b33afbaa, type: 3}
-  buffPower: 2
+  buffPower: 0
   onBuff: 0
 --- !u!33 &779019293
 MeshFilter:
@@ -2027,7 +2027,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 50, y: -30}
-  m_SizeDelta: {x: 160, y: 30}
+  m_SizeDelta: {x: 160, y: 391.4}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1682888840
 MonoBehaviour:
@@ -2705,7 +2705,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -50, y: -30}
-  m_SizeDelta: {x: 160, y: 30}
+  m_SizeDelta: {x: 160, y: 391.4}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &2000063919
 MonoBehaviour:
@@ -2719,7 +2719,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14ae0001e1ce20b489850d697cc99347, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  p: {fileID: 779019292}
+  p: {fileID: 80229035}
 --- !u!114 &2000063920
 MonoBehaviour:
   m_ObjectHideFlags: 0
