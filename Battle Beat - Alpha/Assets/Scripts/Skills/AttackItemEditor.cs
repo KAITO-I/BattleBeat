@@ -77,7 +77,7 @@ public class BackgroundColorScope : GUI.Scope
 }
 
 //AttackItemから派生するクラス
-[CustomEditor(typeof(Fire))]
+[CustomEditor(typeof(BasicAttack))]
 public class FireEditor : AttackItemEditor
 {
     public override void OnInspectorGUI()

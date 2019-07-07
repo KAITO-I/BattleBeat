@@ -27,15 +27,15 @@ public class AttackManager : MonoBehaviour
     {
         foreach(var item in attackItems)
         {
-      　　　//攻撃オブジェクトのターン処理
-            item.TurnProcess();
+      　　　//攻撃オブジェクトのターン処理 => 第一
+            item.TurnProcessPhase1();
             //攻撃オブジェクトがダメージ判定が発生するか
             if (item.CheckDamage())
             {
                 //ダメージ判定が発生する際に、特定のプレイヤーが判定エリア内にいるか
                 foreach (var player in players)
                 {
-                    if(item.CheckArea(player.Pos, player.PlayerID))
+                    if (item.CheckArea(player.Pos, player.PlayerID))
                     {
                         //ダメージ発生
                         item.PassDamage(player);
@@ -43,8 +43,14 @@ public class AttackManager : MonoBehaviour
                 }
             }
         }
+        foreach (var item in attackItems)
+        {
+            //攻撃オブジェクトのターン処理 => 第二
+            item.TurnProcessPhase2();
+            
+        }
         //攻撃オブジェクトが廃棄するべきか
-        foreach(var item in attackItems)
+        foreach (var item in attackItems)
         {
             if (item.isEnd())
             {
@@ -65,5 +71,9 @@ public class AttackManager : MonoBehaviour
     static bool AttackItemIsEnd(AttackItemBase attackItem)
     {
         return attackItem.isEnd();
+    }
+    public Player GetPlayer(int pId)
+    {
+        return players.Find(p => p.PlayerID == pId);
     }
 }

@@ -15,7 +15,7 @@ public class AttackItemBase : MonoBehaviour
     //攻撃範囲
     [SerializeField]
     [HideInInspector]
-    protected List<Vector2Int> Area;
+    protected List<Vector2Int> Area; //座標
     //リングの大きさ
     public Vector2Int BoardSize = new Vector2Int(3, 3);
 
@@ -28,7 +28,8 @@ public class AttackItemBase : MonoBehaviour
         RootID = root;
     }
     //ターンの処理
-    public virtual void TurnProcess() { }
+    public virtual void TurnProcessPhase1() { }
+    public virtual void TurnProcessPhase2() { }
     //攻撃が終わってるか
     public virtual bool isEnd() { return false; }
     //プレイヤーにダメージを与える
@@ -37,5 +38,6 @@ public class AttackItemBase : MonoBehaviour
     public virtual bool CheckDamage() { return false; }
     //posの場所にidがrootIdのプレイヤーがダメージを受けるべきか
     public virtual bool CheckArea(Vector2Int pos,int rootId) { return false; }
- 
+    //このスキルが中断された時の処理
+    public virtual void OnInterruption() { }
 }
