@@ -78,7 +78,16 @@ public class BackgroundColorScope : GUI.Scope
 
 //AttackItemから派生するクラス
 [CustomEditor(typeof(BasicAttack))]
-public class FireEditor : AttackItemEditor
+public class BasicAttackEditor : AttackItemEditor
+{
+    public override void OnInspectorGUI()
+    {
+
+        base.OnInspectorGUI();
+    }
+}
+[CustomEditor(typeof(AllRangeAttack))]
+public class AllRangeEditor : BasicAttackEditor
 {
     public override void OnInspectorGUI()
     {

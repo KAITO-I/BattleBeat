@@ -155,7 +155,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Hp: 0
   HpMax: 100
-  Sp: 0
+  Sp: 100000
   SpMax: 100
   Pos: {x: 4, y: 1}
   LeftKey: 276
@@ -745,7 +745,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Hp: 0
   HpMax: 100
-  Sp: 0
+  Sp: 100000
   SpMax: 100
   Pos: {x: 1, y: 1}
   LeftKey: 97
@@ -1822,28 +1822,6 @@ MonoBehaviour:
   events:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 779019292}
-        m_MethodName: Turn
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 80229035}
-        m_MethodName: Turn
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1394099313}
         m_MethodName: NextTurn
         m_Mode: 1

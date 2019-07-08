@@ -6,23 +6,10 @@ public class Homi : Player
 {
     public GameObject[] SkillPrefabs;
 
-    int wait;
-
     public float buffPower = 0f;
 
     public int onBuff;
 
-    AttackItemBase nowAttack;
-
-    public override void TakeDamage(float Damage)
-    {
-        base.TakeDamage(Damage);
-        if (nowAttack != null)
-        {
-            nowAttack.OnInterruption();
-        }
-        wait = 0;
-    }
     private void ClassicAttackProcess(int i)
     {
         if (wait > 0)
@@ -70,16 +57,8 @@ public class Homi : Player
     {
         ClassicAttackProcess(3);
     }
-    public override void Turn()
+    public override void Turn_AttackPhase()
     {
-        for (int i = 0; i < 4; i++)
-        {
-            if (CoolDownCount[i] > 0)
-            {
-                CoolDownCount[i]--;
-            }
-        }
-        wait--;
         if (onBuff > 0)
         {
             onBuff--;
@@ -88,7 +67,7 @@ public class Homi : Player
                 buffPower = 0;
             }
         }
-        base.Turn(); 
+        base.Turn_AttackPhase(); 
     }
     protected override void IStart()
     {

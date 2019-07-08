@@ -25,7 +25,21 @@ public class AttackManager : MonoBehaviour
     //ターン処理
     public void NextTurn()
     {
-        foreach(var item in attackItems)
+        foreach (var p in players)
+        {
+            p.Turn_AttackPhase();
+        }
+        foreach (var item in attackItems)
+        {
+            //攻撃オブジェクトのターン処理 => 第一
+            item.TurnProcessPhase0();
+        }
+        foreach (var p in players)
+        {
+            p.Turn_MovePhase();
+        }
+        
+        foreach (var item in attackItems)
         {
       　　　//攻撃オブジェクトのターン処理 => 第一
             item.TurnProcessPhase1();

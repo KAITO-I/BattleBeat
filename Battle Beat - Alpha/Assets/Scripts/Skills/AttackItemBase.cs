@@ -28,6 +28,7 @@ public class AttackItemBase : MonoBehaviour
         RootID = root;
     }
     //ターンの処理
+    public virtual void TurnProcessPhase0() { }
     public virtual void TurnProcessPhase1() { }
     public virtual void TurnProcessPhase2() { }
     //攻撃が終わってるか

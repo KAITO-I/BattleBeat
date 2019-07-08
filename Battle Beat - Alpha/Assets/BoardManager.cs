@@ -65,7 +65,7 @@ public class BoardManager : MonoBehaviour
 
      public int _2DArrayIdx_To_1DArrayIdx(int p1,int p2,int p1Max)
     {
-        if (p1 >= p1Max)
+        if (p1 >= p1Max||p1<0)
         {
             return -1;
         }

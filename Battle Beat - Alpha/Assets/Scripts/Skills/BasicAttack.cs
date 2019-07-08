@@ -100,14 +100,7 @@ public class BasicAttack : AttackItemBase
         foreach (var Grid in Area)
         {
             Vector2Int pos;
-            if (Reverse)
-            {
-                pos = new Vector2Int(Col - Grid.x, Row + Grid.y - 1);
-            }
-            else
-            {
-                pos = new Vector2Int(Col + Grid.x, Row + Grid.y - 1);
-            }
+            pos = AreaProcess(Grid);
             var floor = BoardManager._instance.GetGameObjectAt(pos, RootID);
             if (floor != null)
             {
@@ -124,6 +117,21 @@ public class BasicAttack : AttackItemBase
         }
     }
 
+    protected virtual Vector2Int AreaProcess(Vector2Int Grid)
+    {
+        Vector2Int pos;
+        if (Reverse)
+        {
+            pos = new Vector2Int(Col - Grid.x, Row + Grid.y - 1);
+        }
+        else
+        {
+            pos = new Vector2Int(Col + Grid.x, Row + Grid.y - 1);
+        }
+
+        return pos;
+    }
+
     public override void PassDamage(Player player)
     {
         Player playerRoot = AttackManager._instance.GetPlayer(RootID);
@@ -135,14 +143,7 @@ public class BasicAttack : AttackItemBase
         Vector2Int _Area;
         for (int i = 0; i < Area.Count; i++)
         {
-            if (Reverse)
-            {
-                _Area = new Vector2Int(Col - Area[i].x, Row + Area[i].y - 1);
-            }
-            else
-            {
-                _Area = new Vector2Int(Col + Area[i].x, Row + Area[i].y - 1);
-            }
+            _Area = AreaProcess(Area[i]);
             if (pos ==_Area)
             {
                 if (rootId != RootID)

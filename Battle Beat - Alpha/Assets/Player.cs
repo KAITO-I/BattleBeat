@@ -11,7 +11,16 @@ public class Player : MonoBehaviour
     public float Sp;
     public float SpMax;
     public Vector2Int Pos;
-    public virtual void TakeDamage(float Damage) { Hp -= Damage; Debug.Log(gameObject.name + "が" + Damage.ToString() + "ダメージを受けた。"); }
+    protected int wait;
+    protected AttackItemBase nowAttack;
+    public virtual void TakeDamage(float Damage) {
+        Hp -= Damage; Debug.Log(gameObject.name + "が" + Damage.ToString() + "ダメージを受けた。");
+        if (nowAttack != null)
+        {
+            nowAttack.OnInterruption();
+        }
+        wait = 0;
+    }
     public virtual float GetSpecialParameter(string str) { return 0; }
 
     public enum MoveComand
@@ -53,7 +62,7 @@ public class Player : MonoBehaviour
         //Playerの位置が同じになってしまうので少し上げる
         transform.position += new Vector3(0, 1f, 0);
         Hp = HpMax;
-        Sp = 0;
+        Sp = SpMax*100000;
         IStart();
 
     }
@@ -79,11 +88,48 @@ public class Player : MonoBehaviour
         }
     }
 
-    public virtual void Turn()
+    public virtual void Turn_MovePhase()
     {
-        PlayerMove(input);
-        input = MoveComand.None;
-        canInput = true;
+        if(input >= MoveComand.Left && input <= MoveComand.Down) {
+            PlayerMove(input);
+            input = MoveComand.None;
+            canInput = true;
+        }
+
+    }
+    public virtual void Turn_AttackPhase()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            if (CoolDownCount[i] > 0)
+            {
+                CoolDownCount[i]--;
+            }
+        }
+        wait--;
+
+        if (input >= MoveComand.Attack_1 && input <= MoveComand.Attack_4)
+        {
+            switch (input)
+            {
+                case MoveComand.Attack_1:
+                    Attack_1();
+                    break;
+                case MoveComand.Attack_2:
+                    Attack_2();
+                    break;
+                case MoveComand.Attack_3:
+                    Attack_3();
+                    break;
+                case MoveComand.Attack_4:
+                    Attack_4();
+                    break;
+                case MoveComand.None:
+                    break;
+            }
+            input = MoveComand.None;
+            canInput = true;
+        }
     }
 
     //Playerが動けるタイミングになったら活動できる
@@ -129,20 +175,7 @@ public class Player : MonoBehaviour
                 }
                 break;
             //攻撃移動
-            case MoveComand.Attack_1:
-                Attack_1();
-                break;
-            case MoveComand.Attack_2:
-                Attack_2();
-                break;
-            case MoveComand.Attack_3:
-                Attack_3();
-                break;
-            case MoveComand.Attack_4:
-                Attack_4();
-                break;
-            case MoveComand.None:
-                break;
+            
             default:
                 break;
         }
@@ -172,6 +205,39 @@ public class Player : MonoBehaviour
     protected virtual void Attack_4()
     {
     }
-    protected virtual float GetBuff() { return 0; }
+
+    public virtual void ForcedMovement(Vector2Int vector)
+    {
+        Pos=VectorPlusUnderBoardLimit(Pos,vector);
+    }
+
+    private Vector2Int VectorPlusUnderBoardLimit(Vector2Int Pos,Vector2Int vector)
+    {
+        Vector2Int temp = Pos;
+        Vector2Int temptemp = temp;
+        int sign = vector.x > 0 ? 1 : -1;
+        for (int i = vector.x * sign; i > 0; i--)
+        {
+            temptemp = temp;
+            temp.x += sign;
+            if (!BoardManager._instance.Is_In_Stage(temp.x, temp.y, PlayerID))
+            {
+                temp = temptemp;
+                break;
+            }
+        }
+        sign = vector.y > 0 ? 1 : -1;
+        for (int i = vector.y * sign; i > 0; i--)
+        {
+            temptemp = temp;
+            temp.y += sign;
+            if (!BoardManager._instance.Is_In_Stage(temp.x, temp.y, PlayerID))
+            {
+                temp = temptemp;
+                break;
+            }
+        }
+        return temp;
+    }
 }
 
