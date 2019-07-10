@@ -23,6 +23,10 @@ public class BasicAttack : AttackItemBase
         IsInterrupted = false;
     }
     override public void TurnProcessPhase1() {
+        if (isCancel)
+        {
+            return;
+        }
         NowTurn++;
         if (NowTurn==Delay)
         {
@@ -39,6 +43,10 @@ public class BasicAttack : AttackItemBase
     }
     override public void TurnProcessPhase2()
     {
+        if (isCancel)
+        {
+            return;
+        }
         if (IsInterrupted)
         {
             NowTurn = Delay;
@@ -117,20 +125,7 @@ public class BasicAttack : AttackItemBase
         }
     }
 
-    protected virtual Vector2Int AreaProcess(Vector2Int Grid)
-    {
-        Vector2Int pos;
-        if (Reverse)
-        {
-            pos = new Vector2Int(Col - Grid.x, Row + Grid.y - 1);
-        }
-        else
-        {
-            pos = new Vector2Int(Col + Grid.x, Row + Grid.y - 1);
-        }
-
-        return pos;
-    }
+    
 
     public override void PassDamage(Player player)
     {
@@ -138,22 +133,7 @@ public class BasicAttack : AttackItemBase
         float buff_const=playerRoot.GetSpecialParameter("Buff");
         player.TakeDamage((BaseDamage+buff_const) * DamageFactor);
     }
-    public override bool CheckArea(Vector2Int pos,int rootId)
-    {
-        Vector2Int _Area;
-        for (int i = 0; i < Area.Count; i++)
-        {
-            _Area = AreaProcess(Area[i]);
-            if (pos ==_Area)
-            {
-                if (rootId != RootID)
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+    
     public override bool isEnd()
     {
         if (NowTurn > Delay)

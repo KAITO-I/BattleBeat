@@ -2,14 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Homi : Player
+public class Kagura : Player
 {
     public GameObject[] SkillPrefabs;
 
-    public float buffPower = 0f;
-
-    public int onBuff;
-
+    public bool ChainAttackHit;
     private void ClassicAttackProcess(int i)
     {
         if (wait > 0)
@@ -40,15 +37,13 @@ public class Homi : Player
     }
     protected override void Attack_3()
     {
-        var Skill = SkillPrefabs[2].GetComponent<AttackItemBase>() as BuffItem;
-        if (CoolDownCount[2] == 0 )
+        var Skill = SkillPrefabs[2].GetComponent<AttackItemBase>() as ChainAttack;
+        if (CoolDownCount[2] == 0)
         {
             GameObject obj = Instantiate<GameObject>(SkillPrefabs[2]);
-            Skill = obj.GetComponent<AttackItemBase>() as BuffItem;
+            Skill = obj.GetComponent<AttackItemBase>() as ChainAttack;
             Skill.Init(Pos.y, Pos.x, PlayerID == 1 ? false : true, PlayerID);
             CoolDownCount[2] += Skill.CoolDown;
-            onBuff += Skill.Duration;
-            buffPower += Skill.Power;
             nowAttack = Skill;
             AttackManager._instance.Add(Skill);
         }
@@ -59,29 +54,10 @@ public class Homi : Player
     }
     public override void Turn_AttackPhase()
     {
-        if (onBuff > 0)
-        {
-            onBuff--;
-            if (onBuff == 0)
-            {
-                buffPower = 0;
-            }
-        }
-        base.Turn_AttackPhase(); 
+        base.Turn_AttackPhase();
     }
     protected override void IStart()
     {
-        onBuff = 0;
-    }
-    public override float GetSpecialParameter(string str)
-    {
-        if (str == "Buff")
-        {
-            return buffPower;
-        }
-        else
-        {
-            return base.GetSpecialParameter(str);
-        }
+        ChainAttackHit = false;
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class DebugText : MonoBehaviour
 {
 
-    public Homi p;
+    public Player p;
     Text t;
     private void Start()
     {
@@ -19,8 +19,11 @@ public class DebugText : MonoBehaviour
             "Skill1:{4:G}\n" +
             "Skill2:{5:G}\n" +
             "Skill3:{6:G}\n" +
-            "Skill4:{7:G}\n" +
-            "Buff:{8:G}\n" +
-            "BuffPower:{9:G}", p.Hp,p.HpMax,p.Sp,p.SpMax,p.CoolDownCount[0], p.CoolDownCount[1], p.CoolDownCount[2], p.CoolDownCount[3],p.onBuff,p.buffPower);
+            "Skill4:{7:G}\n", p.Hp,p.HpMax,p.Sp,p.SpMax,p.CoolDownCount[0], p.CoolDownCount[1], p.CoolDownCount[2], p.CoolDownCount[3]);
+        if (p.GetType() == typeof(Homi))
+        {
+            t.text += string.Format("Buff:{0:G}\n" +
+            "BuffPower:{1:G}", ((Homi)p).onBuff, ((Homi)p).buffPower);
+        }
     }
 }

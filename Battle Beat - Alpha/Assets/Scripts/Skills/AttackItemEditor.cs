@@ -95,3 +95,12 @@ public class AllRangeEditor : BasicAttackEditor
         base.OnInspectorGUI();
     }
 }
+[CustomEditor(typeof(ChainAttack))]
+public class ChainAttackEditor : AttackItemEditor
+{
+    public override void OnInspectorGUI()
+    {
+
+        base.OnInspectorGUI();
+    }
+}

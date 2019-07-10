@@ -19,6 +19,7 @@ public class AttackItemBase : MonoBehaviour
     //リングの大きさ
     public Vector2Int BoardSize = new Vector2Int(3, 3);
 
+    protected bool isCancel;
     //初期化関数
     public virtual void Init(int row, int col, bool reverse, int root)
     {
@@ -26,19 +27,51 @@ public class AttackItemBase : MonoBehaviour
         Col = col;
         Reverse = reverse;
         RootID = root;
+        isCancel = false;
     }
     //ターンの処理
     public virtual void TurnProcessPhase0() { }
     public virtual void TurnProcessPhase1() { }
     public virtual void TurnProcessPhase2() { }
     //攻撃が終わってるか
-    public virtual bool isEnd() { return false; }
+    public virtual bool isEnd() { return isCancel; }
     //プレイヤーにダメージを与える
     public virtual void PassDamage(Player player) { player.TakeDamage(0); }
     //このターンにダメージ判定があるか
     public virtual bool CheckDamage() { return false; }
     //posの場所にidがrootIdのプレイヤーがダメージを受けるべきか
-    public virtual bool CheckArea(Vector2Int pos,int rootId) { return false; }
+    public virtual bool CheckArea(Vector2Int pos, int rootId)
+    {
+        Vector2Int _Area;
+        for (int i = 0; i < Area.Count; i++)
+        {
+            _Area = AreaProcess(Area[i]);
+            if (pos == _Area)
+            {
+                if (rootId != RootID)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     //このスキルが中断された時の処理
     public virtual void OnInterruption() { }
+    public virtual void Cancel() { isCancel = true; }
+    protected virtual Vector2Int AreaProcess(Vector2Int Grid)
+    {
+        Vector2Int pos;
+        if (Reverse)
+        {
+            pos = new Vector2Int(Col - Grid.x, Row + Grid.y - 1);
+        }
+        else
+        {
+            pos = new Vector2Int(Col + Grid.x, Row + Grid.y - 1);
+        }
+
+        return pos;
+    }
+    
 }

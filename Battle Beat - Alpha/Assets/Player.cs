@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     public Vector2Int Pos;
     protected int wait;
     protected AttackItemBase nowAttack;
+    public bool IsStuned;
     public virtual void TakeDamage(float Damage) {
         Hp -= Damage; Debug.Log(gameObject.name + "が" + Damage.ToString() + "ダメージを受けた。");
         if (nowAttack != null)
@@ -63,6 +64,12 @@ public class Player : MonoBehaviour
         transform.position += new Vector3(0, 1f, 0);
         Hp = HpMax;
         Sp = SpMax*100000;
+        for (int i = 0; i < 4; i++)
+        {
+            CoolDownCount[i] = 0;
+        }
+        wait = 0;
+        nowAttack = null;
         IStart();
 
     }
@@ -90,6 +97,16 @@ public class Player : MonoBehaviour
 
     public virtual void Turn_MovePhase()
     {
+        if (IsStuned)
+        {
+            if(input >= MoveComand.Attack_1 && input <= MoveComand.Attack_4 && nowAttack != null)
+            {
+                nowAttack.Cancel();
+            }
+            input = MoveComand.None;
+            canInput = true;
+        }
+
         if(input >= MoveComand.Left && input <= MoveComand.Down) {
             PlayerMove(input);
             input = MoveComand.None;

@@ -150,14 +150,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 80229034}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01ae087420f47984aa70095a439b8b89, type: 3}
+  m_Script: {fileID: 11500000, guid: df08ef6cd56b78f4d9a0669b3bc33e8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hp: 0
+  Hp: 100
   HpMax: 100
-  Sp: 100000
-  SpMax: 100
+  Sp: 1000
+  SpMax: 1000
   Pos: {x: 4, y: 1}
+  IsStuned: 0
   LeftKey: 276
   RightKey: 275
   UpKey: 273
@@ -169,12 +170,11 @@ MonoBehaviour:
   PlayerID: 2
   CoolDownCount: 00000000000000000000000000000000
   SkillPrefabs:
-  - {fileID: 4781102525549998572, guid: 5c89208f8cddb8748ab7482c09b9f222, type: 3}
-  - {fileID: 4781102525549998572, guid: 34d7c9c37621ade4b9cfd5d838b05d36, type: 3}
-  - {fileID: 3321080945623340731, guid: fddf3bc6a6fbd6d48950101fe864685c, type: 3}
-  - {fileID: 4781102525549998572, guid: 20a721f928931894db48e041b33afbaa, type: 3}
-  buffPower: 0
-  onBuff: 0
+  - {fileID: 6373771744539301792, guid: 440b26da320879f49bc80bb734805f9f, type: 3}
+  - {fileID: 8598021396870418982, guid: 68777e665e6ab2d43a7c1f01b1606b8d, type: 3}
+  - {fileID: 4237146485963558638, guid: 042a9192aab1dd742828e5f4a7367c1d, type: 3}
+  - {fileID: 2836272470564040027, guid: ae1a1029633ef624abb6e5011f47dacd, type: 3}
+  ChainAttackHit: 0
 --- !u!136 &80229036
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -748,6 +748,7 @@ MonoBehaviour:
   Sp: 100000
   SpMax: 100
   Pos: {x: 1, y: 1}
+  IsStuned: 0
   LeftKey: 97
   RightKey: 100
   UpKey: 119
