@@ -40,11 +40,6 @@ public class ConfigManager : MonoBehaviour
         this.SoundVolume.SoundManager.SE.Volume = value;
     }
 
-    public void SetVoiceVol(float value)
-    {
-        this.SoundVolume.SoundManager.Voice.Volume = value;
-    }
-
     //==============================
     // Volume値設定
     //==============================
@@ -55,7 +50,6 @@ public class ConfigManager : MonoBehaviour
         [SerializeField] Slider MasterVolume;
         [SerializeField] Slider BGMVolume;
         [SerializeField] Slider SEVolume;
-        [SerializeField] Slider VoiceVolume;
 
         //------------------------------
         // 初期化
@@ -66,7 +60,6 @@ public class ConfigManager : MonoBehaviour
             this.MasterVolume.value = this.SoundManager.MasterVolume;
             this.BGMVolume.value    = this.SoundManager.BGM.Volume;
             this.SEVolume.value     = this.SoundManager.SE.Volume;
-            this.VoiceVolume.value  = this.SoundManager.Voice.Volume; 
         }
     }
 }
