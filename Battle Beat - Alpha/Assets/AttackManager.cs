@@ -25,43 +25,75 @@ public class AttackManager : MonoBehaviour
     //ターン処理
     public void NextTurn()
     {
+        //ターン始まる時の処理(playerやattackitemなどのオブジェクトのカウンターなどの処理をする)
+        foreach (var item in attackItems)
+        {
+            item.TurnPreprocess();
+        }
+        foreach (var p in players)
+        {
+            p.TurnPreprocess();
+        }
+
+        //（A）このプレイヤー（ユーザー）の指令を処理する
+        　　//A：その一（攻撃指示する場合）：攻撃itemを生成
         foreach (var p in players)
         {
             p.Turn_AttackPhase();
         }
+        //（B）移動する前に判定する攻撃
+            //B：二人のプレイヤーが優先順位無し、同時に処理するために攻撃の予測をする
         foreach (var item in attackItems)
         {
-            //攻撃オブジェクトのターン処理 => 第一
-            item.TurnProcessPhase0();
+            item.TurnProcessPhase0_Prediction_Request();
         }
+           //B：前記の予測を基づいて、疑似の同時処理をする。以下に似たような処理もいくつかある。
+        foreach (var item in attackItems)
+        {
+            item.TurnProcessPhase0_Main();
+        }
+       　　 //A：その二（移動指示する場合）：移動させる
         foreach (var p in players)
         {
             p.Turn_MovePhase();
         }
-        
+        //ProcessPhase1=>DamagePhase=>ProcessPhase2の順でターンの処理をする
+        　　//基本処理
         foreach (var item in attackItems)
         {
-      　　　//攻撃オブジェクトのターン処理 => 第一
-            item.TurnProcessPhase1();
-            //攻撃オブジェクトがダメージ判定が発生するか
-            if (item.CheckDamage())
-            {
-                //ダメージ判定が発生する際に、特定のプレイヤーが判定エリア内にいるか
-                foreach (var player in players)
-                {
-                    if (item.CheckArea(player.Pos, player.PlayerID))
-                    {
-                        //ダメージ発生
-                        item.PassDamage(player);
-                    }
-                }
-            }
+            item.TurnProcessPhase1_Prediction_Request();
+
         }
         foreach (var item in attackItems)
         {
-            //攻撃オブジェクトのターン処理 => 第二
-            item.TurnProcessPhase2();
+            item.TurnProcessPhase1_Main();
             
+        }
+        　　//攻撃オブジェクトのダメージ判定
+        foreach (var item in attackItems)
+        {
+            item.DamegePhase();
+
+        }
+            //ダメージ後処理
+        foreach (var item in attackItems)
+        {
+            item.TurnProcessPhase2_Prediction_Request();
+
+        }
+        foreach (var item in attackItems)
+        {
+            item.TurnProcessPhase2_Main();
+            
+        }
+        //ターンおわる時の処理
+        foreach (var item in attackItems)
+        {
+            item.TurnPostprocess();
+        }
+        foreach (var p in players)
+        {
+            p.TurnPostprocess();
         }
         //攻撃オブジェクトが廃棄するべきか
         foreach (var item in attackItems)

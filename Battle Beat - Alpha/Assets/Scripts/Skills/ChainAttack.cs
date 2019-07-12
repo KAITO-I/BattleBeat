@@ -7,45 +7,89 @@ public class ChainAttack : AttackItemBase
     public int CoolDown;
     public float SpCost;
 
-    public override void TurnProcessPhase0()
+    int turn;
+    public override void Init(int row, int col, bool reverse, int root)
     {
-        var RootPlayer = AttackManager._instance.GetPlayer(RootID) as Kagura;
-
-        int OpponentID = 3 - RootID;
-
-        Player Opponent = AttackManager._instance.GetPlayer(OpponentID);
-        foreach (var Grid in Area)
+        base.Init(row, col, reverse, root);
+        turn = -1;
+    }
+    public override void TurnProcessPhase0_Prediction_Request()
+    {
+        turn++;
+        
+        if (turn == 0)
         {
-            Vector2Int pos;
-            pos = AreaProcess(Grid);
-            if (pos == Opponent.Pos)
+            var RootPlayer = AttackManager._instance.GetPlayer(RootID) as Kagura;
+
+            int OpponentID = 3 - RootID;
+
+            Player Opponent = AttackManager._instance.GetPlayer(OpponentID);
+
+            foreach (var Grid in Area)
             {
-                Opponent.IsStuned = true;
-                RootPlayer.ChainAttackHit = true;
+                Vector2Int pos;
+                pos = AreaProcess(Grid);
+                if (pos == Opponent.Pos)
+                {
+                    Opponent.IsStuned = true;
+                    RootPlayer.ChainAttackHit = true;
+                }
             }
         }
     }
-    public override void TurnProcessPhase1()
+    public override void TurnProcessPhase0_Main()
     {
-        var RootPlayer = AttackManager._instance.GetPlayer(RootID) as Kagura;
-
-        int OpponentID = 3 - RootID;
-
-        Player Opponent = AttackManager._instance.GetPlayer(OpponentID);
-
-        //Hitした場合
-        if (RootPlayer.ChainAttackHit == true && RootPlayer.IsStuned != true)
+        
+        if (turn == 0)
         {
-            Opponent.ForcedMovement(Reverse ? new Vector2Int(Col - 1, Row) : new Vector2Int(Col + 1, Row));
+            var RootPlayer = AttackManager._instance.GetPlayer(RootID) as Kagura;
+
+            int OpponentID = 3 - RootID;
+
+            Player Opponent = AttackManager._instance.GetPlayer(OpponentID);
+
+            if (RootPlayer.ChainAttackHit == true && RootPlayer.IsStuned != true)
+            {
+                RootPlayer.StunTurn += 2;
+                Opponent.StunTurn += 2;
+                Opponent.IsStuned = true;
+                RootPlayer.IsStuned = true;
+            }
+            //鎖攻撃の相打ち
+            else if (RootPlayer.ChainAttackHit == true && RootPlayer.IsStuned == true)
+            {
+                RootPlayer.ChainAttackHit = false;
+                RootPlayer.IsStuned = false;
+
+            }
         }
-        //鎖攻撃の相打ち
-        else if (RootPlayer.ChainAttackHit == true && RootPlayer.IsStuned == true)
-        {
+    }
+    public override void TurnProcessPhase1_Main()
+    {
+        
 
+        if(turn ==1)
+        {
+            var RootPlayer = AttackManager._instance.GetPlayer(RootID) as Kagura;
+
+            int OpponentID = 3 - RootID;
+
+            Player Opponent = AttackManager._instance.GetPlayer(OpponentID);
+
+            //Hitした場合
+            if (RootPlayer.ChainAttackHit == true)
+            {
+                Opponent.ForcedMovement(Reverse ? new Vector2Int(Col - 1, Row) : new Vector2Int(Col + 1, Row));
+            }
+            RootPlayer.ChainAttackHit = false;
         }
     }
     public override bool isEnd()
     {
+        if (turn == 0)
+        {
+            return false;
+        }
         return true;
     }
 }

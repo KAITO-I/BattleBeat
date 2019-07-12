@@ -22,7 +22,7 @@ public class BasicAttack : AttackItemBase
         canMakeDamage = false;
         IsInterrupted = false;
     }
-    override public void TurnProcessPhase1() {
+    override public void TurnProcessPhase1_Main() {
         if (isCancel)
         {
             return;
@@ -41,7 +41,7 @@ public class BasicAttack : AttackItemBase
             Step0();
         }
     }
-    override public void TurnProcessPhase2()
+    override public void TurnProcessPhase2_Main()
     {
         if (isCancel)
         {

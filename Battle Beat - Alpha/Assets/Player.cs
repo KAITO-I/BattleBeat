@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     protected int wait;
     protected AttackItemBase nowAttack;
     public bool IsStuned;
+    public int StunTurn;
     public virtual void TakeDamage(float Damage) {
         Hp -= Damage; Debug.Log(gameObject.name + "が" + Damage.ToString() + "ダメージを受けた。");
         if (nowAttack != null)
@@ -23,6 +24,7 @@ public class Player : MonoBehaviour
         wait = 0;
     }
     public virtual float GetSpecialParameter(string str) { return 0; }
+    public virtual void TurnPreprocess() { if (StunTurn > 0) { StunTurn--; if (StunTurn <= 0) { IsStuned = false; } } }
 
     public enum MoveComand
     {
@@ -70,6 +72,7 @@ public class Player : MonoBehaviour
         }
         wait = 0;
         nowAttack = null;
+        StunTurn = 0;
         IStart();
 
     }
@@ -77,6 +80,7 @@ public class Player : MonoBehaviour
     {
 
     } 
+    public virtual void TurnPostprocess() {  canInput = true; input = MoveComand.None;  }
     // Update is called once per frame
     void Update()
     {
@@ -103,14 +107,11 @@ public class Player : MonoBehaviour
             {
                 nowAttack.Cancel();
             }
-            input = MoveComand.None;
-            canInput = true;
+            return;
         }
 
         if(input >= MoveComand.Left && input <= MoveComand.Down) {
             PlayerMove(input);
-            input = MoveComand.None;
-            canInput = true;
         }
 
     }
@@ -124,6 +125,10 @@ public class Player : MonoBehaviour
             }
         }
         wait--;
+        if (IsStuned)
+        {
+            return;
+        }
 
         if (input >= MoveComand.Attack_1 && input <= MoveComand.Attack_4)
         {
@@ -144,8 +149,6 @@ public class Player : MonoBehaviour
                 case MoveComand.None:
                     break;
             }
-            input = MoveComand.None;
-            canInput = true;
         }
     }
 
@@ -223,9 +226,12 @@ public class Player : MonoBehaviour
     {
     }
 
-    public virtual void ForcedMovement(Vector2Int vector)
+    public virtual void ForcedMovement(Vector2Int targetPos)
     {
-        Pos=VectorPlusUnderBoardLimit(Pos,vector);
+
+        Pos=VectorPlusUnderBoardLimit(Pos,targetPos-Pos);
+        transform.position = BoardManager._instance.ToWorldPos(Pos);
+
     }
 
     private Vector2Int VectorPlusUnderBoardLimit(Vector2Int Pos,Vector2Int vector)

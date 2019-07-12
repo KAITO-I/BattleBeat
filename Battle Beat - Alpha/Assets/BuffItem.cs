@@ -13,7 +13,7 @@ public class BuffItem : AttackItemBase
         base.Init(row, col, reverse, root);
         lifeTime = Duration;
     }
-    public override void TurnProcessPhase2()
+    public override void TurnProcessPhase2_Main()
     {
         lifeTime--;
     }

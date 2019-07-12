@@ -29,10 +29,17 @@ public class AttackItemBase : MonoBehaviour
         RootID = root;
         isCancel = false;
     }
-    //ターンの処理
-    public virtual void TurnProcessPhase0() { }
-    public virtual void TurnProcessPhase1() { }
-    public virtual void TurnProcessPhase2() { }
+    //ターンの処理（使い方はAttackManagerクラスに記載しています）
+    public virtual void TurnPreprocess() { }
+    public virtual void TurnProcessPhase0_Main() { }
+    public virtual void TurnProcessPhase1_Main() { }
+    public virtual void TurnProcessPhase2_Main() { }
+    public virtual void TurnProcessPhase0_Prediction_Request() { }
+    public virtual void TurnProcessPhase1_Prediction_Request() { }
+    public virtual void TurnProcessPhase2_Prediction_Request() { }
+    public virtual void DamegePhase() { }
+    public virtual void TurnPostprocess() { }
+
     //攻撃が終わってるか
     public virtual bool isEnd() { return isCancel; }
     //プレイヤーにダメージを与える
