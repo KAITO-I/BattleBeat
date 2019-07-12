@@ -12,17 +12,13 @@ public class Homi : Player
 
     private void ClassicAttackProcess(int i)
     {
-        if (wait > 0)
-        {
-            return;
-        }
         var Skill = SkillPrefabs[i].GetComponent<AttackItemBase>() as BasicAttack;
         if (CoolDownCount[i] == 0 && Skill.SpCost <= Sp)
         {
             GameObject obj = Instantiate<GameObject>(SkillPrefabs[i]);
             Skill = obj.GetComponent<AttackItemBase>() as BasicAttack;
             Skill.Init(Pos.y, Pos.x, PlayerID == 1 ? false : true, PlayerID);
-            CoolDownCount[i] += Skill.CoolDown;
+            CoolDownCount[i] += Skill.CoolDown+Skill.Delay;
             Sp -= Skill.SpCost;
             wait = Skill.Delay;
             nowAttack = Skill;
@@ -73,15 +69,8 @@ public class Homi : Player
     {
         onBuff = 0;
     }
-    public override float GetSpecialParameter(string str)
+    public override float DamageCalc(float p1)
     {
-        if (str == "Buff")
-        {
-            return buffPower;
-        }
-        else
-        {
-            return base.GetSpecialParameter(str);
-        }
+        return p1+buffPower;
     }
 }

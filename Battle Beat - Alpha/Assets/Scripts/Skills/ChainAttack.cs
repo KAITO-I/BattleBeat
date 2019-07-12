@@ -8,10 +8,16 @@ public class ChainAttack : AttackItemBase
     public float SpCost;
 
     int turn;
+
+    Floor.Colors fColor;
+
+    Kagura rootPlayer;
+
     public override void Init(int row, int col, bool reverse, int root)
     {
         base.Init(row, col, reverse, root);
         turn = -1;
+        rootPlayer = base.RootPlayer as Kagura;
     }
     public override void TurnProcessPhase0_Prediction_Request()
     {
@@ -19,11 +25,7 @@ public class ChainAttack : AttackItemBase
         
         if (turn == 0)
         {
-            var RootPlayer = AttackManager._instance.GetPlayer(RootID) as Kagura;
-
-            int OpponentID = 3 - RootID;
-
-            Player Opponent = AttackManager._instance.GetPlayer(OpponentID);
+            
 
             foreach (var Grid in Area)
             {
@@ -32,7 +34,7 @@ public class ChainAttack : AttackItemBase
                 if (pos == Opponent.Pos)
                 {
                     Opponent.IsStuned = true;
-                    RootPlayer.ChainAttackHit = true;
+                    rootPlayer.ChainAttackHit = true;
                 }
             }
         }
@@ -42,6 +44,17 @@ public class ChainAttack : AttackItemBase
         
         if (turn == 0)
         {
+            if (RootID == 1)
+            {
+                fColor = Floor.Colors.red;
+            }
+
+            else
+            {
+                fColor = Floor.Colors.blue;
+            }
+            ChangeFloorColor(fColor, 0);
+
             var RootPlayer = AttackManager._instance.GetPlayer(RootID) as Kagura;
 
             int OpponentID = 3 - RootID;
@@ -62,6 +75,10 @@ public class ChainAttack : AttackItemBase
                 RootPlayer.IsStuned = false;
 
             }
+        }
+        else if (turn == 1)
+        {
+            ChangeFloorColor(fColor, 1);
         }
     }
     public override void TurnProcessPhase1_Main()

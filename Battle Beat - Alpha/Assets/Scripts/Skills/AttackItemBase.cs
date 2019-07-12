@@ -19,6 +19,8 @@ public class AttackItemBase : MonoBehaviour
     //リングの大きさ
     public Vector2Int BoardSize = new Vector2Int(3, 3);
 
+    protected Player RootPlayer;
+    protected Player Opponent;
     protected bool isCancel;
     //初期化関数
     public virtual void Init(int row, int col, bool reverse, int root)
@@ -28,6 +30,11 @@ public class AttackItemBase : MonoBehaviour
         Reverse = reverse;
         RootID = root;
         isCancel = false;
+        RootPlayer = AttackManager._instance.GetPlayer(RootID);
+
+        int OpponentID = 3 - RootID;
+
+        Opponent = AttackManager._instance.GetPlayer(OpponentID);
     }
     //ターンの処理（使い方はAttackManagerクラスに記載しています）
     public virtual void TurnPreprocess() { }
@@ -37,7 +44,22 @@ public class AttackItemBase : MonoBehaviour
     public virtual void TurnProcessPhase0_Prediction_Request() { }
     public virtual void TurnProcessPhase1_Prediction_Request() { }
     public virtual void TurnProcessPhase2_Prediction_Request() { }
-    public virtual void DamegePhase() { }
+    public virtual void DamegePhase() {
+        if (CheckDamage())
+        {
+            foreach (var p in Area)
+            {
+                Vector2Int pos = AreaProcess(p);
+                int OpponentID = 3 - RootID;
+
+                Player Opponent = AttackManager._instance.GetPlayer(OpponentID);
+                if (pos == Opponent.Pos)
+                {
+                    PassDamage(Opponent);
+                }
+            }
+        }
+    }
     public virtual void TurnPostprocess() { }
 
     //攻撃が終わってるか
@@ -47,8 +69,12 @@ public class AttackItemBase : MonoBehaviour
     //このターンにダメージ判定があるか
     public virtual bool CheckDamage() { return false; }
     //posの場所にidがrootIdのプレイヤーがダメージを受けるべきか
-    public virtual bool CheckArea(Vector2Int pos, int rootId)
+    public virtual bool CheckArea(Vector2Int pos, int rootId,List<Vector2Int> Area = null)
     {
+        if (Area == null)
+        {
+            Area = this.Area;
+        }
         Vector2Int _Area;
         for (int i = 0; i < Area.Count; i++)
         {
@@ -80,5 +106,29 @@ public class AttackItemBase : MonoBehaviour
 
         return pos;
     }
-    
+    protected void ChangeFloorColor(Floor.Colors color, int mode = 0, List<Vector2Int> Area = null)
+    {
+        if(Area == null)
+        {
+            Area = this.Area;
+        }
+        foreach (var Grid in Area)
+        {
+            Vector2Int pos;
+            pos = AreaProcess(Grid);
+            var floor = BoardManager._instance.GetGameObjectAt(pos, RootID);
+            if (floor != null)
+            {
+                var floorObj = floor.GetComponent<Floor>();
+                if (mode == 0)
+                {
+                    floorObj.AddColor(color);
+                }
+                else
+                {
+                    floorObj.SubColor(color);
+                }
+            }
+        }
+    }
 }

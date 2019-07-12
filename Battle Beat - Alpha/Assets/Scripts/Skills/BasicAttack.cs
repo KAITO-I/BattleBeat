@@ -9,16 +9,16 @@ public class BasicAttack : AttackItemBase
     public int Delay;
     public int CoolDown;
     public float SpCost;
-    private int NowTurn;
-    private bool canMakeDamage;
-    private bool IsInterrupted;
+    protected int NowTurn;
+    protected bool canMakeDamage;
+    protected bool IsInterrupted;
 
-    Floor.Colors fColor;
+    protected Floor.Colors fColor;
 
     public override void Init(int row, int col, bool reverse, int root)
     {
         base.Init(row, col, reverse, root);
-        NowTurn = -1;
+        NowTurn = 0;
         canMakeDamage = false;
         IsInterrupted = false;
     }
@@ -27,7 +27,6 @@ public class BasicAttack : AttackItemBase
         {
             return;
         }
-        NowTurn++;
         if (NowTurn==Delay)
         {
             Step1();
@@ -100,38 +99,12 @@ public class BasicAttack : AttackItemBase
     }
     void Step2()
     {
-        ChangeFloorColor(fColor, 1);
-        canMakeDamage = false;
+        
     }
-    private void ChangeFloorColor(Floor.Colors color,int mode=0)
-    {
-        foreach (var Grid in Area)
-        {
-            Vector2Int pos;
-            pos = AreaProcess(Grid);
-            var floor = BoardManager._instance.GetGameObjectAt(pos, RootID);
-            if (floor != null)
-            {
-                var floorObj = floor.GetComponent<Floor>();
-                if (mode == 0)
-                {
-                    floorObj.AddColor(color);
-                }
-                else
-                {
-                    floorObj.SubColor(color);
-                }
-            }
-        }
-    }
-
-    
 
     public override void PassDamage(Player player)
     {
-        Player playerRoot = AttackManager._instance.GetPlayer(RootID);
-        float buff_const=playerRoot.GetSpecialParameter("Buff");
-        player.TakeDamage((BaseDamage+buff_const) * DamageFactor);
+        Opponent.TakeDamage(RootPlayer.DamageCalc(BaseDamage) * DamageFactor);
     }
     
     public override bool isEnd()
@@ -154,5 +127,15 @@ public class BasicAttack : AttackItemBase
          * SomeCodeHere
          * 
          *アニメーションの処理*/
+    }
+    public override void TurnPreprocess()
+    {
+        base.TurnPreprocess();
+        NowTurn++;
+        if (NowTurn >= Delay + 1)
+        {
+            ChangeFloorColor(fColor, 1);
+            canMakeDamage = false;
+        }
     }
 }

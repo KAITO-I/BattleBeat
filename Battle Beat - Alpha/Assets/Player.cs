@@ -23,7 +23,10 @@ public class Player : MonoBehaviour
         }
         wait = 0;
     }
-    public virtual float GetSpecialParameter(string str) { return 0; }
+    public virtual float DamageCalc(float p1) { return p1; }
+    public virtual float DamageCalc(float p1, float p2) { return p1; }
+    public virtual float DamageCalc(float p1, float p2, float p3) { return p1; }
+    public virtual float DamageCalc(float p1, float p2, float p3, float p4) { return p1; }
     public virtual void TurnPreprocess() { if (StunTurn > 0) { StunTurn--; if (StunTurn <= 0) { IsStuned = false; } } }
 
     public enum MoveComand
@@ -41,16 +44,30 @@ public class Player : MonoBehaviour
 
     private MoveComand input = MoveComand.None;
     private bool canInput = true;
+    public class KeySets
+    {
+        public KeyCode LeftKey;
+        public KeyCode RightKey;
+        public KeyCode UpKey;
+        public KeyCode DownKey;
+        public KeyCode Attack_1Key;
+        public KeyCode Attack_2Key;
+        public KeyCode Attack_3Key;
+        public KeyCode Attack_4Key;
 
-    public KeyCode LeftKey;
-    public KeyCode RightKey;
-    public KeyCode UpKey;
-    public KeyCode DownKey;
-    public KeyCode Attack_1Key;
-    public KeyCode Attack_2Key;
-    public KeyCode Attack_3Key;
-    public KeyCode Attack_4Key;
-
+        public KeySets(KeyCode leftKey, KeyCode rightKey, KeyCode upKey, KeyCode downKey, KeyCode attack_1Key, KeyCode attack_2Key, KeyCode attack_3Key, KeyCode attack_4Key)
+        {
+            LeftKey = leftKey;
+            RightKey = rightKey;
+            UpKey = upKey;
+            DownKey = downKey;
+            Attack_1Key = attack_1Key;
+            Attack_2Key = attack_2Key;
+            Attack_3Key = attack_3Key;
+            Attack_4Key = attack_4Key;
+        }
+    }
+    public KeySets keySets;
     //指定した場所に出現させるため
     
 
@@ -61,11 +78,21 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        
+        IStart();
+
+    }
+    protected virtual void IStart()
+    {
+
+    }
+    public void Init()
+    {
         transform.position = BoardManager._instance.ToWorldPos(Pos);
         //Playerの位置が同じになってしまうので少し上げる
         transform.position += new Vector3(0, 1f, 0);
         Hp = HpMax;
-        Sp = SpMax*100000;
+        Sp = SpMax * 100000;
         for (int i = 0; i < 4; i++)
         {
             CoolDownCount[i] = 0;
@@ -73,28 +100,22 @@ public class Player : MonoBehaviour
         wait = 0;
         nowAttack = null;
         StunTurn = 0;
-        IStart();
-
     }
-    protected virtual void IStart()
-    {
-
-    } 
-    public virtual void TurnPostprocess() {  canInput = true; input = MoveComand.None;  }
+    public virtual void TurnPostprocess() {  canInput = true; input = MoveComand.None; if (wait > 0) { wait--; } }
     // Update is called once per frame
     void Update()
     {
         //Test();
-        if (canInput)
+        if (canInput&&wait==0)
         {
-            if (Input.GetKeyDown(LeftKey)) input = MoveComand.Left;
-            else if (Input.GetKeyDown(RightKey)) input = MoveComand.Right;
-            else if (Input.GetKeyDown(UpKey)) input = MoveComand.Up;
-            else if (Input.GetKeyDown(DownKey)) input = MoveComand.Down;
-            else if (Input.GetKeyDown(Attack_1Key)) input = MoveComand.Attack_1;
-            else if (Input.GetKeyDown(Attack_2Key)) input = MoveComand.Attack_2;
-            else if (Input.GetKeyDown(Attack_3Key)) input = MoveComand.Attack_3;
-            else if (Input.GetKeyDown(Attack_4Key)) input = MoveComand.Attack_4;
+            if (Input.GetKeyDown(keySets.LeftKey)) input = MoveComand.Left;
+            else if (Input.GetKeyDown(keySets.RightKey)) input = MoveComand.Right;
+            else if (Input.GetKeyDown(keySets.UpKey)) input = MoveComand.Up;
+            else if (Input.GetKeyDown(keySets.DownKey)) input = MoveComand.Down;
+            else if (Input.GetKeyDown(keySets.Attack_1Key)) input = MoveComand.Attack_1;
+            else if (Input.GetKeyDown(keySets.Attack_2Key)) input = MoveComand.Attack_2;
+            else if (Input.GetKeyDown(keySets.Attack_3Key)) input = MoveComand.Attack_3;
+            else if (Input.GetKeyDown(keySets.Attack_4Key)) input = MoveComand.Attack_4;
             if (input != MoveComand.None) canInput = false;
         }
     }
@@ -124,7 +145,6 @@ public class Player : MonoBehaviour
                 CoolDownCount[i]--;
             }
         }
-        wait--;
         if (IsStuned)
         {
             return;

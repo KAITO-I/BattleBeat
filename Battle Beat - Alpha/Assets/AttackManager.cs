@@ -10,6 +10,16 @@ public class AttackManager : MonoBehaviour
     //プレイヤーが保存されるリスト
     [SerializeField]
     List<Player> players;
+    public void SetPlayers(Player p1,Player p2) {
+        if (players == null) {
+            players = new List<Player>();
+        }
+        if (players != null) {
+            players.Clear();
+            players.Add(p1);
+            players.Add(p2);
+        }
+    }
     private void Awake()
     {
         if (_instance == null)

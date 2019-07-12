@@ -104,3 +104,12 @@ public class ChainAttackEditor : AttackItemEditor
         base.OnInspectorGUI();
     }
 }
+[CustomEditor(typeof(HyperBeam))]
+public class HyperBeamEditor : BasicAttackEditor
+{
+    public override void OnInspectorGUI()
+    {
+
+        base.OnInspectorGUI();
+    }
+}
