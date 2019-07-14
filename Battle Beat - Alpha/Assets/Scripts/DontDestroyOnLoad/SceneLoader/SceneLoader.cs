@@ -1,6 +1,6 @@
 ﻿//==============================
-// Created by SA371516 (荒井)
-// Customized by KAITO-I (稲福)
+// Created by SA371516
+// Customized by KAITO-I
 //==============================
 using System.Collections;
 using UnityEngine;
@@ -37,9 +37,6 @@ public class SceneLoader : MonoBehaviour
         Credit          = 7
     }
 
-    //==============================
-    // クラス
-    //=============================
     // フェード用
     [SerializeField] float fadeInTime;
     [SerializeField] float fadeOutTime;
@@ -52,16 +49,14 @@ public class SceneLoader : MonoBehaviour
     // ロード状態
     private bool isLoading;
 
-    private void Awake()
+    //------------------------------
+    // 初期化
+    //------------------------------
+    public void Init()
     {
-        if (SceneLoader.instance != null)
-        {
-            Destroy(this.gameObject);
-            return;
-        }
+        if (SceneLoader.instance != null) return;
 
         SceneLoader.instance = this;
-        DontDestroyOnLoad(this.gameObject);
 
         this.background.color = new Color(0f, 0f, 0f, 0f);
         this.loadScreen.SetActive(false);
@@ -70,15 +65,18 @@ public class SceneLoader : MonoBehaviour
         this.isLoading = false;
     }
 
-    public void LoadScene(Scenes targetScene)
+    //------------------------------
+    // シーン読込
+    //------------------------------
+    public void LoadScene(Scenes target)
     {
         if (!this.isLoading)
-            StartCoroutine(Load(targetScene));
+            StartCoroutine(Load(target));
         else
             Debug.LogWarning("すでにロード処理が開始しているため、新しく開始できません");
     }
 
-    private IEnumerator Load(Scenes targetScene)
+    private IEnumerator Load(Scenes target)
     {
         this.slider.value = 0f;
         this.isLoading = true;
@@ -95,7 +93,7 @@ public class SceneLoader : MonoBehaviour
 
         // 呼び出し
         this.loadScreen.SetActive(true);
-        AsyncOperation async = SceneManager.LoadSceneAsync((int)targetScene);
+        AsyncOperation async = SceneManager.LoadSceneAsync((int)target);
         async.allowSceneActivation = false;
         while (async.progress < 0.9f)
         {

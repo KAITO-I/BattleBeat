@@ -1,5 +1,5 @@
 ﻿//==============================
-// Created by KAITO-I (稲福)
+// Created by KAITO-I
 //==============================
 using UnityEngine;
 
@@ -59,8 +59,13 @@ public class SoundManager : MonoBehaviour {
     private SE se;
     public  SE SE { get { return this.se; } }
 
-    private void Awake()
+    //------------------------------
+    // 初期化
+    //------------------------------
+    public void Init()
     {
+        if (SoundManager.instance != null) return;
+
         SoundManager.instance = this;
 
         //===== 音量初期値 =====
