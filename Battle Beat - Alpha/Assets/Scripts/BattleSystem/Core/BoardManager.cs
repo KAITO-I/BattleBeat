@@ -50,7 +50,9 @@ public class BoardManager : MonoBehaviour
     //(vector(現在のX,現在のY),何プレイヤーなのか)
     public Vector3 ToWorldPos(Vector2Int BoardPos)
     {
-         return Pos[_2DArrayIdx_To_1DArrayIdx(BoardPos.x,BoardPos.y,(int) COLMax)];
+        var idx = _2DArrayIdx_To_1DArrayIdx(BoardPos.x, BoardPos.y, (int)COLMax);
+
+         return Pos[idx];
     }
     public GameObject GetGameObjectAt(Vector2Int BoardPos,int id)
     {
@@ -69,6 +71,11 @@ public class BoardManager : MonoBehaviour
         {
             return -1;
         }
-        return p1 + p1Max * p2;
+        var rlt = p1 + p1Max * p2;
+        if (rlt > Pos.Count - 1||rlt<0)
+        {
+            return -1;
+        }
+        return rlt;
     }
 }

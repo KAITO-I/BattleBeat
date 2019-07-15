@@ -20,7 +20,7 @@ public class DebugText : MonoBehaviour
             "Skill2:{5:G}\n" +
             "Skill3:{6:G}\n" +
             "Skill4:{7:G}\n" +
-            "Stun:{8:G}\n", p.Hp,p.HpMax,p.Sp,p.SpMax,p.CoolDownCount[0], p.CoolDownCount[1], p.CoolDownCount[2], p.CoolDownCount[3],p.StunTurn);
+            "Stun:{8:G}\n", p.GetHp(),p.HpMax,p.GetSp(),p.SpMax,p.CoolDownCount[0], p.CoolDownCount[1], p.CoolDownCount[2], p.CoolDownCount[3],p.StunTurn);
         if (p.GetType() == typeof(Homi))
         {
             t.text += string.Format("Buff:{0:G}\n" +

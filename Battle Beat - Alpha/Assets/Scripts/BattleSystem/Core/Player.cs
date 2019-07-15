@@ -5,29 +5,39 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-
-    public float Hp;
+    public float OneGameTime=60f;
+    private float Hp;
     public float HpMax;
+    public float GetHp() { return Hp; }
+    public void SetHp(float hp) { Hp = Mathf.Clamp(hp, 0, HpMax); }
+    
     public float Sp;
     public float SpMax;
+
+    public float GetSp() { return Sp; }
+    public void SetSp(float sp) { Sp = Mathf.Clamp(sp, 0, SpMax); }
+
     public Vector2Int Pos;
     protected int wait;
     protected AttackItemBase nowAttack;
     public bool IsStuned;
     public int StunTurn;
+    public float DamageToSPFactor = 2f;
+
     public virtual void TakeDamage(float Damage) {
-        Hp -= Damage; Debug.Log(gameObject.name + "が" + Damage.ToString() + "ダメージを受けた。");
+        SetHp(GetHp()-Damage); Debug.Log(gameObject.name + "が" + Damage.ToString() + "ダメージを受けた。");
         if (nowAttack != null)
         {
             nowAttack.OnInterruption();
         }
         wait = 0;
+        SetSp(Damage* DamageToSPFactor+GetSp());
     }
     public virtual float DamageCalc(float p1) { return p1; }
     public virtual float DamageCalc(float p1, float p2) { return p1; }
     public virtual float DamageCalc(float p1, float p2, float p3) { return p1; }
     public virtual float DamageCalc(float p1, float p2, float p3, float p4) { return p1; }
-    public virtual void TurnPreprocess() { if (StunTurn > 0) { StunTurn--; if (StunTurn <= 0) { IsStuned = false; } } }
+    public virtual void TurnPreprocess() { if (StunTurn > 0) { StunTurn--; if (StunTurn <= 0) { IsStuned = false; } }  }
 
     public enum MoveComand
     {
@@ -92,7 +102,7 @@ public class Player : MonoBehaviour
         //Playerの位置が同じになってしまうので少し上げる
         transform.position += new Vector3(0, 1f, 0);
         Hp = HpMax;
-        Sp = SpMax * 100000;
+        Sp = 0;
         for (int i = 0; i < 4; i++)
         {
             CoolDownCount[i] = 0;
@@ -118,6 +128,7 @@ public class Player : MonoBehaviour
             else if (Input.GetKeyDown(keySets.Attack_4Key)) input = MoveComand.Attack_4;
             if (input != MoveComand.None) canInput = false;
         }
+        SetSp(GetSp()+Time.deltaTime / OneGameTime * SpMax);
     }
 
     public virtual void Turn_MovePhase()

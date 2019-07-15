@@ -113,3 +113,21 @@ public class HyperBeamEditor : BasicAttackEditor
         base.OnInspectorGUI();
     }
 }
+[CustomEditor(typeof(Rocket))]
+public class RocketEditor : BasicAttackEditor
+{
+    public override void OnInspectorGUI()
+    {
+
+        base.OnInspectorGUI();
+    }
+}
+[CustomEditor(typeof(Trap))]
+public class TrapEditor : BasicAttackEditor
+{
+    public override void OnInspectorGUI()
+    {
+
+        base.OnInspectorGUI();
+    }
+}

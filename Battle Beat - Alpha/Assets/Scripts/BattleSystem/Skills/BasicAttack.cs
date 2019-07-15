@@ -7,8 +7,6 @@ public class BasicAttack : AttackItemBase
     public float DamageFactor;
     public float BaseDamage;
     public int Delay;
-    public int CoolDown;
-    public float SpCost;
     protected int NowTurn;
     protected bool canMakeDamage;
     protected bool IsInterrupted;
@@ -29,15 +27,48 @@ public class BasicAttack : AttackItemBase
         }
         if (NowTurn==Delay)
         {
-            Step1();
+            if (RootID == 1)
+            {
+                fColor = Floor.Colors.deeppink;
+            }
+
+            else
+            {
+                fColor = Floor.Colors.skyblue;
+            }
+            ChangeFloorColor(fColor, 1);
+            if (RootID == 1)
+            {
+                fColor = Floor.Colors.red;
+            }
+
+            else
+            {
+                fColor = Floor.Colors.blue;
+            }
+            ChangeFloorColor(fColor, 0);
+
+            canMakeDamage = true;
+            Debug.Log("ダメージ発生のターン");
         }
         else if (NowTurn == Delay+1)
         {
-            Step2();
+            
         }
         else
         {
-            Step0();
+            if (RootID == 1)
+            {
+                fColor = Floor.Colors.deeppink;
+            }
+
+            else
+            {
+                fColor = Floor.Colors.skyblue;
+            }
+            ChangeFloorColor(fColor, 0);
+
+            Debug.Log(string.Format("{0}ターン後、ダメージ判定する", Delay - NowTurn));
         }
     }
     override public void TurnProcessPhase2_Main()
@@ -52,54 +83,6 @@ public class BasicAttack : AttackItemBase
             
             IsInterrupted = false;
         }
-    }
-    void Step0()
-    {
-        //ここに攻撃モーションを入れる
-
-        if (RootID == 1)
-        {
-            fColor = Floor.Colors.deeppink;
-        }
-
-        else
-        {
-            fColor = Floor.Colors.skyblue;
-        }
-        ChangeFloorColor(fColor, 0);
-
-        Debug.Log(string.Format("{0}ターン後、ダメージ判定する",Delay-NowTurn));
-    }
-    void Step1()
-    {
-        //ここに攻撃モーションを入れる
-        if (RootID == 1)
-        {
-            fColor = Floor.Colors.deeppink;
-        }
-
-        else
-        {
-            fColor = Floor.Colors.skyblue;
-        }
-        ChangeFloorColor(fColor, 1);
-        if (RootID == 1)
-        {
-            fColor = Floor.Colors.red;
-        }
-
-        else
-        {
-            fColor = Floor.Colors.blue;
-        }
-        ChangeFloorColor(fColor, 0);
-
-        canMakeDamage = true;
-        Debug.Log("ダメージ発生のターン");
-    }
-    void Step2()
-    {
-        
     }
 
     public override void PassDamage(Player player)

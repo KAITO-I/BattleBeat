@@ -15,13 +15,17 @@ public class AttackItemBase : MonoBehaviour
     //攻撃範囲
     [SerializeField]
     [HideInInspector]
-    protected List<Vector2Int> Area; //座標
+    public List<Vector2Int> Area; //座標
     //リングの大きさ
     public Vector2Int BoardSize = new Vector2Int(3, 3);
+
 
     protected Player RootPlayer;
     protected Player Opponent;
     protected bool isCancel;
+
+    public int CoolDown;
+    public float SpCost;
     //初期化関数
     public virtual void Init(int row, int col, bool reverse, int root)
     {
@@ -50,9 +54,7 @@ public class AttackItemBase : MonoBehaviour
             foreach (var p in Area)
             {
                 Vector2Int pos = AreaProcess(p);
-                int OpponentID = 3 - RootID;
 
-                Player Opponent = AttackManager._instance.GetPlayer(OpponentID);
                 if (pos == Opponent.Pos)
                 {
                     PassDamage(Opponent);

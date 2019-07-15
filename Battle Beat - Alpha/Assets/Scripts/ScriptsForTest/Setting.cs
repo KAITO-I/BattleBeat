@@ -11,6 +11,10 @@ public class Setting : MonoBehaviour
         ANA,
         YUNIZON
     }
+    public bool testMode;
+    public Chara p1;
+    public Chara p2;
+
     public static Chara p1c;
     public static Chara p2c;
     public GameObject[] charaPrefabs;
@@ -42,6 +46,11 @@ public class Setting : MonoBehaviour
     public DebugText dt2;
     private void Start()
     {
+        if (testMode)
+        {
+            p1c = p1;
+            p2c = p2;
+        }
         p1k = new Player.KeySets(LeftKey, RightKey, UpKey, DownKey, Attack_1Key, Attack_2Key, Attack_3Key, Attack_4Key);
         p2k= new Player.KeySets(LeftKey2, RightKey2, UpKey2, DownKey2, Attack_1Key2, Attack_2Key2, Attack_3Key2, Attack_4Key2);
         GameObject p1g = Instantiate<GameObject>(charaPrefabs[(int)p1c]);
@@ -61,5 +70,17 @@ public class Setting : MonoBehaviour
         //debug
         dt1.p = p1p;
         dt2.p = p2p;
+    }
+    //cheat
+    private void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            AttackManager._instance.GetPlayer(1).Sp = 100;
+        }
+        if (Input.GetKeyUp(KeyCode.RightShift))
+        {
+            AttackManager._instance.GetPlayer(2).Sp = 100;
+        }
     }
 }

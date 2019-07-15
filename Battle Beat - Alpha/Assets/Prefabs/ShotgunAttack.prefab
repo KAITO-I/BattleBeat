@@ -40,18 +40,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1119904956139624259}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3748ec619c174944c98665ea75929053, type: 3}
+  m_Script: {fileID: 11500000, guid: ac2267c6b4b9f364dbb63df671924d3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   RootID: 0
   Area:
   - {x: 1, y: 1}
-  - {x: 2, y: 0}
   - {x: 2, y: 1}
+  - {x: 2, y: 0}
   - {x: 2, y: 2}
+  - {x: 3, y: 1}
   - {x: 3, y: 2}
   - {x: 3, y: 0}
-  - {x: 3, y: 1}
   BoardSize: {x: 3, y: 6}
   DamageFactor: 1
   BaseDamage: 4

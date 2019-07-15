@@ -1573,11 +1573,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb861cbface225045b2fc14f2dc47b48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  testMode: 1
+  p1: 0
+  p2: 1
   charaPrefabs:
   - {fileID: 2616607855929116335, guid: 74688a5cca0977841b1253a5d3ff96da, type: 3}
   - {fileID: 4320667415473011673, guid: 5232ccf6a5bcb814f8e7cfc2d6d9435a, type: 3}
   - {fileID: 4320667415473011673, guid: 43fc2ee2dfc6bd34b95cfbc898677484, type: 3}
-  - {fileID: 2616607855929116335, guid: 74688a5cca0977841b1253a5d3ff96da, type: 3}
+  - {fileID: 4320667415473011673, guid: 7c25af2f3100d764aa2fac4e4b585de3, type: 3}
   LeftKey: 97
   RightKey: 100
   UpKey: 119
