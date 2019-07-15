@@ -1,12 +1,19 @@
-﻿using System.Collections;
+﻿//==============================
+// Created by akiirohappa
+//==============================
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
+//==============================
+// 入力切替用
+//==============================
 public class InputChange : MonoBehaviour
 {
     public Text uitex;
     PlayerNum pn;
-    public PlayerController[] players; 
+    public PlayerControllerr[] players; 
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +26,7 @@ public class InputChange : MonoBehaviour
         switch (pn)
         {
             case PlayerNum.oneP:
-                if (Input.GetButtonDown("LB_1P") && Input.GetButtonDown("RB_2P"))
+                if (Input.GetButtonDown("LB_1P") && Input.GetButtonDown("RB_1P"))
                 {
                     Debug.Log("SetPlayer 1 1");
                     pn = PlayerNum.twoP;

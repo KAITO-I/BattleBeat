@@ -10,7 +10,7 @@ public enum PlayerNum
     oneP,
     twoP,
 }
-public class PlayerController : MonoBehaviour
+public class PlayerControllerr : MonoBehaviour
 {
     //Numで実際のプレイヤー番号。myplでコントローラーの番号
     [SerializeField]PlayerNum Num;
