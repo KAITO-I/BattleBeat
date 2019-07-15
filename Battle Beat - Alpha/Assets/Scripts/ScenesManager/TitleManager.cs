@@ -20,8 +20,8 @@ public class TitleManager : MonoBehaviour
     
     //背景
     public RectTransform Titleback;
-    float BackW = Screen.width / 2;
-    float BackH = Screen.height / 2;
+    float BackW;
+    float BackH;
     public float Backmove_speed;
     //Text
     public Text text;
@@ -29,18 +29,19 @@ public class TitleManager : MonoBehaviour
     Color color_;
     bool B;
     //BGM
-    AudioSource audio_;
+    [SerializeField] AudioClip bgm;
 
     // Start is called before the first frame update
     void Start()
     {
-        audio_ = GetComponent<AudioSource>();
         video = GetComponent<VideoPlayer>();
         video.Play();
         //透明
         color_.a = 0f;
         text.color = color_;
         title_ = TitleStatus.Anim;
+        BackW= Screen.width / 2;
+        BackH = Screen.height / 2;
     }
 
     // Update is called once per frame
@@ -69,7 +70,7 @@ public class TitleManager : MonoBehaviour
             Titleback.transform.position = new Vector3(BackW, BackH, 0f);
             title_ = TitleStatus.Title;
             //BGM再生
-            audio_.Play();
+            SoundManager.Instance.BGM.Play(this.bgm);
         }
     }
 

@@ -1,6 +1,6 @@
 ﻿//==============================
-// Created    by akiirohappa (木原)
-// Customized by KAITO-I     (稲福)
+// Created by akiirohappa
+// Customized by KAITO-I
 //==============================
 using System.Collections;
 using System.Collections.Generic;

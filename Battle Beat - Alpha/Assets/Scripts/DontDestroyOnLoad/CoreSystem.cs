@@ -23,7 +23,12 @@ public class CoreSystem : MonoBehaviour
         this.soundManager.Init();
         this.sceneLoader.Init();
 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0)) ;
     }
 }
