@@ -26,9 +26,4 @@ public class CoreSystem : MonoBehaviour
         //Cursor.lockState = CursorLockMode.Locked;
         //Cursor.visible = false;
     }
-
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0)) ;
-    }
 }

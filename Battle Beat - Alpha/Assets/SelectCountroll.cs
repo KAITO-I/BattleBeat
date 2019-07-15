@@ -113,6 +113,9 @@ public class SelectCountroll : MonoBehaviour
             //決定ボタンを入力したら
             if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
             {
+                Settings.p1c = Player1;
+                Settings.p2c = Player2;
+                SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainGame);
                 Debug.Log("battleSceneへ");
             }
             Ready.SetActive(true);
