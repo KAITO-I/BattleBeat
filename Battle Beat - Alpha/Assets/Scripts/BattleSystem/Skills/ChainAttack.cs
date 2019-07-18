@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class ChainAttack : AttackItemBase
 {
-    public int CoolDown;
-    public float SpCost;
-
     int turn;
 
     Floor.Colors fColor;

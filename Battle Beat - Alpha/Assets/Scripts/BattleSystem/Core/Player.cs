@@ -5,27 +5,39 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    //
     public float OneGameTime=60f;
+
+    public int PlayerID;
+    //HP関係
     private float Hp;
     public float HpMax;
     public float GetHp() { return Hp; }
     public void SetHp(float hp) { Hp = Mathf.Clamp(hp, 0, HpMax); }
     
+    //SP関係
     public float Sp;
     public float SpMax;
-
     public float GetSp() { return Sp; }
     public void SetSp(float sp) { Sp = Mathf.Clamp(sp, 0, SpMax); }
-
-    public Vector2Int Pos;
-    protected int wait;
-    protected AttackItemBase nowAttack;
-    public bool IsStuned;
-    public int StunTurn;
     public float DamageToSPFactor = 2f;
 
+    //ボード上の座標（col、row）
+    public Vector2Int Pos;
+
+    //溜め攻撃が自分で中断できないので、そのカウンター
+    protected int wait;
+    //最後プレーヤーが生成したAttackItemオブジェクト
+    protected AttackItemBase nowAttack;
+    //スタンされているかどうか
+    public bool IsStuned;
+    //スタンTurn数
+    public int StunTurn;
+
+    //ダメージ受ける関数
     public virtual void TakeDamage(float Damage) {
-        SetHp(GetHp()-Damage); Debug.Log(gameObject.name + "が" + Damage.ToString() + "ダメージを受けた。");
+        SetHp(GetHp()-Damage);
+        Debug.Log(gameObject.name + "が" + Damage.ToString() + "ダメージを受けた。");
         if (nowAttack != null)
         {
             nowAttack.OnInterruption();
@@ -33,11 +45,16 @@ public class Player : MonoBehaviour
         wait = 0;
         SetSp(Damage* DamageToSPFactor+GetSp());
     }
+    //ダメージ計算関数群（プレーヤーが他のプレーヤーにダメージを与え時にバフやらを考慮して攻撃力の計算）
     public virtual float DamageCalc(float p1) { return p1; }
     public virtual float DamageCalc(float p1, float p2) { return p1; }
     public virtual float DamageCalc(float p1, float p2, float p3) { return p1; }
     public virtual float DamageCalc(float p1, float p2, float p3, float p4) { return p1; }
-    public virtual void TurnPreprocess() { if (StunTurn > 0) { StunTurn--; if (StunTurn <= 0) { IsStuned = false; } }  }
+
+    
+    public int[] CoolDownCount = new int[4];
+
+    
 
     public enum MoveComand
     {
@@ -54,6 +71,8 @@ public class Player : MonoBehaviour
 
     private MoveComand input = MoveComand.None;
     private bool canInput = true;
+
+    //入力キーの射影
     public class KeySets
     {
         public KeyCode LeftKey;
@@ -78,13 +97,9 @@ public class Player : MonoBehaviour
         }
     }
     public KeySets keySets;
-    //指定した場所に出現させるため
     
 
-    [SerializeField]
-    public int PlayerID;
-    [SerializeField]
-    public int[] CoolDownCount = new int[4];
+    
 
     void Start()
     {
@@ -111,11 +126,11 @@ public class Player : MonoBehaviour
         nowAttack = null;
         StunTurn = 0;
     }
+    public virtual void TurnPreprocess() { if (StunTurn > 0) { StunTurn--; if (StunTurn <= 0) { IsStuned = false; } } }
     public virtual void TurnPostprocess() {  canInput = true; input = MoveComand.None; if (wait > 0) { wait--; } }
-    // Update is called once per frame
     void Update()
     {
-        //Test();
+        //プレーヤー入力
         if (canInput&&wait==0)
         {
             if (Input.GetKeyDown(keySets.LeftKey)) input = MoveComand.Left;
@@ -128,6 +143,8 @@ public class Player : MonoBehaviour
             else if (Input.GetKeyDown(keySets.Attack_4Key)) input = MoveComand.Attack_4;
             if (input != MoveComand.None) canInput = false;
         }
+
+        //Spが時間経過で増やす
         SetSp(GetSp()+Time.deltaTime / OneGameTime * SpMax);
     }
 
@@ -183,17 +200,13 @@ public class Player : MonoBehaviour
         }
     }
 
-    //Playerが動けるタイミングになったら活動できる
     void  PlayerMove(MoveComand move)
     {
         int TempY = Pos.y;
         int TempX = Pos.x;
 
-        //ジャンプのタイミングを一定間隔::どの位置に飛ぶのかチェック
-        //行動を操作する
         switch (move)
         {
-            //左移動
             case MoveComand.Left:
                 TempX -= 1;
                 if (!BoardManager._instance.Is_In_Stage(TempX, TempY, PlayerID))
@@ -201,7 +214,6 @@ public class Player : MonoBehaviour
                     TempX = Pos.x;
                 }
                 break;
-            //右移動
             case MoveComand.Right:
                 TempX += 1;
                 if (!BoardManager._instance.Is_In_Stage(TempX, TempY, PlayerID))
@@ -209,7 +221,6 @@ public class Player : MonoBehaviour
                     TempX = Pos.x;
                 }
                 break;
-            //上移動
             case MoveComand.Up:
                 TempY -= 1;
                 if (!BoardManager._instance.Is_In_Stage(TempX, TempY, PlayerID))
@@ -217,7 +228,6 @@ public class Player : MonoBehaviour
                     TempY = Pos.y;
                 }
                 break;
-            //下移動
             case MoveComand.Down:
                 TempY += 1;
                 if (!BoardManager._instance.Is_In_Stage(TempX, TempY, PlayerID))
@@ -225,7 +235,6 @@ public class Player : MonoBehaviour
                     TempY = Pos.y;
                 }
                 break;
-            //攻撃移動
             
             default:
                 break;
@@ -233,11 +242,8 @@ public class Player : MonoBehaviour
 
         if (move >= MoveComand.Left && move <= MoveComand.Down)
         {
-            //ここでポジションを変更してる
             transform.position = BoardManager._instance.ToWorldPos(new Vector2Int(TempX, TempY));
-            //Playerの位置が同じになってしまうので少し上げる
             transform.position += new Vector3(0, 1f, 0);
-            //現在のポジションを入れる
             Pos.x = TempX;
             Pos.y = TempY;
         }
@@ -257,6 +263,7 @@ public class Player : MonoBehaviour
     {
     }
 
+    //強制移動関数
     public virtual void ForcedMovement(Vector2Int targetPos)
     {
 
@@ -264,7 +271,7 @@ public class Player : MonoBehaviour
         transform.position = BoardManager._instance.ToWorldPos(Pos);
 
     }
-
+    //ボード範囲判定
     private Vector2Int VectorPlusUnderBoardLimit(Vector2Int Pos,Vector2Int vector)
     {
         Vector2Int temp = Pos;

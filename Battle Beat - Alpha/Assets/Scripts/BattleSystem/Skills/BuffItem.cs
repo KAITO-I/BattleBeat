@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BuffItem : AttackItemBase
 {
-    public int CoolDown;
     public float Power;
     public int Duration;
     int lifeTime;
