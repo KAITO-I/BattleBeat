@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
@@ -20,14 +22,28 @@ public class SelectButtom : MonoBehaviour
     //看板
     [SerializeField]
     RectTransform ImageChange;
-
-
+    //背景ビル
+    [SerializeField]
+    RectTransform ImageMove;
+        //ビルテキスト
+    [SerializeField]
+    RectTransform TextChange;
+    [SerializeField]
+    Text ModeText;
+    //EventSystem用
+    [SerializeField]
+    EventSystem eventSystem;
+    
 
     //初期消し用
     bool Set = true;
     //表示用
     bool GrupEnter = false;
     bool GrupEnter2 = false;
+    //テキスト変更用
+    bool TextEnter = false;
+    //看板判定用
+    int Stage = 1;
 
     //最初の選択
     //Playを決定時(二番目へ)
@@ -42,9 +58,22 @@ public class SelectButtom : MonoBehaviour
         Debug.Log("mode選択へ");
 
     }
-    //看板右側でBackを決定時(一番目へ)
+    //Stageは0ならタイトルそれ以外は一つ前へ
+    //看板右側でBackを決定時(一番目へ)ここをバックキーに対応する
     public void OnclickBackSlect()
     {
+        switch (Stage)
+        {
+            case 1:
+                //タイトルに戻る
+
+                break;
+            case 2:
+                //右から左にひとつもどる
+
+                break;
+              
+        }
         Grup2.gameObject.SetActive(false);
 
         GrupEnter2 = true;
@@ -66,7 +95,7 @@ public class SelectButtom : MonoBehaviour
         ImageChange = GameObject.Find("SelectImage").GetComponent<RectTransform>();
 
 
-
+        TextEnter = true;
         ////グループをセット
         //Grup1 = GameObject.Find("Canvas/Select1").GetComponent<GameObject>();
         //Grup2 = GameObject.Find("Canvas/Select2").GetComponent<GameObject>();
@@ -74,7 +103,19 @@ public class SelectButtom : MonoBehaviour
 
     private void Update()
     {
-        if(Set == true)//認識のため
+        //テキスト関係
+        //mode説明
+            try
+            {
+                ModeText.text = eventSystem.currentSelectedGameObject.GetComponent<ModeDescription>().Text;/*obj.GetComponentInChildren<Text>().text;*/
+            }
+            catch(NullReferenceException)
+            {
+                ModeText.text = "選択されてないよ";
+            }
+        
+
+        if (Set == true)//認識のため
         {
             Grup2.gameObject.SetActive(false);
             //次読まない為
