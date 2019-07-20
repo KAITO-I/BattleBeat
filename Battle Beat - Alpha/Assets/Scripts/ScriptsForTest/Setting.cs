@@ -41,6 +41,11 @@ public class Setting : MonoBehaviour
     public KeyCode Attack_4Key2;
 
 
+    //Gauge
+    [SerializeField]
+    GameObject GaugeLeft;
+    [SerializeField]
+    GameObject GaugeRight;
     //debug
     public DebugText dt1;
     public DebugText dt2;
@@ -67,6 +72,21 @@ public class Setting : MonoBehaviour
         p2p.Init();
         AttackManager._instance.SetPlayers(p1p, p2p);
 
+        //Set Gauge
+        var gl = GaugeLeft.GetComponents<Gauge>();
+        p1p.HPChange += gl[0].SetCurrentValue;
+        p1p.HPChange += gl[1].SetCurrentValue;
+        p1p.SPChange += gl[2].SetCurrentValue;
+        gl[0].Init(p1p.HpMax, 1f);
+        gl[1].Init(p1p.HpMax, 1f);
+        gl[2].Init(p1p.SpMax, 0f);
+        var gr = GaugeRight.GetComponents<Gauge>();
+        p2p.HPChange += gr[0].SetCurrentValue;
+        p2p.HPChange += gr[1].SetCurrentValue;
+        p2p.SPChange += gr[2].SetCurrentValue;
+        gr[0].Init(p2p.HpMax, 1f);
+        gr[1].Init(p2p.HpMax, 1f);
+        gr[2].Init(p2p.SpMax, 0f);
         //debug
         dt1.p = p1p;
         dt2.p = p2p;

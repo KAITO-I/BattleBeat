@@ -108,9 +108,9 @@ MonoBehaviour:
   Area:
   - {x: 3, y: 1}
   BoardSize: {x: 3, y: 6}
-  DamageFactor: 1
-  BaseDamage: 4
-  Delay: 0
   CoolDown: 10
   SpCost: 0
+  DamageFactor: 4
+  BaseDamage: 4
+  Delay: 0
   LiftTime: 5

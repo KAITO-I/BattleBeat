@@ -122,14 +122,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c624a8f951864224da0b08129124ef80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hp: 0
+  OneGameTime: 60
+  PlayerID: 0
   HpMax: 100
   Sp: 0
   SpMax: 100
+  DamageToSPFactor: 2
   Pos: {x: 0, y: 0}
   IsStuned: 0
   StunTurn: 0
-  PlayerID: 0
   CoolDownCount: 00000000000000000000000000000000
   SkillPrefabs:
   - {fileID: 6660486584687797973, guid: 3590fb84d940e0f4cb8207e942872d8e, type: 3}

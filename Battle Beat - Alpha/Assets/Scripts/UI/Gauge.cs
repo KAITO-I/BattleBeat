@@ -46,10 +46,11 @@ public class Gauge : MonoBehaviour
         }
     }
 
-    public void SetMaxValue(float value)
+    public void Init(float MaxValue,float StartPercent)
     {
-        MaxValue = value;
-        CurrentValueR = MaxValue;
+        this.MaxValue = MaxValue;
+        CurrentValueR = this.MaxValue * StartPercent;
+        CurrentValue = CurrentValueR;
     }
 
     public void SetCurrentValue(float value)
@@ -86,23 +87,5 @@ public class Gauge : MonoBehaviour
             }
             yield return new WaitForFixedUpdate();
         }
-    }
-    public void Reset100()
-    {
-        SetMaxValue(100);
-        SetCurrentValue(100);
-    }
-    public void Reset0()
-    {
-        SetMaxValue(100);
-        SetCurrentValue(0);
-    }
-    public void Reduce10()
-    {
-        SetCurrentValue(CurrentValue - 10);
-    }
-    public void Add10()
-    {
-        SetCurrentValue(CurrentValue + 10);
     }
 }

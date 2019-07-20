@@ -2,9 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class Player : MonoBehaviour
 {
+    public delegate void OnValueChange(float value);
+    public OnValueChange HPChange;
+    public OnValueChange SPChange;
     //
     public float OneGameTime=60f;
 
@@ -13,13 +15,13 @@ public class Player : MonoBehaviour
     private float Hp;
     public float HpMax;
     public float GetHp() { return Hp; }
-    public void SetHp(float hp) { Hp = Mathf.Clamp(hp, 0, HpMax); }
+    public void SetHp(float hp) { Hp = Mathf.Clamp(hp, 0, HpMax);if (HPChange != null) { HPChange(Hp); } }
     
     //SP関係
     public float Sp;
     public float SpMax;
     public float GetSp() { return Sp; }
-    public void SetSp(float sp) { Sp = Mathf.Clamp(sp, 0, SpMax); }
+    public void SetSp(float sp) { Sp = Mathf.Clamp(sp, 0, SpMax); if (SPChange != null) { SPChange(Sp); } }
     public float DamageToSPFactor = 2f;
 
     //ボード上の座標（col、row）

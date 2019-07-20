@@ -50,8 +50,8 @@ MonoBehaviour:
   - {x: 3, y: 1}
   - {x: 3, y: 2}
   BoardSize: {x: 3, y: 6}
-  DamageFactor: 1
-  BaseDamage: 4
-  Delay: 1
   CoolDown: 5
   SpCost: 0
+  DamageFactor: 4
+  BaseDamage: 4
+  Delay: 1
