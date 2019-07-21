@@ -29,14 +29,14 @@ public class SceneLoader : MonoBehaviour
     //==============================
     public enum Scenes
     {
-        Title = 0,
-        MainMenu = 1,
+        Title           = 0,
+        MainMenu        = 1,
         CharacterSelect = 2,
-        MainGame = 3,
-        Training = 4,
-        Result = 5,
-        Config = 6,
-        Credit = 7
+        MainGame        = 3,
+        Training        = 4,
+        Result          = 5,
+        Config          = 6,
+        Credit          = 7
     }
 
     //==============================
