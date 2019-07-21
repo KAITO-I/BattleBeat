@@ -4,7 +4,7 @@
 using UnityEngine;
 
 //==============================
-// MasterVolumeをポインターのように扱う為のクラス
+// MasterVolumeを扱うクラス
 //==============================
 public class MasterVolume
 {
@@ -34,7 +34,10 @@ public class SoundManager : MonoBehaviour {
     // クラス
     //==============================
     // 音量
-    [SerializeField] float defVol; // デフォルト音量値
+    [SerializeField]
+    [Range(0.0f, 1.0f)]
+    private float defaultVol; // デフォルト音量値
+
     private MasterVolume masterVolume;
     public float MasterVolume
     {
@@ -46,18 +49,16 @@ public class SoundManager : MonoBehaviour {
             PlayerPrefs.SetFloat("MasterVol", value);
             PlayerPrefs.Save();
 
-            this.bgm.UpdateVolume();
+            this.BGM.UpdateVolume();
             this.se.UpdateVolume();
         }
     }
 
-    // 再生オブジェクト
+    public Sound BGM { get; private set; }
+
     [SerializeField]
-    private Sound bgm;
-    public  Sound BGM { get { return this.bgm; } }
-    [SerializeField]
-    private SE se;
-    public  SE SE { get { return this.se; } }
+    private SoundEffect se;
+    public  SoundEffect SE { get { return this.se; } }
 
     //------------------------------
     // 初期化
@@ -67,10 +68,11 @@ public class SoundManager : MonoBehaviour {
         if (SoundManager.instance != null) return;
 
         SoundManager.instance = this;
+        this.BGM = GetComponent<Sound>();
 
         //===== 音量初期値 =====
-        this.masterVolume = new MasterVolume(PlayerPrefs.GetFloat("MasterVol", defVol));
-        this.bgm.Init(masterVolume, "BGMVol", defVol);
-        this.se.Init(masterVolume, "SEVol", defVol);
+        this.masterVolume = new MasterVolume(PlayerPrefs.GetFloat("MasterVol", defaultVol));
+        this.BGM.Init(masterVolume, "BGMVol", defaultVol);
+        this.se.Init(masterVolume, "SEVol", defaultVol);
     }
 }

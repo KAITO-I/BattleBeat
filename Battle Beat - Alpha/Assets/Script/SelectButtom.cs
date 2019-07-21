@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 
 public class SelectButtom : MonoBehaviour
@@ -25,11 +26,13 @@ public class SelectButtom : MonoBehaviour
     //背景ビル
     [SerializeField]
     RectTransform ImageMove;
+
         //ビルテキスト
     [SerializeField]
-    RectTransform TextChange;
+    TextMeshProUGUI ModeTextTitle;
     [SerializeField]
-    Text ModeText;
+    TextMeshProUGUI ModeTextDescription;
+
     //EventSystem用
     [SerializeField]
     EventSystem eventSystem;
@@ -105,14 +108,17 @@ public class SelectButtom : MonoBehaviour
     {
         //テキスト関係
         //mode説明
-            try
-            {
-                ModeText.text = eventSystem.currentSelectedGameObject.GetComponent<ModeDescription>().Text;/*obj.GetComponentInChildren<Text>().text;*/
-            }
-            catch(NullReferenceException)
-            {
-                ModeText.text = "選択されてないよ";
-            }
+        try
+        {
+            ModeDescription description = eventSystem.currentSelectedGameObject.GetComponent<ModeDescription>();
+            this.ModeTextTitle.text = description.Title;
+            this.ModeTextDescription.text = description.Description;
+        }
+        catch (NullReferenceException)
+        {
+            this.ModeTextTitle.text = " ";
+            this.ModeTextDescription.text = "選択されてないよ";
+        }
         
 
         if (Set == true)//認識のため
