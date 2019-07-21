@@ -6,6 +6,7 @@ public class CoreSystem : MonoBehaviour
 {
     private static CoreSystem instance;
 
+    [SerializeField] ControllerManager controllerManager;
     [SerializeField] SoundManager soundManager;
     [SerializeField] SceneLoader sceneLoader;
 
@@ -20,6 +21,7 @@ public class CoreSystem : MonoBehaviour
         CoreSystem.instance = this;
         DontDestroyOnLoad(this.gameObject);
 
+        this.controllerManager.Init();
         this.soundManager.Init();
         this.sceneLoader.Init();
 

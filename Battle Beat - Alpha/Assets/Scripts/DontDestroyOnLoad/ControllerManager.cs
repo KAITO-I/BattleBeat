@@ -3,6 +3,7 @@
 // Customized by KAITO-I and SA371516
 //==============================
 using UnityEngine;
+using System;
 
 //==============================
 // プレイヤーのコントローラーを管理するクラス
@@ -46,27 +47,17 @@ public class ControllerManager : MonoBehaviour
     //==============================
     // class
     //==============================
-    public static PlayerController Player1 { get; private set; }
-    public static PlayerController Player2 { get; private set; }
+    public static Controller Player1 { get; private set; }
+    public static Controller Player2 { get; private set; }
 
-    PlayerController SelectPlayer;
-
-    //これでInput.Axesの名前を取得している
-    private string[] axisAxes = {
-        "D-padX_",
-        "D-padY_"
-    };
-
-    private string[] buttonAxes = {
-        "A_",
-        "B_",
-        "X_",
-        "Y_",
-        "L_",
-        "R_",
-        "Select_",
-        "Start_"
-    };
+    //------------------------------
+    // 初期化
+    //------------------------------
+    public void Init()
+    {
+        if (ControllerManager.instance != null) return;
+        ControllerManager.instance = this;
+    }
 
     private void Update()
     {
@@ -86,6 +77,26 @@ public class ControllerManager : MonoBehaviour
                 break;
             }
         }*/
+        if (!himoduke)
+        {
+            ControllerChange();
+            return;
+        }
+
+        if (Input.anyKeyDown)
+        {
+            foreach (Axis axis in Enum.GetValues(typeof(Axis)))
+            {
+                if (Player1 != null && !Mathf.Approximately(Player1.GetAxis(axis), 0f)) Debug.Log("P1 " + axis.ToString() + ":" + Player1.GetAxis(axis));
+                if (Player2 != null && !Mathf.Approximately(Player2.GetAxis(axis), 0f)) Debug.Log("P2 " + axis.ToString() + ":" + Player2.GetAxis(axis));
+            }
+
+            foreach (Button button in Enum.GetValues(typeof(Button)))
+            {
+                if (Player1 != null && Player1.GetButton(button) != false) Debug.Log("P1 " + button.ToString() + ":" + Player1.GetButton(button));
+                if (Player2 != null && Player2.GetButton(button) != false) Debug.Log("P2 " + button.ToString() + ":" + Player2.GetButton(button));
+            }
+        }
     }
 
     //コントローラー操作
@@ -151,40 +162,59 @@ public class ControllerManager : MonoBehaviour
     }*/
 
     //Playerの紐づけ
+    bool himoduke = false;
     void ControllerChange()
     {
-        switch (Input.GetKeyDown("A_1P"))
+        if (Input.anyKeyDown)
         {
-            case true:
-                Player1 = new PlayerController(1, axisAxes, buttonAxes);
-                Player2 = new PlayerController(2, axisAxes, buttonAxes);
-                break;
+            switch (Input.GetButtonDown("A_1"))
+            {
+                case true:
+                    Player1 = new Controller(1);
+                    //Player2 = new Controller(2);
+                    himoduke = true;
+                    break;
 
-            case false:
-                Player1 = new PlayerController(2, axisAxes, buttonAxes);
-                Player2 = new PlayerController(1, axisAxes, buttonAxes);
-                break;
+                case false:
+                    //Player1 = new Controller(2);
+                    Player2 = new Controller(1);
+                    himoduke = true;
+                    break;
+            }
+            Debug.Log("ControllerChange");
         }
     }
 
     //==============================
     // プレイヤーのコントローラーのクラス
     //==============================
-    public class PlayerController
+    public class Controller
     {
         public int controllerNum { get; private set; }
-        private string[] axisAxes;
-        private string[] buttonAxes;
 
-        public PlayerController(int controllerNum, string[] axisAxes, string[] buttonAxes)
+        //これでInput.Axesの名前を取得している
+        private string[] axisAxes = {
+            "D-padX_",
+            "D-padY_"
+        };
+
+        private string[] buttonAxes = {
+            "A_",
+            "B_",
+            "X_",
+            "Y_",
+            "L_",
+            "R_",
+            "Select_",
+            "Start_"
+        };
+
+        public Controller(int controllerNum)
         {
             this.controllerNum = controllerNum;
 
-            this.axisAxes   = axisAxes;
-            this.buttonAxes = buttonAxes;
-
-            for (int i = 0; i < this.axisAxes.Length; i++) this.axisAxes[i] += this.controllerNum + "P";
-            for (int i = 0; i < this.buttonAxes.Length; i++) this.buttonAxes[i] += this.controllerNum + "P";
+            for (int i = 0; i < this.axisAxes.Length; i++) this.axisAxes[i] += this.controllerNum.ToString();
+            for (int i = 0; i < this.buttonAxes.Length; i++) this.buttonAxes[i] += this.controllerNum.ToString();
         }
 
         public float GetAxis(Axis axis)
@@ -205,13 +235,6 @@ public class ControllerManager : MonoBehaviour
         public bool GetButtonUp(Button button)
         {
             return Input.GetButtonUp(this.buttonAxes[(int)button]);
-        }
-
-        public bool AnyButtonDown()
-        {
-            for (int i = 0; i < this.buttonAxes.Length; i++)
-                if (Input.GetButtonDown(this.buttonAxes[i])) return true;
-            return false;
         }
     }
 }

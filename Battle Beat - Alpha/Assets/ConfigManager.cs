@@ -19,6 +19,11 @@ public class ConfigManager : MonoBehaviour
         this.SoundVolume.Init();
     }
 
+    public void LoadMainMenu()
+    {
+        SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainMenu);
+    }
+
     //------------------------------
     // 音量値設定反映
     //------------------------------

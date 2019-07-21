@@ -75,7 +75,6 @@ public class SceneLoader : MonoBehaviour
     public void Init()
     {
         if (SceneLoader.instance != null) return;
-
         SceneLoader.instance = this;
 
         this.isLoading = false;
@@ -139,6 +138,7 @@ public class SceneLoader : MonoBehaviour
         //===== 呼び出し =====
         AsyncOperation async = SceneManager.LoadSceneAsync((int)target);
         async.allowSceneActivation = false;
+
         while (async.progress < 0.9f)
         {
             this.loadingGauge.fillAmount = async.progress;
@@ -147,6 +147,8 @@ public class SceneLoader : MonoBehaviour
 
         // 修正
         this.loadingGauge.fillAmount = 1f;
+
+        yield return new WaitForSeconds(2.0f);
 
         //===== シャッター上昇 =====
         async.allowSceneActivation = true;

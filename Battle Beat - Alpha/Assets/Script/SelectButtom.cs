@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using TMPro;
 
 
 public class SelectButtom : MonoBehaviour
@@ -29,9 +28,9 @@ public class SelectButtom : MonoBehaviour
 
         //ビルテキスト
     [SerializeField]
-    TextMeshProUGUI ModeTextTitle;
+    Text ModeTextTitle;
     [SerializeField]
-    TextMeshProUGUI ModeTextDescription;
+    Text ModeTextDescription;
 
     //EventSystem用
     [SerializeField]

@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2c9004a023bb214aae3d84b301e86b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  controllerManager: {fileID: 6525556436408709102}
   soundManager: {fileID: 38442783354722355}
   sceneLoader: {fileID: 7913120561312324634}
 --- !u!1 &2694987350537318159
@@ -57,6 +58,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2694987350537318158}
+  - component: {fileID: 6525556436408709102}
   m_Layer: 0
   m_Name: ControllerManager
   m_TagString: Untagged
@@ -78,6 +80,18 @@ Transform:
   m_Father: {fileID: 2694987349732319566}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6525556436408709102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2694987350537318159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3405c1a06ffaac4bb575ca813ffd906, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5061638577799789560
 GameObject:
   m_ObjectHideFlags: 0
@@ -207,7 +221,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loadingObj: {fileID: 5061638577799789560}
-  shutterAnimSpeed: 1000
+  shutterDownTime: 0.5
+  shutterUpTime: 1
   loadingGauge: {fileID: 5427735635162824556}
   loadingText: {fileID: 4243981085844628100}
   loadingTextColor: {r: 1, g: 1, b: 1, a: 1}
