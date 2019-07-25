@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿//Create by Inafuku, Edit by KinSen 2019/07/25
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -25,32 +26,47 @@ public class RythmManager : MonoBehaviour
     // 命令先
     [SerializeField] private UnityEvent events = new UnityEvent();
 
-    private void Start()
+    //
+    bool Running;
+
+    public  void Init()
     {
         this.bps        = 60f / (float) bpm;
         this.time       += this.bps + 0.00001f;
         this.tempoCount = 0;
+        Running = false;
+    }
+    public void StartRythm()
+    {
+        Running = true;
+    }
+    public void StopRythm()
+    {
+        Running = false;
     }
 
     private void Update()
     {
-        // リズム
-        this.time += Time.deltaTime;
-        if (this.time >= this.bps)
+        if (Running)
         {
-            this.time -= this.bps;
-
-            Debug.Log("Rythm");
-            events.Invoke();
-
-            //テンポ上昇
-            this.tempoCount++;
-            if (this.tempoCount == this.tempoUpCount)
+            // リズム
+            this.time += Time.deltaTime;
+            if (this.time >= this.bps)
             {
-                this.tempoCount = 0;
-                this.bpm += tempoUpValue;
-                this.bps = 60f / (float) bpm;
-                if (this.bpm >= this.maxBpm) this.tempoUpCount = -1;
+                this.time -= this.bps;
+
+                Debug.Log("Rythm");
+                events.Invoke();
+
+                //テンポ上昇
+                this.tempoCount++;
+                if (this.tempoCount == this.tempoUpCount)
+                {
+                    this.tempoCount = 0;
+                    this.bpm += tempoUpValue;
+                    this.bps = 60f / (float)bpm;
+                    if (this.bpm >= this.maxBpm) this.tempoUpCount = -1;
+                }
             }
         }
     }

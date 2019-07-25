@@ -1,5 +1,5 @@
 ﻿//---------------------------------------------------
-//作成者・木原　時間信仰
+//作成者・木原　時間信仰 編集者 金川
 //---------------------------------------------------
 using System.Collections;
 using System.Collections.Generic;
@@ -12,9 +12,11 @@ public class TimeSetter : MonoBehaviour
     [SerializeField] Text showText;
     [SerializeField] bool timeFlag;
 
-    private void Start()
+    public bool isTimeOut() { return !timeFlag; }
+
+    private void Awake()
     {
-        timeFlag = true;
+        timeFlag = false;
     }
     private void FixedUpdate()
     {
@@ -24,12 +26,15 @@ public class TimeSetter : MonoBehaviour
         if(time < 0f)
         {
             timeFlag = false;
-            Debug.Log("戦闘終了");
         }
     }
     public void TimeSetUP(float f)
     {
         time = f;
+    }
+    public void startTimer()
+    {
+        timeFlag = true;
     }
     void TimeShow()
     {
