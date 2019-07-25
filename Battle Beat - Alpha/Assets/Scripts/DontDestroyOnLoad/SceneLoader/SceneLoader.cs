@@ -2,12 +2,11 @@
 // Created by SA371516
 // Customized by KAITO-I
 //==============================
-using System;
 using System.Collections;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using TMPro;
 
 //==============================
 // シーン読み込み
@@ -65,9 +64,10 @@ public class SceneLoader : MonoBehaviour
     // ロード中
     private bool isLoading;
     [Header("Loading")]
-    [SerializeField] Image loadingGauge;
-    [SerializeField] Text  loadingText;
-    [SerializeField] Color loadingTextColor;
+    [SerializeField] Text   pressButtonText;
+    [SerializeField] Text   loadingText;
+    private          string loadingTextMsg;
+    [SerializeField] Image  loadingGauge;
 
     //------------------------------
     // 初期化
@@ -78,6 +78,10 @@ public class SceneLoader : MonoBehaviour
         SceneLoader.instance = this;
 
         this.isLoading = false;
+        this.pressButtonText.color = new Color(this.pressButtonText.color.r, this.pressButtonText.color.g, this.pressButtonText.color.b);
+        this.loadingText.color     = new Color(this.loadingText.color.r, this.loadingText.color.g, this.loadingText.color.b);
+        this.loadingTextMsg        = this.loadingText.text;
+        this.loadingGauge.color    = new Color(this.loadingGauge.color.r, this.loadingGauge.color.g, this.loadingGauge.color.b);
     }
 
     //------------------------------
@@ -94,14 +98,16 @@ public class SceneLoader : MonoBehaviour
     private IEnumerator Load(Scenes target)
     {
         this.isLoading = true;
+        bool title = (SceneManager.GetActiveScene().buildIndex == 0);
         float time;
         Transform loadingObjTF = this.loadingObj.transform;
 
         //===== シャッター降下 =====
-        // 位置設定
+        // 設定
         loadingObjTF.position = new Vector3(SceneLoader.canvasCenterX, SceneLoader.canvasCenterY + Screen.height);
+        this.pressButtonText.color = new Color(this.pressButtonText.color.r, this.pressButtonText.color.g, this.pressButtonText.color.b, 0f);
+        this.loadingText.color     = new Color(this.loadingText.color.r, this.loadingText.color.g, this.loadingText.color.b, title ? 0f : 1f);
         this.loadingGauge.fillAmount = 0f;
-        this.loadingText.color = new Color(loadingTextColor.r, loadingTextColor.g, loadingTextColor.b, 0f);
 
         // 降下
         time = 0f;
@@ -119,16 +125,16 @@ public class SceneLoader : MonoBehaviour
         // 修正
         loadingObjTF.position = new Vector3(SceneLoader.canvasCenterX, SceneLoader.canvasCenterY);
 
-        //===== タイトルなら文字アニメーション再生 =====
-        if (SceneManager.GetActiveScene().buildIndex == 0)
+        //タイトルなら文字アニメーション再生
+        if (title)
         {
-            this.loadingText.GetComponent<Animation>().Play();
+            this.pressButtonText.GetComponent<Animation>().Play();
             while (true)
             {
                 if (Input.anyKeyDown)
                 {
-                    this.loadingText.GetComponent<Animation>().Stop();
-                    this.loadingText.color = new Color(loadingTextColor.r, loadingTextColor.g, loadingTextColor.b, 0f);
+                    this.pressButtonText.GetComponent<Animation>().Stop();
+                    this.pressButtonText.color = new Color(this.pressButtonText.color.r, this.pressButtonText.color.g, this.pressButtonText.color.b, 0f);
                     break;
                 }
                 yield return null;
@@ -136,6 +142,9 @@ public class SceneLoader : MonoBehaviour
         }
 
         //===== 呼び出し =====
+        //ローディング文字コルーチン再生
+        Coroutine loadingTextAnim = StartCoroutine(Loading());
+
         AsyncOperation async = SceneManager.LoadSceneAsync((int)target);
         async.allowSceneActivation = false;
 
@@ -148,7 +157,10 @@ public class SceneLoader : MonoBehaviour
         // 修正
         this.loadingGauge.fillAmount = 1f;
 
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(10.0f);
+
+        // ローディング文字コルーチン停止
+        StopCoroutine(loadingTextAnim);
 
         //===== シャッター上昇 =====
         async.allowSceneActivation = true;
@@ -209,5 +221,24 @@ public class SceneLoader : MonoBehaviour
 
         this.isLoading = false;
         */
+    }
+
+    private IEnumerator Loading()
+    {
+        if (Mathf.Approximately(this.loadingText.color.a, 0f))
+            this.loadingText.color = new Color(this.loadingText.color.r, this.loadingText.color.g, this.loadingText.color.b, 1f);
+
+        int count = 0;
+        while (true)
+        {
+            StringBuilder sb = new StringBuilder(this.loadingTextMsg);
+            if (count != 0) sb.Append('.', count);
+            this.loadingText.text = sb.ToString();
+
+            count++;
+            if (count > 3) count = 0;
+
+            yield return new WaitForSeconds(1.0f);
+        }
     }
 }

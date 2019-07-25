@@ -67,6 +67,8 @@ public class SoundManager : MonoBehaviour {
     {
         if (SoundManager.instance != null) return;
 
+        Debug.Log("初期化");
+
         SoundManager.instance = this;
         this.BGM = GetComponent<Sound>();
 
