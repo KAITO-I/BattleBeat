@@ -7,8 +7,8 @@ public class CoreSystem : MonoBehaviour
     private static CoreSystem instance;
 
     [SerializeField] ControllerManager controllerManager;
-    [SerializeField] SoundManager soundManager;
-    [SerializeField] SceneLoader sceneLoader;
+    [SerializeField] SceneLoader       sceneLoader;
+    [SerializeField] SoundManager      soundManager;
 
     private void Awake()
     {
@@ -22,8 +22,8 @@ public class CoreSystem : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
 
         this.controllerManager.Init();
-        this.soundManager.Init();
         this.sceneLoader.Init();
+        this.soundManager.Init();
 
         //Cursor.lockState = CursorLockMode.Locked;
         //Cursor.visible = false;
