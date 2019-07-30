@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controllerManager: {fileID: 635572296}
-  sceneLoader: {fileID: 1428501327}
+  sceneLoader: {fileID: 8502207969995269353}
   soundManager: {fileID: 7785459121382918105}
 --- !u!1 &2694987350537318159
 GameObject:
@@ -274,7 +274,6 @@ GameObject:
   - component: {fileID: 81159744188311273}
   - component: {fileID: 5253066177536563480}
   - component: {fileID: 8502207969995269353}
-  - component: {fileID: 1428501327}
   m_Layer: 5
   m_Name: SceneLoader
   m_TagString: Untagged
@@ -363,24 +362,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
 --- !u!114 &8502207969995269353
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5778213665204622764}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42f727f3e2a434081947c0a7ebba967e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  loadingObj: {fileID: 5061638577799789560}
-  shutterDownTime: 0.5
-  shutterUpTime: 2
-  pressButtonText: {fileID: 4243981085844628100}
-  loadingText: {fileID: 245986256253391103}
-  loadingGauge: {fileID: 5427735635162824556}
---- !u!114 &1428501327
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -850,7 +831,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.7490196, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
