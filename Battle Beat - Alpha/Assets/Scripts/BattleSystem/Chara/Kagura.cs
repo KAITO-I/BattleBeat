@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Kagura : Player
 {
-    public GameObject[] SkillPrefabs;
 
     public bool ChainAttackHit;
     private void ClassicAttackProcess(int i)
@@ -18,6 +17,10 @@ public class Kagura : Player
             CoolDownCount[i] += Skill.CoolDown + Skill.Delay;
             Sp -= Skill.SpCost;
             wait = Skill.Delay;
+            if (wait > 0)
+            {
+                waitAttackId = i;
+            }
             nowAttack = Skill;
             AttackManager._instance.Add(Skill);
         }
@@ -40,6 +43,8 @@ public class Kagura : Player
             Skill = obj.GetComponent<AttackItemBase>() as ChainAttack;
             Skill.Init(Pos.y, Pos.x, PlayerID == 1 ? false : true, PlayerID);
             CoolDownCount[2] += Skill.CoolDown;
+            wait = 1;
+            waitAttackId = 2;
             nowAttack = Skill;
             AttackManager._instance.Add(Skill);
         }

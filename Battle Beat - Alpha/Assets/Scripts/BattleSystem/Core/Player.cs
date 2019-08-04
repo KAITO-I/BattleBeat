@@ -28,13 +28,21 @@ public class Player : MonoBehaviour
     public Vector2Int Pos;
 
     //溜め攻撃が自分で中断できないので、そのカウンター
+    [SerializeField]
     protected int wait;
+    protected int waitAttackId;
+    public int getWaitingAttack()
+    {
+        return wait > 0 ? waitAttackId : -1;
+    }
     //最後プレーヤーが生成したAttackItemオブジェクト
     protected AttackItemBase nowAttack;
     //スタンされているかどうか
     public bool IsStuned;
     //スタンTurn数
     public int StunTurn;
+
+    public GameObject[] SkillPrefabs;
 
     //ダメージ受ける関数
     public virtual void TakeDamage(float Damage) {
@@ -128,8 +136,8 @@ public class Player : MonoBehaviour
         nowAttack = null;
         StunTurn = 0;
     }
-    public virtual void TurnPreprocess() { if (StunTurn > 0) { StunTurn--; if (StunTurn <= 0) { IsStuned = false; } } }
-    public virtual void TurnPostprocess() {  canInput = true; input = MoveComand.None; if (wait > 0) { wait--; } }
+    public virtual void TurnPreprocess() { if (wait > 0) { wait--; } if (StunTurn > 0) { StunTurn--; if (StunTurn <= 0) { IsStuned = false; } } }
+    public virtual void TurnPostprocess() {  canInput = true; input = MoveComand.None;  }
     void Update()
     {
         //プレーヤー入力
@@ -270,8 +278,10 @@ public class Player : MonoBehaviour
     {
 
         Pos=VectorPlusUnderBoardLimit(Pos,targetPos-Pos);
-        transform.position = BoardManager._instance.ToWorldPos(Pos);
-
+        float y = transform.position.y;
+        var p = BoardManager._instance.ToWorldPos(Pos);
+        p.y = y;
+        transform.position = p;
     }
     //ボード範囲判定
     private Vector2Int VectorPlusUnderBoardLimit(Vector2Int Pos,Vector2Int vector)

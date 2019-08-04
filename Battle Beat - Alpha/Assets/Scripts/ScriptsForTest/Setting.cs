@@ -46,6 +46,13 @@ public class Setting : MonoBehaviour
     GameObject GaugeLeft;
     [SerializeField]
     GameObject GaugeRight;
+
+    //skills
+    [SerializeField]
+    SkillPanel SkillPanelP1;
+    [SerializeField]
+    SkillPanel SkillPanelP2;
+
     //debug
     public DebugText dt1;
     public DebugText dt2;
@@ -87,9 +94,15 @@ public class Setting : MonoBehaviour
         gr[0].Init(p2p.HpMax, 1f);
         gr[1].Init(p2p.HpMax, 1f);
         gr[2].Init(p2p.SpMax, 0f);
+
+        //Set SkillPanel
+        SkillPanelP1.Init(p1c,p1p);
+        SkillPanelP2.Init(p2c,p2p);
+
         //debug
         dt1.p = p1p;
         dt2.p = p2p;
+
     }
     //cheat
     private void Update()

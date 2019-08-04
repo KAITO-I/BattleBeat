@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Yunizon : Player
 {
-    public GameObject[] SkillPrefabs;
     public bool Guard;
 
     protected override void IStart()
@@ -23,6 +22,10 @@ public class Yunizon : Player
             CoolDownCount[i] += Skill.CoolDown + Skill.Delay;
             Sp -= Skill.SpCost;
             wait = Skill.Delay;
+            if (wait > 0)
+            {
+                waitAttackId = i;
+            }
             nowAttack = Skill;
             AttackManager._instance.Add(Skill);
         }
@@ -51,6 +54,10 @@ public class Yunizon : Player
             Sp -= Skill.SpCost;
             nowAttack = Skill;
             wait = int.MaxValue;
+            if (wait > 0)
+            {
+                waitAttackId = 3;
+            }
             AttackManager._instance.Add(Skill);
         }
     }

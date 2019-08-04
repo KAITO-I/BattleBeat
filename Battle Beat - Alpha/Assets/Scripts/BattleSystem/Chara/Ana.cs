@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Ana : Player
 {
-    public GameObject[] SkillPrefabs;
 
     private void ClassicAttackProcess(int i)
     {
@@ -17,6 +16,10 @@ public class Ana : Player
             CoolDownCount[i] += Skill.CoolDown + Skill.Delay;
             Sp -= Skill.SpCost;
             wait = Skill.Delay;
+            if (wait > 0)
+            {
+                waitAttackId = i;
+            }
             nowAttack = Skill;
             AttackManager._instance.Add(Skill);
         }
@@ -32,6 +35,10 @@ public class Ana : Player
             CoolDownCount[i] += Skill.CoolDown + Skill.Delay+2;
             Sp -= Skill.SpCost;
             wait = Skill.Delay+2;
+            if (wait > 0)
+            {
+                waitAttackId = i;
+            }
             nowAttack = Skill;
             AttackManager._instance.Add(Skill);
         }

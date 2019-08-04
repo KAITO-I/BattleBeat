@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 public class BattleManager : MonoBehaviour
 {
     [SerializeField]
@@ -36,7 +37,7 @@ public class BattleManager : MonoBehaviour
                 rythmManager.StopRythm();
 
                 //TimeOutTextDisplay
-                TimeOutTextDisplayTest();
+                TextDisplayForTest("Time Out");
 
             }
             if (AttackManager._instance.GetWinner() != 0)
@@ -45,26 +46,28 @@ public class BattleManager : MonoBehaviour
                 {
                     case 1:
                         //P1Win
-                        print("p1win");
+                        TextDisplayForTest("p1win");
                         break;
                     case 2:
                         //P2Win
-                        print("p2win");
+                        TextDisplayForTest("p2win");
                         break;
                     case 3:
                         //DRAW
-                        print("draw");
+                        TextDisplayForTest("draw");
                         break;
                 }
                 rythmManager.StopRythm();
+                timeSetter.stop();
             }
         }
     }
     //Debug
     [SerializeField]
     GameObject textObj;
-    void TimeOutTextDisplayTest()
+    void TextDisplayForTest(string str)
     {
         textObj.SetActive(true);
+        textObj.GetComponent<Text>().text = str;
     }
 }

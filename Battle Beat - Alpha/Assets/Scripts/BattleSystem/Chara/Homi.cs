@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Homi : Player
 {
-    public GameObject[] SkillPrefabs;
 
     public float buffPower = 0f;
 
@@ -21,6 +20,10 @@ public class Homi : Player
             CoolDownCount[i] += Skill.CoolDown+Skill.Delay;
             Sp -= Skill.SpCost;
             wait = Skill.Delay;
+            if (wait > 0)
+            {
+                waitAttackId = i;
+            }
             nowAttack = Skill;
             AttackManager._instance.Add(Skill);
         }

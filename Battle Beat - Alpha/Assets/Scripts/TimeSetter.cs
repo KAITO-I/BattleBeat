@@ -40,4 +40,9 @@ public class TimeSetter : MonoBehaviour
     {
         showText.text = time.ToString("f0");
     }
+
+    public void stop()
+    {
+        timeFlag = false;
+    } 
 }
