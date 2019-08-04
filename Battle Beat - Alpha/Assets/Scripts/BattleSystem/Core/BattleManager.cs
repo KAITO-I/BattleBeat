@@ -59,6 +59,8 @@ public class BattleManager : MonoBehaviour
                 }
                 rythmManager.StopRythm();
                 timeSetter.stop();
+
+                //SceneLoader.Instance.LoadScene(SceneLoader.Scenes.Result);
             }
         }
     }
