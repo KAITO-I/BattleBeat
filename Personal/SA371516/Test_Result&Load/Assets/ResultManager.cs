@@ -7,6 +7,7 @@ public class ResultManager : MonoBehaviour
 {
     enum ResultState
     {
+        BackDis,
         TextMove,
         CharaDis,
         TextDis,
@@ -15,21 +16,12 @@ public class ResultManager : MonoBehaviour
     struct CharaStatus
     {
         public string name;
+        public Sprite backimg;
         public Color charaColor;
         public string Word;
     }
-    //ここのintをSettingのCharaに変えると全て変わる
-    Dictionary<int, CharaStatus> chara = new Dictionary<int, CharaStatus>();
-    ResultState state;
-    Text PlayerT, Charaname, Word;
-    [SerializeField]
-    GameObject[] Texts;
-    [SerializeField]
-    Image BackGraund;
-    Color changecolor;
-
     //キャラクターの名前
-    string[] Name=
+    string[] Name =
     {
         "カグラ",
         "ホーミー",
@@ -52,6 +44,22 @@ public class ResultManager : MonoBehaviour
         Color.yellow
     };
 
+    //ここのintをSettingのCharaに変えると全て変わる
+    Dictionary<int, CharaStatus> chara = new Dictionary<int, CharaStatus>();
+    ResultState state;
+    Text PlayerT, Charaname, Word;
+    [SerializeField]
+    GameObject[] Texts;
+    [SerializeField]
+    Image BackGraund, CharaImg;
+    Color changecolor;
+    [SerializeField]
+    GameObject BlackImg;
+
+    //背景の画像
+    [SerializeField]
+    Sprite[] BackImgs;
+
     public float MoveTime;
     Vector3[] vec = new Vector3[3];
     RectTransform[] Gole = new RectTransform[3];
@@ -67,6 +75,7 @@ public class ResultManager : MonoBehaviour
     [SerializeField]
     GameObject WordPos;
     //勝利したほうの情報を受け取る
+    [SerializeField]
     int WinPlayerID;
     [SerializeField]
     int WinCharaID;
@@ -82,6 +91,7 @@ public class ResultManager : MonoBehaviour
             status.name = Name[i];
             status.charaColor = characolors[i];
             status.Word = Words[i];
+            status.backimg = BackImgs[i];
             chara.Add(i, status);
         }
         //Text取得
@@ -96,20 +106,24 @@ public class ResultManager : MonoBehaviour
             Vector3 pos = Texts[i].transform.position;
             pos.x = -300;
             Texts[i].gameObject.transform.position = pos;
-            Debug.Log("ゴールポジション:" + vec[i] + "\n現在のポジション:" + Texts[i].transform.position);
         }
         //色初期化
         changecolor =  new Color();
         changecolor = Color.white;
         changecolor.a = 0f;
-        BackGraund.color = changecolor;
+        //背景
+        BackGraund.sprite = chara[WinCharaID - 1].backimg;
+        //キャラクター
+        CharaImg.color = changecolor;
 
-        state = ResultState.TextMove;
+        PlayerT.text = WinPlayerID.ToString() + "P";
 
         Charaname.text = chara[WinCharaID - 1].name;
         Charaname.color = chara[WinCharaID - 1].charaColor;
 
         WordPos.SetActive(false);
+        state = ResultState.BackDis;
+
     }
 
     // Update is called once per frame
@@ -117,15 +131,18 @@ public class ResultManager : MonoBehaviour
     {
         switch (state)
         {
+            case ResultState.BackDis:
+                BlackImg.transform.position += new Vector3(150f, 0f, 0f);
+                if (BlackImg.transform.position.x > 3000) state = ResultState.TextMove;
+                break;
             case ResultState.TextMove:
                 TextMove();
                 break;
                 //背景の透明度を変えている
             case ResultState.CharaDis:
                 changecolor.a += 0.1f;
-                Debug.Log(BackGraund.color.a);
-                BackGraund.color = changecolor;
-                if (BackGraund.color.a >= 1)
+                CharaImg.color = changecolor;
+                if (CharaImg.color.a >= 1)
                 {
                     SetText();
                     WordPos.SetActive(true);
