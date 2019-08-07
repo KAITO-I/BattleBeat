@@ -35,7 +35,9 @@ public class SelectButtom : MonoBehaviour
     //EventSystem用
     [SerializeField]
     EventSystem eventSystem;
-    
+
+    //背景
+    [SerializeField] GameObject BackGround;
 
     //初期消し用
     bool Set = true;
@@ -101,6 +103,7 @@ public class SelectButtom : MonoBehaviour
         ////グループをセット
         //Grup1 = GameObject.Find("Canvas/Select1").GetComponent<GameObject>();
         //Grup2 = GameObject.Find("Canvas/Select2").GetComponent<GameObject>();
+        
     }
 
     private void Update()
@@ -126,9 +129,10 @@ public class SelectButtom : MonoBehaviour
             //次読まない為
             Set = false;
         }
-        if(GrupEnter == true)//Play決定時の移動処理
+        if(GrupEnter)//Play決定時の移動処理
         {
             ImageChange.localScale -= new Vector3(0.01f,0,0);
+            BackGround.transform.position -= new Vector3(1.5f, 0, 0);
             //既定の位置(1 -> -1へ)
             if (ImageChange.localScale.x <= -1f)
             {
@@ -139,10 +143,11 @@ public class SelectButtom : MonoBehaviour
 
             }
         }
-        if(GrupEnter2 == true)//back決定時の移動処理(看板右の時)
+        if(GrupEnter2)//back決定時の移動処理(看板右の時)
         {
             ImageChange.localScale += new Vector3(0.01f,0,0);
-            if(ImageChange.localScale.x >= 1)
+            BackGround.transform.position += new Vector3(1.5f, 0, 0);
+            if (ImageChange.localScale.x >= 1)
             {
                 ImageChange.localScale = new Vector3(1f, 0.8f, 1f);
                 Grup1.gameObject.SetActive(true);
