@@ -50,7 +50,12 @@ public class TitleManager : MonoBehaviour
         switch (title_)
         {
             case TitleStatus.Anim:
-                if(!video.isPlaying)title_ = TitleStatus.BackMove;
+                if (!video.isPlaying || Input.anyKey)
+                {
+                    Debug.Log("MovieEnd");
+                    video.StepForward();
+                    title_ = TitleStatus.BackMove;
+                }
                 break;
             case TitleStatus.BackMove:
                 BackGraund();
