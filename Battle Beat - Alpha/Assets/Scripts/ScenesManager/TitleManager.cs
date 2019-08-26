@@ -68,6 +68,8 @@ public class TitleManager : MonoBehaviour
     //背景を動かす処理
     void BackGraund()
     {
+        title_ = TitleStatus.Title;
+        /*
         Titleback.transform.position -= new Vector3(0f,Backmove_speed,0f);
         //行き過ぎた用
         if (Titleback.transform.position.y <= BackH)
@@ -76,7 +78,7 @@ public class TitleManager : MonoBehaviour
             title_ = TitleStatus.Title;
             //BGM再生
             SoundManager.Instance.BGM.Play(this.bgm);
-        }
+        }*/
     }
 
     //タイトル次の画面に移動出来る状態
@@ -85,7 +87,7 @@ public class TitleManager : MonoBehaviour
         if (!B)  StartCoroutine(UIStart());
 
         //ボタンが入力されたら
-        if (Input.anyKeyDown)
+        //if (Input.anyKeyDown)
             SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainMenu);
         /*if (Input.GetKeyDown(KeyCode.Return)||
             Input.GetKeyDown(KeyCode.Backspace)||

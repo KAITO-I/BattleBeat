@@ -308,7 +308,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7ec0078fabee4c5c8c454a33dc37638, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Titleback: {fileID: 1399476068}
+  Titleback: {fileID: 1006796876}
   Backmove_speed: 40
   text: {fileID: 1809606654}
   UIinterval: 0.5
@@ -431,7 +431,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 911989810}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: a1849da988ae76f438798c78d9c22662, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: e1027bc3ba4ecbd44837c23f5bbea7a5, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 1128961649}
@@ -444,19 +444,23 @@ VideoPlayer:
   m_DataSource: 0
   m_PlaybackSpeed: 1
   m_AudioOutputMode: 1
-  m_TargetAudioSources:
-  - {fileID: 911989813}
-  m_DirectAudioVolumes:
-  - 1
+  m_TargetAudioSources: []
+  m_DirectAudioVolumes: []
   m_Url: 
-  m_EnabledAudioTracks: 01
-  m_DirectAudioMutes: 00
-  m_ControlledAudioTrackCount: 1
+  m_EnabledAudioTracks: 
+  m_DirectAudioMutes: 
+  m_ControlledAudioTrackCount: 0
   m_PlayOnAwake: 0
   m_SkipOnDrop: 1
   m_Looping: 0
   m_WaitForFirstFrame: 0
   m_FrameReadyEventEnabled: 0
+--- !u!224 &1006796876 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 9092477641930365369, guid: a9542cc574199d240acdeb56dc1e5738,
+    type: 3}
+  m_PrefabInstance: {fileID: 1252843021}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1128961647
 GameObject:
   m_ObjectHideFlags: 0
@@ -629,7 +633,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1253333524
 Transform:
   m_ObjectHideFlags: 0
