@@ -47,8 +47,8 @@ public class ControllerManager : MonoBehaviour
     //==============================
     // class
     //==============================
-    public static Controller Player1 { get; private set; }
-    public static Controller Player2 { get; private set; }
+    public Controller Player1 { get; private set; }
+    public Controller Player2 { get; private set; }
 
     //------------------------------
     // 初期化
@@ -183,6 +183,28 @@ public class ControllerManager : MonoBehaviour
             }
             Debug.Log("ControllerChange");
         }
+    }
+
+    public float GetAxis(Axis axis)
+    {
+        float player1Axis = this.Player1.GetAxis(axis);
+        float player2Axis = this.Player2.GetAxis(axis);
+        return player1Axis > player2Axis ? player1Axis : player2Axis;
+    }
+
+    public bool GetButton(Button button)
+    {
+        return this.Player1.GetButton(button) || this.Player2.GetButton(button);
+    }
+
+    public bool GetButtonDown(Button button)
+    {
+        return this.Player1.GetButtonDown(button) || this.Player2.GetButtonDown(button);
+    }
+
+    public bool GetButtonUp(Button button)
+    {
+        return this.Player1.GetButtonUp(button) || this.Player2.GetButtonUp(button);
     }
 
     //==============================
