@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2616607855929116330}
   - component: {fileID: 2616607855929116310}
   - component: {fileID: 6878629137174893653}
-  - component: {fileID: -9106551426815358166}
+  - component: {fileID: -5937534459849402391}
   m_Layer: 0
   m_Name: Homi
   m_TagString: Player
@@ -94,7 +94,7 @@ MonoBehaviour:
   - {fileID: 4781102525549998572, guid: 34d7c9c37621ade4b9cfd5d838b05d36, type: 3}
   - {fileID: 3321080945623340731, guid: fddf3bc6a6fbd6d48950101fe864685c, type: 3}
   - {fileID: 4781102525549998572, guid: 20a721f928931894db48e041b33afbaa, type: 3}
-  AnimationController: {fileID: -9106551426815358166}
+  AnimationController: {fileID: -5937534459849402391}
   CoolDownCount: 00000000000000000000000000000000
   buffPower: 0
   onBuff: 0
@@ -154,7 +154,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &-9106551426815358166
+--- !u!114 &-5937534459849402391
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -163,7 +163,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2616607855929116335}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26a25a8735880e54b9465177e28e529a, type: 3}
+  m_Script: {fileID: 11500000, guid: b44af1459121d084a86949f66b22e448, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   interval: 0.6

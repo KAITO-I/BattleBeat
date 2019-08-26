@@ -55,6 +55,9 @@ public class Player : MonoBehaviour
         {
             nowAttack.OnInterruption();
         }
+
+        //ここにやられたアニメーション再生
+        //タメのリセット
         wait = 0;
         SetSp(Damage* DamageToSPFactor+GetSp());
     }
@@ -139,7 +142,23 @@ public class Player : MonoBehaviour
         nowAttack = null;
         StunTurn = 0;
     }
-    public virtual void TurnPreprocess() { if (wait > 0) { wait--; } if (StunTurn > 0) { StunTurn--; if (StunTurn <= 0) { IsStuned = false; } } }
+    public virtual void TurnPreprocess() {
+        if (wait > 0)
+        {
+            wait--;
+            if (wait == 0)
+            {
+                AnimationController.AttackWaitEnd(waitAttackId);
+            }
+        }
+        if (StunTurn > 0)
+        {
+            StunTurn--;
+            if (StunTurn <= 0)
+            { IsStuned = false;
+            }
+        }
+    }
     public virtual void TurnPostprocess() {  canInput = true; input = MoveComand.None;  }
     void Update()
     {
@@ -266,15 +285,19 @@ public class Player : MonoBehaviour
 
     protected virtual void Attack_1()
     {
+        AnimationController.Attack(MoveComand.Attack_1);
     }
     protected virtual void Attack_2()
     {
+        AnimationController.Attack(MoveComand.Attack_2);
     }
     protected virtual void Attack_3()
     {
+        AnimationController.Attack(MoveComand.Attack_3);
     }
     protected virtual void Attack_4()
     {
+        AnimationController.Attack(MoveComand.Attack_4);
     }
 
     //強制移動関数
