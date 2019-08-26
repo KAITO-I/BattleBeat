@@ -76,12 +76,12 @@ public class ControllerManager : MonoBehaviour
                 Debug.Log(code);
                 break;
             }
-        }*/
+        }
         if (!himoduke)
         {
             ControllerChange();
             return;
-        }
+        }*/
 
         if (Input.anyKeyDown)
         {
@@ -162,7 +162,7 @@ public class ControllerManager : MonoBehaviour
     }*/
 
     //Playerの紐づけ
-    bool himoduke = false;
+    /*bool himoduke = false;
     void ControllerChange()
     {
         if (Input.anyKeyDown)
@@ -183,7 +183,7 @@ public class ControllerManager : MonoBehaviour
             }
             Debug.Log("ControllerChange");
         }
-    }
+    }*/
 
     public float GetAxis(Axis axis)
     {
@@ -205,6 +205,27 @@ public class ControllerManager : MonoBehaviour
     public bool GetButtonUp(Button button)
     {
         return this.Player1.GetButtonUp(button) || this.Player2.GetButtonUp(button);
+    }
+
+    public bool ChangeControllerData(int num)
+    {
+        Debug.Log("プレイヤー" + num +"のAボタンを押してください");
+        if (Input.anyKeyDown)
+        {
+            if (Input.GetButtonDown("A_1"))
+            {
+                if(num == 1)Player1 = new Controller(1);
+                else Player2 = new Controller(1);
+                return true;
+            }
+            else if(Input.GetButtonDown("A_2"))
+            {
+                if (num == 1) Player1 = new Controller(2);
+                else Player2 = new Controller(2);
+                return true;
+            }
+        }
+        return false;
     }
 
     //==============================
