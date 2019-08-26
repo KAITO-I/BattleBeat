@@ -75,6 +75,8 @@ public class Setting : MonoBehaviour
         p2p.PlayerID = 2;
         p1p.Pos = new Vector2Int(1, 1);
         p2p.Pos = new Vector2Int(4, 1);
+        p1p.transform.rotation = Quaternion.Euler(0, 90, 0);
+        p2p.transform.rotation = Quaternion.Euler(0, -90, 0);
         p1p.Init();
         p2p.Init();
         AttackManager._instance.SetPlayers(p1p, p2p);

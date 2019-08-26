@@ -44,6 +44,9 @@ public class Player : MonoBehaviour
 
     public GameObject[] SkillPrefabs;
 
+    public BasePlayerAnimation AnimationController;
+    bool AnimFlag;
+
     //ダメージ受ける関数
     public virtual void TakeDamage(float Damage) {
         SetHp(GetHp()-Damage);
@@ -214,7 +217,7 @@ public class Player : MonoBehaviour
     {
         int TempY = Pos.y;
         int TempX = Pos.x;
-
+        Debug.Log(move);
         switch (move)
         {
             case MoveComand.Left:
@@ -252,8 +255,9 @@ public class Player : MonoBehaviour
 
         if (move >= MoveComand.Left && move <= MoveComand.Down)
         {
-            transform.position = BoardManager._instance.ToWorldPos(new Vector2Int(TempX, TempY));
-            transform.position += new Vector3(0, 1f, 0);
+            var pos= BoardManager._instance.ToWorldPos(new Vector2Int(TempX, TempY));
+            pos += new Vector3(0, 1f, 0);
+            AnimationController.Move(gameObject, pos, move);
             Pos.x = TempX;
             Pos.y = TempY;
         }
