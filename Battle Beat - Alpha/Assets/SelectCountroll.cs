@@ -98,6 +98,13 @@ public class SelectCountroll : MonoBehaviour
         Player01_text.text = CharaObj[Player1].GetCharaname;
         Player02_text.text = CharaObj[Player2].GetCharaname;
 
+        Player01.sprite = CharaObj[Player1].GetCharaSprite;
+        Player01_text.text = CharaObj[Player1].GetCharaname;
+
+        Player02.sprite = CharaObj[Player2].GetCharaSprite;
+        Player02_text.text = CharaObj[Player2].GetCharaname;
+
+
         //戻り時間
         ReturnTime = 5;
         ReturnSlider.maxValue = ReturnTime;

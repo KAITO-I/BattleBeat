@@ -15,10 +15,11 @@ public class ResultManager : MonoBehaviour
     }
     struct CharaStatus
     {
-        public string name;
-        public Sprite backimg;
-        public Color charaColor;
-        public string Word;
+        public string _name;
+        public Sprite _backImg;
+        public Sprite _charaImg;
+        public Color _charaColor;
+        public string _Word;
     }
     //キャラクターの名前
     string[] Name =
@@ -43,11 +44,17 @@ public class ResultManager : MonoBehaviour
         Color.blue,
         Color.yellow
     };
-
     //ここのintをSettingのCharaに変えると全て変わる
     Dictionary<int, CharaStatus> chara = new Dictionary<int, CharaStatus>();
     ResultState state;
     Text PlayerT, Charaname, Word;
+    Vector3[] vec = new Vector3[3];
+    RectTransform[] Gole = new RectTransform[3];
+    private float timeUntilDisplay = 0;     // 表示にかかる時間
+    private float timeElapsed = 1;          // 文字列の表示を開始した時間
+    private int lastUpdateCharacter = -1;       // 表示中の文字数
+    int flag;
+
     [SerializeField]
     GameObject[] Texts;
     [SerializeField]
@@ -55,23 +62,9 @@ public class ResultManager : MonoBehaviour
     Color changecolor;
     [SerializeField]
     GameObject BlackImg;
-
     //背景の画像
     [SerializeField]
-    Sprite[] BackImgs;
-
-    public float MoveTime;
-    Vector3[] vec = new Vector3[3];
-    RectTransform[] Gole = new RectTransform[3];
-
-    [SerializeField]
-    [Range(0.001f, 0.3f)]
-    float intervalForCharacterDisplay = 0.05f;  // 1文字の表示にかかる時間
-
-    private float timeUntilDisplay = 0;     // 表示にかかる時間
-    private float timeElapsed = 1;          // 文字列の表示を開始した時間
-    private int lastUpdateCharacter = -1;       // 表示中の文字数
-
+    Sprite[] BackImgs,CharaImags;
     [SerializeField]
     GameObject WordPos;
     //勝利したほうの情報を受け取る
@@ -79,19 +72,23 @@ public class ResultManager : MonoBehaviour
     int WinPlayerID;
     [SerializeField]
     int WinCharaID;
+    [SerializeField]
+    [Range(0.001f, 0.3f)]
+    float intervalForCharacterDisplay = 0.05f;  // 1文字の表示にかかる時間
 
-    int flag;
-    // Start is called before the first frame update
+    public float MoveTime;
+
     void Start()
     {
         //キャラ情報初期化
         for(int i = 0; i < 4; ++i)
         {
             CharaStatus status = new CharaStatus();
-            status.name = Name[i];
-            status.charaColor = characolors[i];
-            status.Word = Words[i];
-            status.backimg = BackImgs[i];
+            status._name = Name[i];
+            status._charaColor = characolors[i];
+            status._Word = Words[i];
+            status._backImg = BackImgs[i];
+            status._charaImg = CharaImags[i];
             chara.Add(i, status);
         }
         //Text取得
@@ -112,14 +109,15 @@ public class ResultManager : MonoBehaviour
         changecolor = Color.white;
         changecolor.a = 0f;
         //背景
-        BackGraund.sprite = chara[WinCharaID - 1].backimg;
+        BackGraund.sprite = chara[WinCharaID - 1]._backImg;
         //キャラクター
+        CharaImg.sprite = chara[WinCharaID - 1]._charaImg;
         CharaImg.color = changecolor;
 
         PlayerT.text = WinPlayerID.ToString() + "P";
 
-        Charaname.text = chara[WinCharaID - 1].name;
-        Charaname.color = chara[WinCharaID - 1].charaColor;
+        Charaname.text = chara[WinCharaID - 1]._name;
+        Charaname.color = chara[WinCharaID - 1]._charaColor;
 
         WordPos.SetActive(false);
         state = ResultState.BackDis;
@@ -174,15 +172,15 @@ public class ResultManager : MonoBehaviour
     void TextDis()
     {
         // クリックから経過した時間が想定表示時間の何%か確認し、表示文字数を出す
-        int displayCharacterCount = (int)(Mathf.Clamp01((Time.time - timeElapsed) / timeUntilDisplay) * chara[WinCharaID - 1].Word.Length);
+        int displayCharacterCount = (int)(Mathf.Clamp01((Time.time - timeElapsed) / timeUntilDisplay) * chara[WinCharaID - 1]._Word.Length);
         // 表示文字数が前回の表示文字数と異なるならテキストを更新する
         if (displayCharacterCount != lastUpdateCharacter)
         {
-            Word.text = chara[WinCharaID-1].Word.Substring(0, displayCharacterCount);
+            Word.text = chara[WinCharaID-1]._Word.Substring(0, displayCharacterCount);
             lastUpdateCharacter = displayCharacterCount;
         }
         //すべて表示したら飛べるようにする
-        if (displayCharacterCount == chara[WinCharaID - 1].Word.Length)
+        if (displayCharacterCount == chara[WinCharaID - 1]._Word.Length)
         {
             state = ResultState.SceneJump;
         }
@@ -192,7 +190,7 @@ public class ResultManager : MonoBehaviour
     void SetText()
     {
         // 想定表示時間と現在の時刻をキャッシュ
-        timeUntilDisplay = chara[WinCharaID - 1].Word.Length * intervalForCharacterDisplay;
+        timeUntilDisplay = chara[WinCharaID - 1]._Word.Length * intervalForCharacterDisplay;
         timeElapsed = Time.time;
         // 文字カウントを初期化
         lastUpdateCharacter = -1;
