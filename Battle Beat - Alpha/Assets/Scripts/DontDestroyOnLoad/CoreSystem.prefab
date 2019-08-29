@@ -58,7 +58,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2694987350537318158}
-  - component: {fileID: 5520631634534412439}
   - component: {fileID: 635572296}
   m_Layer: 0
   m_Name: ControllerManager
@@ -81,18 +80,6 @@ Transform:
   m_Father: {fileID: 2694987349732319566}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5520631634534412439
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2694987350537318159}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3405c1a06ffaac4bb575ca813ffd906, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &635572296
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171,13 +158,13 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 7f026ff3c264e4a4ba5270450b2afe4c, type: 3}
+    m_Font: {fileID: 12800000, guid: e0fb84e1f76474946b47bf1196c1e6d2, type: 3}
     m_FontSize: 75
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 100
-    m_Alignment: 6
+    m_Alignment: 7
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -446,9 +433,9 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 7f026ff3c264e4a4ba5270450b2afe4c, type: 3}
-    m_FontSize: 75
-    m_FontStyle: 0
+    m_Font: {fileID: 12800000, guid: e0fb84e1f76474946b47bf1196c1e6d2, type: 3}
+    m_FontSize: 100
+    m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 100
@@ -458,9 +445,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Press Any Button
-
-'
+  m_Text: Press Any Button
 --- !u!111 &7976068613695780336
 Animation:
   m_ObjectHideFlags: 0
@@ -807,8 +792,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -515}
-  m_SizeDelta: {x: 0, y: -1030}
+  m_AnchoredPosition: {x: 760, y: -490}
+  m_SizeDelta: {x: -1520, y: -1030}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6456155987560470360
 CanvasRenderer:

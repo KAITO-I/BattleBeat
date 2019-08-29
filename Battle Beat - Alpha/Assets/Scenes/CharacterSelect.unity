@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657892, g: 0.4964128, b: 0.5748173, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.49641287, b: 0.5748173, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1500,6 +1500,63 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1290540881392927130, guid: a9542cc574199d240acdeb56dc1e5738,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 760
+      objectReference: {fileID: 0}
+    - target: {fileID: 1290540881392927130, guid: a9542cc574199d240acdeb56dc1e5738,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -1520
+      objectReference: {fileID: 0}
+    - target: {fileID: 1290540881392927130, guid: a9542cc574199d240acdeb56dc1e5738,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -502.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1290540881392927130, guid: a9542cc574199d240acdeb56dc1e5738,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -1005
+      objectReference: {fileID: 0}
+    - target: {fileID: 245986256253391103, guid: a9542cc574199d240acdeb56dc1e5738,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: e0fb84e1f76474946b47bf1196c1e6d2,
+        type: 3}
+    - target: {fileID: 245986256253391103, guid: a9542cc574199d240acdeb56dc1e5738,
+        type: 3}
+      propertyPath: m_FontData.m_Alignment
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4243981085844628100, guid: a9542cc574199d240acdeb56dc1e5738,
+        type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: e0fb84e1f76474946b47bf1196c1e6d2,
+        type: 3}
+    - target: {fileID: 4243981085844628100, guid: a9542cc574199d240acdeb56dc1e5738,
+        type: 3}
+      propertyPath: m_Text
+      value: Press Any Button
+      objectReference: {fileID: 0}
+    - target: {fileID: 4243981085844628100, guid: a9542cc574199d240acdeb56dc1e5738,
+        type: 3}
+      propertyPath: m_FontData.m_FontStyle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4243981085844628100, guid: a9542cc574199d240acdeb56dc1e5738,
+        type: 3}
+      propertyPath: m_FontData.m_FontSize
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 4243981085844628100, guid: a9542cc574199d240acdeb56dc1e5738,
+        type: 3}
+      propertyPath: m_FontData.m_MaxSize
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 2694987349663952224, guid: a9542cc574199d240acdeb56dc1e5738,
         type: 3}

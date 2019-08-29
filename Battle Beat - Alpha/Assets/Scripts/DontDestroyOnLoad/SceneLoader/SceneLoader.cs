@@ -102,6 +102,9 @@ public class SceneLoader : MonoBehaviour
         float time;
         Transform loadingObjTF = this.loadingObj.transform;
 
+        //===== ロード文字初期化 =====
+        this.loadingText.text = this.loadingTextMsg;
+
         //===== シャッター降下 =====
         // 設定
         loadingObjTF.position = new Vector3(SceneLoader.canvasCenterX, SceneLoader.canvasCenterY + Screen.height);
@@ -156,8 +159,6 @@ public class SceneLoader : MonoBehaviour
 
         // 修正
         this.loadingGauge.fillAmount = 1f;
-
-        yield return new WaitForSeconds(3.0f);
 
         // ローディング文字コルーチン停止
         StopCoroutine(loadingTextAnim);
