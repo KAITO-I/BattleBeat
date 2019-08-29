@@ -7,9 +7,12 @@ public class CharaSelectObj : MonoBehaviour
 {
     //status
     public Sprite[] Flames = new Sprite[3];
+    SpriteRenderer _sprite;
     Image image;
-    public Sprite CharaSprite;
-    public string Charaname;
+    [SerializeField]
+    Sprite CharaSprite;
+    [SerializeField]
+    string Charaname;
     public Sprite GetCharaSprite
     {
         get { return CharaSprite; }
@@ -23,13 +26,13 @@ public class CharaSelectObj : MonoBehaviour
 
     private void Awake()
     {
-        image = gameObject.transform.GetChild(0).GetComponent<Image>();
+        _sprite= gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>();
     }
     public void Init()
     {
         P1select = false;
         P2select = false;
-        image.sprite = Flames[3];
+        _sprite.sprite = Flames[3];
     }
     //(操作している人のID,キャラが選択されているか)
     public void charaSelect(int ID,bool OK)
@@ -47,19 +50,19 @@ public class CharaSelectObj : MonoBehaviour
         //枠の画像を変更する
         if (P1select && P2select)
         {
-            image.sprite = Flames[0];
+            _sprite.sprite = Flames[0];
         }
         else if (P1select&&!P2select)
         {
-            image.sprite = Flames[1];
+            _sprite.sprite = Flames[1];
         }
         else if (P2select&&!P1select)
         {
-            image.sprite = Flames[2];
+            _sprite.sprite = Flames[2];
         }
         else if (!P1select && !P2select)
         {
-            image.sprite = Flames[3];   
+            _sprite.sprite = Flames[3];
 
         }
     }

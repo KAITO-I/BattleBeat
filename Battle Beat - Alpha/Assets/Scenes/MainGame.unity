@@ -4049,7 +4049,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: e68d98e3acec75c4b9ae2a041aa1a5f4,
         type: 3}
       propertyPath: m_Name
-      value: BG (1)
+      value: StageObject
       objectReference: {fileID: 0}
     - target: {fileID: -8980944854386829289, guid: e68d98e3acec75c4b9ae2a041aa1a5f4,
         type: 3}

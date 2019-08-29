@@ -7,9 +7,13 @@ using UnityEngine.EventSystems;
 public class SelectCountroll : MonoBehaviour
 {
     [SerializeField]
-    Image Player01;
+    GameObject Player01_Obj;
     [SerializeField]
-    Image Player02;
+    GameObject Player02_Obj;
+    [SerializeField]
+    SpriteRenderer Player01;
+    [SerializeField]
+    SpriteRenderer Player02;
 
     [SerializeField]
     Text Player01_text;
@@ -17,8 +21,8 @@ public class SelectCountroll : MonoBehaviour
     Text Player02_text;
 
     //キャラクターID
-    int Player1;
-    int Player2;
+    int _Player1;
+    int _Player2;
     //キャラクター選択
     bool Player1_OK;
     bool Player2_OK;
@@ -38,15 +42,12 @@ public class SelectCountroll : MonoBehaviour
     GameObject Text02;
 
     [SerializeField]
-    List<Image> Chara_;
-
-    public GameObject F;
+    GameObject FlameObj;
     List<CharaSelectObj> CharaObj;
     int length;
 
     [SerializeField]
     GameObject Ready;
-
     string[] charaname =
     {
         "Chara1",
@@ -55,7 +56,21 @@ public class SelectCountroll : MonoBehaviour
         "Chara4"
     };
 
-    // Start is called before the first frame update
+    float[] _xSize =
+    {
+        0.3f,
+        0.4f,
+        0.22f,
+        0.3f
+    };
+    float[] _ySize =
+    {
+        0.3f,
+        0.4f,
+        0.22f,
+        0.3f
+    };
+
     void Start()
     {
         Ready.SetActive(false);
@@ -63,47 +78,34 @@ public class SelectCountroll : MonoBehaviour
         Text01.SetActive(false);
         Text02.SetActive(false);
         CharaObj = new List<CharaSelectObj>();
-        foreach (Transform v in F.transform)
+        foreach (Transform v in FlameObj.transform)
         {
             var CObj = v.GetComponent<CharaSelectObj>();
             CharaObj.Add(CObj);
-            //デバッグ用
-            var CImg = v.GetComponent<Image>();
-            Chara_.Add(CImg);
         }
-        length = F.transform.childCount;
+        length = FlameObj.transform.childCount;
 
         foreach (var c in CharaObj)
         {
             c.Init();
         }
 
-        Player1 = 0;
-        Player2 = 0;
+        _Player1 = 0;
+        _Player2 = 0;
         Player1_OK = false;
         Player2_OK = false;
 
-        CharaObj[Player1].charaSelect(1, true);
-        CharaObj[Player2].charaSelect(2, true);
-        #region ============デバッグ用====================
-        //デバッグ用に色を取得する
-        //1Pの色変え
-        Color color = Chara_[Player1].color;
-        Player01.color = color;
-        //2Pの色かえ
-        Color color2 = Chara_[Player1].color;
-        Player02.color = color2;
-        #endregion
+        CharaObj[_Player1].charaSelect(1, true);
+        CharaObj[_Player2].charaSelect(2, true);
         //テキスト表示
-        Player01_text.text = CharaObj[Player1].GetCharaname;
-        Player02_text.text = CharaObj[Player2].GetCharaname;
+        Player01_text.text = CharaObj[_Player1].GetCharaname;
+        Player02_text.text = CharaObj[_Player2].GetCharaname;
 
-        Player01.sprite = CharaObj[Player1].GetCharaSprite;
-        Player01_text.text = CharaObj[Player1].GetCharaname;
+        Player01.sprite = CharaObj[_Player1].GetCharaSprite;
+        Player02.sprite = CharaObj[_Player2].GetCharaSprite;
 
-        Player02.sprite = CharaObj[Player2].GetCharaSprite;
-        Player02_text.text = CharaObj[Player2].GetCharaname;
-
+        Player01_Obj.transform.localScale = new Vector3(_xSize[_Player1], _ySize[_Player1], 1);
+        Player02_Obj.transform.localScale = new Vector3(_xSize[_Player2], _ySize[_Player2], 1);
 
         //戻り時間
         ReturnTime = 5;
@@ -120,8 +122,8 @@ public class SelectCountroll : MonoBehaviour
             //決定ボタンを入力したら
             if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
             {
-                Setting.p1c = (Setting.Chara)Player1;
-                Setting.p2c = (Setting.Chara)Player2;
+                Setting.p1c = (Setting.Chara)_Player1;
+                Setting.p2c = (Setting.Chara)_Player2;
                 SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainGame);
                 Debug.Log("battleSceneへ");
             }
@@ -140,65 +142,56 @@ public class SelectCountroll : MonoBehaviour
         //1P処理
         if (Input.GetKeyDown(KeyCode.S) && !Player1_OK)
         {
-            CharaObj[Player1].charaSelect(1, false);
-            Player1++;
-            Player1 = Player1 % length;
-            Debug.Log(Player1);
-            CharaObj[Player1].charaSelect(1, true);
+            CharaObj[_Player1].charaSelect(1, false);
+            _Player1++;
+            _Player1 = _Player1 % length;
+            CharaObj[_Player1].charaSelect(1, true);
 
-            Player01.sprite = CharaObj[Player1].GetCharaSprite;
-            Player01_text.text = CharaObj[Player1].GetCharaname;
-            //デバッグ用1P色変え
-            Color color = Chara_[Player1].color;
-            Player01.color = color;
+            Player01.sprite = CharaObj[_Player1].GetCharaSprite;
+            Player01_text.text = CharaObj[_Player1].GetCharaname;
+
+            Player01_Obj.transform.localScale = new Vector3(_xSize[_Player1], _ySize[_Player1], 1);
         }
         else if (Input.GetKeyDown(KeyCode.W) && !Player1_OK)
         {
-            CharaObj[Player1].charaSelect(1, false);
-            Player1--;
-            Player1 = Player1 % length;
-            if (Player1 < 0) Player1 = 3;
-            Debug.Log(Player1);
-            CharaObj[Player1].charaSelect(1, true);
+            CharaObj[_Player1].charaSelect(1, false);
+            _Player1--;
+            _Player1 = _Player1 % length;
+            if (_Player1 < 0) _Player1 = 3;
+            CharaObj[_Player1].charaSelect(1, true);
 
-            Player01.sprite = CharaObj[Player1].GetCharaSprite;
-            Player01_text.text = CharaObj[Player1].GetCharaname;
-            //デバッグ用1P色変え
-            Color color = Chara_[Player1].color;
-            Player01.color = color;
+            Player01.sprite = CharaObj[_Player1].GetCharaSprite;
+            Player01_text.text = CharaObj[_Player1].GetCharaname;
+
+            Player01_Obj.transform.localScale = new Vector3(_xSize[_Player1], _ySize[_Player1], 1);
         }
         //2P処理
         if (Input.GetKeyDown(KeyCode.DownArrow) && !Player2_OK)
         {
-            CharaObj[Player2].charaSelect(2, false);
-            Player2++;
-            Player2 = Player2 % length;
-            Debug.Log(Player2);
-            CharaObj[Player2].charaSelect(2, true);
+            CharaObj[_Player2].charaSelect(2, false);
+            _Player2++;
+            _Player2 = _Player2 % length;
+            CharaObj[_Player2].charaSelect(2, true);
 
-            Player02.sprite = CharaObj[Player2].GetCharaSprite;
-            Player02_text.text = CharaObj[Player2].GetCharaname;
+            Player02.sprite = CharaObj[_Player2].GetCharaSprite;
+            Player02_text.text = CharaObj[_Player2].GetCharaname;
 
-            //2Pの色かえ
-            Color color2 = Chara_[Player2].color;
-            Player02.color = color2;
+            Player02_Obj.transform.localScale = new Vector3(_xSize[_Player2], _ySize[_Player2], 1);
 
         }
         else if (Input.GetKeyDown(KeyCode.UpArrow) && !Player2_OK)
         {
-            CharaObj[Player2].charaSelect(2, false);
-            Player2--;
-            Player2 = Player2 % length;
-            if (Player2 < 0) Player2 = 3;
-            Debug.Log(Player2);
-            CharaObj[Player2].charaSelect(2, true);
+            CharaObj[_Player2].charaSelect(2, false);
+            _Player2--;
+            _Player2 = _Player2 % length;
+            if (_Player2 < 0) _Player2 = 3;
+            Debug.Log(_Player2);
+            CharaObj[_Player2].charaSelect(2, true);
 
-            Player02.sprite = CharaObj[Player2].GetCharaSprite;
-            Player02_text.text = CharaObj[Player2].GetCharaname;
+            Player02.sprite = CharaObj[_Player2].GetCharaSprite;
+            Player02_text.text = CharaObj[_Player2].GetCharaname;
 
-            //2Pの色かえ
-            Color color2 = Chara_[Player2].color;
-            Player02.color = color2;
+            Player02_Obj.transform.localScale = new Vector3(_xSize[_Player2], _ySize[_Player2], 1);
         }
 
         //選択時//渡す値を決定する
@@ -256,7 +249,6 @@ public class SelectCountroll : MonoBehaviour
     void SetSilder(float t)
     {
         if (t < ReturnSlider.value) return;
-        Debug.Log("asdf");
         ReturnSlider.value = t;
     }
 }
