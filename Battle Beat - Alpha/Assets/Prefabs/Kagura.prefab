@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 4320667415473011679}
   - component: {fileID: 4320667415473011678}
   - component: {fileID: 4320667415473011672}
+  - component: {fileID: 5549952569031527368}
+  - component: {fileID: 2719648719320650150}
   m_Layer: 0
   m_Name: Kagura
   m_TagString: Player
@@ -29,9 +31,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4320667415473011673}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.17, y: 1.13, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1211555933833527567}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -80,7 +83,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4320667415473011673}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -123,19 +126,146 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OneGameTime: 60
-  Hp: 0
+  PlayerID: 2
   HpMax: 100
   Sp: 0
   SpMax: 100
+  DamageToSPFactor: 2
   Pos: {x: 4, y: 1}
+  wait: 0
   IsStuned: 0
   StunTurn: 0
-  DamageToSPFactor: 2
-  PlayerID: 2
-  CoolDownCount: 00000000000000000000000000000000
   SkillPrefabs:
   - {fileID: 6373771744539301792, guid: 440b26da320879f49bc80bb734805f9f, type: 3}
   - {fileID: 8598021396870418982, guid: 68777e665e6ab2d43a7c1f01b1606b8d, type: 3}
   - {fileID: 4237146485963558638, guid: 042a9192aab1dd742828e5f4a7367c1d, type: 3}
   - {fileID: 2836272470564040027, guid: ae1a1029633ef624abb6e5011f47dacd, type: 3}
+  AnimationController: {fileID: 2719648719320650150}
+  CoolDownCount: 00000000000000000000000000000000
   ChainAttackHit: 0
+--- !u!95 &5549952569031527368
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4320667415473011673}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: fbecf36072f42ea4b9e51ecd7fef25cb, type: 3}
+  m_Controller: {fileID: 9100000, guid: 6811633b6759cb94097731419d539a9b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2719648719320650150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4320667415473011673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d65d99e7649a37f49a12ccbd2c33b673, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerObj: {fileID: 4320667415473011673}
+  AnimCheck: 0
+  interval: 0.6
+--- !u!1001 &1211555933833665531
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4320667415473011651}
+    m_Modifications:
+    - target: {fileID: 100116, guid: fbecf36072f42ea4b9e51ecd7fef25cb, type: 3}
+      propertyPath: m_Name
+      value: kagura_front
+      objectReference: {fileID: 0}
+    - target: {fileID: 100116, guid: fbecf36072f42ea4b9e51ecd7fef25cb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100108, guid: fbecf36072f42ea4b9e51ecd7fef25cb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400116, guid: fbecf36072f42ea4b9e51ecd7fef25cb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400116, guid: fbecf36072f42ea4b9e51ecd7fef25cb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400116, guid: fbecf36072f42ea4b9e51ecd7fef25cb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400116, guid: fbecf36072f42ea4b9e51ecd7fef25cb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400116, guid: fbecf36072f42ea4b9e51ecd7fef25cb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400116, guid: fbecf36072f42ea4b9e51ecd7fef25cb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400116, guid: fbecf36072f42ea4b9e51ecd7fef25cb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400116, guid: fbecf36072f42ea4b9e51ecd7fef25cb, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400116, guid: fbecf36072f42ea4b9e51ecd7fef25cb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400116, guid: fbecf36072f42ea4b9e51ecd7fef25cb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400116, guid: fbecf36072f42ea4b9e51ecd7fef25cb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400116, guid: fbecf36072f42ea4b9e51ecd7fef25cb, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 400116, guid: fbecf36072f42ea4b9e51ecd7fef25cb, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 400116, guid: fbecf36072f42ea4b9e51ecd7fef25cb, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 13700000, guid: fbecf36072f42ea4b9e51ecd7fef25cb, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 464f6127d1e3ecc4599db3771e36f743, type: 2}
+    - target: {fileID: 13700000, guid: fbecf36072f42ea4b9e51ecd7fef25cb, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: f23ad61a0697c6445a7906407016323d, type: 2}
+    m_RemovedComponents:
+    - {fileID: 9500000, guid: fbecf36072f42ea4b9e51ecd7fef25cb, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: fbecf36072f42ea4b9e51ecd7fef25cb, type: 3}
+--- !u!4 &1211555933833527567 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400116, guid: fbecf36072f42ea4b9e51ecd7fef25cb,
+    type: 3}
+  m_PrefabInstance: {fileID: 1211555933833665531}
+  m_PrefabAsset: {fileID: 0}
