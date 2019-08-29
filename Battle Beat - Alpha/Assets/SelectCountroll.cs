@@ -148,7 +148,6 @@ public class SelectCountroll : MonoBehaviour
             CharaObj[_Player1].charaSelect(1, true);
 
             Player01.sprite = CharaObj[_Player1].GetCharaSprite;
-            _player1Text.sprite =
             _player1Text.sprite = _ChataText[_Player1];
 
             Player01_Obj.transform.localScale = new Vector3(_xSize[_Player1], _ySize[_Player1], 1);
