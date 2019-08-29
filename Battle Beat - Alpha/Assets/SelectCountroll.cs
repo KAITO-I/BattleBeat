@@ -16,9 +16,7 @@ public class SelectCountroll : MonoBehaviour
     SpriteRenderer Player02;
 
     [SerializeField]
-    Text Player01_text;
-    [SerializeField]
-    Text Player02_text;
+    Image _player1Text, _player2Text;
 
     //キャラクターID
     int _Player1;
@@ -48,6 +46,9 @@ public class SelectCountroll : MonoBehaviour
 
     [SerializeField]
     GameObject Ready;
+    [SerializeField]
+    Sprite[] _ChataText;
+
     string[] charaname =
     {
         "Chara1",
@@ -58,17 +59,17 @@ public class SelectCountroll : MonoBehaviour
 
     float[] _xSize =
     {
-        0.3f,
         0.4f,
-        0.22f,
-        0.3f
+        0.7f,
+        0.25f,
+        0.35f
     };
     float[] _ySize =
     {
-        0.3f,
         0.4f,
-        0.22f,
-        0.3f
+        0.7f,
+        0.25f,
+        0.35f
     };
 
     void Start()
@@ -97,9 +98,8 @@ public class SelectCountroll : MonoBehaviour
 
         CharaObj[_Player1].charaSelect(1, true);
         CharaObj[_Player2].charaSelect(2, true);
-        //テキスト表示
-        Player01_text.text = CharaObj[_Player1].GetCharaname;
-        Player02_text.text = CharaObj[_Player2].GetCharaname;
+        _player1Text.sprite = _ChataText[_Player1];
+        _player2Text.sprite = _ChataText[_Player2];
 
         Player01.sprite = CharaObj[_Player1].GetCharaSprite;
         Player02.sprite = CharaObj[_Player2].GetCharaSprite;
@@ -148,7 +148,8 @@ public class SelectCountroll : MonoBehaviour
             CharaObj[_Player1].charaSelect(1, true);
 
             Player01.sprite = CharaObj[_Player1].GetCharaSprite;
-            Player01_text.text = CharaObj[_Player1].GetCharaname;
+            _player1Text.sprite =
+            _player1Text.sprite = _ChataText[_Player1];
 
             Player01_Obj.transform.localScale = new Vector3(_xSize[_Player1], _ySize[_Player1], 1);
         }
@@ -161,7 +162,7 @@ public class SelectCountroll : MonoBehaviour
             CharaObj[_Player1].charaSelect(1, true);
 
             Player01.sprite = CharaObj[_Player1].GetCharaSprite;
-            Player01_text.text = CharaObj[_Player1].GetCharaname;
+            _player1Text.sprite = _ChataText[_Player1];
 
             Player01_Obj.transform.localScale = new Vector3(_xSize[_Player1], _ySize[_Player1], 1);
         }
@@ -174,7 +175,7 @@ public class SelectCountroll : MonoBehaviour
             CharaObj[_Player2].charaSelect(2, true);
 
             Player02.sprite = CharaObj[_Player2].GetCharaSprite;
-            Player02_text.text = CharaObj[_Player2].GetCharaname;
+            _player2Text.sprite = _ChataText[_Player2];
 
             Player02_Obj.transform.localScale = new Vector3(_xSize[_Player2], _ySize[_Player2], 1);
 
@@ -185,11 +186,10 @@ public class SelectCountroll : MonoBehaviour
             _Player2--;
             _Player2 = _Player2 % length;
             if (_Player2 < 0) _Player2 = 3;
-            Debug.Log(_Player2);
             CharaObj[_Player2].charaSelect(2, true);
 
             Player02.sprite = CharaObj[_Player2].GetCharaSprite;
-            Player02_text.text = CharaObj[_Player2].GetCharaname;
+            _player2Text.sprite = _ChataText[_Player2];
 
             Player02_Obj.transform.localScale = new Vector3(_xSize[_Player2], _ySize[_Player2], 1);
         }

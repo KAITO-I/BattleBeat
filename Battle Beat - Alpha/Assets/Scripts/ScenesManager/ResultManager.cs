@@ -15,20 +15,11 @@ public class ResultManager : MonoBehaviour
     }
     struct CharaStatus
     {
-        public string _name;
         public Sprite _backImg;
         public Sprite _charaImg;
-        public Color _charaColor;
+        public Sprite _CharaText;
         public string _Word;
     }
-    //キャラクターの名前
-    string[] Name =
-    {
-        "カグラ",
-        "ホーミー",
-        "アナ",
-        "ユニ＆ゾーン"
-    };
     //キャラクター台詞
     string[] Words ={
         "カグラ勝利,これはテストの表示です",
@@ -36,18 +27,11 @@ public class ResultManager : MonoBehaviour
         "アナ勝利,これはテストの表示です",
         "ユニ＆ゾーン勝利,これはテストの表示です "
     };
-    //キャラクターの色
-    Color[] characolors =
-    {
-        Color.red,
-        Color.green,
-        Color.blue,
-        Color.yellow
-    };
     //ここのintをSettingのCharaに変えると全て変わる
     Dictionary<int, CharaStatus> chara = new Dictionary<int, CharaStatus>();
     ResultState state;
-    Text PlayerT, Charaname, Word;
+    Image PlayerT, charatext;
+    Text  Word;
     Vector3[] vec = new Vector3[3];
     RectTransform[] Gole = new RectTransform[3];
     private float timeUntilDisplay = 0;     // 表示にかかる時間
@@ -55,16 +39,16 @@ public class ResultManager : MonoBehaviour
     private int lastUpdateCharacter = -1;       // 表示中の文字数
     int flag;
 
+    Color changecolor;
     [SerializeField]
     GameObject[] Texts;
     [SerializeField]
     Image BackGraund, CharaImg;
-    Color changecolor;
     [SerializeField]
     GameObject BlackImg;
     //背景の画像
     [SerializeField]
-    Sprite[] BackImgs,CharaImags;
+    Sprite[] BackImgs, CharaImags, PlayerImgs, CharaTexts;
     [SerializeField]
     GameObject WordPos;
     //勝利したほうの情報を受け取る
@@ -75,7 +59,6 @@ public class ResultManager : MonoBehaviour
     [SerializeField]
     [Range(0.001f, 0.3f)]
     float intervalForCharacterDisplay = 0.05f;  // 1文字の表示にかかる時間
-
     public float MoveTime;
 
     void Start()
@@ -84,16 +67,15 @@ public class ResultManager : MonoBehaviour
         for(int i = 0; i < 4; ++i)
         {
             CharaStatus status = new CharaStatus();
-            status._name = Name[i];
-            status._charaColor = characolors[i];
             status._Word = Words[i];
             status._backImg = BackImgs[i];
             status._charaImg = CharaImags[i];
+            status._CharaText = CharaTexts[i];
             chara.Add(i, status);
         }
-        //Text取得
-        PlayerT = Texts[0].GetComponent<Text>();
-        Charaname = Texts[1].GetComponent<Text>();
+        
+        PlayerT = Texts[0].GetComponent<Image>();
+        charatext = Texts[1].GetComponent<Image>();
         Word = Texts[3].GetComponent<Text>();
         //位置取得
         for (int i = 0; i < 3; i++)
@@ -104,24 +86,22 @@ public class ResultManager : MonoBehaviour
             pos.x = -300;
             Texts[i].gameObject.transform.position = pos;
         }
-        //色初期化
-        changecolor =  new Color();
-        changecolor = Color.white;
-        changecolor.a = 0f;
         //背景
         BackGraund.sprite = chara[WinCharaID - 1]._backImg;
         //キャラクター
         CharaImg.sprite = chara[WinCharaID - 1]._charaImg;
-        CharaImg.color = changecolor;
+        charatext.sprite = chara[WinCharaID - 1]._CharaText;
 
-        PlayerT.text = WinPlayerID.ToString() + "P";
-
-        Charaname.text = chara[WinCharaID - 1]._name;
-        Charaname.color = chara[WinCharaID - 1]._charaColor;
+        PlayerT.sprite = PlayerImgs[WinPlayerID - 1];
 
         WordPos.SetActive(false);
         state = ResultState.BackDis;
 
+        //色初期化
+        changecolor = new Color();
+        changecolor = Color.white;
+        changecolor.a = 0f;
+        CharaImg.color = changecolor;
     }
 
     // Update is called once per frame
