@@ -8,18 +8,11 @@ public class CharaSelectObj : MonoBehaviour
     //status
     public Sprite[] Flames = new Sprite[3];
     SpriteRenderer _sprite;
-    Image image;
     [SerializeField]
     Sprite CharaSprite;
-    [SerializeField]
-    string Charaname;
     public Sprite GetCharaSprite
     {
         get { return CharaSprite; }
-    }
-    public string GetCharaname
-    {
-        get { return Charaname; }
     }
     private bool P1select;
     private bool P2select;

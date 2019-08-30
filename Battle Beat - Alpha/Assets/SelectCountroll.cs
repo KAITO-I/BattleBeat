@@ -11,13 +11,11 @@ public class SelectCountroll : MonoBehaviour
     [SerializeField]
     GameObject Player02_Obj;
     [SerializeField]
-    SpriteRenderer Player01;
-    [SerializeField]
-    SpriteRenderer Player02;
-
-    [SerializeField]
     Image _player1Text, _player2Text;
 
+    //キャラ立ち絵
+    SpriteRenderer Player01;
+    SpriteRenderer Player02;
     //キャラクターID
     int _Player1;
     int _Player2;
@@ -74,7 +72,10 @@ public class SelectCountroll : MonoBehaviour
 
     void Start()
     {
-        Ready.SetActive(false);
+        Player01 = Player01_Obj.GetComponent<SpriteRenderer>();
+        Player02 = Player02_Obj . GetComponent<SpriteRenderer>();
+
+    Ready.SetActive(false);
 
         Text01.SetActive(false);
         Text02.SetActive(false);
@@ -115,7 +116,7 @@ public class SelectCountroll : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Test();
+        SelectMove();
         //Charaが二人とも選択されたとき
         if (Text01.activeSelf && Text02.activeSelf)
         {
@@ -131,13 +132,9 @@ public class SelectCountroll : MonoBehaviour
             return;
         }
         Ready.SetActive(false);
-
-        ////現在のButtonがどれなのかを取得
-        //GameObject SelectButton = EventSystem.current.currentSelectedGameObject;
-        ////Buttonが変更された時
     }
 
-    void Test()
+    void SelectMove()
     {
         //1P処理
         if (Input.GetKeyDown(KeyCode.S) && !Player1_OK)
@@ -175,7 +172,6 @@ public class SelectCountroll : MonoBehaviour
 
             Player02.sprite = CharaObj[_Player2].GetCharaSprite;
             _player2Text.sprite = _ChataText[_Player2];
-
             Player02_Obj.transform.localScale = new Vector3(_xSize[_Player2], _ySize[_Player2], 1);
 
         }
