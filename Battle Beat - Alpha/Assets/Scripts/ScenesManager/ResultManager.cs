@@ -41,7 +41,7 @@ public class ResultManager : MonoBehaviour
 
     Color changecolor;
     [SerializeField]
-    GameObject[] Texts;
+    GameObject[] Moves;
     [SerializeField]
     Image BackGraund, CharaImg;
     [SerializeField]
@@ -61,6 +61,24 @@ public class ResultManager : MonoBehaviour
     float intervalForCharacterDisplay = 0.05f;  // 1文字の表示にかかる時間
     public float MoveTime;
 
+    float _yPos = -105;
+
+    float[] _xSize =
+    {
+        1.2f,
+        1f,
+        1.2f,
+        1f
+    };
+    float[] _ySize =
+    {
+        1.3f,
+        1.3f,
+        1.2f,
+        1f
+    };
+
+
     void Start()
     {
         //キャラ情報初期化
@@ -74,18 +92,27 @@ public class ResultManager : MonoBehaviour
             chara.Add(i, status);
         }
         
-        PlayerT = Texts[0].GetComponent<Image>();
-        charatext = Texts[1].GetComponent<Image>();
-        Word = Texts[3].GetComponent<Text>();
+        PlayerT = Moves[0].GetComponent<Image>();
+        charatext = Moves[1].GetComponent<Image>();
+        Word = Moves[3].GetComponent<Text>();
         //位置取得
         for (int i = 0; i < 3; i++)
         {
-            Gole[i] = Texts[i].GetComponent<RectTransform>();
-            vec[i] = Texts[i].GetComponent<RectTransform>().position;
-            Vector3 pos = Texts[i].transform.position;
+            Gole[i] = Moves[i].GetComponent<RectTransform>();
+            vec[i] = Moves[i].GetComponent<RectTransform>().position;
+            Vector3 pos = Moves[i].transform.position;
             pos.x = -300;
-            Texts[i].gameObject.transform.position = pos;
+            Moves[i].gameObject.transform.position = pos;
         }
+        //立ち絵位置修正
+        RectTransform rect = CharaImg.GetComponent<RectTransform>();
+        if (WinCharaID == 3)
+        {
+            Vector3 _vec = rect.position;
+            _vec.y = _yPos;
+            CharaImg.GetComponent<RectTransform>().position = _vec;
+        }
+        rect.transform.localScale = new Vector3(_xSize[WinCharaID], _ySize[WinCharaID], 1f);
         //背景
         BackGraund.sprite = chara[WinCharaID - 1]._backImg;
         //キャラクター
@@ -180,7 +207,7 @@ public class ResultManager : MonoBehaviour
     //
     void TextMove()
     {
-        RectTransform rect = Texts[flag].GetComponent<RectTransform>();
+        RectTransform rect = Moves[flag].GetComponent<RectTransform>();
         switch (flag)
         {
             case 0:
