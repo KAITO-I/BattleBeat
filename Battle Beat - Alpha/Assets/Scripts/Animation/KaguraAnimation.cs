@@ -5,6 +5,14 @@ using UnityEngine;
 //攻撃は違うのでクラスを分ける
 public class KaguraAnimation :BasePlayerAnimation
 {
+    Animator _kusariAnim;
+    Animator _toguroAnim;
+    private void Start()
+    {
+        anim = GetComponent<Animator>();
+        player = PlayerObj.GetComponent<Player>();
+        _kusariAnim = gameObject.transform.GetChild(2).GetComponent<Animator>();
+    }
     protected override void Attack1()
     {
         anim.SetTrigger("Attack1");
@@ -18,6 +26,7 @@ public class KaguraAnimation :BasePlayerAnimation
     protected override void Attack3()
     {
         anim.SetTrigger("PullAttack");
+        KusariAnim("Kusari");
         PlayAnim = "PullAttack";
     }
     protected override void Attack4()
@@ -25,6 +34,26 @@ public class KaguraAnimation :BasePlayerAnimation
         anim.SetTrigger("Wait");
         PlayAnim = "Wait";
     }
+    //鎖のアニメーションを再生する関数（鎖攻撃が当たった,敵のオブジェクト）
+    public void KusariAnim(string _triggerName, bool _attack = false,GameObject _enemyObj=null)
+    {
+        if (_attack)//相手につけている鎖のアニメーションを再生させる
+        {
+            _toguroAnim = _enemyObj.transform.GetChild(1).GetComponent<Animator>();
+            _enemyObj.transform.GetChild(1).GetComponent<MeshRenderer>().enabled = true;//表示
+            _toguroAnim.SetTrigger("Toguro");
+        }
+        else　if(_enemyObj!=null)//鎖を非表示にするため
+        {
+            _enemyObj.transform.GetChild(1).GetComponent<MeshRenderer>().enabled = false;//非表示
+            _kusariAnim.SetTrigger(_triggerName);
+        }
+        else//アニメーションのみ再生
+        {
+            _kusariAnim.SetTrigger(_triggerName);
+        }
+    }
+
     public override void AttackWaitEnd(int waitAttackId)
     {
         switch (waitAttackId)

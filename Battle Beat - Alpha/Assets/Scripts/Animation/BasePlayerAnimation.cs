@@ -7,8 +7,8 @@ using UnityEngine.UI;
 public class BasePlayerAnimation:MonoBehaviour
 {
     [SerializeField]
-    GameObject PlayerObj;
-    Player player;
+    protected GameObject PlayerObj;
+    protected Player player;
     AnimatorStateInfo info_;
 
 
@@ -35,7 +35,13 @@ public class BasePlayerAnimation:MonoBehaviour
     {
         AnimFunc(comand);
     }
-    //タイミングを同じにするため（未完成）(動かすもの,到達点)
+    //この関数をダメージを受けたときに呼ぶ
+    public virtual void Damage()
+    {
+        MoveDamage();
+    }
+
+    //タイミングを同じにするため(動かすもの,到達点)
     IEnumerator enumerator(GameObject obj, Vector3 Goal)
     {
         float time = 0;
@@ -156,6 +162,12 @@ public class BasePlayerAnimation:MonoBehaviour
         anim.SetTrigger("LeftT");
         PlayAnim = "left";
     }
+    private void MoveDamage()
+    {
+        anim.SetTrigger("Damage");
+        PlayAnim = "Damage";
+    }
+
     //（再生する技のID）
     public virtual void AttackWaitEnd(int waitAttackId)
     {
