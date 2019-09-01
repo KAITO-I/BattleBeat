@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class ResultManager : MonoBehaviour
 {
+    ControllerManager.Controller _1Pcontroller = ControllerManager.Instance.Player1;
+    ControllerManager.Controller _2Pcontroller = ControllerManager.Instance.Player2;
+
     enum ResultState
     {
         BackDis,
