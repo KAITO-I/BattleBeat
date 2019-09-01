@@ -11,6 +11,8 @@ public class SKillGrid : MonoBehaviour
     Image imageOnUse;
     [SerializeField]
     Image image;
+    [SerializeField]
+    Text coolDownText;
 
     int TurnMax = 1;
     private void Start()
@@ -27,6 +29,7 @@ public class SKillGrid : MonoBehaviour
         imageCoolDown.fillAmount = 0f;
         image.sprite = mainSprite;
         TurnMax = Turn;
+        coolDownText.text = string.Empty;
     }
 
     public void SetTurn(int Turn)
@@ -34,6 +37,11 @@ public class SKillGrid : MonoBehaviour
         if (Turn >= 0 && TurnMax >= 0)
         {
             imageCoolDown.fillAmount = ((float)Turn) / ((float)TurnMax);
+            coolDownText.text = Turn.ToString();
+        }
+        if(Turn==0)
+        {
+            coolDownText.text = string.Empty;
         }
     }
     public void SetOnUse(bool active)

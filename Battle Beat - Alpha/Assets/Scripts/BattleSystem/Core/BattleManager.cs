@@ -11,6 +11,7 @@ public class BattleManager : MonoBehaviour
     TimeSetter timeSetter;
     [SerializeField]
     float TotalTime = 60f;
+
     bool onGame;
 
     private void Start()

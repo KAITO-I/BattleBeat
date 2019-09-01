@@ -59,6 +59,14 @@ public class Floor : MonoBehaviour
         {
             temp /= c_cnt;
         }
+        if (Flags == 0)
+        {
+            temp.a = 0;
+        }
+        else
+        {
+            temp.a = 1;
+        }
         renderer.material.color = temp;
     }
 }
