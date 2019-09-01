@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657892, g: 0.4964128, b: 0.5748173, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -372,7 +372,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 89b8e88dd5f8fca409474167ba353e4a, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -406,7 +406,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &439349182
 RectTransform:
   m_ObjectHideFlags: 0
@@ -729,7 +729,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 2.7770002}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 75, y: -34}
+  m_AnchoredPosition: {x: 27, y: -49}
   m_SizeDelta: {x: 750, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1007963453
@@ -754,7 +754,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: e0fb84e1f76474946b47bf1196c1e6d2, type: 3}
-    m_FontSize: 27
+    m_FontSize: 35
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -817,14 +817,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cb39179ce5d81a4ebc48e16a2112d82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BackGraund: {fileID: 411388763}
+  CharaImg: {fileID: 2051360708}
+  BlackImg: {fileID: 439349181}
   Moves:
   - {fileID: 781098794}
   - {fileID: 305251198}
   - {fileID: 1755546248}
   - {fileID: 1007963451}
-  BackGraund: {fileID: 411388763}
-  CharaImg: {fileID: 2051360708}
-  BlackImg: {fileID: 439349181}
   BackImgs:
   - {fileID: 21300000, guid: c484f8491c82de54192d111e0ed703b6, type: 3}
   - {fileID: 21300000, guid: f4a69d4038760de499ed1c0ccb14e199, type: 3}
@@ -845,7 +845,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: e48c1e1b2534eb74b9dc986af3a82cae, type: 3}
   WordPos: {fileID: 633552702}
   WinPlayerID: 2
-  WinCharaID: 3
+  WinCharaID: 2
+  _loseCharaId: 0
   intervalForCharacterDisplay: 0.05
   MoveTime: 50
 --- !u!1 &1549461358
@@ -1233,7 +1234,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 3ea14d54db64ea94c9edecf41d5c93ba, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1d74d776405479a458bd7d5bd461f1f9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
