@@ -5,7 +5,7 @@ using UnityEngine.Video;
 
 public class TitleManager : MonoBehaviour
 {
-    //タイトルの状態
+    /*//タイトルの状態
     enum TitleStatus
     {
         Anim,
@@ -69,7 +69,7 @@ public class TitleManager : MonoBehaviour
     void BackGraund()
     {
         title_ = TitleStatus.Title;
-        /*
+        
         Titleback.transform.position -= new Vector3(0f,Backmove_speed,0f);
         //行き過ぎた用
         if (Titleback.transform.position.y <= BackH)
@@ -78,7 +78,7 @@ public class TitleManager : MonoBehaviour
             title_ = TitleStatus.Title;
             //BGM再生
             SoundManager.Instance.BGM.Play(this.bgm);
-        }*/
+        }
     }
 
     //タイトル次の画面に移動出来る状態
@@ -89,14 +89,14 @@ public class TitleManager : MonoBehaviour
         //ボタンが入力されたら
         //if (Input.anyKeyDown)
             SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainMenu);
-        /*if (Input.GetKeyDown(KeyCode.Return)||
+        if (Input.GetKeyDown(KeyCode.Return)||
             Input.GetKeyDown(KeyCode.Backspace)||
             Input.GetKeyDown(KeyCode.Space)||
             Input.GetKeyDown(KeyCode.Tab)
             )
         {
             GameObject.Find("GameObject").GetComponent<SceneJump>().Jump("LoadScene");
-        }*/
+        }
     }
     //UIのアニメーション処理
     IEnumerator UIStart()
@@ -123,5 +123,61 @@ public class TitleManager : MonoBehaviour
             yield return new WaitForSeconds(1f / 60f);
         }
         B = false;
+    }*/
+
+    private VideoPlayer vp;
+
+    [SerializeField]
+    private AudioClip animeAudio;
+    private Sound sound;
+
+    [SerializeField]
+    private Image fade;
+    [SerializeField]
+    private float darkToLightFadeTime;
+    [SerializeField]
+    private float lightToDarkFadeTime;
+
+    private void Start()
+    {
+        // アニメーション再生
+        (this.vp = GetComponent<VideoPlayer>()).Play();
+        this.sound = SoundManager.Instance.SE.Play(this.animeAudio);
+
+        // シャッタータイマー開始
+        StartCoroutine(ShutterTimer(this.vp.clip.length));
+
+        // 明転フェード開始
+        StartCoroutine(StartFade());
+    }
+
+    private void Update()
+    {
+        if (Input.anyKeyDown)
+        {
+            this.sound.Stop();
+            SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainMenu);
+        }
+    }
+
+    private IEnumerator StartFade()
+    {
+        float timer = 0f;
+        while (true)
+        {
+            this.fade.color = new Color(0f, 0f, 0f, Mathf.Lerp(1.0f, 0.0f, timer / this.darkToLightFadeTime));
+
+            if (Mathf.Approximately(this.fade.color.a, 0f)) break;
+            
+            yield return 0;
+            timer += Time.deltaTime;
+        }
+    }
+
+    private IEnumerator ShutterTimer(double time)
+    {
+        yield return new WaitForSeconds((float) time);
+        this.sound.Stop();
+        SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainMenu);
     }
 }

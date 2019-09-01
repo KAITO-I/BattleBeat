@@ -54,20 +54,22 @@ public class Sound : MonoBehaviour
     // [引数]
     // AudioClip sound : 再生する音源
     //------------------------------
-    public virtual void Play(AudioClip clip)
+    public virtual Sound Play(AudioClip clip)
     {
         // 既に再生していれば実行しない
-        if (this.AudioSource.clip == clip) return;
-
-        if (this.AudioSource.isPlaying) Stop();
-        this.AudioSource.clip = clip;
-        this.AudioSource.Play();
+        if (this.AudioSource.clip != clip)
+        {
+            if (this.AudioSource.isPlaying) Stop();
+            this.AudioSource.clip = clip;
+            this.AudioSource.Play();
+        }
+        return this;
     }
 
     //------------------------------
     // 停止
     //------------------------------
-    public void Stop()
+    public virtual void Stop()
     {
         this.AudioSource.Stop();
     }
