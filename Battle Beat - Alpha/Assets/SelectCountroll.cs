@@ -125,7 +125,7 @@ public class SelectCountroll : MonoBehaviour
         if (Text01.activeSelf && Text02.activeSelf)
         {
             //決定ボタンを入力したら
-            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
+            if (_1Pcontroller.GetButtonDown(ControllerManager.Button.A) || _2Pcontroller.GetButtonDown(ControllerManager.Button.A))
             {
                 Setting.p1c = (Setting.Chara)_Player1;
                 Setting.p2c = (Setting.Chara)_Player2;
