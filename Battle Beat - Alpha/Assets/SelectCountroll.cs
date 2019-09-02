@@ -122,10 +122,10 @@ public class SelectCountroll : MonoBehaviour
         SelectMove();
         //SelectMoveDebug();
         //Charaが二人とも選択されたとき
-        if (Text01.activeSelf && Text02.activeSelf)
+        if (Player1_OK&& Player2_OK)
         {
             //決定ボタンを入力したら
-            if (_1Pcontroller.GetButtonDown(ControllerManager.Button.A) || _2Pcontroller.GetButtonDown(ControllerManager.Button.A))
+            if (ControllerManager.Instance.GetButtonDown(ControllerManager.Button.Start))
             {
                 Setting.p1c = (Setting.Chara)_Player1;
                 Setting.p2c = (Setting.Chara)_Player2;

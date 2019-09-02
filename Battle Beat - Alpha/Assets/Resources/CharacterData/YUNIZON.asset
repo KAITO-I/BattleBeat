@@ -26,5 +26,5 @@ MonoBehaviour:
   - 
   - 
   - 
-  CharaTextImage: {fileID: 0}
+  CharaTextImage: {fileID: 21300000, guid: e48c1e1b2534eb74b9dc986af3a82cae, type: 3}
   backGraund: {fileID: 21300000, guid: cc93827cdc4d9504f8a351730f941676, type: 3}
