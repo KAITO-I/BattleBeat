@@ -62,7 +62,7 @@ public class SceneLoader : MonoBehaviour
     [SerializeField] float shutterUpTime;
 
     // ロード中
-    private bool isLoading;
+    public bool isLoading { private set; get; }
     [Header("Loading")]
     [SerializeField] Text   pressButtonText;
     [SerializeField] Text   loadingText;

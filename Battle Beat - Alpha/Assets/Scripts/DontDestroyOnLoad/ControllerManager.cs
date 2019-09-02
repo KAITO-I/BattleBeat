@@ -50,6 +50,13 @@ public class ControllerManager : MonoBehaviour
     public Controller Player1 { get; private set; }
     public Controller Player2 { get; private set; }
 
+    [SerializeField]
+    private bool forcedSpecificationed;
+    [SerializeField]
+    private int player1ID;
+    [SerializeField]
+    private int player2ID;
+
     //------------------------------
     // 初期化
     //------------------------------
@@ -57,46 +64,28 @@ public class ControllerManager : MonoBehaviour
     {
         if (ControllerManager.instance != null) return;
         ControllerManager.instance = this;
+
+        if (this.forcedSpecificationed)
+        {
+            Player1 = new Controller(this.player1ID);
+            Player2 = new Controller(this.player2ID);
+        }
     }
 
     private void Update()
     {
-        //入力されたものが何なのか
-        /*foreach (Controller code in Enum.GetValues(typeof(Controller)))
+        /*
+        foreach (Axis axis in Enum.GetValues(typeof(Axis)))
         {
-            if (Input.GetButtonDown(axes[(int)code]+"1P"))
-            {
-                //処理を書く
-                Debug.Log(code);
-                break;
-            }
-            else if (Input.GetButtonDown(axes[(int)code] + "2P"))
-            {
-                //処理を書く
-                Debug.Log(code);
-                break;
-            }
+            if (Player1 != null && !Mathf.Approximately(Player1.GetAxis(axis), 0f)) Debug.Log("P1 " + axis.ToString() + ":" + Player1.GetAxis(axis));
+            if (Player2 != null && !Mathf.Approximately(Player2.GetAxis(axis), 0f)) Debug.Log("P2 " + axis.ToString() + ":" + Player2.GetAxis(axis));
         }
-        if (!himoduke)
+
+        foreach (Button button in Enum.GetValues(typeof(Button)))
         {
-            ControllerChange();
-            return;
+            if (Player1 != null && Player1.GetButton(button) != false) Debug.Log("P1 " + button.ToString() + ":" + Player1.GetButton(button));
+            if (Player2 != null && Player2.GetButton(button) != false) Debug.Log("P2 " + button.ToString() + ":" + Player2.GetButton(button));
         }*/
-
-        if (Input.anyKeyDown)
-        {
-            foreach (Axis axis in Enum.GetValues(typeof(Axis)))
-            {
-                if (Player1 != null && !Mathf.Approximately(Player1.GetAxis(axis), 0f)) Debug.Log("P1 " + axis.ToString() + ":" + Player1.GetAxis(axis));
-                if (Player2 != null && !Mathf.Approximately(Player2.GetAxis(axis), 0f)) Debug.Log("P2 " + axis.ToString() + ":" + Player2.GetAxis(axis));
-            }
-
-            foreach (Button button in Enum.GetValues(typeof(Button)))
-            {
-                if (Player1 != null && Player1.GetButton(button) != false) Debug.Log("P1 " + button.ToString() + ":" + Player1.GetButton(button));
-                if (Player2 != null && Player2.GetButton(button) != false) Debug.Log("P2 " + button.ToString() + ":" + Player2.GetButton(button));
-            }
-        }
     }
 
     //コントローラー操作
