@@ -211,13 +211,13 @@ public class ResultManager : MonoBehaviour
     //シーン移動
     void OnClick()
     {
-        if (Input.GetKeyDown(KeyCode.B))
+        if (_1Pcontroller.GetButtonDown(ControllerManager.Button.A)|| _2Pcontroller.GetButtonDown(ControllerManager.Button.A))
         {
-            GameObject.Find("GameObject").GetComponent<SceneJump>().Jump("Test");
+            SceneLoader.Instance.LoadScene(SceneLoader.Scenes.CharacterSelect);
         }
-        else if (Input.GetKeyDown(KeyCode.T))
+        else if (_1Pcontroller.GetButtonDown(ControllerManager.Button.B) || _2Pcontroller.GetButtonDown(ControllerManager.Button.B))
         {
-            GameObject.Find("GameObject").GetComponent<SceneJump>().Jump("LoadScene");
+            SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainMenu);
         }
     }
     //キャラクターコメント表示
