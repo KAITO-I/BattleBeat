@@ -11,7 +11,7 @@ public class AttackManager : MonoBehaviour
     [SerializeField]
     List<Player> players;
 
-    uint winner;
+    static uint winner;
     public void SetPlayers(Player p1,Player p2) {
         if (players == null) {
             players = new List<Player>();

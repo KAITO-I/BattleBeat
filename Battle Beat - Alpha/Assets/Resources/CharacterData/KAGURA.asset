@@ -15,8 +15,8 @@ MonoBehaviour:
   Name: "\u30AB\u30B0\u30E9"
   Avatar: {fileID: 21300000, guid: 4f8ef516263122e4ca3b9764865c21b0, type: 3}
   SkillIcons:
-  - {fileID: 21300000, guid: d868b7884601a2e49b1d6e1504b62819, type: 3}
-  - {fileID: 21300000, guid: d868b7884601a2e49b1d6e1504b62819, type: 3}
-  - {fileID: 21300000, guid: d868b7884601a2e49b1d6e1504b62819, type: 3}
-  - {fileID: 21300000, guid: d868b7884601a2e49b1d6e1504b62819, type: 3}
+  - {fileID: 21300000, guid: 4ecc88cd8e9f05e4d8920354903f2db8, type: 3}
+  - {fileID: 21300000, guid: 2efb9ffda8b1f8e40929a925180eed8b, type: 3}
+  - {fileID: 21300000, guid: 2ed9b06984158e74da5f1883df16d5a0, type: 3}
+  - {fileID: 21300000, guid: 33d4797dcbf0e5b4894d37ef41085b1f, type: 3}
   prefab: {fileID: 4320667415473011673, guid: 5232ccf6a5bcb814f8e7cfc2d6d9435a, type: 3}

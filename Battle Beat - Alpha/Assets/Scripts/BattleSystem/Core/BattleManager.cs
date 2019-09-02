@@ -14,6 +14,9 @@ public class BattleManager : MonoBehaviour
 
     bool onGame;
 
+
+    static int winPlayerId;
+    static int LosePlayerId;
     private void Start()
     {
         onGame = false;
@@ -24,10 +27,25 @@ public class BattleManager : MonoBehaviour
     }
     public void startGame()
     {
-        onGame = true;
-        
-        timeSetter.startTimer();
-        rythmManager.StartRythm();
+        ShowImage._instance.ShowImages(new string[]{"3","2","1","READY","GO" });
+        StartCoroutine(startGameLoop());
+    }
+
+    IEnumerator startGameLoop()
+    {
+        while(true){
+            if (ShowImage._instance.IsEnd())
+            {
+                onGame = true;
+                timeSetter.startTimer();
+                rythmManager.StartRythm();
+                break;
+            }
+            else
+            {
+                yield return new WaitForFixedUpdate();
+            }
+        }
     }
     private void Update()
     {
@@ -37,8 +55,8 @@ public class BattleManager : MonoBehaviour
             {
                 rythmManager.StopRythm();
 
-                //TimeOutTextDisplay
-                TextDisplayForTest("Time Out");
+                ////TimeOutTextDisplay
+                //TextDisplayForTest("Time Out");
 
             }
             if (AttackManager._instance.GetWinner() != 0)
@@ -47,21 +65,21 @@ public class BattleManager : MonoBehaviour
                 {
                     case 1:
                         //P1Win
-                        TextDisplayForTest("p1win");
+                        ShowImage._instance.ShowImages(new string[] { "GAME" });
+                        StartCoroutine(WaitAndJumpScene());
                         break;
                     case 2:
                         //P2Win
-                        TextDisplayForTest("p2win");
+                        ShowImage._instance.ShowImages(new string[] { "GAME" });
+                        StartCoroutine(WaitAndJumpScene());
                         break;
                     case 3:
                         //DRAW
-                        TextDisplayForTest("draw");
+                        ShowImage._instance.ShowImages(new string[] { "Draw" });
+                        StartCoroutine(WaitAndJumpScene());
                         break;
                 }
-                rythmManager.StopRythm();
-                timeSetter.stop();
-
-                //SceneLoader.Instance.LoadScene(SceneLoader.Scenes.Result);
+                
             }
         }
     }
@@ -72,5 +90,24 @@ public class BattleManager : MonoBehaviour
     {
         textObj.SetActive(true);
         textObj.GetComponent<Text>().text = str;
+    }
+    IEnumerator WaitAndJumpScene()
+    {
+        rythmManager.StopRythm();
+        timeSetter.stop();
+
+        while (true)
+        {
+            if (ShowImage._instance.IsEnd())
+            {
+                break;
+            }
+            else
+            {
+                yield return new WaitForFixedUpdate();
+            }
+        }
+       
+        SceneLoader.Instance.LoadScene(SceneLoader.Scenes.Result);
     }
 }
