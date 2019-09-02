@@ -8,6 +8,7 @@ public class ResultManager : MonoBehaviour
     ControllerManager.Controller _1Pcontroller = ControllerManager.Instance.Player1;
     ControllerManager.Controller _2Pcontroller = ControllerManager.Instance.Player2;
 
+
     enum ResultState
     {
         BackDis,
@@ -113,6 +114,12 @@ public class ResultManager : MonoBehaviour
     void Start()
     {
         BlackImg.SetActive(true);
+        //プレイヤー情報
+        WinPlayerID = (int)AttackManager.winner;
+        if (WinPlayerID == 1)
+        {
+            WinCharaID = (int)Setting.p1c + 1;
+        }
 
         //キャラ情報初期化
         for(int i = 0; i < 4; ++i)
