@@ -12,6 +12,12 @@ public class MainMenuManager : MonoBehaviour
         Changing
     }
 
+    private class Description
+    {
+        private string title;
+        private string description;
+    }
+
     private ControllerManager controller;
     private State state;
     private int selected;
@@ -55,6 +61,10 @@ public class MainMenuManager : MonoBehaviour
     private float mtOverrayLeftSideRotateX;
     [SerializeField]
     private float mtOverrayRightSideRotateX;
+
+    [Header("ModeDescription")]
+    [SerializeField]
+    private Description[] Left
 
     private void Start()
     {
@@ -131,10 +141,17 @@ public class MainMenuManager : MonoBehaviour
         }
     }
 
+    private void ChangeBoard()
+    {
+
+    }
+
     private void ChangeSignToAllBlack()
     {
         for (int i = 0; i < this.numberOfSigns; i++) this.mtOverlays[i].SetActive(true);
     }
+
+    private void Change
 
     private IEnumerator LeftToRight()
     {
