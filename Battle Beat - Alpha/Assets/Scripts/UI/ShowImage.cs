@@ -14,7 +14,7 @@ public class ShowImage : MonoBehaviour
     Coroutine coroutine=null;
     List<Sprite> sprites=new List<Sprite>();
     public static ShowImage _instance;
-    private void Start()
+    private void Awake()
     {
         if (_instance == null)
         {

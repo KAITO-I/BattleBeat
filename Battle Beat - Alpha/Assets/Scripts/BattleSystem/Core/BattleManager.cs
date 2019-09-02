@@ -27,7 +27,7 @@ public class BattleManager : MonoBehaviour
     }
     public void startGame()
     {
-        ShowImage._instance.ShowImages(new string[]{"3","2","1","READY","GO" });
+        ShowImage._instance.ShowImages(new string[]{ "READY","3","2","1","GO" });
         StartCoroutine(startGameLoop());
     }
 
@@ -47,6 +47,17 @@ public class BattleManager : MonoBehaviour
             }
         }
     }
+
+    private class CountUp
+    {
+        private int time;
+        private int bpm;
+    }
+
+    [SerializeField]
+    private CountUp[] countUp;
+    int index = 0;
+    float timer = 0f;
     private void Update()
     {
         if (onGame)
@@ -79,7 +90,6 @@ public class BattleManager : MonoBehaviour
                         StartCoroutine(WaitAndJumpScene());
                         break;
                 }
-                
             }
         }
     }

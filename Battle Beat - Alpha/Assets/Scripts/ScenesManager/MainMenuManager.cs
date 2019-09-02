@@ -62,9 +62,9 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField]
     private float mtOverrayRightSideRotateX;
 
-    [Header("ModeDescription")]
+    /*[Header("ModeDescription")]
     [SerializeField]
-    private Description[] Left
+    private Description[] Left*/
 
     private void Start()
     {
@@ -151,7 +151,7 @@ public class MainMenuManager : MonoBehaviour
         for (int i = 0; i < this.numberOfSigns; i++) this.mtOverlays[i].SetActive(true);
     }
 
-    private void Change
+    //private void Change
 
     private IEnumerator LeftToRight()
     {

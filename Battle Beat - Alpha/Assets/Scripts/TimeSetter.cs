@@ -10,7 +10,7 @@ public class TimeSetter : MonoBehaviour
 {
     [SerializeField]float time = 0f;
     [SerializeField] Text showText;
-    [SerializeField] bool timeFlag;
+    [SerializeField] bool timeFlag; 
 
     public bool isTimeOut() { return !timeFlag; }
 
@@ -27,6 +27,7 @@ public class TimeSetter : MonoBehaviour
         {
             timeFlag = false;
         }
+
     }
     public void TimeSetUP(float f)
     {

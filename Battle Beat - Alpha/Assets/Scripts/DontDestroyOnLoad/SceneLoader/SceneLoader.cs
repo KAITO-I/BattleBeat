@@ -32,8 +32,8 @@ public class SceneLoader : MonoBehaviour
         MainMenu        = 1,
         CharacterSelect = 2,
         MainGame        = 3,
-        Training        = 4,
-        Result          = 5,
+        Training        = 5,
+        Result          = 4,
         Config          = 6,
         Credit          = 7
     }

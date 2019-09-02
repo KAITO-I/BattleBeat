@@ -11,7 +11,11 @@ public class AttackManager : MonoBehaviour
     [SerializeField]
     List<Player> players;
 
-    public static uint winner=1;
+    public RythmManager rythmManager;
+    public static uint winner;
+
+    public int totalTurn=0;
+
     public void SetPlayers(Player p1,Player p2) {
         if (players == null) {
             players = new List<Player>();
@@ -119,6 +123,22 @@ public class AttackManager : MonoBehaviour
             }
         }
         attackItems.RemoveAll(AttackItemIsEnd);
+
+
+        totalTurn++;
+        //tempo up 判定
+        switch (totalTurn)
+        {
+            case 32:
+                rythmManager.TempoUp(113);
+                ShowImage._instance.ShowImages(new string[] {"3", "2", "1", "TempoUp" });
+                break;
+            case 96:
+                rythmManager.TempoUp(150);
+                ShowImage._instance.ShowImages(new string[] { "3", "2", "1", "TempoUp" });
+                break;
+        }
+
     }
 
     private void CheckWinner()

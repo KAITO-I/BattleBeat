@@ -59,15 +59,21 @@ public class RythmManager : MonoBehaviour
                 events.Invoke();
 
                 //テンポ上昇
-                this.tempoCount++;
+                /*this.tempoCount++;
                 if (this.tempoCount == this.tempoUpCount)
                 {
                     this.tempoCount = 0;
                     this.bpm += tempoUpValue;
                     this.bps = 60f / (float)bpm;
                     if (this.bpm >= this.maxBpm) this.tempoUpCount = -1;
-                }
+                }*/
             }
         }
+    }
+
+    public void TempoUp(int tempo)
+    {
+        this.bpm = tempo;
+        this.bps = 60 / (float)bpm;
     }
 }
