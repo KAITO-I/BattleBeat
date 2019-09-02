@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-
+#if UNITY_EDITOR
 [CustomEditor(typeof(AttackItemBase))]
 public class AttackItemEditor : Editor
 {
@@ -131,3 +131,4 @@ public class TrapEditor : BasicAttackEditor
         base.OnInspectorGUI();
     }
 }
+#endif
