@@ -13,10 +13,18 @@ MonoBehaviour:
   m_Name: YUNIZON
   m_EditorClassIdentifier: 
   Name: "\u30E6\u30CB&\u30BE\u30FC\u30F3"
-  Avatar: {fileID: 21300000, guid: e5c34770fa2968f4b9ef8f91332d5e80, type: 3}
+  Avatar: {fileID: 21300000, guid: 1fdca0415bbf55d47a21b5d9be3865b5, type: 3}
   SkillIcons:
   - {fileID: 21300000, guid: d868b7884601a2e49b1d6e1504b62819, type: 3}
   - {fileID: 21300000, guid: d868b7884601a2e49b1d6e1504b62819, type: 3}
   - {fileID: 21300000, guid: d868b7884601a2e49b1d6e1504b62819, type: 3}
   - {fileID: 21300000, guid: d868b7884601a2e49b1d6e1504b62819, type: 3}
   prefab: {fileID: 4320667415473011673, guid: 7c25af2f3100d764aa2fac4e4b585de3, type: 3}
+  Serifs:
+  - 
+  - 
+  - 
+  - 
+  - 
+  CharaTextImage: {fileID: 0}
+  backGraund: {fileID: 21300000, guid: cc93827cdc4d9504f8a351730f941676, type: 3}

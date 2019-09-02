@@ -13,10 +13,18 @@ MonoBehaviour:
   m_Name: KAGURA
   m_EditorClassIdentifier: 
   Name: "\u30AB\u30B0\u30E9"
-  Avatar: {fileID: 21300000, guid: 4f8ef516263122e4ca3b9764865c21b0, type: 3}
+  Avatar: {fileID: 21300000, guid: 1d74d776405479a458bd7d5bd461f1f9, type: 3}
   SkillIcons:
   - {fileID: 21300000, guid: 4ecc88cd8e9f05e4d8920354903f2db8, type: 3}
   - {fileID: 21300000, guid: 2efb9ffda8b1f8e40929a925180eed8b, type: 3}
   - {fileID: 21300000, guid: 2ed9b06984158e74da5f1883df16d5a0, type: 3}
   - {fileID: 21300000, guid: 33d4797dcbf0e5b4894d37ef41085b1f, type: 3}
   prefab: {fileID: 4320667415473011673, guid: 5232ccf6a5bcb814f8e7cfc2d6d9435a, type: 3}
+  Serifs:
+  - "\u60AA\u304F\u306A\u304B\u3063\u305F\u3002\\n\u3044\u305A\u308C\u307E\u305F\u3001\u624B\u5408\u308F\u305B\u3092\u9858\u304A\u3046\u3002"
+  - "\u3082\u3046\u5C11\u3057\u30DE\u30B7\u306A\u3082\u306E\u306F\u5C45\u306A\u3044\u306E\u304B\uFF1F\\n\u2026\u2026\u3053\u308C\u3067\u306F\u8155\u304C\u920D\u308B\u3070\u304B\u308A\u3060\u3002"
+  - 
+  - 
+  - 
+  CharaTextImage: {fileID: 0}
+  backGraund: {fileID: 21300000, guid: c484f8491c82de54192d111e0ed703b6, type: 3}

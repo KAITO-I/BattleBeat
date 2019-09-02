@@ -13,10 +13,18 @@ MonoBehaviour:
   m_Name: ANA
   m_EditorClassIdentifier: 
   Name: "\u30A2\u30CA"
-  Avatar: {fileID: 21300000, guid: 5dc3ab8a41a0b814f8290e9e8ed3ec3b, type: 3}
+  Avatar: {fileID: 21300000, guid: 3ea14d54db64ea94c9edecf41d5c93ba, type: 3}
   SkillIcons:
   - {fileID: 21300000, guid: d868b7884601a2e49b1d6e1504b62819, type: 3}
   - {fileID: 21300000, guid: d868b7884601a2e49b1d6e1504b62819, type: 3}
   - {fileID: 21300000, guid: d868b7884601a2e49b1d6e1504b62819, type: 3}
   - {fileID: 21300000, guid: d868b7884601a2e49b1d6e1504b62819, type: 3}
   prefab: {fileID: 4320667415473011673, guid: 43fc2ee2dfc6bd34b95cfbc898677484, type: 3}
+  Serifs:
+  - 
+  - 
+  - 
+  - 
+  - 
+  CharaTextImage: {fileID: 0}
+  backGraund: {fileID: 21300000, guid: a5ab60f238700ec409a03d5b0db7e22f, type: 3}

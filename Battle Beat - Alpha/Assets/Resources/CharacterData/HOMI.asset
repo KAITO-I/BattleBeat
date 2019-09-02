@@ -13,10 +13,18 @@ MonoBehaviour:
   m_Name: HOMI
   m_EditorClassIdentifier: 
   Name: "\u30DB\u30FC\u30DF\u30FC"
-  Avatar: {fileID: 21300000, guid: 930ff3ab8010e1e4eb322e614f3f4bd0, type: 3}
+  Avatar: {fileID: 21300000, guid: 823e22aad650b6d449152b804c4fe4af, type: 3}
   SkillIcons:
   - {fileID: 21300000, guid: 5b36853538652174ea2005d938b89550, type: 3}
   - {fileID: 21300000, guid: a3c2bd923d733084bad8dc265517dc8e, type: 3}
   - {fileID: 21300000, guid: b78c46a9296a8bf41b30fef48733258b, type: 3}
   - {fileID: 21300000, guid: 75206a6f171fce246bb564e597cc46be, type: 3}
   prefab: {fileID: 2616607855929116335, guid: 74688a5cca0977841b1253a5d3ff96da, type: 3}
+  Serifs:
+  - 
+  - 
+  - 
+  - 
+  - 
+  CharaTextImage: {fileID: 0}
+  backGraund: {fileID: 21300000, guid: f4a69d4038760de499ed1c0ccb14e199, type: 3}

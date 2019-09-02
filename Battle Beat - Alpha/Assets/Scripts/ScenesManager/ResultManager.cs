@@ -17,54 +17,13 @@ public class ResultManager : MonoBehaviour
         TextDis,
         SceneJump
     }
-    struct CharaStatus
-    {
-        public Sprite _backImg;
-        public Sprite _charaImg;
-        public Sprite _CharaText;
-        public string _disWord;
-    }
-    //キャラクター台詞
-    string[,] _words =
-    {  
-        {
-            "悪くなかった。\nいずれまた、手合わせを願おう。",
-            "もう少しマシなものは居ないのか？\n……これでは腕が鈍るばかりだ。",
-            "六弦琴を振るい戦うか\n……小僧、中々に楽しめたぞ。",
-            "その腕の武装\n……少し見せてはもらえないだろうか？",
-            "なんとも珍妙なものに乗っているな。\n戦の流儀も人それぞれ、か。"
-        },
 
-        {
-            "楽しかったぜ！またやろうな！！",
-            "今日も良いビートだった！アンタも結構ノれてたぜ？",
-            "そのガッチガチな装備でよく動けんな……重くねーの？",
-            "オネーサンの店にライブステージ作ってくれよ！毎日盛り上げてやっからさ！	",
-            "お前らのゴーグルお揃いなのか？ッハハ、仲いいんだな！"
-        },
-        {
-            "",
-            "",
-            "",
-            "",
-            ""
-        },
-        {
-            "",
-            "",
-            "",
-            "",
-            ""
-        },
-    };
-
-    //ここのintをSettingのCharaに変えると全て変わる
-    Dictionary<int, CharaStatus> chara = new Dictionary<int, CharaStatus>();
     ResultState state;
     Image PlayerT, charatext;
     Text  Word;
     Vector3[] vec = new Vector3[3];
     RectTransform[] Gole = new RectTransform[3];
+    string WordText;
     private float timeUntilDisplay = 0;     // 表示にかかる時間
     private float timeElapsed = 1;          // 文字列の表示を開始した時間
     private int lastUpdateCharacter = -1;       // 表示中の文字数
@@ -79,7 +38,7 @@ public class ResultManager : MonoBehaviour
     GameObject[] Moves;
     //背景の画像
     [SerializeField,Header("オブジェクトリスト")]
-    Sprite[] BackImgs, CharaImags, PlayerImgs, CharaTexts;
+    Sprite[]  PlayerImgs;
     [SerializeField]
     GameObject WordPos;
     //勝利したほうの情報を受け取る
@@ -88,7 +47,7 @@ public class ResultManager : MonoBehaviour
     [SerializeField]
     int WinCharaID;
     [SerializeField]
-    float _loseCharaId;
+    int _loseCharaId;
     [SerializeField]
     [Range(0.001f, 0.3f)]
     float intervalForCharacterDisplay = 0.05f;  // 1文字の表示にかかる時間
@@ -116,22 +75,19 @@ public class ResultManager : MonoBehaviour
         BlackImg.SetActive(true);
         //プレイヤー情報
         WinPlayerID = (int)AttackManager.winner;
+        _loseCharaId = 3 - WinPlayerID;
         if (WinPlayerID == 1)
         {
             WinCharaID = (int)Setting.p1c + 1;
         }
-
-        //キャラ情報初期化
-        for(int i = 0; i < 4; ++i)
+        else if(WinCharaID == 2)
         {
-            CharaStatus status = new CharaStatus();
-            //セリフをランダムに出現させるため
-            status._disWord = CharaWoadInstance();
-            status._backImg = BackImgs[i];
-            status._charaImg = CharaImags[i];
-            status._CharaText = CharaTexts[i];
-            chara.Add(i, status);
+            WinCharaID = (int)Setting.p2c + 1;
         }
+
+        Setting.Chara winChara = (Setting.Chara) (WinCharaID-1);
+        string path = "CharacterData/" + winChara.ToString();
+        CharaData winnerData = Resources.Load<CharaData>(path);
         
         PlayerT = Moves[0].GetComponent<Image>();
         charatext = Moves[1].GetComponent<Image>();
@@ -154,17 +110,19 @@ public class ResultManager : MonoBehaviour
             CharaImg.GetComponent<RectTransform>().position = _vec;
         }
         rect.transform.localScale = new Vector3(_xSize[WinCharaID], _ySize[WinCharaID], 1f);
+
         //背景
-        BackGraund.sprite = chara[WinCharaID - 1]._backImg;
+        BackGraund.sprite = winnerData.backGraund;
         ////色初期化
         changecolor = Color.white;
         //changecolor.a = 0.1f;
         //CharaImg.color = changecolor;
 
         //キャラクター
-        CharaImg.sprite = chara[WinCharaID - 1]._charaImg;
-        charatext.sprite = chara[WinCharaID - 1]._CharaText;
-
+        CharaImg.sprite = winnerData.Avatar;
+        charatext.sprite = winnerData.CharaTextImage;
+        WordText = CharaWoadInstance(winnerData);
+        //勝利したほうを表示
         PlayerT.sprite = PlayerImgs[WinPlayerID - 1];
 
         WordPos.SetActive(false);
@@ -224,136 +182,52 @@ public class ResultManager : MonoBehaviour
     void TextDis()
     {
         // クリックから経過した時間が想定表示時間の何%か確認し、表示文字数を出す
-        int displayCharacterCount = (int)(Mathf.Clamp01((Time.time - timeElapsed) / timeUntilDisplay) * chara[WinCharaID - 1]._disWord.Length);
+        int displayCharacterCount = (int)(Mathf.Clamp01((Time.time - timeElapsed) / timeUntilDisplay) * WordText.Length);
         // 表示文字数が前回の表示文字数と異なるならテキストを更新する
         if (displayCharacterCount != lastUpdateCharacter)
         {
-            Word.text = chara[WinCharaID-1]._disWord.Substring(0, displayCharacterCount);
+            Word.text = WordText.Substring(0, displayCharacterCount);
             lastUpdateCharacter = displayCharacterCount;
         }
         //すべて表示したら飛べるようにする
-        if (displayCharacterCount == chara[WinCharaID - 1]._disWord.Length)
+        if (displayCharacterCount == WordText.Length)
         {
             state = ResultState.SceneJump;
         }
 
     }
 
-    string CharaWoadInstance()
+    string CharaWoadInstance(CharaData data)
     {
         string _charaText = null;
-        //int _charaWordId = Random.Range(0, 3);
-        int _charaWordId = Random.Range(0, 2);
-        switch (WinCharaID)
+        if (WinPlayerID == _loseCharaId)
         {
-            case 1:
-                if (_charaWordId==2)
-                {
-                    switch (_loseCharaId)
-                    {
-                        case 2:
-                            _charaText = _words[WinCharaID - 1, 2];
-                            break;
-                        case 3:
-                            _charaText = _words[WinCharaID - 1, 3];
-                            break;
-                        case 4:
-                            _charaText = _words[WinCharaID - 1, 4];
-                            break;
-                        default:
-                            _charaWordId = Random.Range(0, 2);
-                            _charaText = _words[WinCharaID - 1, _charaWordId];
-                            break;
-                    }
-
-                }
-                else
-                {
-                    _charaText = _words[WinCharaID - 1, _charaWordId];
-                }
-                break;
-            case 2:
-                if (_charaWordId == 2)
-                {
-                    switch (_loseCharaId)
-                    {
-                        case 1:
-                            _charaText = _words[WinCharaID - 1, 2];
-                            break;
-                        case 3:
-                            _charaText = _words[WinCharaID - 1, 3];
-                            break;
-                        case 4:
-                            _charaText = _words[WinCharaID - 1, 4];
-                            break;
-                        default:
-                            _charaWordId = Random.Range(0, 2);
-                            _charaText = _words[WinCharaID - 1, _charaWordId];
-                            break;
-
-                    }
-
-                }
-                else
-                {
-                    _charaText = _words[WinCharaID - 1, _charaWordId];
-                }
-
-                break;
-            case 3:
-                if (_charaWordId == 2)
-                {
-                    switch (_loseCharaId)
-                    {
-                        case 1:
-                            _charaText = _words[WinCharaID - 1, 2];
-                            break;
-                        case 2:
-                            _charaText = _words[WinCharaID - 1, 3];
-                            break;
-                        case 4:
-                            _charaText = _words[WinCharaID - 1, 4];
-                            break;
-                        default:
-                            _charaWordId = Random.Range(0, 2);
-                            _charaText = _words[WinCharaID - 1, _charaWordId];
-                            break;
-                    }
-                }
-                else
-                {
-                    _charaText = _words[WinCharaID - 1, _charaWordId];
-                }
-
-                break;
-            case 4:
-                if (_charaWordId == 2)
-                {
-                    switch (_loseCharaId)
-                    {
-                        case 1:
-                            _charaText = _words[WinCharaID - 1, 2];
-                            break;
-                        case 3:
-                            _charaText = _words[WinCharaID - 1, 3];
-                            break;
-                        case 4:
-                            _charaText = _words[WinCharaID - 1, 4];
-                            break;
-                        default:
-                            _charaWordId = Random.Range(0, 2);
-                            _charaText = _words[WinCharaID - 1, _charaWordId];
-                            break;
-                    }
-                }
-                else
-                {
-                    _charaText = _words[WinCharaID - 1, _charaWordId];
-                }
-                break;
-            default:
-                _charaText = "範囲外が選択されました";
-                break;
+            int _index = Random.Range(0, 2);
+            switch (_index)
+            {
+                case 0:
+                    _charaText = data.Serifs[WinPlayerID];
+                    break;
+                case 1:
+                    _charaText = data.Serifs[4];
+                    break;
+            }
+        }
+        else
+        {
+            int _index = Random.Range(0, 3);
+            switch (_index)
+            {
+                case 0:
+                    _charaText = data.Serifs[_loseCharaId];
+                    break;
+                case 1:
+                    _charaText = data.Serifs[WinPlayerID];
+                    break;
+                case 2:
+                    _charaText = data.Serifs[4];
+                    break;
+            }
         }
         return _charaText;
     }
@@ -362,7 +236,7 @@ public class ResultManager : MonoBehaviour
     void TextInstance()
     {
         // 想定表示時間と現在の時刻をキャッシュ
-        timeUntilDisplay = chara[WinCharaID - 1]._disWord.Length * intervalForCharacterDisplay;
+        timeUntilDisplay = WordText.Length * intervalForCharacterDisplay;
         timeElapsed = Time.time;
         // 文字カウントを初期化
         lastUpdateCharacter = -1;

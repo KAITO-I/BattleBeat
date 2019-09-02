@@ -133,7 +133,7 @@ public class AttackManager : MonoBehaviour
                 rythmManager.TempoUp(113);
                 ShowImage._instance.ShowImages(new string[] {"3", "2", "1", "TempoUp" });
                 break;
-            case 96:
+            case 64:
                 rythmManager.TempoUp(150);
                 ShowImage._instance.ShowImages(new string[] { "3", "2", "1", "TempoUp" });
                 break;

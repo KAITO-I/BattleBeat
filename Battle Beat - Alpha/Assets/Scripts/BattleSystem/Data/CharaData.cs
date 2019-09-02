@@ -9,4 +9,7 @@ public class CharaData : ScriptableObject
     public Sprite Avatar;
     public Sprite[] SkillIcons = new Sprite[4];
     public GameObject prefab;
+    public string[] Serifs = new string[5];
+    public Sprite CharaTextImage;
+    public Sprite backGraund;
 }
