@@ -5,28 +5,28 @@ using System.Collections;
 using UnityEngine;
 
 //==============================
-// SE専用クラス(Soundを継承)
+// SEクラス
 //==============================
 public class SoundEffect : Sound
 {
     private bool destroyed;
 
     //------------------------------
-    // 再生(override)
+    // 再生
     //------------------------------
     public override Sound Play(AudioClip clip)
     {
-        SoundEffect se = Instantiate(this).GetComponent<SoundEffect>();
-        se.AudioSource = se.gameObject.GetComponent<AudioSource>();
-
         this.destroyed = false;
+
+        SoundEffect se = Instantiate(this).GetComponent<SoundEffect>();
+        //se.AudioSource = se.gameObject.GetComponent<AudioSource>();
         
         StartCoroutine(se.DestroyTimer(clip));
         return se;
     }
 
     //------------------------------
-    // 再生(Coroutine)
+    // SE再生後に自身を消去
     //------------------------------
     private IEnumerator DestroyTimer(AudioClip clip)
     {
@@ -42,12 +42,17 @@ public class SoundEffect : Sound
         }
     }
 
+    //------------------------------
+    // 停止
+    //------------------------------
     public override void Stop()
     {
         if (!this.destroyed)
         {
-            base.Stop();
+            this.AudioSource.Stop();
+
             this.destroyed = true;
+
             Destroy(this.gameObject);
         }
     }

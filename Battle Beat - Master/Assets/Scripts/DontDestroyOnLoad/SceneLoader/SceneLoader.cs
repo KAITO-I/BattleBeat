@@ -7,6 +7,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 //==============================
 // シーン読み込み
@@ -64,10 +65,10 @@ public class SceneLoader : MonoBehaviour
     // ロード中
     public bool isLoading { private set; get; }
     [Header("Loading")]
-    [SerializeField] Text   pressButtonText;
-    [SerializeField] Text   loadingText;
-    private          string loadingTextMsg;
-    [SerializeField] Image  loadingGauge;
+    [SerializeField] TextMeshProUGUI pressButtonText;
+    [SerializeField] TextMeshProUGUI loadingText;
+    private          string          loadingTextMsg;
+    [SerializeField] Image           loadingGauge;
 
     //------------------------------
     // 初期化

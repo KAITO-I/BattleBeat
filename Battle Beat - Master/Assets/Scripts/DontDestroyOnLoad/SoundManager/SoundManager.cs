@@ -49,16 +49,18 @@ public class SoundManager : MonoBehaviour {
             PlayerPrefs.SetFloat("MasterVol", value);
             PlayerPrefs.Save();
 
-            this.BGM.UpdateVolume();
+            this.bgm.UpdateVolume();
             this.se.UpdateVolume();
         }
     }
 
-    public Sound BGM { get; private set; }
+    [SerializeField]
+    private BackgroundMusic bgm;
+    public BackgroundMusic BGM { get { return this.bgm; } }
 
     [SerializeField]
     private SoundEffect se;
-    public  SoundEffect SE { get { return this.se; } }
+    public SoundEffect SE { get { return this.se; } }
 
     //------------------------------
     // 初期化
@@ -68,7 +70,6 @@ public class SoundManager : MonoBehaviour {
         if (SoundManager.instance != null) return;
 
         SoundManager.instance = this;
-        this.BGM = GetComponent<Sound>();
 
         //===== 音量初期値 =====
         this.masterVolume = new MasterVolume(PlayerPrefs.GetFloat("MasterVol", defaultVol));

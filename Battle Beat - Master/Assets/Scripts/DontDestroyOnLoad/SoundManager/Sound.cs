@@ -1,18 +1,19 @@
 ﻿//==============================
 // Created by KAITO-I (稲福)
 //==============================
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Sound : MonoBehaviour
+//==============================
+// BGM、SEへの継承専用クラス
+//==============================
+public abstract class Sound : MonoBehaviour
 {
-    protected AudioSource AudioSource;
+    protected AudioSource AudioSource { get; private set; }
 
-    protected MasterVolume MasterVol;
-    private   string       prefsName;
-    private   float        volume;
-    public    float        Volume
+    protected MasterVolume MasterVol { get; private set; }
+    private string prefsName;
+    private float volume;
+    public float Volume
     {
         get { return this.volume; }
         set
@@ -35,42 +36,25 @@ public class Sound : MonoBehaviour
 
         this.MasterVol = masterVol;
         this.prefsName = prefsName;
-        this.volume    = PlayerPrefs.GetFloat(prefsName, defVol);
+        this.volume = PlayerPrefs.GetFloat(prefsName, defVol);
 
         UpdateVolume();
     }
 
-    //------------------------------
-    // 音量更新
-    //------------------------------
     public void UpdateVolume()
     {
         this.AudioSource.volume = MasterVol.Value * volume;
     }
 
+    //==============================
+    // 継承専用
+    //==============================
     //------------------------------
     // 再生
     //------------------------------
     // [引数]
     // AudioClip sound : 再生する音源
     //------------------------------
-    public virtual Sound Play(AudioClip clip)
-    {
-        // 既に再生していれば実行しない
-        if (this.AudioSource.clip != clip)
-        {
-            if (this.AudioSource.isPlaying) Stop();
-            this.AudioSource.clip = clip;
-            this.AudioSource.Play();
-        }
-        return this;
-    }
-
-    //------------------------------
-    // 停止
-    //------------------------------
-    public virtual void Stop()
-    {
-        this.AudioSource.Stop();
-    }
+    public abstract Sound Play(AudioClip audioClip);
+    public abstract void  Stop();                    // 停止
 }

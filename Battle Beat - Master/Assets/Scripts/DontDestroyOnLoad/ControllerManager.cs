@@ -178,7 +178,9 @@ public class ControllerManager : MonoBehaviour
     {
         float player1Axis = this.Player1.GetAxis(axis);
         float player2Axis = this.Player2.GetAxis(axis);
-        return player1Axis > player2Axis ? player1Axis : player2Axis;
+        if      (!Mathf.Approximately(player1Axis, 0f)) return player1Axis;
+        else if (!Mathf.Approximately(player2Axis, 0f)) return player2Axis;
+        else                                            return 0f;
     }
 
     public bool GetButton(Button button)
