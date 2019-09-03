@@ -7,10 +7,10 @@ public class KaguraAnimation :BasePlayerAnimation
 {
     Animator _kusariAnim;
     Animator _toguroAnim;
-    private void Start()
+    protected override void Start()
     {
-        anim = GetComponent<Animator>();
-        player = PlayerObj.GetComponent<Player>();
+        base.Start();
+        _toguroAnim = _enemyObj.transform.GetChild(1).GetComponent<Animator>();
         _kusariAnim = gameObject.transform.GetChild(2).GetComponent<Animator>();
     }
     protected override void Attack1()
@@ -39,16 +39,15 @@ public class KaguraAnimation :BasePlayerAnimation
     {
         if (_attack)//相手につけている鎖のアニメーションを再生させる
         {
-            _toguroAnim = _enemyObj.transform.GetChild(1).GetComponent<Animator>();
             _enemyObj.transform.GetChild(1).GetComponent<MeshRenderer>().enabled = true;//表示
             _toguroAnim.SetTrigger("Toguro");
         }
-        else　if(_enemyObj!=null)//鎖を非表示にするため
+        else　if(_enemyObj!=null)//引き寄せ後の処理
         {
-            _enemyObj.transform.GetChild(1).GetComponent<MeshRenderer>().enabled = false;//非表示
+            _enemyObj.transform.GetChild(1).GetComponent<MeshRenderer>().enabled = false;//表示
             _kusariAnim.SetTrigger(_triggerName);
         }
-        else//アニメーションのみ再生
+        else//当たらない場合の処理
         {
             _kusariAnim.SetTrigger(_triggerName);
         }

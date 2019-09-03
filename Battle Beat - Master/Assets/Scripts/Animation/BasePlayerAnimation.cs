@@ -11,7 +11,7 @@ public class BasePlayerAnimation:MonoBehaviour
     protected Player player;
     AnimatorStateInfo info_;
 
-
+    public MeshRenderer _renderer;
     public bool AnimCheck;
     public float interval;
 
@@ -19,10 +19,12 @@ public class BasePlayerAnimation:MonoBehaviour
     protected Animator anim;
     protected string PlayAnim;
 
-    void Start()
+    protected virtual void Start()
     {
         anim = GetComponent<Animator>();
         player = PlayerObj.GetComponent<Player>();
+        _renderer = transform.GetChild(2).GetComponent<MeshRenderer>();
+        _renderer.enabled = false;
     }
     //（プレイヤーの場所,目的地,コマンド）
     public virtual void Move(GameObject Player,Vector3 Goal, Player.MoveComand comand)
