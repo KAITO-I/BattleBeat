@@ -103,6 +103,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -177,6 +178,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerObj: {fileID: 4320667415473011673}
+  _renderer: {fileID: 0}
   AnimCheck: 0
   interval: 0.6
 --- !u!1001 &1929730577720793202
@@ -321,6 +323,14 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 958b28061271072458e11cf09fe80c31, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d1de063dd075dea47b7cde0f6af4ce31, type: 2}
+    - target: {fileID: 2300002, guid: 958b28061271072458e11cf09fe80c31, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d1de063dd075dea47b7cde0f6af4ce31, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 958b28061271072458e11cf09fe80c31, type: 3}
 --- !u!4 &4217243728480125079 stripped
@@ -346,11 +356,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 879e128bb1494b243b25aec9bd8e3cd9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.188
+      value: 0.052
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 879e128bb1494b243b25aec9bd8e3cd9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.14
+      value: 0.159
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 879e128bb1494b243b25aec9bd8e3cd9, type: 3}
       propertyPath: m_LocalRotation.x
@@ -384,6 +394,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 879e128bb1494b243b25aec9bd8e3cd9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2fcfbc891783c9c43a3d5b6db45dce92, type: 2}
     - target: {fileID: 9500000, guid: 879e128bb1494b243b25aec9bd8e3cd9, type: 3}
       propertyPath: m_Controller
       value: 
