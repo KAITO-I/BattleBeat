@@ -5,7 +5,6 @@ using UnityEngine;
 //攻撃は違うのでクラスを分ける
 public class HomiAnimation : BasePlayerAnimation
 {
-
     protected override void Attack1()
     {
         anim.SetTrigger("Attack1");

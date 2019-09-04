@@ -23,6 +23,12 @@ public class RythmManager : MonoBehaviour
     private float time;
     private int   tempoCount;
 
+    public float getbps
+    {
+        get { return bps; }
+    }
+
+
     // 命令先
     [SerializeField] private UnityEvent events = new UnityEvent();
 

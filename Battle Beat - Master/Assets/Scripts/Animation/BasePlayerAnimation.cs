@@ -6,11 +6,19 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Animator))]
 public class BasePlayerAnimation:MonoBehaviour
 {
+    public enum _KusariAnimList
+    {
+        Toguro,
+        Start,
+        Finish
+    }
     [SerializeField]
     protected GameObject PlayerObj;
     protected Player player;
     AnimatorStateInfo info_;
+    RythmManager rythm;
 
+    //自分のとぐろ
     public MeshRenderer _renderer;
     public bool AnimCheck;
     public float interval;
@@ -23,8 +31,15 @@ public class BasePlayerAnimation:MonoBehaviour
     {
         anim = GetComponent<Animator>();
         player = PlayerObj.GetComponent<Player>();
-        _renderer = transform.GetChild(2).GetComponent<MeshRenderer>();
+        _renderer = transform.GetChild(1).GetComponent<MeshRenderer>();
         _renderer.enabled = false;
+        rythm = GameObject.Find("Manager").GetComponent<RythmManager>();
+        interval = rythm.getbps;
+    }
+
+    protected virtual void Update()
+    {
+        interval = rythm.getbps;
     }
     //（プレイヤーの場所,目的地,コマンド）
     public virtual void Move(GameObject Player,Vector3 Goal, Player.MoveComand comand)
@@ -49,10 +64,9 @@ public class BasePlayerAnimation:MonoBehaviour
         float time = 0;
 
         Vector3 Oragin = obj.transform.position;
-        //移動距離を測る
         Vector3 pos = Vector3.Lerp(Oragin, Goal,time/interval);
         obj.transform.position = pos;
-        //距離
+        //移動
         while (time<interval)
         {
             time += Time.deltaTime;
