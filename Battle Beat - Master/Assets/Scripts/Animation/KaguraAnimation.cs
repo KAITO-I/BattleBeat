@@ -5,6 +5,13 @@ using UnityEngine;
 //攻撃は違うのでクラスを分ける
 public class KaguraAnimation :BasePlayerAnimation
 {
+    public enum PP
+    {
+        Tempo1,
+        Tempo2,
+        Tempo3
+    };
+
     Animator _kusariAnim;
     Animator _toguroAnim;
     protected override void Start()
