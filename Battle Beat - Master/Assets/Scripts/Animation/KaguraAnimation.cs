@@ -18,13 +18,16 @@ public class KaguraAnimation :BasePlayerAnimation
     protected override void Update()
     {
         base.Update();
-        _KusariInfo = _toguroAnim.GetCurrentAnimatorStateInfo(0);
-        if (_toguroAnim!=null&&!_KusariInfo.IsName("Toguro"))//巻きつくアニメーションが終了したら
+        if (_toguroAnim!=null)//巻きつくアニメーションが終了したら
         {
-            _enemyRenderer.enabled = false;//非表示
-            KusariAnim(_KusariAnimList.Finish);
-            _toguroAnim = null;
-            _enemyRenderer = null;
+            _KusariInfo = _toguroAnim.GetCurrentAnimatorStateInfo(0);
+            if (!_KusariInfo.IsName("Toguro"))
+            {
+                _enemyRenderer.enabled = false;//非表示
+                KusariAnim(_KusariAnimList.Finish);
+                _toguroAnim = null;
+                _enemyRenderer = null;
+            }
         }
 
     }
