@@ -8,7 +8,7 @@ using UnityEngine;
 //==============================
 public abstract class Sound : MonoBehaviour
 {
-    protected AudioSource AudioSource { get; private set; }
+    protected AudioSource AudioSource { get; set; }
 
     protected MasterVolume MasterVol { get; private set; }
     private string prefsName;
@@ -53,8 +53,26 @@ public abstract class Sound : MonoBehaviour
     // 再生
     //------------------------------
     // [引数]
-    // AudioClip sound : 再生する音源
+    // AudioClip clip : 再生する音源
     //------------------------------
-    public abstract Sound Play(AudioClip audioClip);
-    public abstract void  Stop();                    // 停止
+    // [返り値]
+    // Sound : 自身のクラス（音楽再生管理）
+    //------------------------------
+    public abstract Sound Play(AudioClip clip);
+
+    //------------------------------
+    // Resourcesから再生（ファイルパス：Sounds)
+    //------------------------------
+    // [引数]
+    // string name : 再生する音源の名前
+    //------------------------------
+    // [返り値]
+    // Sound : 自身のクラス（音楽再生管理）
+    //------------------------------
+    public abstract Sound PlayFromResources(string name);
+
+    //------------------------------
+    // 停止
+    //------------------------------
+    public abstract void  Stop();
 }

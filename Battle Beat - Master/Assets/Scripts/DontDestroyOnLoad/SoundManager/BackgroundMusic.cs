@@ -23,6 +23,12 @@ public class BackgroundMusic : Sound
         return this;
     }
 
+    public override Sound PlayFromResources(string name)
+    {
+        AudioClip clip = Resources.Load<AudioClip>("Sound/BGM/" + name);
+        return Play(clip);
+    }
+
     //------------------------------
     // 停止
     //------------------------------

@@ -59,16 +59,29 @@ public class SceneLoader : MonoBehaviour
 
     // シャッターアニメーション
     [Header("Shutter Animation")]
-    [SerializeField] float shutterDownTime;
-    [SerializeField] float shutterUpTime;
+    [SerializeField]
+    private float shutterDownTime;
+    [SerializeField]
+    private float shutterUpTime;
 
     // ロード中
     public bool isLoading { private set; get; }
+
     [Header("Loading")]
-    [SerializeField] TextMeshProUGUI pressButtonText;
-    [SerializeField] TextMeshProUGUI loadingText;
-    private          string          loadingTextMsg;
-    [SerializeField] Image           loadingGauge;
+    [SerializeField]
+    private TextMeshProUGUI pressButtonText;
+    [SerializeField]
+    private TextMeshProUGUI loadingText;
+    [SerializeField]
+    private Image loadingGauge;
+
+    private string loadingTextMsg;
+
+    [Header("LoadTitle")]
+    [SerializeField]
+    private float fadeTime;
+    [SerializeField]
+    private Image fade;
 
     //------------------------------
     // 初期化
@@ -78,11 +91,12 @@ public class SceneLoader : MonoBehaviour
         if (SceneLoader.instance != null) return;
         SceneLoader.instance = this;
 
-        this.isLoading = false;
-        this.pressButtonText.color = new Color(this.pressButtonText.color.r, this.pressButtonText.color.g, this.pressButtonText.color.b);
-        this.loadingText.color     = new Color(this.loadingText.color.r, this.loadingText.color.g, this.loadingText.color.b);
-        this.loadingTextMsg        = this.loadingText.text;
-        this.loadingGauge.color    = new Color(this.loadingGauge.color.r, this.loadingGauge.color.g, this.loadingGauge.color.b);
+        this.loadingObj.SetActive(false);
+
+        this.isLoading      = false;
+        this.loadingTextMsg = this.loadingText.text;
+
+        this.fade.color = new Color(0f, 0f, 0f, 1f);
     }
 
     //------------------------------
@@ -99,130 +113,137 @@ public class SceneLoader : MonoBehaviour
     private IEnumerator Load(Scenes target)
     {
         this.isLoading = true;
-        bool title = (SceneManager.GetActiveScene().buildIndex == 0);
+
+        this.loadingObj.SetActive(true);
+        this.fade.color = new Color(this.fade.color.r, this.fade.color.g, this.fade.color.b, 0f); // 念のためAlphaを0に
+
         float time;
-        Transform loadingObjTF = this.loadingObj.transform;
 
-        //===== ロード文字初期化 =====
-        this.loadingText.text = this.loadingTextMsg;
-
-        //===== シャッター降下 =====
-        // 設定
-        loadingObjTF.position = new Vector3(SceneLoader.canvasCenterX, SceneLoader.canvasCenterY + Screen.height);
-        this.pressButtonText.color = new Color(this.pressButtonText.color.r, this.pressButtonText.color.g, this.pressButtonText.color.b, 0f);
-        this.loadingText.color     = new Color(this.loadingText.color.r, this.loadingText.color.g, this.loadingText.color.b, title ? 0f : 1f);
-        this.loadingGauge.fillAmount = 0f;
-
-        // 降下
-        time = 0f;
-        while (time <= this.shutterDownTime)
+        //===== タイトルシーン以外への遷移 =====
+        if (target != Scenes.Title)
         {
-            loadingObjTF.position = 
-                new Vector3(
-                    SceneLoader.canvasCenterX,
-                    Mathf.Lerp(SceneLoader.canvasCenterY + Screen.height, SceneLoader.canvasCenterY, time / this.shutterDownTime)
-                );
-            time += Time.deltaTime;
-            yield return null;
-        }
+            Transform loadingObjTF = this.loadingObj.transform;
+            bool isTitle = SceneManager.GetActiveScene().buildIndex == (int)Scenes.Title;
 
-        // 修正
-        loadingObjTF.position = new Vector3(SceneLoader.canvasCenterX, SceneLoader.canvasCenterY);
+            //===== ロード文字初期化 =====
+            this.loadingText.text = this.loadingTextMsg;
 
-        //タイトルなら文字アニメーション再生
-        if (title)
-        {
-            this.pressButtonText.GetComponent<Animation>().Play();
-            while (true)
+            //===== シャッター降下 =====
+            // 設定
+            loadingObjTF.position = new Vector3(SceneLoader.canvasCenterX, SceneLoader.canvasCenterY + Screen.height);
+            this.pressButtonText.color = new Color(this.pressButtonText.color.r, this.pressButtonText.color.g, this.pressButtonText.color.b, 0f);
+            this.loadingText.color = new Color(this.loadingText.color.r, this.loadingText.color.g, this.loadingText.color.b, isTitle ? 0f : 1f);
+            this.loadingGauge.fillAmount = 0f;
+
+            // 降下
+            time = 0f;
+            while (time <= this.shutterDownTime)
             {
-                if (Input.anyKeyDown)
-                {
-                    this.pressButtonText.GetComponent<Animation>().Stop();
-                    this.pressButtonText.color = new Color(this.pressButtonText.color.r, this.pressButtonText.color.g, this.pressButtonText.color.b, 0f);
-                    break;
-                }
+                loadingObjTF.position =
+                    new Vector3(
+                        SceneLoader.canvasCenterX,
+                        Mathf.Lerp(SceneLoader.canvasCenterY + Screen.height, SceneLoader.canvasCenterY, time / this.shutterDownTime)
+                    );
+                time += Time.deltaTime;
                 yield return null;
             }
+
+            // 修正
+            loadingObjTF.position = new Vector3(SceneLoader.canvasCenterX, SceneLoader.canvasCenterY);
+
+            //タイトルなら文字アニメーション再生
+            if (isTitle)
+            {
+                this.pressButtonText.GetComponent<Animation>().Play();
+                while (true)
+                {
+                    if (Input.anyKeyDown)
+                    {
+                        this.pressButtonText.GetComponent<Animation>().Stop();
+                        this.pressButtonText.color = new Color(this.pressButtonText.color.r, this.pressButtonText.color.g, this.pressButtonText.color.b, 0f);
+                        break;
+                    }
+                    yield return null;
+                }
+            }
+
+            //===== 呼び出し =====
+            //ローディング文字コルーチン再生
+            Coroutine loadingTextAnim = StartCoroutine(Loading());
+
+            AsyncOperation async = SceneManager.LoadSceneAsync((int)target);
+            async.allowSceneActivation = false;
+
+            // 呼び出し待機
+            while (async.progress < 0.9f)
+            {
+                this.loadingGauge.fillAmount = async.progress;
+                yield return null;
+            }
+
+            // 修正
+            this.loadingGauge.fillAmount = 1f;
+
+            // ローディング文字コルーチン停止
+            StopCoroutine(loadingTextAnim);
+
+            // シーン移動
+            async.allowSceneActivation = true;
+
+            // 1フレーム待機
+            yield return 0;
+
+            //===== シャッター上昇 =====
+            time = 0f;
+            while (time <= this.shutterUpTime)
+            {
+                loadingObjTF.position =
+                    new Vector3(
+                        SceneLoader.canvasCenterX,
+                        Mathf.Lerp(SceneLoader.canvasCenterY, SceneLoader.canvasCenterY + Screen.height, time / this.shutterUpTime)
+                    );
+                time += Time.deltaTime;
+                yield return null;
+            }
+
+            // 修正
+            loadingObjTF.position = new Vector3(SceneLoader.canvasCenterX, SceneLoader.canvasCenterY + Screen.height);
         }
-
-        //===== 呼び出し =====
-        //ローディング文字コルーチン再生
-        Coroutine loadingTextAnim = StartCoroutine(Loading());
-
-        AsyncOperation async = SceneManager.LoadSceneAsync((int)target);
-        async.allowSceneActivation = false;
-
-        while (async.progress < 0.9f)
+        //===== タイトルシーンへの遷移 =====
+        else
         {
-            this.loadingGauge.fillAmount = async.progress;
-            yield return null;
+            //===== フェード =====
+            time = 0f;
+            while (time <= this.fadeTime)
+            {
+                this.fade.color = new Color(this.fade.color.r, this.fade.color.g, this.fade.color.b, Mathf.Lerp(0f, 1f, time / this.fadeTime));
+
+                time += Time.deltaTime;
+                yield return 0;
+            }
+
+            // 修正
+            this.fade.color = new Color(this.fade.color.r, this.fade.color.g, this.fade.color.b, 1f);
+
+            //===== 呼び出し =====
+            AsyncOperation async = SceneManager.LoadSceneAsync((int)target);
+            async.allowSceneActivation = false;
+
+            // 呼び出し待機
+            while (async.progress < 0.9f) yield return null;
+
+            // シーン移動
+            async.allowSceneActivation = true;
+
+            // 1フレーム待機
+            yield return 0;
+
+            this.fade.color = new Color(this.fade.color.r, this.fade.color.g, this.fade.color.b, 0f);
         }
 
-        // 修正
-        this.loadingGauge.fillAmount = 1f;
-
-        // ローディング文字コルーチン停止
-        StopCoroutine(loadingTextAnim);
-
-        //===== シャッター上昇 =====
-        async.allowSceneActivation = true;
-        time = 0f;
-        while (time <= this.shutterUpTime)
-        {
-            loadingObjTF.position =
-                new Vector3(
-                    SceneLoader.canvasCenterX,
-                    Mathf.Lerp(SceneLoader.canvasCenterY, SceneLoader.canvasCenterY + Screen.height, time / this.shutterUpTime)
-                );
-            time += Time.deltaTime;
-            yield return null;
-        }
-
-        // 修正
-        loadingObjTF.position = new Vector3(SceneLoader.canvasCenterX, SceneLoader.canvasCenterY + Screen.height);
+        this.loadingObj.SetActive(false);
 
         this.isLoading = false;
-
-        /*
-        this.slider.value = 0f;
-        this.isLoading = true;
-
-        // 暗転
-        float time = 0f;
-        this.background.color = new Color(0f, 0f, 0f, 0f);
-        while (time <= this.fadeInTime)
-        {
-            this.background.color = new Color(0f, 0f, 0f, Mathf.Lerp(0f, 1f, time / this.fadeInTime));
-            time += Time.deltaTime;
-            yield return null;
-        }
-
-        // 呼び出し
-        this.loadScreen.SetActive(true);
-        AsyncOperation async = SceneManager.LoadSceneAsync((int)target);
-        async.allowSceneActivation = false;
-        while (async.progress < 0.9f)
-        {
-            this.slider.value = async.progress;
-            yield return null;
-        }
-
-        // 呼び出し完了
-        this.loadScreen.SetActive(false);
-        async.allowSceneActivation = true;
-
-        // 明転
-        time = 0f;
-        this.background.color = new Color(0f, 0f, 0f, 1f);
-        while (time <= this.fadeOutTime)
-        {
-            this.background.color = new Color(0f, 0f, 0f, Mathf.Lerp(1f, 0f, time / this.fadeOutTime));
-            time += Time.deltaTime;
-            yield return null;
-        }
-
-        this.isLoading = false;
-        */
     }
 
     private IEnumerator Loading()

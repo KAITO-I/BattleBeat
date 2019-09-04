@@ -19,10 +19,16 @@ public class SoundEffect : Sound
         this.destroyed = false;
 
         SoundEffect se = Instantiate(this).GetComponent<SoundEffect>();
-        //se.AudioSource = se.gameObject.GetComponent<AudioSource>();
+        se.AudioSource = se.gameObject.GetComponent<AudioSource>();
         
         StartCoroutine(se.DestroyTimer(clip));
         return se;
+    }
+
+    public override Sound PlayFromResources(string name)
+    {
+        AudioClip clip = Resources.Load<AudioClip>("Sound/SE/" + name);
+        return Play(clip);
     }
 
     //------------------------------

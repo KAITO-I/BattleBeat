@@ -693,5 +693,10 @@ PrefabInstance:
       propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8502207969995269353, guid: a9542cc574199d240acdeb56dc1e5738,
+        type: 3}
+      propertyPath: fadeTime
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a9542cc574199d240acdeb56dc1e5738, type: 3}

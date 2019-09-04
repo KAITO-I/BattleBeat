@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,13 +13,23 @@ public class MainMenuManager : MonoBehaviour
         Changing
     }
 
+   [Serializable]
+   private class Sign
+    {
+        [SerializeField]
+        private Sprite[] sign;
+    }
+
+   [Serializable]
     private class Description
     {
         private string title;
         private string description;
     }
 
-    private ControllerManager controller;
+    private ControllerManager controllerManager;
+    private SceneLoader       sceneLoader;
+
     private State state;
     private int selected;
     private bool canPressDpadY;
@@ -38,17 +49,11 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField]
     private Transform megaphoneTree;
     [SerializeField]
-    private Transform megaphoneTreeUI;
+    private Transform[] megaphoneTreeUI;
     [SerializeField]
-    private Transform megaphoneTreeOverlay;
+    private Sign[] mtLeftSprite;
     [SerializeField]
-    private int numberOfSigns;
-    [SerializeField]
-    private GameObject[] mtOverlays; // 上から覆うUI
-    [SerializeField]
-    private Sprite mtLeftSprite;
-    [SerializeField]
-    private Sprite mtRightSprite;
+    private Sign[] mtRightSprite;
     [SerializeField]
     private float mtLeftPosX;
     [SerializeField]
@@ -62,13 +67,17 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField]
     private float mtOverrayRightSideRotateX;
 
-    /*[Header("ModeDescription")]
+    private int numberOfSings;
+
+    [Header("ModeDescription")]
     [SerializeField]
-    private Description[] Left*/
+    private Description[] Left;
 
     private void Start()
     {
-        this.controller = ControllerManager.Instance;
+        this.controllerManager = ControllerManager.Instance;
+        this.sceneLoader       = SceneLoader.Instance;
+
         this.state = State.Left;
         this.selected = 0;
         this.canPressDpadY = true;
@@ -83,8 +92,8 @@ public class MainMenuManager : MonoBehaviour
 
         if (this.state != State.Changing)
         {
-            // 十字キー処理
-            float axisY = this.controller.GetAxis(ControllerManager.Axis.DpadY);
+            // 十字キー処理（押したままで連続移動になる処理を防ぐため、一度押したら入力不可。離したら入力可能になる。）
+            float axisY = this.controllerManager.GetAxis(ControllerManager.Axis.DpadY);
             if (!Mathf.Approximately(axisY, 0f))
             {
                 if (this.canPressDpadY)
@@ -92,7 +101,7 @@ public class MainMenuManager : MonoBehaviour
                     if (axisY < 0)
                     {
                         this.selected++;
-                        if (this.selected > this.numberOfSigns - 1) this.selected = this.numberOfSigns - 1;
+                        if (this.selected > 2) this.selected = 2;
                     }
                     else
                     {
@@ -106,35 +115,41 @@ public class MainMenuManager : MonoBehaviour
 
             ChangeSign();
 
-            // ボタン処理
+            //===== ボタン処理 =====
+            // 左側
             if (this.state == State.Left)
             {
-                if (this.controller.GetButtonDown(ControllerManager.Button.A))
+                // A
+                if (this.controllerManager.GetButtonDown(ControllerManager.Button.A))
                 {
                     switch (this.selected)
                     {
                         case 0: StartCoroutine(LeftToRight()); break;
                     }
                 }
-            } else
+                // B
+                else if (this.controllerManager.GetButtonDown(ControllerManager.Button.B)) this.sceneLoader.LoadScene(SceneLoader.Scenes.Title);
+            }
+            // 右側
+            else
             {
                 // A
-                if (this.controller.GetButtonDown(ControllerManager.Button.A))
+                if (this.controllerManager.GetButtonDown(ControllerManager.Button.A))
                 {
                     switch (this.selected)
                     {
-                        case 0: SceneLoader.Instance.LoadScene(SceneLoader.Scenes.CharacterSelect); break;
+                        case 0: this.sceneLoader.LoadScene(SceneLoader.Scenes.CharacterSelect); break;
                     }
                 }
-                //B
-                else if (this.controller.GetButtonDown(ControllerManager.Button.B)) StartCoroutine(RightToLeft());
+                // B
+                else if (this.controllerManager.GetButtonDown(ControllerManager.Button.B)) StartCoroutine(RightToLeft());
             }
         }
     }
 
     private void ChangeSign()
     {
-        for (int i = 0; i < this.numberOfSigns; i++)
+        for (int i = 0; i < 2; i++)
         {
             if (i == this.selected) this.mtOverlays[i].SetActive(false);
             else                    this.mtOverlays[i].SetActive(true);
@@ -148,7 +163,7 @@ public class MainMenuManager : MonoBehaviour
 
     private void ChangeSignToAllBlack()
     {
-        for (int i = 0; i < this.numberOfSigns; i++) this.mtOverlays[i].SetActive(true);
+        for (int i = 0; i < this.numberOfSings; i++) this.mtOverlays[i].SetActive(true);
     }
 
     //private void Change
@@ -160,7 +175,7 @@ public class MainMenuManager : MonoBehaviour
         ChangeSignToAllBlack();
 
         float timer = 0f;
-        while (true)
+        while (timer <= this.moveTime)
         {
             this.background.position = new Vector3(Mathf.Lerp(this.backLeftPosX, this.backRightPosX, timer / this.moveTime), this.background.position.y);
             this.megaphoneTree.position = new Vector3(Mathf.Lerp(this.mtLeftPosX, this.mtRightPosX, timer / this.moveTime), this.megaphoneTree.position.y);
@@ -187,8 +202,6 @@ public class MainMenuManager : MonoBehaviour
             this.megaphoneTreeOverlay.rotation = Quaternion.Euler(this.megaphoneTreeOverlay.rotation.x, rotateOverlay, this.megaphoneTreeOverlay.rotation.z);
 
             timer += Time.deltaTime;
-            if (timer >= this.moveTime) break;
-
             yield return 0;
         }
 
@@ -209,7 +222,7 @@ public class MainMenuManager : MonoBehaviour
         ChangeSignToAllBlack();
 
         float timer = 0f;
-        while (true)
+        while (timer <= this.moveTime)
         {
             background.position = new Vector3(Mathf.Lerp(backRightPosX, backLeftPosX, timer / this.moveTime), background.position.y);
             megaphoneTree.position = new Vector3(Mathf.Lerp(mtRightPosX, mtLeftPosX, timer / this.moveTime), megaphoneTree.position.y);
@@ -236,8 +249,6 @@ public class MainMenuManager : MonoBehaviour
             megaphoneTreeOverlay.rotation = Quaternion.Euler(megaphoneTreeOverlay.rotation.x, rotateOverlay, megaphoneTreeOverlay.rotation.z);
 
             timer += Time.deltaTime;
-            if (timer >= this.moveTime) break;
-
             yield return 0;
         }
 
@@ -249,20 +260,5 @@ public class MainMenuManager : MonoBehaviour
         this.state = State.Left;
         this.selected = 0;
         ChangeSign();
-    }
-
-    public void LoadTitle()
-    {
-        SceneLoader.Instance.LoadScene(SceneLoader.Scenes.Title);
-    }
-
-    public void LoadCharacterSelect()
-    {
-        SceneLoader.Instance.LoadScene(SceneLoader.Scenes.CharacterSelect);
-    }
-
-    public void LoadConfig()
-    {
-        SceneLoader.Instance.LoadScene(SceneLoader.Scenes.Config);
     }
 }
