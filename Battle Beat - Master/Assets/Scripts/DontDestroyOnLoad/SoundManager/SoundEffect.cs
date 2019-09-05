@@ -1,59 +1,19 @@
-﻿//==============================
-// Created by KAITO-I (稲福)
-//==============================
-using System.Collections;
 using UnityEngine;
 
-//==============================
-// SEクラス
-//==============================
-public class SoundEffect : Sound
-{
-    private bool destroyed;
+public class SoundEffect : MonoBehaviour {
+    private AudioSource audio;
 
-    //------------------------------
-    // 再生
-    //------------------------------
-    public override Sound Play(AudioClip clip)
-    {
-        this.destroyed = false;
+    private void Start() {
+        this.audio = GetComponent<AudioSource>();
+    }
 
-        SoundEffect se = Instantiate(this).GetComponent<SoundEffect>();
-        //se.AudioSource = se.gameObject.GetComponent<AudioSource>();
+    public void Play(AudioClip clip) {
+        this.audio.clip = clip;
+        this.audio.Play();
+        Invoke("EndCheck", clip.length);
+    }
+
+    private void EndCheck() {
         
-        StartCoroutine(se.DestroyTimer(clip));
-        return se;
-    }
-
-    //------------------------------
-    // SE再生後に自身を消去
-    //------------------------------
-    private IEnumerator DestroyTimer(AudioClip clip)
-    {
-        this.AudioSource.clip = clip;
-        this.AudioSource.Play();
-
-        yield return new WaitForSeconds(clip.length);
-
-        if (!this.destroyed)
-        {
-            this.destroyed = true;
-            Destroy(this.gameObject);
-        }
-    }
-
-    //------------------------------
-    // 停止
-    //------------------------------
-    public override void Stop()
-    {
-        if (!this.destroyed)
-        {
-            this.AudioSource.Stop();
-
-            this.destroyed = true;
-
-            Destroy(this.gameObject);
-        }
     }
 }

@@ -129,8 +129,6 @@ public class TitleManager : MonoBehaviour
 
     [SerializeField]
     private AudioClip animeAudio;
-    //    private Sound sound;
-    int soundId;
 
     [SerializeField]
     private Image fade;
@@ -143,7 +141,7 @@ public class TitleManager : MonoBehaviour
     {
         // アニメーション再生
         (this.vp = GetComponent<VideoPlayer>()).Play();
-        this.soundId = SoundManager.Instance.PlaySE(this.animeAudio);
+        SoundManager.Instance.PlayBGM(BGMID.Title);
 
         // シャッタータイマー開始
         StartCoroutine(ShutterTimer(this.vp.clip.length));
@@ -156,8 +154,7 @@ public class TitleManager : MonoBehaviour
     {
         if (Input.anyKeyDown)
         {
-            SoundManager.Instance.StopSE(soundId);
-//            this.sound.Stop();
+            SoundManager.Instance.StopBGM();
             SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainMenu);
         }
     }
@@ -179,8 +176,7 @@ public class TitleManager : MonoBehaviour
     private IEnumerator ShutterTimer(double time)
     {
         yield return new WaitForSeconds((float) time);
-        SoundManager.Instance.StopSE(soundId);
-//        this.sound.Stop();
+        SoundManager.Instance.StopBGM();
         SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainMenu);
     }
 }

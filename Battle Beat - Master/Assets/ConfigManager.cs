@@ -2,24 +2,30 @@
 // Created by akiirohappa
 // Customized by KAITO-I
 //==============================
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 
 //==============================
 // Config操作／管理
 //==============================
 public class ConfigManager : MonoBehaviour
 {
-    [SerializeField] VolumeConfig SoundVolume;
-    private ControllerManager controller;
+    [Header("Volume")]
+    [SerializeField]
+    private AudioMixer gameAudioMixer;
+    [SerializeField]
+    private Slider masterSlider;
+    [SerializeField]
+    private Slider bgmSlider;
+    [SerializeField]
+    private Slider seSlider;
+
     int nowSelect;
     private void Start()
     {
-        this.SoundVolume.Init();
-        nowSelect = 0;
-        SoundVolume.MasterVolume.Select();
+        /*nowSelect = 0;
+        SoundVolume.MasterVolume.Select();*/
     }
 
     public void LoadMainMenu()
@@ -29,7 +35,7 @@ public class ConfigManager : MonoBehaviour
 
     private void Update()
     {
-        controller = ControllerManager.Instance;
+        /*controller = ControllerManager.Instance;
         float v = controller.GetAxis_Menu(ControllerManager.Axis.DpadY);
         if(v >= 0)
         {
@@ -58,7 +64,7 @@ public class ConfigManager : MonoBehaviour
         if(controller.GetButtonDown_Menu(ControllerManager.Button.B))
         {
             LoadMainMenu();
-        }
+        }*/
     }
     //------------------------------
     // 音量値設定反映
@@ -68,54 +74,17 @@ public class ConfigManager : MonoBehaviour
     //------------------------------
     public void SetMasterVol(float value)
     {
-        this.SoundVolume.SoundManager.MasterVolume = value;
-        this.SoundVolume.MasterText.text = this.SoundVolume.VolumeDisplayCalc(value).ToString();
+        this.gameAudioMixer.SetFloat("MasterVol", Mathf.Lerp(0f, -80f, value / 100f));
     }
 
     public void SetBGMVol(float value)
     {
-        this.SoundVolume.SoundManager.BGM.Volume = value;
-        this.SoundVolume.BGMText.text = this.SoundVolume.VolumeDisplayCalc(value).ToString();
+        this.gameAudioMixer.SetFloat("BGMVol", Mathf.Lerp(0f, -80f, value / 100f));
     }
 
     public void SetSEVol(float value)
     {
-        this.SoundVolume.SoundManager.SE.Volume = value;
-        this.SoundVolume.SEText.text = this.SoundVolume.VolumeDisplayCalc(value).ToString();
+        this.gameAudioMixer.SetFloat("SEVol", Mathf.Lerp(0f, -80f, value / 100f));
     }
-
-    //==============================
-    // Volume値設定
-    //==============================
-    [System.Serializable]
-    class VolumeConfig
-    {
-        public SoundManager SoundManager { get; private set; }
-        [SerializeField] public Slider MasterVolume;
-        [SerializeField] public Slider BGMVolume;
-        [SerializeField] public Slider SEVolume;
-        public Text MasterText;
-        public Text BGMText;
-        public Text SEText;
-        //------------------------------
-        // 初期化
-        //------------------------------
-        public void Init()
-        {
-            this.SoundManager = SoundManager.Instance;
-            this.MasterVolume.value = this.SoundManager.MasterVolume;
-            this.BGMVolume.value    = this.SoundManager.BGM.Volume;
-            this.SEVolume.value     = this.SoundManager.SE.Volume;
-            this.MasterText.text = VolumeDisplayCalc(this.SoundManager.MasterVolume).ToString(); ;
-            this.BGMText.text = VolumeDisplayCalc(this.SoundManager.BGM.Volume).ToString(); ;
-            this.SEText.text = VolumeDisplayCalc(this.SoundManager.SE.Volume).ToString(); ;
-        }
-        public int VolumeDisplayCalc(float vol)
-        {
-            return (int)(vol * 100);
-        }
-    }
-
-
 }
 
