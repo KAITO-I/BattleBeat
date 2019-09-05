@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 4320667415473011679}
   - component: {fileID: 4320667415473011678}
   - component: {fileID: 9191592045781479349}
+  - component: {fileID: 1711560454165245918}
+  - component: {fileID: -8494404444140561014}
   m_Layer: 0
   m_Name: YuniZon
   m_TagString: Player
@@ -140,9 +142,45 @@ MonoBehaviour:
   - {fileID: 1462125297497678513, guid: 4701a991422dc9a43b36e91557170fa4, type: 3}
   - {fileID: 9141986572909831412, guid: ab7365e8ae2201647963a5b272b21d9b, type: 3}
   - {fileID: 5616453592050605903, guid: a93ee2e00f800f04f80d05e48b334b29, type: 3}
-  AnimationController: {fileID: 0}
+  AnimationController: {fileID: -8494404444140561014}
   CoolDownCount: 00000000000000000000000000000000
+  onGame: 0
   Guard: 0
+--- !u!95 &1711560454165245918
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4320667415473011673}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &-8494404444140561014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4320667415473011673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26a25a8735880e54b9465177e28e529a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerObj: {fileID: 4320667415473011673}
+  _renderer: {fileID: 0}
+  AnimCheck: 0
+  interval: 0
 --- !u!1001 &852754517004580069
 PrefabInstance:
   m_ObjectHideFlags: 0

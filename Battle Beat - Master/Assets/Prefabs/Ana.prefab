@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 4320667415473011679}
   - component: {fileID: 4320667415473011678}
   - component: {fileID: -5639884449031383472}
+  - component: {fileID: -5158517085444911650}
+  - component: {fileID: 4882877871646710935}
   m_Layer: 0
   m_Name: Ana
   m_TagString: Player
@@ -140,8 +142,44 @@ MonoBehaviour:
   - {fileID: 2661390269113452054, guid: da7d9c26aa5ea9d4cbd1e385a4a53982, type: 3}
   - {fileID: 1119904956139624259, guid: ef94b8a5405cc94479865eb68f635089, type: 3}
   - {fileID: 7850170818662004598, guid: 739e0729b85766c46987e050a008cb6c, type: 3}
-  AnimationController: {fileID: 0}
+  AnimationController: {fileID: 4882877871646710935}
   CoolDownCount: 00000000000000000000000000000000
+  onGame: 0
+--- !u!95 &-5158517085444911650
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4320667415473011673}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &4882877871646710935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4320667415473011673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26a25a8735880e54b9465177e28e529a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerObj: {fileID: 4320667415473011673}
+  _renderer: {fileID: 0}
+  AnimCheck: 0
+  interval: 0
 --- !u!1001 &2795594176360514183
 PrefabInstance:
   m_ObjectHideFlags: 0
