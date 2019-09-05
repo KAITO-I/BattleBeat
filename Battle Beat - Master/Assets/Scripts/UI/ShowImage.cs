@@ -38,23 +38,48 @@ public class ShowImage : MonoBehaviour
     }
     IEnumerator ShowImageMain()
     {
-        while (index / 2 < sprites.Count)
+        isEnd = false;
+        float zeroTime = 0f;
+        float time = displayTime;
+        bool changeFlag = true;
+        while (true)
         {
-            float time = 0;
-            if (index % 2 == 0)
+            while (zeroTime > time)
             {
-                time = displayTime;    
-                image.rectTransform.sizeDelta = new Vector2(sprites[index / 2].rect.width, sprites[index / 2].rect.height);
-                image.sprite = sprites[index / 2];
-                image.gameObject.SetActive(true);
+                zeroTime -= time;
+                index++;
+                if (index % 2 == 0)
+                {
+                    time = displayTime;
+                }
+                else
+                {
+                    time = interval;
+                }
+                Debug.Log(Time.time);
+                changeFlag = true;
             }
-            else
+            if(index / 2 >= sprites.Count)
             {
-                time = interval;
                 image.gameObject.SetActive(false);
+                break;
             }
-            yield return new WaitForSeconds(time);
-            index++;
+            if (changeFlag)
+            {
+                if (index % 2 == 0)
+                {
+                    image.rectTransform.sizeDelta = new Vector2(sprites[index / 2].rect.width, sprites[index / 2].rect.height);
+                    image.sprite = sprites[index / 2];
+                    image.gameObject.SetActive(true);
+                }
+                else
+                {
+                    image.gameObject.SetActive(false);
+                }
+                changeFlag = false;
+            }
+            zeroTime += Time.deltaTime;
+            yield return new WaitForFixedUpdate();
         }
         isEnd = true;
     }

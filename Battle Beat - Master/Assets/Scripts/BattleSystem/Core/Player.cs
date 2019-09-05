@@ -168,23 +168,23 @@ public class Player : MonoBehaviour
         //プレーヤー入力
         if (canInput&&wait==0)
         {
-            //if (Input.GetKeyDown(keySets.LeftKey)) input = MoveComand.Left;
-            //else if (Input.GetKeyDown(keySets.RightKey)) input = MoveComand.Right;
-            //else if (Input.GetKeyDown(keySets.UpKey)) input = MoveComand.Up;
-            //else if (Input.GetKeyDown(keySets.DownKey)) input = MoveComand.Down;
-            //else if (Input.GetKeyDown(keySets.Attack_1Key)) input = MoveComand.Attack_1;
-            //else if (Input.GetKeyDown(keySets.Attack_2Key)) input = MoveComand.Attack_2;
-            //else if (Input.GetKeyDown(keySets.Attack_3Key)) input = MoveComand.Attack_3;
-            //else if (Input.GetKeyDown(keySets.Attack_4Key)) input = MoveComand.Attack_4;
-            if (input != MoveComand.None) canInput = false;
-            else if (controller.GetAxis(ControllerManager.Axis.DpadX) < 0) input = MoveComand.Left;
-            else if (controller.GetAxis(ControllerManager.Axis.DpadX) > 0) input = MoveComand.Right;
-            else if (controller.GetAxis(ControllerManager.Axis.DpadY) > 0) input = MoveComand.Up;
-            else if (controller.GetAxis(ControllerManager.Axis.DpadY) < 0) input = MoveComand.Down;
-            else if (controller.GetButtonDown(ControllerManager.Button.Y)) input = MoveComand.Attack_1;
-            else if (controller.GetButtonDown(ControllerManager.Button.X)) input = MoveComand.Attack_2;
-            else if (controller.GetButtonDown(ControllerManager.Button.A)) input = MoveComand.Attack_3;
-            else if (controller.GetButtonDown(ControllerManager.Button.B)) input = MoveComand.Attack_4;
+            if (Input.GetKeyDown(keySets.LeftKey)) input = MoveComand.Left;
+            else if (Input.GetKeyDown(keySets.RightKey)) input = MoveComand.Right;
+            else if (Input.GetKeyDown(keySets.UpKey)) input = MoveComand.Up;
+            else if (Input.GetKeyDown(keySets.DownKey)) input = MoveComand.Down;
+            else if (Input.GetKeyDown(keySets.Attack_1Key)) input = MoveComand.Attack_1;
+            else if (Input.GetKeyDown(keySets.Attack_2Key)) input = MoveComand.Attack_2;
+            else if (Input.GetKeyDown(keySets.Attack_3Key)) input = MoveComand.Attack_3;
+            else if (Input.GetKeyDown(keySets.Attack_4Key)) input = MoveComand.Attack_4;
+            //if (input != MoveComand.None) canInput = false;
+            //else if (controller.GetAxis(ControllerManager.Axis.DpadX) < 0) input = MoveComand.Left;
+            //else if (controller.GetAxis(ControllerManager.Axis.DpadX) > 0) input = MoveComand.Right;
+            //else if (controller.GetAxis(ControllerManager.Axis.DpadY) > 0) input = MoveComand.Up;
+            //else if (controller.GetAxis(ControllerManager.Axis.DpadY) < 0) input = MoveComand.Down;
+            //else if (controller.GetButtonDown(ControllerManager.Button.Y)) input = MoveComand.Attack_1;
+            //else if (controller.GetButtonDown(ControllerManager.Button.X)) input = MoveComand.Attack_2;
+            //else if (controller.GetButtonDown(ControllerManager.Button.A)) input = MoveComand.Attack_3;
+            //else if (controller.GetButtonDown(ControllerManager.Button.B)) input = MoveComand.Attack_4;
         }
 
         //Spが時間経過で増やす

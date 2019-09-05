@@ -14,7 +14,8 @@ public class BattleManager : MonoBehaviour
 
     bool onGame;
 
-
+    bool readyFlag = false;
+    bool readyEndFlag = false;
     static int winPlayerId;
     static int LosePlayerId;
     private void Start()
@@ -27,19 +28,34 @@ public class BattleManager : MonoBehaviour
     }
     public void startGame()
     {
-        ShowImage._instance.ShowImages(new string[]{ "READY","3","2","1","GO" });
         StartCoroutine(startGameLoop());
     }
 
     IEnumerator startGameLoop()
     {
-        while(true){
+        ShowImage._instance.ShowImages(new string[] {  "void", "void", "void", "void" }, 0.7f, 0.1f);
+        while (true){
             if (ShowImage._instance.IsEnd())
             {
-                onGame = true;
-                timeSetter.startTimer();
-                rythmManager.StartRythm();
-                break;
+                if (readyFlag == false)
+                {
+                    ShowImage._instance.ShowImages(new string[] { "READY" }, 3.1f, 0.1f);
+                    readyFlag = true;
+                }
+                else{
+                    if (readyEndFlag == false)
+                    {
+                        ShowImage._instance.ShowImages(new string[] { "3", "2", "1", "GO" }, 0.8f, 0f);
+                        readyEndFlag = true;
+                    }
+                    else
+                    {
+                        onGame = true;
+                        timeSetter.startTimer();
+                        rythmManager.StartRythm();
+                        break;
+                    }
+                }
             }
             else
             {
@@ -118,6 +134,6 @@ public class BattleManager : MonoBehaviour
             }
         }
        
-        SceneLoader.Instance.LoadScene(SceneLoader.Scenes.Result);
+        //SceneLoader.Instance.LoadScene(SceneLoader.Scenes.Result);
     }
 }

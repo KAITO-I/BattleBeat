@@ -129,14 +129,22 @@ public class AttackManager : MonoBehaviour
         //tempo up 判定
         switch (totalTurn)
         {
-            case 32:
+            case 17:
+                
                 rythmManager.TempoUp(113);
-                ShowImage._instance.ShowImages(new string[] {"3", "2", "1", "TempoUp" });
+                
                 break;
-            case 64:
+            case 17 - 4:
+                ShowImage._instance.ShowImages(new string[] { "3", "2", "1", "TempoUp" }, 0.8f, 0.0f);
+                break;
+
+            case 80:
                 rythmManager.TempoUp(150);
-                ShowImage._instance.ShowImages(new string[] { "3", "2", "1", "TempoUp" });
                 break;
+            case 80- 4:
+                ShowImage._instance.ShowImages(new string[] { "3", "2", "1", "TempoUp" }, 0.8f, 0.0f);
+                break;
+                
         }
 
     }
