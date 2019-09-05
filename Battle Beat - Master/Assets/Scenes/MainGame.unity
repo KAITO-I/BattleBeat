@@ -2738,7 +2738,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb861cbface225045b2fc14f2dc47b48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testMode: 1
+  testMode: 0
   p1: 0
   p2: 1
   charaPrefabs:
@@ -2808,7 +2808,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: e87efda9106a058468491a5f1be6a2d2, type: 3}
+  m_audioClip: {fileID: 8300000, guid: d7ec17b8d722c2f4caf6fb93ef7bdcd5, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
