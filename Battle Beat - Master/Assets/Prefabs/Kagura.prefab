@@ -178,7 +178,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerObj: {fileID: 4320667415473011673}
-  _renderer: {fileID: 0}
   AnimCheck: 0
   interval: 0.6
 --- !u!1001 &1929730577720793202
@@ -198,15 +197,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400018, guid: df7cdb8a75dd4214896be4c307d83196, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.71
       objectReference: {fileID: 0}
     - target: {fileID: 400018, guid: df7cdb8a75dd4214896be4c307d83196, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.579
+      value: -4.22
       objectReference: {fileID: 0}
     - target: {fileID: 400018, guid: df7cdb8a75dd4214896be4c307d83196, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -2.028
       objectReference: {fileID: 0}
     - target: {fileID: 400018, guid: df7cdb8a75dd4214896be4c307d83196, type: 3}
       propertyPath: m_LocalRotation.x
@@ -240,6 +239,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 400018, guid: df7cdb8a75dd4214896be4c307d83196, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 400018, guid: df7cdb8a75dd4214896be4c307d83196, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 400018, guid: df7cdb8a75dd4214896be4c307d83196, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: df7cdb8a75dd4214896be4c307d83196, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: df7cdb8a75dd4214896be4c307d83196, type: 3}
     - target: {fileID: 9500000, guid: df7cdb8a75dd4214896be4c307d83196, type: 3}
       propertyPath: m_Controller
       value: 
