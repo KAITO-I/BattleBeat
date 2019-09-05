@@ -42,6 +42,7 @@ public class SelectCountroll : MonoBehaviour
 
     [SerializeField]
     GameObject FlameObj;
+    [SerializeField]
     List<CharaSelectObj> CharaObj;
     int length;
 
@@ -125,7 +126,7 @@ public class SelectCountroll : MonoBehaviour
         if (Player1_OK&& Player2_OK)
         {
             //決定ボタンを入力したら
-            if (ControllerManager.Instance.GetButtonDown(ControllerManager.Button.Start))
+            if (ControllerManager.Instance.GetButtonDown_Menu(ControllerManager.Button.Start))
             {
                 Setting.p1c = (Setting.Chara)_Player1;
                 Setting.p2c = (Setting.Chara)_Player2;
@@ -141,62 +142,9 @@ public class SelectCountroll : MonoBehaviour
     void SelectMove()
     {
         //1P処理
-        if (_1Pcontroller.GetButtonDown(ControllerManager.Button.Y)&&!Player1_OK)
-        {
-            if (_1Pcontroller.GetAxis(ControllerManager.Axis.DpadY) > 0)//上入力
-            {
-                CharaObj[_Player1].charaSelect(1, false);
-                _Player1++;
-                _Player1 = _Player1 % length;
-                CharaObj[_Player1].charaSelect(1, true);
-
-                Player01.sprite = CharaObj[_Player1].GetCharaSprite;
-                _player1Text.sprite = _ChataText[_Player1];
-
-                Player01_Obj.transform.localScale = new Vector3(_xSize[_Player1], _ySize[_Player1], 1);
-            }
-            else//下入力
-            {
-                CharaObj[_Player1].charaSelect(1, false);
-                _Player1--;
-                _Player1 = _Player1 % length;
-                if (_Player1 < 0) _Player1 = 3;
-                CharaObj[_Player1].charaSelect(1, true);
-
-                Player01.sprite = CharaObj[_Player1].GetCharaSprite;
-                _player1Text.sprite = _ChataText[_Player1];
-
-                Player01_Obj.transform.localScale = new Vector3(_xSize[_Player1], _ySize[_Player1], 1);
-            }
-        }
+        _Player1 = InputProcess(Player01_Obj, _player1Text, _1Pcontroller, Player01, _Player1, Player1_OK);
         //2P処理
-        if (_2Pcontroller.GetButtonDown(ControllerManager.Button.Y) && !Player2_OK)
-        {
-            if (_2Pcontroller.GetAxis(ControllerManager.Axis.DpadY) > 0)//上入力
-            {
-                CharaObj[_Player2].charaSelect(2, false);
-                _Player2++;
-                _Player2 = _Player2 % length;
-                CharaObj[_Player2].charaSelect(2, true);
-
-                Player02.sprite = CharaObj[_Player2].GetCharaSprite;
-                _player2Text.sprite = _ChataText[_Player2];
-                Player02_Obj.transform.localScale = new Vector3(_xSize[_Player2], _ySize[_Player2], 1);
-            }
-            else
-            {
-                CharaObj[_Player2].charaSelect(2, false);
-                _Player2--;
-                _Player2 = _Player2 % length;
-                if (_Player2 < 0) _Player2 = 3;
-                CharaObj[_Player2].charaSelect(2, true);
-
-                Player02.sprite = CharaObj[_Player2].GetCharaSprite;
-                _player2Text.sprite = _ChataText[_Player2];
-
-                Player02_Obj.transform.localScale = new Vector3(_xSize[_Player2], _ySize[_Player2], 1);
-            }
-        }
+        _Player2 = InputProcess(Player02_Obj, _player2Text, _2Pcontroller, Player02, _Player2, Player2_OK);
         //選択時//渡す値を決定する
         if (_1Pcontroller.GetButtonDown(ControllerManager.Button.A))
         {
@@ -237,7 +185,7 @@ public class SelectCountroll : MonoBehaviour
             }
         }
         //両方入力されていない
-        if(!_1Pcontroller.GetButton(ControllerManager.Button.B) && !_2Pcontroller.GetButton(ControllerManager.Button.B))
+        if (!_1Pcontroller.GetButton(ControllerManager.Button.B) && !_2Pcontroller.GetButton(ControllerManager.Button.B))
         {
             Player1_Time = Time.time;
             Player2_Time = Time.time;
@@ -246,6 +194,40 @@ public class SelectCountroll : MonoBehaviour
         }
         Text01.SetActive(Player1_OK);
         Text02.SetActive(Player2_OK);
+    }
+
+    private int InputProcess(GameObject Player_Obj, Image _playerText, ControllerManager.Controller _controller, SpriteRenderer Player, int _Player, bool Player_OK)
+    {
+        if (!Player_OK)
+        {
+            if (_controller.GetAxisUp(ControllerManager.Axis.DpadY) > 0)//上入力
+            {
+                CharaObj[_Player].charaSelect(1, false);
+                _Player++;
+                _Player = _Player % length;
+                CharaObj[_Player].charaSelect(1, true);
+
+                Player.sprite = CharaObj[_Player].GetCharaSprite;
+                _playerText.sprite = _ChataText[_Player];
+
+                Player_Obj.transform.localScale = new Vector3(_xSize[_Player], _ySize[_Player], 1);
+            }
+            else if (_controller.GetAxisUp(ControllerManager.Axis.DpadY) < 0)//下入力
+            {
+                CharaObj[_Player].charaSelect(1, false);
+                _Player--;
+                _Player = _Player % length;
+                if (_Player < 0) _Player = 3;
+                CharaObj[_Player].charaSelect(1, true);
+
+                Player.sprite = CharaObj[_Player].GetCharaSprite;
+                _playerText.sprite = _ChataText[_Player];
+
+                Player_Obj.transform.localScale = new Vector3(_xSize[_Player], _ySize[_Player], 1);
+            }
+        }
+
+        return _Player;
     }
 
     void SelectMoveDebug()

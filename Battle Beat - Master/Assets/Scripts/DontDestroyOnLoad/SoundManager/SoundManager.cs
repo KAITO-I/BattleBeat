@@ -76,4 +76,12 @@ public class SoundManager : MonoBehaviour {
         this.BGM.Init(masterVolume, "BGMVol", defaultVol);
         this.se.Init(masterVolume, "SEVol", defaultVol);
     }
+    public int PlaySE(AudioClip clip)
+    {
+        return 0;
+    }
+    public void StopSE(int no)
+    {
+
+    }
 }

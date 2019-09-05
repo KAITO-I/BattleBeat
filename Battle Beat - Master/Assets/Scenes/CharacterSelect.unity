@@ -333,7 +333,7 @@ Transform:
   - {fileID: 318458975}
   - {fileID: 1965297884}
   m_Father: {fileID: 1329113690}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &248045673
 MonoBehaviour:
@@ -348,11 +348,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Flames:
-  - {fileID: 21300000, guid: f0040859bff9f374695fc728542e7c35, type: 3}
-  - {fileID: 21300000, guid: d1293d3ae5548a548b16af4e0694f552, type: 3}
-  - {fileID: 21300000, guid: 764cdd0823f7fce4b8b7e0e8cbd9741e, type: 3}
-  - {fileID: 21300000, guid: 4388570eef3c3a543a5d21f46a9cdd52, type: 3}
-  CharaSprite: {fileID: 21300000, guid: 823e22aad650b6d449152b804c4fe4af, type: 3}
+  - {fileID: 21300000, guid: a26c7d5c0d60e034e99c27e26662b917, type: 3}
+  - {fileID: 21300000, guid: 95379ca5736adf64ebaf7cbf696cfdfd, type: 3}
+  - {fileID: 21300000, guid: df026cd6ee7dcf24cb74beb0578f1957, type: 3}
+  - {fileID: 21300000, guid: 9202c0b9baf448b4e95a546002292ca7, type: 3}
+  CharaSprite: {fileID: 21300000, guid: 1d74d776405479a458bd7d5bd461f1f9, type: 3}
 --- !u!1 &292147295
 GameObject:
   m_ObjectHideFlags: 0
@@ -2106,8 +2106,8 @@ Transform:
   m_LocalPosition: {x: -1.0680506, y: -9.473646, z: 10.26931}
   m_LocalScale: {x: 0.8, y: 1, z: 1}
   m_Children:
-  - {fileID: 248045672}
   - {fileID: 2132775169}
+  - {fileID: 248045672}
   - {fileID: 137871774}
   - {fileID: 177213059}
   m_Father: {fileID: 1527809214}
@@ -2214,7 +2214,7 @@ Transform:
   m_GameObject: {fileID: 1353353421}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.6, y: -0.33, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 0.1, y: 0.09, z: 1}
   m_Children: []
   m_Father: {fileID: 2132775169}
   m_RootOrder: 1
@@ -2257,7 +2257,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 4a3652b3543301945a491cd463d833a7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f6330b388eee3f746a0acb79a9419f0c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2305,6 +2305,7 @@ MonoBehaviour:
   Text01: {fileID: 542191512}
   Text02: {fileID: 1511722900}
   FlameObj: {fileID: 1329113689}
+  CharaObj: []
   Ready: {fileID: 468595717}
   _ChataText:
   - {fileID: 21300000, guid: 97edc4613de313f43b40fc4a0234c8ab, type: 3}
@@ -2392,6 +2393,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1290540881392927130, guid: a9542cc574199d240acdeb56dc1e5738,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 760
+      objectReference: {fileID: 0}
+    - target: {fileID: 1290540881392927130, guid: a9542cc574199d240acdeb56dc1e5738,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -1520
+      objectReference: {fileID: 0}
+    - target: {fileID: 1290540881392927130, guid: a9542cc574199d240acdeb56dc1e5738,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -502.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1290540881392927130, guid: a9542cc574199d240acdeb56dc1e5738,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -1005
+      objectReference: {fileID: 0}
     - target: {fileID: 4243981085844628100, guid: a9542cc574199d240acdeb56dc1e5738,
         type: 3}
       propertyPath: m_FontData.m_Font
@@ -2428,26 +2449,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_FontData.m_Alignment
       value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 1290540881392927130, guid: a9542cc574199d240acdeb56dc1e5738,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 760
-      objectReference: {fileID: 0}
-    - target: {fileID: 1290540881392927130, guid: a9542cc574199d240acdeb56dc1e5738,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: -1520
-      objectReference: {fileID: 0}
-    - target: {fileID: 1290540881392927130, guid: a9542cc574199d240acdeb56dc1e5738,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -502.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1290540881392927130, guid: a9542cc574199d240acdeb56dc1e5738,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: -1005
       objectReference: {fileID: 0}
     - target: {fileID: 2694987349663952224, guid: a9542cc574199d240acdeb56dc1e5738,
         type: 3}
@@ -2752,13 +2753,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1965297883}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.13, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.09, z: 1}
+  m_LocalRotation: {x: 0.07878442, y: 0.99689174, z: -0, w: 0}
+  m_LocalPosition: {x: -1.77, y: 0.6, z: 0}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 1}
   m_Children: []
   m_Father: {fileID: 248045672}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180.00002, z: 9.037001}
 --- !u!212 &1965297885
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2797,7 +2798,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: f6330b388eee3f746a0acb79a9419f0c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4a3652b3543301945a491cd463d833a7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2839,7 +2840,7 @@ Transform:
   - {fileID: 1052287243}
   - {fileID: 1353353422}
   m_Father: {fileID: 1329113690}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2132775170
 MonoBehaviour:
@@ -2854,8 +2855,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Flames:
-  - {fileID: 21300000, guid: a26c7d5c0d60e034e99c27e26662b917, type: 3}
-  - {fileID: 21300000, guid: 95379ca5736adf64ebaf7cbf696cfdfd, type: 3}
-  - {fileID: 21300000, guid: df026cd6ee7dcf24cb74beb0578f1957, type: 3}
-  - {fileID: 21300000, guid: 9202c0b9baf448b4e95a546002292ca7, type: 3}
-  CharaSprite: {fileID: 21300000, guid: 1d74d776405479a458bd7d5bd461f1f9, type: 3}
+  - {fileID: 21300000, guid: f0040859bff9f374695fc728542e7c35, type: 3}
+  - {fileID: 21300000, guid: d1293d3ae5548a548b16af4e0694f552, type: 3}
+  - {fileID: 21300000, guid: 764cdd0823f7fce4b8b7e0e8cbd9741e, type: 3}
+  - {fileID: 21300000, guid: 4388570eef3c3a543a5d21f46a9cdd52, type: 3}
+  CharaSprite: {fileID: 21300000, guid: 823e22aad650b6d449152b804c4fe4af, type: 3}

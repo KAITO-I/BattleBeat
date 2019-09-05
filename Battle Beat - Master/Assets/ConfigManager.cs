@@ -30,7 +30,7 @@ public class ConfigManager : MonoBehaviour
     private void Update()
     {
         controller = ControllerManager.Instance;
-        float v = controller.GetAxis(ControllerManager.Axis.DpadY);
+        float v = controller.GetAxis_Menu(ControllerManager.Axis.DpadY);
         if(v >= 0)
         {
             if(nowSelect != 2)nowSelect++;
@@ -55,7 +55,7 @@ public class ConfigManager : MonoBehaviour
             default:
                 break;
         }
-        if(controller.GetButtonDown(ControllerManager.Button.B))
+        if(controller.GetButtonDown_Menu(ControllerManager.Button.B))
         {
             LoadMainMenu();
         }

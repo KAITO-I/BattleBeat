@@ -9,7 +9,6 @@ using UnityEngine;
 public abstract class Sound : MonoBehaviour
 {
     protected AudioSource AudioSource { get; private set; }
-
     protected MasterVolume MasterVol { get; private set; }
     private string prefsName;
     private float volume;

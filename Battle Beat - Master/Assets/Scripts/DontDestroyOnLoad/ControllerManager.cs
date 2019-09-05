@@ -57,6 +57,8 @@ public class ControllerManager : MonoBehaviour
     [SerializeField]
     private int player2ID;
 
+
+    const float inputThreshold = 0.9f;
     //------------------------------
     // 初期化
     //------------------------------
@@ -72,7 +74,7 @@ public class ControllerManager : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         /*
         foreach (Axis axis in Enum.GetValues(typeof(Axis)))
@@ -86,6 +88,8 @@ public class ControllerManager : MonoBehaviour
             if (Player1 != null && Player1.GetButton(button) != false) Debug.Log("P1 " + button.ToString() + ":" + Player1.GetButton(button));
             if (Player2 != null && Player2.GetButton(button) != false) Debug.Log("P2 " + button.ToString() + ":" + Player2.GetButton(button));
         }*/
+        Player1.UpdateAxes();
+        Player2.UpdateAxes();
     }
 
     //コントローラー操作
@@ -174,26 +178,25 @@ public class ControllerManager : MonoBehaviour
         }
     }*/
 
-    public float GetAxis(Axis axis)
+    public int GetAxis_Menu(Axis axis)
     {
-        float player1Axis = this.Player1.GetAxis(axis);
-        float player2Axis = this.Player2.GetAxis(axis);
-        if      (!Mathf.Approximately(player1Axis, 0f)) return player1Axis;
-        else if (!Mathf.Approximately(player2Axis, 0f)) return player2Axis;
-        else                                            return 0f;
+        int player1Axis = this.Player1.GetAxis(axis);
+        int player2Axis = this.Player2.GetAxis(axis);
+        if      (player1Axis!=0) return player1Axis;
+        else  return player2Axis;
     }
 
-    public bool GetButton(Button button)
+    public bool GetButton_Menu(Button button)
     {
         return this.Player1.GetButton(button) || this.Player2.GetButton(button);
     }
 
-    public bool GetButtonDown(Button button)
+    public bool GetButtonDown_Menu(Button button)
     {
         return this.Player1.GetButtonDown(button) || this.Player2.GetButtonDown(button);
     }
 
-    public bool GetButtonUp(Button button)
+    public bool GetButtonUp_Menu(Button button)
     {
         return this.Player1.GetButtonUp(button) || this.Player2.GetButtonUp(button);
     }
@@ -226,6 +229,12 @@ public class ControllerManager : MonoBehaviour
     {
         public int controllerNum { get; private set; }
 
+        private Vector2Int preAxes=new Vector2Int(0,0);
+
+        public void UpdateAxes()
+        {
+            preAxes = new Vector2Int(GetAxis(Axis.DpadX), GetAxis(Axis.DpadY));
+        }
         //これでInput.Axesの名前を取得している
         private string[] axisAxes = {
             "D-padX_",
@@ -251,11 +260,38 @@ public class ControllerManager : MonoBehaviour
             for (int i = 0; i < this.buttonAxes.Length; i++) this.buttonAxes[i] += this.controllerNum.ToString();
         }
 
-        public float GetAxis(Axis axis)
+        public int GetAxis(Axis axis)
         {
-            return Input.GetAxis(this.axisAxes[(int)axis]);
+            var temp = Input.GetAxis(this.axisAxes[(int)axis]);
+            int result = 0;
+            if (temp > inputThreshold)
+            {
+                result = 1;
+            }
+            else if (temp < -inputThreshold)
+            {
+                result = -1;
+            }
+            return result;
         }
-
+        public int GetAxisUp(Axis axis) //1フレームずつ呼び出すこと
+        {
+            var temp = Input.GetAxis(this.axisAxes[(int)axis]);
+            int result = 0;
+            if (temp > inputThreshold)
+            {
+                result = 1;
+            }
+            else if (temp < -inputThreshold)
+            {
+                result = -1;
+            }
+            if (result == (axis==Axis.DpadX?preAxes.x:preAxes.y))
+            {
+                result = 0;
+            }
+            return result;
+        }
         public bool GetButton(Button button)
         {
             return Input.GetButton(this.buttonAxes[(int)button]);

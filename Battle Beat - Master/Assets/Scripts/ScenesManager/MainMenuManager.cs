@@ -84,8 +84,8 @@ public class MainMenuManager : MonoBehaviour
         if (this.state != State.Changing)
         {
             // 十字キー処理
-            float axisY = this.controller.GetAxis(ControllerManager.Axis.DpadY);
-            if (!Mathf.Approximately(axisY, 0f))
+            float axisY = this.controller.GetAxis_Menu(ControllerManager.Axis.DpadY);
+            if(Mathf.Abs(axisY)>0.9f)
             {
                 if (this.canPressDpadY)
                 {
@@ -109,7 +109,7 @@ public class MainMenuManager : MonoBehaviour
             // ボタン処理
             if (this.state == State.Left)
             {
-                if (this.controller.GetButtonDown(ControllerManager.Button.A))
+                if (this.controller.GetButtonDown_Menu(ControllerManager.Button.A))
                 {
                     switch (this.selected)
                     {
@@ -119,7 +119,7 @@ public class MainMenuManager : MonoBehaviour
             } else
             {
                 // A
-                if (this.controller.GetButtonDown(ControllerManager.Button.A))
+                if (this.controller.GetButtonDown_Menu(ControllerManager.Button.A))
                 {
                     switch (this.selected)
                     {
@@ -127,7 +127,7 @@ public class MainMenuManager : MonoBehaviour
                     }
                 }
                 //B
-                else if (this.controller.GetButtonDown(ControllerManager.Button.B)) StartCoroutine(RightToLeft());
+                else if (this.controller.GetButtonDown_Menu(ControllerManager.Button.B)) StartCoroutine(RightToLeft());
             }
         }
     }
