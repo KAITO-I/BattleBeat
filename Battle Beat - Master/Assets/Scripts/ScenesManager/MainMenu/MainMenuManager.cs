@@ -3,21 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using MainMenu;
 
 public class MainMenuManager : MonoBehaviour
 {
+    //==============================
+    // UIの表示位置状態
+    //==============================
     private enum State
     {
         Left,
         Right,
         Changing
-    }
-
-   [Serializable]
-   private class Sign
-    {
-        [SerializeField]
-        private Sprite[] sign;
     }
 
    [Serializable]
@@ -47,13 +44,9 @@ public class MainMenuManager : MonoBehaviour
 
     [Header("MegaphoneTree")]
     [SerializeField]
-    private Transform megaphoneTree;
+    private Transform mt;
     [SerializeField]
-    private Transform[] megaphoneTreeUI;
-    [SerializeField]
-    private Sign[] mtLeftSprite;
-    [SerializeField]
-    private Sign[] mtRightSprite;
+    private MegaphoneTreeUI mtUILeft;
     [SerializeField]
     private float mtLeftPosX;
     [SerializeField]
@@ -62,18 +55,23 @@ public class MainMenuManager : MonoBehaviour
     private float mtSideRotateX;
     [SerializeField]
     private float mtCenterRotateX;
-    [SerializeField]
-    private float mtOverrayLeftSideRotateX;
-    [SerializeField]
-    private float mtOverrayRightSideRotateX;
 
-    private int numberOfSings;
+
+    [Serializable]
+    private GameObject buttons; // 選択状態を示すボタン(プレイヤーからは見えない)
+
+
+
 
     [Header("ModeDescription")]
     [SerializeField]
     private Description[] Left;
 
-    private void Start()
+    private void Start() {
+        
+    }
+
+    /* private void Start()
     {
         this.controllerManager = ControllerManager.Instance;
         this.sceneLoader       = SceneLoader.Instance;
@@ -81,7 +79,6 @@ public class MainMenuManager : MonoBehaviour
         this.state = State.Left;
         this.selected = 0;
         this.canPressDpadY = true;
-        this.megaphoneTreeUI.GetComponent<Image>().sprite = this.mtLeftSprite;
         ChangeSign();
     }
 
@@ -147,14 +144,15 @@ public class MainMenuManager : MonoBehaviour
         }
     }
 
-    private void ChangeSign()
+    //------------------------------
+    // デザインを入れ替える
+    //------------------------------
+    private void ChangeDesign()
     {
-        for (int i = 0; i < 2; i++)
-        {
-            if (i == this.selected) this.mtOverlays[i].SetActive(false);
-            else                    this.mtOverlays[i].SetActive(true);
-        }
+        
     }
+
+    
 
     private void ChangeBoard()
     {
@@ -260,5 +258,5 @@ public class MainMenuManager : MonoBehaviour
         this.state = State.Left;
         this.selected = 0;
         ChangeSign();
-    }
+    }*/
 }
