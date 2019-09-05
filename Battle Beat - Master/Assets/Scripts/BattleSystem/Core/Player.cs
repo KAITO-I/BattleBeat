@@ -91,6 +91,8 @@ public class Player : MonoBehaviour
     private MoveComand input = MoveComand.None;
     private bool canInput = true;
 
+    public bool onGame = false;
+
     //入力キーの射影
     public class KeySets
     {
@@ -165,6 +167,10 @@ public class Player : MonoBehaviour
     public virtual void TurnPostprocess() {  canInput = true; input = MoveComand.None;  }
     void Update()
     {
+        if (!onGame)
+        {
+            return;
+        }
         //プレーヤー入力
         if (canInput&&wait==0)
         {

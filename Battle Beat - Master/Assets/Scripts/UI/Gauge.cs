@@ -51,6 +51,7 @@ public class Gauge : MonoBehaviour
         this.MaxValue = MaxValue;
         CurrentValueR = this.MaxValue * StartPercent;
         CurrentValue = CurrentValueR;
+        image.fillAmount = Mathf.Clamp(CurrentValue / MaxValue, 0, 1);
     }
 
     public void SetCurrentValue(float value)

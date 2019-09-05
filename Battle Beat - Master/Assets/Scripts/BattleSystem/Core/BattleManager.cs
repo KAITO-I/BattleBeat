@@ -33,6 +33,7 @@ public class BattleManager : MonoBehaviour
 
     IEnumerator startGameLoop()
     {
+        MainGameCamera._instance.GameStart();
         ShowImage._instance.ShowImages(new string[] {  "void", "void", "void", "void" }, 0.7f, 0.1f);
         while (true){
             if (ShowImage._instance.IsEnd())
@@ -51,6 +52,8 @@ public class BattleManager : MonoBehaviour
                     else
                     {
                         onGame = true;
+                        AttackManager._instance.GetPlayer(1).onGame = true ;
+                        AttackManager._instance.GetPlayer(2).onGame = true;
                         timeSetter.startTimer();
                         rythmManager.StartRythm();
                         break;
