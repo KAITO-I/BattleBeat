@@ -19,7 +19,7 @@ public class BasePlayerAnimation:MonoBehaviour
     RythmManager rythm;
 
     //自分のとぐろ
-    protected MeshRenderer _renderer;
+    public MeshRenderer _renderer;
     public bool AnimCheck;
     public float interval;
 
@@ -152,6 +152,11 @@ public class BasePlayerAnimation:MonoBehaviour
     }
     protected virtual void Attack4()
     {
+    }
+
+    public virtual void KusariAnim(_KusariAnimList _triggerName, GameObject _enemyObj = null, bool _attack = false)
+    {
+
     }
 
     //2P視点

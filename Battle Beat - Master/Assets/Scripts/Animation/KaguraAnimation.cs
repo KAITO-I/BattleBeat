@@ -55,12 +55,12 @@ public class KaguraAnimation :BasePlayerAnimation
         PlayAnim = "Wait";
     }
     //鎖のアニメーションを再生する関数（敵のオブジェクト,鎖攻撃が当たった）
-    public void KusariAnim(_KusariAnimList _triggerName,GameObject _enemyObj=null, bool _attack = false)
+    public override void KusariAnim(_KusariAnimList _triggerName,GameObject _enemyObj=null, bool _attack = false)
     {
         if (_attack)//相手につけている鎖のアニメーションを再生させる
         {
             _toguroAnim = _enemyObj.transform.GetChild(1).GetComponent<Animator>();
-            _enemyRenderer = _renderer;
+            _enemyRenderer = _enemyObj.GetComponent<BasePlayerAnimation>()._renderer;//親要素として取得することが出来るのか？
             _enemyRenderer.enabled = true;//表示
             _toguroAnim.SetTrigger("Toguro");//"Toguro"
         }

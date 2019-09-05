@@ -348,10 +348,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Flames:
-  - {fileID: 21300000, guid: a26c7d5c0d60e034e99c27e26662b917, type: 3}
-  - {fileID: 21300000, guid: 95379ca5736adf64ebaf7cbf696cfdfd, type: 3}
-  - {fileID: 21300000, guid: df026cd6ee7dcf24cb74beb0578f1957, type: 3}
-  - {fileID: 21300000, guid: 9202c0b9baf448b4e95a546002292ca7, type: 3}
+  - {fileID: 21300000, guid: f0040859bff9f374695fc728542e7c35, type: 3}
+  - {fileID: 21300000, guid: d1293d3ae5548a548b16af4e0694f552, type: 3}
+  - {fileID: 21300000, guid: 764cdd0823f7fce4b8b7e0e8cbd9741e, type: 3}
+  - {fileID: 21300000, guid: 4388570eef3c3a543a5d21f46a9cdd52, type: 3}
   CharaSprite: {fileID: 21300000, guid: 1d74d776405479a458bd7d5bd461f1f9, type: 3}
 --- !u!1 &292147295
 GameObject:
@@ -1199,8 +1199,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 352, y: 459}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 352, y: 367}
+  m_SizeDelta: {x: 500, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &542191514
 MonoBehaviour:
@@ -1224,11 +1224,11 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: e0fb84e1f76474946b47bf1196c1e6d2, type: 3}
-    m_FontSize: 40
+    m_FontSize: 80
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 4
-    m_MaxSize: 50
+    m_MaxSize: 80
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -1472,7 +1472,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0.0625, y: 0.07421875, z: 0.02734375, w: -0.03125}
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -2459,6 +2459,16 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1302119431850140085, guid: a9542cc574199d240acdeb56dc1e5738,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1302119431850140085, guid: a9542cc574199d240acdeb56dc1e5738,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a9542cc574199d240acdeb56dc1e5738, type: 3}
 --- !u!1 &1511722900
@@ -2495,8 +2505,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -167, y: -136.7}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -373, y: -177}
+  m_SizeDelta: {x: 200, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1511722902
 MonoBehaviour:
@@ -2520,11 +2530,11 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: e0fb84e1f76474946b47bf1196c1e6d2, type: 3}
-    m_FontSize: 40
+    m_FontSize: 70
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 4
-    m_MaxSize: 50
+    m_MaxSize: 70
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -2854,8 +2864,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Flames:
-  - {fileID: 21300000, guid: f0040859bff9f374695fc728542e7c35, type: 3}
-  - {fileID: 21300000, guid: d1293d3ae5548a548b16af4e0694f552, type: 3}
-  - {fileID: 21300000, guid: 764cdd0823f7fce4b8b7e0e8cbd9741e, type: 3}
-  - {fileID: 21300000, guid: 4388570eef3c3a543a5d21f46a9cdd52, type: 3}
+  - {fileID: 21300000, guid: a26c7d5c0d60e034e99c27e26662b917, type: 3}
+  - {fileID: 21300000, guid: 95379ca5736adf64ebaf7cbf696cfdfd, type: 3}
+  - {fileID: 21300000, guid: df026cd6ee7dcf24cb74beb0578f1957, type: 3}
+  - {fileID: 21300000, guid: 9202c0b9baf448b4e95a546002292ca7, type: 3}
   CharaSprite: {fileID: 21300000, guid: 823e22aad650b6d449152b804c4fe4af, type: 3}

@@ -52,6 +52,7 @@ public class Kagura : Player
     }
     protected override void Attack_3()
     {
+        base.Attack_3();
         var Skill = SkillPrefabs[2].GetComponent<AttackItemBase>() as ChainAttack;
         if (CoolDownCount[2] == 0)
         {
@@ -63,7 +64,6 @@ public class Kagura : Player
             waitAttackId = 2;
             nowAttack = Skill;
             AttackManager._instance.Add(Skill);
-            base.Attack_3();
         }
     }
     protected override void Attack_4()
