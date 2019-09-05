@@ -48,9 +48,11 @@ MonoBehaviour:
   - {x: 2, y: 0}
   - {x: 2, y: 1}
   - {x: 2, y: 2}
+  - {x: 1, y: 0}
+  - {x: 1, y: 2}
   BoardSize: {x: 3, y: 6}
   CoolDown: 5
   SpCost: 0
   DamageFactor: 4
-  BaseDamage: 5
+  BaseDamage: 4
   Delay: 1

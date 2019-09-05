@@ -50,5 +50,5 @@ MonoBehaviour:
   CoolDown: 0
   SpCost: 0
   DamageFactor: 4
-  BaseDamage: 3
+  BaseDamage: 4
   Delay: 0

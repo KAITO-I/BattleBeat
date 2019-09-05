@@ -46,4 +46,6 @@ MonoBehaviour:
   RootID: 0
   Area: []
   BoardSize: {x: 3, y: 3}
+  CoolDown: 0
+  SpCost: 100
   Power: 1

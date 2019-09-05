@@ -98,6 +98,15 @@ public class ChainAttack : AttackItemBase
             RootPlayer.ChainAttackHit = false;
         }
     }
+    public override void DamegePhase()
+    {
+        int OpponentID = 3 - RootID;
+
+        if (CheckArea(Opponent.Pos, OpponentID, Area))
+        {
+            PassDamage(RootPlayer);
+        }
+    }
     public override bool isEnd()
     {
         if (turn == 0)
