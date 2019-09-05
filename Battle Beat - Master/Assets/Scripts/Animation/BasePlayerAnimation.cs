@@ -39,7 +39,8 @@ public class BasePlayerAnimation:MonoBehaviour
 
     protected virtual void Update()
     {
-        interval = rythm.getbps;
+        interval = rythm.getbps / 2;
+        anim.speed = rythm.getbps * 2;
     }
     //（プレイヤーの場所,目的地,コマンド）
     public virtual void Move(GameObject Player,Vector3 Goal, Player.MoveComand comand)

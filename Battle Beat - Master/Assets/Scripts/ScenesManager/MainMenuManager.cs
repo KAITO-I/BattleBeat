@@ -28,7 +28,7 @@ public class MainMenuManager : MonoBehaviour
 
     [Header("Background")]
     [SerializeField]
-    private Transform background;
+    private RectTransform background;
     [SerializeField]
     private float backLeftPosX;
     [SerializeField]
@@ -36,11 +36,11 @@ public class MainMenuManager : MonoBehaviour
 
     [Header("MegaphoneTree")]
     [SerializeField]
-    private Transform megaphoneTree;
+    private RectTransform megaphoneTree;
     [SerializeField]
-    private Transform megaphoneTreeUI;
+    private RectTransform megaphoneTreeUI;
     [SerializeField]
-    private Transform megaphoneTreeOverlay;
+    private RectTransform megaphoneTreeOverlay;
     [SerializeField]
     private int numberOfSigns;
     [SerializeField]
@@ -162,8 +162,8 @@ public class MainMenuManager : MonoBehaviour
         float timer = 0f;
         while (true)
         {
-            this.background.position = new Vector3(Mathf.Lerp(this.backLeftPosX, this.backRightPosX, timer / this.moveTime), this.background.position.y);
-            this.megaphoneTree.position = new Vector3(Mathf.Lerp(this.mtLeftPosX, this.mtRightPosX, timer / this.moveTime), this.megaphoneTree.position.y);
+            this.background.anchoredPosition = new Vector3(Mathf.Lerp(this.backLeftPosX, this.backRightPosX, timer / this.moveTime), this.background.anchoredPosition.y);
+            this.megaphoneTree.anchoredPosition = new Vector3(Mathf.Lerp(this.mtLeftPosX, this.mtRightPosX, timer / this.moveTime), this.megaphoneTree.anchoredPosition.y);
 
             // 前半 0->90
             if (timer / this.moveTime <= 0.5)
@@ -192,8 +192,8 @@ public class MainMenuManager : MonoBehaviour
             yield return 0;
         }
 
-        this.background.position = new Vector3(this.backRightPosX, this.background.position.y);
-        this.megaphoneTree.position = new Vector3(this.mtRightPosX, this.megaphoneTree.position.y);
+        this.background.anchoredPosition = new Vector3(this.backRightPosX, this.background.anchoredPosition.y);
+        this.megaphoneTree.anchoredPosition = new Vector3(this.mtRightPosX, this.megaphoneTree.anchoredPosition.y);
 
         this.megaphoneTreeUI.rotation = Quaternion.Euler(this.megaphoneTreeUI.rotation.x, this.mtSideRotateX, this.megaphoneTreeUI.rotation.z);
 
@@ -211,8 +211,8 @@ public class MainMenuManager : MonoBehaviour
         float timer = 0f;
         while (true)
         {
-            background.position = new Vector3(Mathf.Lerp(backRightPosX, backLeftPosX, timer / this.moveTime), background.position.y);
-            megaphoneTree.position = new Vector3(Mathf.Lerp(mtRightPosX, mtLeftPosX, timer / this.moveTime), megaphoneTree.position.y);
+            background.anchoredPosition = new Vector3(Mathf.Lerp(backRightPosX, backLeftPosX, timer / this.moveTime), background.anchoredPosition.y);
+            megaphoneTree.anchoredPosition = new Vector3(Mathf.Lerp(mtRightPosX, mtLeftPosX, timer / this.moveTime), megaphoneTree.anchoredPosition.y);
 
             // 前半 0->90
             if (timer / this.moveTime <= 0.5)
@@ -241,7 +241,7 @@ public class MainMenuManager : MonoBehaviour
             yield return 0;
         }
 
-        this.background.position = new Vector3(this.backLeftPosX, this.background.position.y);
+        this.background.anchoredPosition = new Vector3(this.backLeftPosX, this.background.anchoredPosition.y);
         this.megaphoneTree.position = new Vector3(this.mtLeftPosX, this.megaphoneTree.position.y);
 
         this.megaphoneTreeUI.rotation = Quaternion.Euler(this.megaphoneTreeUI.rotation.x, this.mtSideRotateX, this.megaphoneTreeUI.rotation.z);

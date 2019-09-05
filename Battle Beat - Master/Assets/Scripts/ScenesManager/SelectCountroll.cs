@@ -42,7 +42,6 @@ public class SelectCountroll : MonoBehaviour
 
     [SerializeField]
     GameObject FlameObj;
-    [SerializeField]
     List<CharaSelectObj> CharaObj;
     int length;
 
@@ -51,26 +50,18 @@ public class SelectCountroll : MonoBehaviour
     [SerializeField]
     Sprite[] _ChataText;
 
-    string[] charaname =
-    {
-        "Chara1",
-        "Chara2",
-        "Chara3",
-        "Chara4"
-    };
-
     float[] _xSize =
     {
-        0.4f,
         0.7f,
-        0.25f,
+        0.4f,
+        0.3f,
         0.35f
     };
     float[] _ySize =
     {
-        0.4f,
         0.7f,
-        0.25f,
+        0.4f,
+        0.3f,
         0.35f
     };
 
@@ -113,7 +104,7 @@ public class SelectCountroll : MonoBehaviour
         Player02_Obj.transform.localScale = new Vector3(_xSize[_Player2], _ySize[_Player2], 1);
 
         //戻り時間
-        ReturnTime = 5;
+        ReturnTime = 1.5f;
         ReturnSlider.maxValue = ReturnTime;
     }
 
@@ -142,9 +133,9 @@ public class SelectCountroll : MonoBehaviour
     void SelectMove()
     {
         //1P処理
-        _Player1 = InputProcess(Player01_Obj, _player1Text, _1Pcontroller, Player01, _Player1, Player1_OK);
+        _Player1 = InputProcess(Player01_Obj, _player1Text, _1Pcontroller, Player01, _Player1, Player1_OK,1);
         //2P処理
-        _Player2 = InputProcess(Player02_Obj, _player2Text, _2Pcontroller, Player02, _Player2, Player2_OK);
+        _Player2 = InputProcess(Player02_Obj, _player2Text, _2Pcontroller, Player02, _Player2, Player2_OK,2);
         //選択時//渡す値を決定する
         if (_1Pcontroller.GetButtonDown(ControllerManager.Button.A))
         {
@@ -167,7 +158,7 @@ public class SelectCountroll : MonoBehaviour
             SetSilder(difference);
             if (difference > ReturnTime)
             {
-                Debug.Log("一つ前の画面へ");
+                SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainMenu);
             }
         }
         if (_2Pcontroller.GetButton(ControllerManager.Button.B))
@@ -181,7 +172,7 @@ public class SelectCountroll : MonoBehaviour
             SetSilder(difference);
             if (difference > ReturnTime)
             {
-                Debug.Log("一つ前の画面へ");
+                SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainMenu);
             }
         }
         //両方入力されていない
@@ -196,29 +187,29 @@ public class SelectCountroll : MonoBehaviour
         Text02.SetActive(Player2_OK);
     }
 
-    private int InputProcess(GameObject Player_Obj, Image _playerText, ControllerManager.Controller _controller, SpriteRenderer Player, int _Player, bool Player_OK)
+    private int InputProcess(GameObject Player_Obj, Image _playerText, ControllerManager.Controller _controller, SpriteRenderer Player, int _Player, bool Player_OK,int _playerid)
     {
         if (!Player_OK)
         {
-            if (_controller.GetAxisUp(ControllerManager.Axis.DpadY) > 0)//上入力
+            if (_controller.GetAxisUp(ControllerManager.Axis.DpadY) < 0)//上入力
             {
-                CharaObj[_Player].charaSelect(1, false);
+                CharaObj[_Player].charaSelect(_playerid, false);
                 _Player++;
                 _Player = _Player % length;
-                CharaObj[_Player].charaSelect(1, true);
+                CharaObj[_Player].charaSelect(_playerid, true);
 
                 Player.sprite = CharaObj[_Player].GetCharaSprite;
                 _playerText.sprite = _ChataText[_Player];
 
                 Player_Obj.transform.localScale = new Vector3(_xSize[_Player], _ySize[_Player], 1);
             }
-            else if (_controller.GetAxisUp(ControllerManager.Axis.DpadY) < 0)//下入力
+            else if (_controller.GetAxisUp(ControllerManager.Axis.DpadY) > 0)//下入力
             {
-                CharaObj[_Player].charaSelect(1, false);
+                CharaObj[_Player].charaSelect(_playerid, false);
                 _Player--;
                 _Player = _Player % length;
                 if (_Player < 0) _Player = 3;
-                CharaObj[_Player].charaSelect(1, true);
+                CharaObj[_Player].charaSelect(_playerid, true);
 
                 Player.sprite = CharaObj[_Player].GetCharaSprite;
                 _playerText.sprite = _ChataText[_Player];
