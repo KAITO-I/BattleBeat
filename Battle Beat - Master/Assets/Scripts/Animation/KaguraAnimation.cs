@@ -6,6 +6,7 @@ using UnityEngine;
 public class KaguraAnimation :BasePlayerAnimation
 {
     MeshRenderer _enemyRenderer;
+    //[SerializeField]
     Animator _kusariAnim;
     Animator _toguroAnim;
     AnimatorStateInfo _KusariInfo;
@@ -13,6 +14,7 @@ public class KaguraAnimation :BasePlayerAnimation
     {
         base.Start();
         _kusariAnim = gameObject.transform.GetChild(2).GetComponent<Animator>();
+        anim.SetTrigger("Start");
     }
 
     protected override void Update()
@@ -58,7 +60,7 @@ public class KaguraAnimation :BasePlayerAnimation
         if (_attack)//相手につけている鎖のアニメーションを再生させる
         {
             _toguroAnim = _enemyObj.transform.GetChild(1).GetComponent<Animator>();
-            _enemyRenderer = _enemyObj.GetComponent<BasePlayerAnimation>()._renderer;
+            _enemyRenderer = _renderer;
             _enemyRenderer.enabled = true;//表示
             _toguroAnim.SetTrigger("Toguro");//"Toguro"
         }
@@ -67,10 +69,10 @@ public class KaguraAnimation :BasePlayerAnimation
             switch (_triggerName)
             {
                 case _KusariAnimList.Start:
-                    _kusariAnim.SetTrigger("Kusari");//"Kusari or Kusari2"
+                    _kusariAnim.SetTrigger("Start");
                     break;
                 case _KusariAnimList.Finish:
-                    _kusariAnim.SetTrigger("Kusari2");//"Kusari or Kusari2"
+                    _kusariAnim.SetTrigger("Finish");
                     break;
             }
         }
@@ -81,8 +83,8 @@ public class KaguraAnimation :BasePlayerAnimation
         switch (waitAttackId)
         {
             case 1:
-                anim.SetTrigger("HorizontalAttack");
-                PlayAnim = "HorizontalAttack";
+                anim.SetTrigger("Attack1");
+                PlayAnim = "Attack1";
                 break;
             case 3:
                 anim.SetTrigger("Special");

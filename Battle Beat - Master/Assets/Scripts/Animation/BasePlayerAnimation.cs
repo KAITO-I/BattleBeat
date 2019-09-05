@@ -19,7 +19,7 @@ public class BasePlayerAnimation:MonoBehaviour
     RythmManager rythm;
 
     //自分のとぐろ
-    public MeshRenderer _renderer;
+    protected MeshRenderer _renderer;
     public bool AnimCheck;
     public float interval;
 
