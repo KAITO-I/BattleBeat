@@ -1,31 +1,23 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using MainMenu;
 
 public class MainMenuManager : MonoBehaviour
 {
-    private enum State
-    {
-        Left,
-        Right,
-        Changing
-    }
-
-    private class Description
-    {
-        private string title;
-        private string description;
-    }
-
+    // 管理系
     private ControllerManager controller;
-    private State state;
-    private int selected;
-    private bool canPressDpadY;
 
+    // 状態
+    private State state;
+    private int   selected;
+    private bool  canPressDpadY;
+
+    // 画面の移動時間
     [SerializeField]
     private float moveTime;
 
+    // 背景
     [Header("Background")]
     [SerializeField]
     private RectTransform background;
@@ -34,6 +26,7 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField]
     private float backRightPosX;
 
+    // メガホンツリー
     [Header("MegaphoneTree")]
     [SerializeField]
     private RectTransform megaphoneTree;
@@ -69,6 +62,7 @@ public class MainMenuManager : MonoBehaviour
     private void Start()
     {
         this.controller = ControllerManager.Instance;
+
         this.state = State.Left;
         this.selected = 0;
         this.canPressDpadY = true;
