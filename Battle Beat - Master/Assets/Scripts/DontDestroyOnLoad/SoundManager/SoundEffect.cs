@@ -13,7 +13,7 @@ public class SoundEffect : MonoBehaviour {
         Invoke("EndCheck", clip.length);
     }
 
-    private void EndCheck() {
-        
+    private void EndPlay() {
+        SoundManager.Instance.SEEndCallBack(this);
     }
 }

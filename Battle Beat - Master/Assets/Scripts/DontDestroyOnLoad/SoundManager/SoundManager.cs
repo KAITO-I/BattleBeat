@@ -20,14 +20,14 @@ public enum BGMID {
 
 // SEで使う音源のリスト
 public enum SEID {
-    Controller_Select,
-    Controller_Decision,
-    Controller_Back,
+    General_Controller_Select,
+    General_Controller_Decision,
+    General_Controller_Back,
+    General_Siren,
     Shutter_Down,
     Shutter_Close,
     Shutter_Up,
-    CharacterSelect_Ready,
-    CharacterSelect_Go,
+    CharacterSelect_GameStart,
     Game_Countdown,
     Game_Ready,
     Game_Character_General_Slash,
@@ -86,6 +86,8 @@ public class SoundManager : MonoBehaviour {
     private void Awake() {
         if (instance != null) return;
         instance = this;
+
+        this.playingBGMID = BGMID.None;
 
         this.usedSEGameObject      = new List<SoundEffect>();
         this.unusedSEGameObject    = new List<SoundEffect>();

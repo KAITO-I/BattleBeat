@@ -137,10 +137,15 @@ public class TitleManager : MonoBehaviour
     [SerializeField]
     private float lightToDarkFadeTime;
 
-    private void Start()
+    private IEnumerator Start()
     {
         // アニメーション再生
         (this.vp = GetComponent<VideoPlayer>()).Play();
+
+        // アニメーション再生までのラグ
+        yield return new WaitForSeconds(0.25f);
+
+        // BGM再生
         SoundManager.Instance.PlayBGM(BGMID.Title);
 
         // シャッタータイマー開始
