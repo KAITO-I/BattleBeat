@@ -2521,6 +2521,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1356310773}
   - component: {fileID: 1356310772}
+  - component: {fileID: 1356310774}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -2550,6 +2551,9 @@ MonoBehaviour:
   Text01: {fileID: 542191512}
   Text02: {fileID: 1511722900}
   FlameObj: {fileID: 1329113689}
+  Commands: 0000000001000000040000000500000007000000
+  _boss_Sprite: {fileID: 21300000, guid: 92c95ff9e1d57e3498cd0f7dfe92a005, type: 3}
+  _void: {fileID: 21300000, guid: 9ca0c66b97421054daf20b8a6431db71, type: 3}
   Ready: {fileID: 468595717}
   _ChataText:
   - {fileID: 21300000, guid: 0e549c8be99a4474b9a448c4de5bae71, type: 3}
@@ -2575,6 +2579,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1356310774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1356310771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9df5a63321b41f9418f8f956dad2aa83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1362050577
 PrefabInstance:
   m_ObjectHideFlags: 0

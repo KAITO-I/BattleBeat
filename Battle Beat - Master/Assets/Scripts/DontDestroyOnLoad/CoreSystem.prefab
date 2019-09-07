@@ -555,7 +555,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   loadingObj: {fileID: 5061638577799789560}
   shutterDownTime: 0.5
-  shutterUpTime: 2
+  shutterUpTime: 0.5
   pressButtonText: {fileID: 1788773437622833175}
   loadingText: {fileID: 7153925046393550193}
   loadingGauge: {fileID: 5427735635162824556}

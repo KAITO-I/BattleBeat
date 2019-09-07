@@ -16,14 +16,19 @@ public class SelectCountroll : MonoBehaviour
     SpriteRenderer Description_1P, Description_2P;
     [SerializeField]
     Slider ReturnSlider;
-
     [SerializeField]
     GameObject Text01;
     [SerializeField]
     GameObject Text02;
-
     [SerializeField]
     GameObject FlameObj;
+    [SerializeField]
+    ControllerManager.Button[] Commands;
+    [SerializeField]
+    Sprite _boss_Sprite;
+    [SerializeField]
+    Sprite _void;
+
     List<CharaSelectObj> CharaObj;
     int length;
 
@@ -55,6 +60,21 @@ public class SelectCountroll : MonoBehaviour
     bool _1PDes;
     bool _2PDes;
 
+    //Boss変数
+    bool[] _boss=new bool[2] {false,false};
+
+    void BossSelect(int playerid)
+    {
+        if( playerid==0) {
+            _boss[0] = true;
+            Setting.p1c = (Setting.Chara)4;
+        }
+        else if(playerid == 1)
+        {
+            _boss[1] = true;
+            Setting.p2c = (Setting.Chara)4;
+        }
+    }
 
 
     float[] _xSize =
@@ -119,6 +139,12 @@ public class SelectCountroll : MonoBehaviour
         //戻り時間
         ReturnTime = 1.5f;
         ReturnSlider.maxValue = ReturnTime;
+        string commandStr = string.Empty;
+        foreach(var v in Commands)
+        {
+            commandStr += v.ToString();
+        }
+        CommandManager.instance.registCommand(commandStr, (int i)=> { Debug.Log("Boss!"); _boss[i] = true; });
     }
 
     // Update is called once per frame
@@ -133,8 +159,13 @@ public class SelectCountroll : MonoBehaviour
             //決定ボタンを入力したら
             if (ControllerManager.Instance.GetButtonDown_Menu(ControllerManager.Button.Start))
             {
-                Setting.p1c = (Setting.Chara)_Player1;
-                Setting.p2c = (Setting.Chara)_Player2;
+                if (!_boss[0])
+                {
+                    Setting.p1c = (Setting.Chara)_Player1;
+                }else if (!_boss[1])
+                {
+                    Setting.p2c = (Setting.Chara)_Player2;
+                }
                 SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainGame);
                 Debug.Log("battleSceneへ");
             }
@@ -147,9 +178,27 @@ public class SelectCountroll : MonoBehaviour
     void SelectMove()
     {
         //1P処理
-        _Player1 = InputProcess(Player01_Obj, _player1Text, _1Pcontroller, Player01, _Player1, Player1_OK,Description_1P,1);
+        if (!_boss[0])
+        {
+            _Player1 = InputProcess(Player01_Obj, _player1Text, _1Pcontroller, Player01, _Player1, Player1_OK, Description_1P, 1);
+        }
+        else
+        {
+            Player01.sprite = _boss_Sprite;
+            _player1Text.sprite = _void;
+            Description_1P.sprite = _void;
+        }
         //2P処理
-        _Player2 = InputProcess(Player02_Obj, _player2Text, _2Pcontroller, Player02, _Player2, Player2_OK,Description_2P,2);
+        if (!_boss[1])
+        {
+            _Player2 = InputProcess(Player02_Obj, _player2Text, _2Pcontroller, Player02, _Player2, Player2_OK, Description_2P, 2);
+        }
+        else
+        {
+            Player02.sprite = _boss_Sprite;
+            _player2Text.sprite = _void;
+            Description_2P.sprite = _void;
+        }
         //選択時//渡す値を決定する
         if (_1Pcontroller.GetButtonDown(ControllerManager.Button.A))
         {
