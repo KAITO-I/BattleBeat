@@ -2,20 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Kagura : Player
+public class Boss : Player
 {
+    public float buffPower = 0f;
 
-    public bool ChainAttackHit;
+    public int onBuff;
+
+
+    protected override void IStart()
+    {
+        onBuff = 0;
+    }
+
+    public override float DamageCalc(float p1)
+    {
+        return p1 + buffPower;
+    }
+
     private bool ClassicAttackProcess(int i)
     {
         var Skill = SkillPrefabs[i].GetComponent<AttackItemBase>() as BasicAttack;
-        if (CoolDownCount[i] == 0 && Skill.SpCost <= Sp)
+        if (CoolDownCount[i] == 0)
         {
             GameObject obj = Instantiate<GameObject>(SkillPrefabs[i]);
             Skill = obj.GetComponent<AttackItemBase>() as BasicAttack;
             Skill.Init(Pos.y, Pos.x, PlayerID == 1 ? false : true, PlayerID);
             CoolDownCount[i] += Skill.CoolDown + Skill.Delay;
-            Sp -= Skill.SpCost;
             wait = Skill.Delay;
             if (wait > 0)
             {
@@ -33,52 +45,46 @@ public class Kagura : Player
 
     protected override void Attack_1()
     {
+
         var rlt = ClassicAttackProcess(0);
 
         if (rlt)
         {
             base.Attack_1();
         }
-
     }
     protected override void Attack_2()
     {
-        var rit=ClassicAttackProcess(1);
-        if (rit)
+        var rlt = ClassicAttackProcess(1);
+
+        if (rlt)
         {
             base.Attack_2();
         }
     }
     protected override void Attack_3()
     {
-        var Skill = SkillPrefabs[2].GetComponent<AttackItemBase>() as ChainAttack;
-        if (CoolDownCount[2] == 0)
+        var rlt = ClassicAttackProcess(2);
+
+        if (rlt)
         {
-            GameObject obj = Instantiate<GameObject>(SkillPrefabs[2]);
-            Skill = obj.GetComponent<AttackItemBase>() as ChainAttack;
-            Skill.Init(Pos.y, Pos.x, PlayerID == 1 ? false : true, PlayerID);
-            CoolDownCount[2] += Skill.CoolDown;
-            wait = 1;
-            waitAttackId = 2;
-            nowAttack = Skill;
-            AttackManager._instance.Add(Skill);
             base.Attack_3();
         }
     }
     protected override void Attack_4()
     {
-        var rit = ClassicAttackProcess(3);
-        if (rit)
+        var Skill = SkillPrefabs[3].GetComponent<AttackItemBase>() as BuffItem;
+        if (CoolDownCount[3] == 0)
         {
+            GameObject obj = Instantiate<GameObject>(SkillPrefabs[3]);
+            Skill = obj.GetComponent<AttackItemBase>() as BuffItem;
+            Skill.Init(Pos.y, Pos.x, PlayerID == 1 ? false : true, PlayerID);
+            CoolDownCount[3] += Skill.CoolDown+5;
+            onBuff += Skill.Duration+5;
+            buffPower += Skill.Power;
+            nowAttack = Skill;
+            AttackManager._instance.Add(Skill);
             base.Attack_4();
         }
-    }
-    public override void Turn_AttackPhase()
-    {
-        base.Turn_AttackPhase();
-    }
-    protected override void IStart()
-    {
-        ChainAttackHit = false;
     }
 }
