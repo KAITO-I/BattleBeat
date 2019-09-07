@@ -12,26 +12,8 @@ public class SelectCountroll : MonoBehaviour
     GameObject Player02_Obj;
     [SerializeField]
     Image _player1Text, _player2Text;
-
-    ControllerManager.Controller _1Pcontroller = ControllerManager.Instance.Player1;
-    ControllerManager.Controller _2Pcontroller = ControllerManager.Instance.Player2;
-
-    //キャラ立ち絵
-    SpriteRenderer Player01;
-    SpriteRenderer Player02;
-    //キャラクターID
-    int _Player1;
-    int _Player2;
-    //キャラクター選択
-    bool Player1_OK;
-    bool Player2_OK;
-    //戻る時間
-    float Player1_Time;
-    float Player2_Time;
-    //戻る画面移動時間
-    float ReturnTime;
-    float ReturnTimeValumes;
-
+    [SerializeField]
+    SpriteRenderer Description_1P, Description_2P;
     [SerializeField]
     Slider ReturnSlider;
 
@@ -48,7 +30,32 @@ public class SelectCountroll : MonoBehaviour
     [SerializeField]
     GameObject Ready;
     [SerializeField]
-    Sprite[] _ChataText;
+    Sprite[] _ChataText, ChareDescriptions;
+
+
+    ControllerManager.Controller _1Pcontroller = ControllerManager.Instance.Player1;
+    ControllerManager.Controller _2Pcontroller = ControllerManager.Instance.Player2;
+    SceneLoader loader = SceneLoader.Instance;
+
+    //キャラ立ち絵
+    SpriteRenderer Player01;
+    SpriteRenderer Player02;
+    //キャラクターID
+    int _Player1;
+    int _Player2;
+    //キャラクター選択
+    bool Player1_OK;
+    bool Player2_OK;
+    //戻る時間
+    float Player1_Time;
+    float Player2_Time;
+    //戻る画面移動時間
+    float ReturnTime;
+    float ReturnTimeValumes;
+    bool _1PDes;
+    bool _2PDes;
+
+
 
     float[] _xSize =
     {
@@ -91,6 +98,9 @@ public class SelectCountroll : MonoBehaviour
         _Player2 = 0;
         Player1_OK = false;
         Player2_OK = false;
+        _1PDes = false;
+        _2PDes = false;
+
 
         CharaObj[_Player1].charaSelect(1, true);
         CharaObj[_Player2].charaSelect(2, true);
@@ -103,6 +113,9 @@ public class SelectCountroll : MonoBehaviour
         Player01_Obj.transform.localScale = new Vector3(_xSize[_Player1], _ySize[_Player1], 1);
         Player02_Obj.transform.localScale = new Vector3(_xSize[_Player2], _ySize[_Player2], 1);
 
+        Description_1P.enabled = _1PDes;
+        Description_2P.enabled = _2PDes;
+
         //戻り時間
         ReturnTime = 1.5f;
         ReturnSlider.maxValue = ReturnTime;
@@ -110,7 +123,8 @@ public class SelectCountroll : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {        
+    {
+        if (loader.isLoading) return;
         SelectMove();
         //SelectMoveDebug();
         //Charaが二人とも選択されたとき
@@ -133,9 +147,9 @@ public class SelectCountroll : MonoBehaviour
     void SelectMove()
     {
         //1P処理
-        _Player1 = InputProcess(Player01_Obj, _player1Text, _1Pcontroller, Player01, _Player1, Player1_OK,1);
+        _Player1 = InputProcess(Player01_Obj, _player1Text, _1Pcontroller, Player01, _Player1, Player1_OK,Description_1P,1);
         //2P処理
-        _Player2 = InputProcess(Player02_Obj, _player2Text, _2Pcontroller, Player02, _Player2, Player2_OK,2);
+        _Player2 = InputProcess(Player02_Obj, _player2Text, _2Pcontroller, Player02, _Player2, Player2_OK,Description_2P,2);
         //選択時//渡す値を決定する
         if (_1Pcontroller.GetButtonDown(ControllerManager.Button.A))
         {
@@ -175,6 +189,17 @@ public class SelectCountroll : MonoBehaviour
                 SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainMenu);
             }
         }
+        //説明画面
+        if (_1Pcontroller.GetButtonDown(ControllerManager.Button.X))
+        {
+            if (_1PDes) _1PDes = false;
+            else _1PDes = true;
+        }
+        if (_2Pcontroller.GetButtonDown(ControllerManager.Button.X))
+        {
+            if (_2PDes) _2PDes = false;
+            else _2PDes =true;
+        }
         //両方入力されていない
         if (!_1Pcontroller.GetButton(ControllerManager.Button.B) && !_2Pcontroller.GetButton(ControllerManager.Button.B))
         {
@@ -185,40 +210,8 @@ public class SelectCountroll : MonoBehaviour
         }
         Text01.SetActive(Player1_OK);
         Text02.SetActive(Player2_OK);
-    }
-
-    private int InputProcess(GameObject Player_Obj, Image _playerText, ControllerManager.Controller _controller, SpriteRenderer Player, int _Player, bool Player_OK,int _playerid)
-    {
-        if (!Player_OK)
-        {
-            if (_controller.GetAxisUp(ControllerManager.Axis.DpadY) < 0)//上入力
-            {
-                CharaObj[_Player].charaSelect(_playerid, false);
-                _Player++;
-                _Player = _Player % length;
-                CharaObj[_Player].charaSelect(_playerid, true);
-
-                Player.sprite = CharaObj[_Player].GetCharaSprite;
-                _playerText.sprite = _ChataText[_Player];
-
-                Player_Obj.transform.localScale = new Vector3(_xSize[_Player], _ySize[_Player], 1);
-            }
-            else if (_controller.GetAxisUp(ControllerManager.Axis.DpadY) > 0)//下入力
-            {
-                CharaObj[_Player].charaSelect(_playerid, false);
-                _Player--;
-                _Player = _Player % length;
-                if (_Player < 0) _Player = 3;
-                CharaObj[_Player].charaSelect(_playerid, true);
-
-                Player.sprite = CharaObj[_Player].GetCharaSprite;
-                _playerText.sprite = _ChataText[_Player];
-
-                Player_Obj.transform.localScale = new Vector3(_xSize[_Player], _ySize[_Player], 1);
-            }
-        }
-
-        return _Player;
+        Description_1P.enabled = _1PDes;
+        Description_2P.enabled = _2PDes;
     }
 
     void SelectMoveDebug()
@@ -328,7 +321,41 @@ public class SelectCountroll : MonoBehaviour
         Text02.SetActive(Player2_OK);
     }
 
+    private int InputProcess(GameObject Player_Obj, Image _playerText, ControllerManager.Controller _controller, SpriteRenderer Player, int _Player, bool Player_OK,SpriteRenderer _Description, int _playerid)
+    {
+        if (!Player_OK)
+        {
+            if (_controller.GetAxisUp(ControllerManager.Axis.DpadY) < 0)//上入力
+            {
+                CharaObj[_Player].charaSelect(_playerid, false);
+                _Player++;
+                _Player = _Player % length;
+                CharaObj[_Player].charaSelect(_playerid, true);
 
+                Player.sprite = CharaObj[_Player].GetCharaSprite;
+                _playerText.sprite = _ChataText[_Player];
+                _Description.sprite = ChareDescriptions[_Player];
+
+                Player_Obj.transform.localScale = new Vector3(_xSize[_Player], _ySize[_Player], 1);
+            }
+            else if (_controller.GetAxisUp(ControllerManager.Axis.DpadY) > 0)//下入力
+            {
+                CharaObj[_Player].charaSelect(_playerid, false);
+                _Player--;
+                _Player = _Player % length;
+                if (_Player < 0) _Player = 3;
+                CharaObj[_Player].charaSelect(_playerid, true);
+
+                Player.sprite = CharaObj[_Player].GetCharaSprite;
+                _playerText.sprite = _ChataText[_Player];
+                _Description.sprite = ChareDescriptions[_Player];
+
+                Player_Obj.transform.localScale = new Vector3(_xSize[_Player], _ySize[_Player], 1);
+            }
+        }
+
+        return _Player;
+    }
     void SetSilder(float t)
     {
         if (t < ReturnSlider.value) return;
