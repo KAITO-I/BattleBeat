@@ -160,7 +160,7 @@ public class TitleManager : MonoBehaviour
         if (Input.anyKeyDown)
         {
             SoundManager.Instance.StopBGM();
-            SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainMenu);
+            SceneLoader.Instance.LoadScene(SceneLoader.Scenes.CharacterSelect);
         }
     }
 
