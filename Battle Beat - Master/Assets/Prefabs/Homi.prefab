@@ -35,6 +35,7 @@ Transform:
   m_Children:
   - {fileID: 7678932061300136291}
   - {fileID: 7310461535116829986}
+  - {fileID: 662824582289050108}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -97,6 +98,7 @@ MonoBehaviour:
   - {fileID: 4781102525549998572, guid: 20a721f928931894db48e041b33afbaa, type: 3}
   AnimationController: {fileID: -5937534459849402391}
   CoolDownCount: 00000000000000000000000000000000
+  onGame: 0
   buffPower: 0
   onBuff: 0
 --- !u!23 &2616607855929116310
@@ -171,6 +173,98 @@ MonoBehaviour:
   _renderer: {fileID: 0}
   AnimCheck: 0
   interval: 0.6
+--- !u!1001 &662824582288921388
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2616607855929116328}
+    m_Modifications:
+    - target: {fileID: 100080, guid: d84d9244342543b44870005793a21db0, type: 3}
+      propertyPath: m_Name
+      value: homi
+      objectReference: {fileID: 0}
+    - target: {fileID: 100080, guid: d84d9244342543b44870005793a21db0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400080, guid: d84d9244342543b44870005793a21db0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400080, guid: d84d9244342543b44870005793a21db0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400080, guid: d84d9244342543b44870005793a21db0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400080, guid: d84d9244342543b44870005793a21db0, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400080, guid: d84d9244342543b44870005793a21db0, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400080, guid: d84d9244342543b44870005793a21db0, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400080, guid: d84d9244342543b44870005793a21db0, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400080, guid: d84d9244342543b44870005793a21db0, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 400080, guid: d84d9244342543b44870005793a21db0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400080, guid: d84d9244342543b44870005793a21db0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400080, guid: d84d9244342543b44870005793a21db0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: d84d9244342543b44870005793a21db0, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: d84d9244342543b44870005793a21db0, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 53121f6b22dbf6a4088338298d706e17, type: 2}
+    - target: {fileID: 2300002, guid: d84d9244342543b44870005793a21db0, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300002, guid: d84d9244342543b44870005793a21db0, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 53121f6b22dbf6a4088338298d706e17, type: 2}
+    - target: {fileID: 13700000, guid: d84d9244342543b44870005793a21db0, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 13700000, guid: d84d9244342543b44870005793a21db0, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 05847f07849ca67418a94fa2c72e45b6, type: 2}
+    m_RemovedComponents:
+    - {fileID: 9500000, guid: d84d9244342543b44870005793a21db0, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: d84d9244342543b44870005793a21db0, type: 3}
+--- !u!4 &662824582289050108 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400080, guid: d84d9244342543b44870005793a21db0,
+    type: 3}
+  m_PrefabInstance: {fileID: 662824582288921388}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3453056712364175993
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -182,6 +276,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ho-mi-
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 7bd81c208237a1443ab3f01bfc0a1874,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -9064037194395425439, guid: 7bd81c208237a1443ab3f01bfc0a1874,
         type: 3}
@@ -295,6 +394,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2616607855929116328}
     m_Modifications:
+    - target: {fileID: 100000, guid: 879e128bb1494b243b25aec9bd8e3cd9, type: 3}
+      propertyPath: m_Name
+      value: kusari_toguro
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 879e128bb1494b243b25aec9bd8e3cd9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 879e128bb1494b243b25aec9bd8e3cd9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
@@ -338,14 +445,6 @@ PrefabInstance:
     - target: {fileID: 400000, guid: 879e128bb1494b243b25aec9bd8e3cd9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: 879e128bb1494b243b25aec9bd8e3cd9, type: 3}
-      propertyPath: m_Name
-      value: kusari_toguro
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: 879e128bb1494b243b25aec9bd8e3cd9, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: 879e128bb1494b243b25aec9bd8e3cd9, type: 3}
       propertyPath: m_Enabled
