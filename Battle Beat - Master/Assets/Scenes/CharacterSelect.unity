@@ -2720,6 +2720,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: b819e586df5c42a4e870da9e7e9c2056, type: 3}
   - {fileID: 21300000, guid: 431009ed422b3d14bba2614f35b4f543, type: 3}
   - {fileID: 21300000, guid: b819e586df5c42a4e870da9e7e9c2056, type: 3}
+  _ReadyBackGraund: {fileID: 0}
   text: {fileID: 820978146}
   interval: 2
 --- !u!4 &1356310773
