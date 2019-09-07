@@ -9,6 +9,14 @@ using UnityEngine.Events;
 //==============================
 public class RythmManager : MonoBehaviour
 {
+    public static RythmManager instance;
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
     // 速度設定
     [SerializeField] private int bpm    = 100;
     [SerializeField] private int maxBpm = 150; // 最高BPM

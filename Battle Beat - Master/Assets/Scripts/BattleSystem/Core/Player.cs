@@ -73,7 +73,8 @@ public class Player : MonoBehaviour
     
     public int[] CoolDownCount = new int[4];
 
-    
+    List<Effekseer.EffekseerEmitter> emitters=new List<Effekseer.EffekseerEmitter>();
+
 
     public enum MoveComand
     {

@@ -13,6 +13,7 @@ public class Trap : BasicAttack
     }
     public override void Init(int row, int col, bool reverse, int root)
     {
+        base.Init(row, col, reverse, root);
         if (!reverse)
         {
             transform.position = BoardManager._instance.ToWorldPos(new Vector2Int(col+ Area[0].x, row));
@@ -24,7 +25,7 @@ public class Trap : BasicAttack
         transform.position += new Vector3(0, 1f, 0);
         DamagePassed = false;
 
-        base.Init(row, col, reverse, root);
+        
 
         canMakeDamage = true;//baseを上書きする
     }

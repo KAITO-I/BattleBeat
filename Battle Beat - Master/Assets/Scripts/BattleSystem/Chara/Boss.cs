@@ -79,8 +79,8 @@ public class Boss : Player
             GameObject obj = Instantiate<GameObject>(SkillPrefabs[3]);
             Skill = obj.GetComponent<AttackItemBase>() as BuffItem;
             Skill.Init(Pos.y, Pos.x, PlayerID == 1 ? false : true, PlayerID);
-            CoolDownCount[3] += Skill.CoolDown+5;
-            onBuff += Skill.Duration+5;
+            CoolDownCount[3] += Skill.CoolDown;
+            onBuff += Skill.Duration;
             buffPower += Skill.Power;
             nowAttack = Skill;
             AttackManager._instance.Add(Skill);

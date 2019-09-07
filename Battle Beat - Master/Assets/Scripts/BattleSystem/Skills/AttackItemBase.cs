@@ -26,6 +26,10 @@ public class AttackItemBase : MonoBehaviour
 
     public int CoolDown;
     public float SpCost;
+
+    [SerializeField]
+    protected Effekseer.EffekseerEffectAsset EffekseerEffectAsset;
+
     //初期化関数
     public virtual void Init(int row, int col, bool reverse, int root)
     {
@@ -39,6 +43,10 @@ public class AttackItemBase : MonoBehaviour
         int OpponentID = 3 - RootID;
 
         Opponent = AttackManager._instance.GetPlayer(OpponentID);
+
+        transform.SetParent(RootPlayer.transform);
+        transform.localPosition = Vector3.zero;
+        transform.localRotation = Quaternion.identity;
     }
     //ターンの処理（使い方はAttackManagerクラスに記載しています）
     public virtual void TurnPreprocess() { }
