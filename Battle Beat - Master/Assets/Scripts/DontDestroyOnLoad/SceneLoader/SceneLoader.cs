@@ -115,6 +115,7 @@ public class SceneLoader : MonoBehaviour
 
         // 降下
         time = 0f;
+        SoundManager.Instance.PlaySE(SEID.Shutter_Down);
         while (time <= this.shutterDownTime)
         {
             loadingObjTF.position = 
@@ -125,7 +126,7 @@ public class SceneLoader : MonoBehaviour
             time += Time.deltaTime;
             yield return null;
         }
-
+        SoundManager.Instance.PlaySE(SEID.Shutter_Close);
         // 修正
         loadingObjTF.position = new Vector3(SceneLoader.canvasCenterX, SceneLoader.canvasCenterY);
 
@@ -167,6 +168,7 @@ public class SceneLoader : MonoBehaviour
         //===== シャッター上昇 =====
         async.allowSceneActivation = true;
         time = 0f;
+        SoundManager.Instance.PlaySE(SEID.Shutter_Up);
         while (time <= this.shutterUpTime)
         {
             loadingObjTF.position =
