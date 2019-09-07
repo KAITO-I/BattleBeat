@@ -7,9 +7,7 @@ using UnityEngine.EventSystems;
 public class SelectCountroll : MonoBehaviour
 {
     [SerializeField]
-    GameObject Player01_Obj;
-    [SerializeField]
-    GameObject Player02_Obj;
+    GameObject Player01_Obj,Player02_Obj;
     [SerializeField]
     Image _player1Text, _player2Text;
     [SerializeField]
@@ -17,48 +15,49 @@ public class SelectCountroll : MonoBehaviour
     [SerializeField]
     Slider ReturnSlider;
     [SerializeField]
-    GameObject Text01;
-    [SerializeField]
-    GameObject Text02;
+    GameObject Text01,Text02;
     [SerializeField]
     GameObject FlameObj;
-    [SerializeField]
+    [SerializeField,Header("ボスコマンド設定")]
     ControllerManager.Button[] Commands;
     [SerializeField]
     Sprite _boss_Sprite;
     [SerializeField]
     Sprite _void;
-
-    List<CharaSelectObj> CharaObj;
-    int length;
-
     [SerializeField]
     GameObject Ready;
     [SerializeField]
     Sprite[] _ChataText, ChareDescriptions;
+    [SerializeField]
+    GameObject _ReadyBackGraund;
+    [SerializeField]
+    Text text;
 
+
+    List<CharaSelectObj> CharaObj;
+    int length;
 
     ControllerManager.Controller _1Pcontroller = ControllerManager.Instance.Player1;
     ControllerManager.Controller _2Pcontroller = ControllerManager.Instance.Player2;
     SceneLoader loader = SceneLoader.Instance;
+    SoundManager _soundManager=SoundManager.Instance;
 
     //キャラ立ち絵
-    SpriteRenderer Player01;
-    SpriteRenderer Player02;
+    SpriteRenderer Player01, Player02;
     //キャラクターID
-    int _Player1;
-    int _Player2;
+    int _Player1, _Player2;
     //キャラクター選択
-    bool Player1_OK;
-    bool Player2_OK;
+    bool Player1_OK,Player2_OK;
     //戻る時間
-    float Player1_Time;
-    float Player2_Time;
+    float Player1_Time, Player2_Time;
     //戻る画面移動時間
     float ReturnTime;
     float ReturnTimeValumes;
-    bool _1PDes;
-    bool _2PDes;
+    //説明表示
+    bool _1PDes,_2PDes;
+    float time;
+    public float interval;
+    float a = 1;
 
     //Boss変数
     bool[] _boss=new bool[2] {false,false};
@@ -75,7 +74,6 @@ public class SelectCountroll : MonoBehaviour
             Setting.p2c = (Setting.Chara)4;
         }
     }
-
 
     float[] _xSize =
     {
@@ -114,13 +112,9 @@ public class SelectCountroll : MonoBehaviour
             c.Init();
         }
 
-        _Player1 = 0;
-        _Player2 = 0;
-        Player1_OK = false;
-        Player2_OK = false;
-        _1PDes = false;
-        _2PDes = false;
-
+        _Player1 = _Player2 = 0;
+        Player1_OK = Player2_OK = false;
+        _1PDes = _2PDes= false;
 
         CharaObj[_Player1].charaSelect(1, true);
         CharaObj[_Player2].charaSelect(2, true);
@@ -145,6 +139,12 @@ public class SelectCountroll : MonoBehaviour
             commandStr += v.ToString();
         }
         CommandManager.instance.registCommand(commandStr, (int i)=> { Debug.Log("Boss!"); _boss[i] = true; });
+        _soundManager.PlayBGM(BGMID.CharacterSelect);
+
+        _ReadyBackGraund.SetActive(false);
+        Color color = text.color;
+        color.a = 0;
+        text.color = color;
     }
 
     // Update is called once per frame
@@ -166,89 +166,117 @@ public class SelectCountroll : MonoBehaviour
                 {
                     Setting.p2c = (Setting.Chara)_Player2;
                 }
+                _soundManager.PlaySE(SEID.CharacterSelect_GameStart);
                 SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainGame);
                 Debug.Log("battleSceneへ");
             }
+            _ReadyBackGraund.SetActive(false);
             Ready.SetActive(true);
+            TextColorChange();
             return;
         }
+        _ReadyBackGraund.SetActive(false);
         Ready.SetActive(false);
     }
 
     void SelectMove()
     {
+
         //1P処理
-        if (!_boss[0])
+        if (!_boss[0]&& _1Pcontroller.GetAxis(ControllerManager.Axis.DpadY) != 0)
         {
             _Player1 = InputProcess(Player01_Obj, _player1Text, _1Pcontroller, Player01, _Player1, Player1_OK, Description_1P, 1);
         }
-        else
+        else if(_boss[0])
         {
             Player01.sprite = _boss_Sprite;
             _player1Text.sprite = _void;
             Description_1P.sprite = _void;
         }
         //2P処理
-        if (!_boss[1])
+        if (!_boss[1] && _2Pcontroller.GetAxis(ControllerManager.Axis.DpadY) != 0)
         {
             _Player2 = InputProcess(Player02_Obj, _player2Text, _2Pcontroller, Player02, _Player2, Player2_OK, Description_2P, 2);
         }
-        else
+        else if (_boss[1])
         {
             Player02.sprite = _boss_Sprite;
             _player2Text.sprite = _void;
             Description_2P.sprite = _void;
         }
-        //選択時//渡す値を決定する
-        if (_1Pcontroller.GetButtonDown(ControllerManager.Button.A))
-        {
-            Player1_OK = true;
-        }
-        if (_2Pcontroller.GetButtonDown(ControllerManager.Button.A))
-        {
-            Player2_OK = true;
-        }
-        //×ボタンの処理
-        //長押しで画面移動処理
-        if (_1Pcontroller.GetButton(ControllerManager.Button.B))
-        {
-            //キャラ選択時は選択を外す
-            if (_1Pcontroller.GetButtonDown(ControllerManager.Button.B))
-            {
-                Player1_OK = false;
-            }
-            float difference = Time.time - Player1_Time;
-            SetSilder(difference);
-            if (difference > ReturnTime)
-            {
-                SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainMenu);
-            }
-        }
-        if (_2Pcontroller.GetButton(ControllerManager.Button.B))
-        {
-            //キャラ選択時は選択を外す
-            if (_2Pcontroller.GetButtonDown(ControllerManager.Button.B))
-            {
-                Player2_OK = false;
-            }
-            float difference = Time.time - Player2_Time;
-            SetSilder(difference);
-            if (difference > ReturnTime)
-            {
-                SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainMenu);
-            }
-        }
-        //説明画面
-        if (_1Pcontroller.GetButtonDown(ControllerManager.Button.X))
-        {
-            if (_1PDes) _1PDes = false;
-            else _1PDes = true;
-        }
-        if (_2Pcontroller.GetButtonDown(ControllerManager.Button.X))
-        {
-            if (_2PDes) _2PDes = false;
-            else _2PDes =true;
-        }
+        //ボタンの関数
+        ButtonMove(_1Pcontroller, Player1_OK, Player2_OK, _1PDes);
+        ButtonMove(_2Pcontroller, Player2_OK, Player1_OK, _2PDes);
+
+        ////選択時//渡す値を決定する
+        //if (_1Pcontroller.GetButtonDown(ControllerManager.Button.A))
+        //{
+        //    Player1_OK = true;
+        //    if (Player2_OK)
+        //    {
+        //        _soundManager.PlaySE(SEID.General_Siren);
+        //    }
+        //    else
+        //    {
+        //        _soundManager.PlaySE(SEID.General_Controller_Decision);
+        //    }
+        //}
+        //if (_2Pcontroller.GetButtonDown(ControllerManager.Button.A))
+        //{
+        //    Player2_OK = true;
+        //    if (Player1_OK)
+        //    {
+        //        _soundManager.PlaySE(SEID.General_Siren);
+        //    }
+        //    else
+        //    {
+        //        _soundManager.PlaySE(SEID.General_Controller_Decision);
+        //    }
+
+        //}
+        ////×ボタンの処理
+        ////長押しで画面移動処理
+        //if (_1Pcontroller.GetButton(ControllerManager.Button.B))
+        //{
+        //    //キャラ選択時は選択を外す
+        //    if (_1Pcontroller.GetButtonDown(ControllerManager.Button.B))
+        //    {
+        //          Player1_OK = false;
+        //          _soundManager.PlaySE(SEID.General_Controller_Back);
+        //    }
+        //    float difference = Time.time - Player1_Time;
+        //    SetSilder(difference);
+        //    if (difference > ReturnTime)
+        //    {
+        //        SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainMenu);
+        //    }
+        //}
+        //if (_2Pcontroller.GetButton(ControllerManager.Button.B))
+        //{
+        //    //キャラ選択時は選択を外す
+        //    if (_2Pcontroller.GetButtonDown(ControllerManager.Button.B))
+        //    {
+        //        Player2_OK = false;
+        //        _soundManager.PlaySE(SEID.General_Controller_Back);
+        //    }
+        //    float difference = Time.time - Player2_Time;
+        //    SetSilder(difference);
+        //    if (difference > ReturnTime)
+        //    {
+        //        SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainMenu);
+        //    }
+        //}
+        ////説明画面
+        //if (_1Pcontroller.GetButtonDown(ControllerManager.Button.X))
+        //{
+        //    if (_1PDes) _1PDes = false;
+        //    else _1PDes = true;
+        //}
+        //if (_2Pcontroller.GetButtonDown(ControllerManager.Button.X))
+        //{
+        //    if (_2PDes) _2PDes = false;
+        //    else _2PDes =true;
+        //}
         //両方入力されていない
         if (!_1Pcontroller.GetButton(ControllerManager.Button.B) && !_2Pcontroller.GetButton(ControllerManager.Button.B))
         {
@@ -386,6 +414,7 @@ public class SelectCountroll : MonoBehaviour
                 _Description.sprite = ChareDescriptions[_Player];
 
                 Player_Obj.transform.localScale = new Vector3(_xSize[_Player], _ySize[_Player], 1);
+                _soundManager.PlaySE(SEID.General_Controller_Select);
             }
             else if (_controller.GetAxisUp(ControllerManager.Axis.DpadY) > 0)//下入力
             {
@@ -400,14 +429,63 @@ public class SelectCountroll : MonoBehaviour
                 _Description.sprite = ChareDescriptions[_Player];
 
                 Player_Obj.transform.localScale = new Vector3(_xSize[_Player], _ySize[_Player], 1);
+                _soundManager.PlaySE(SEID.General_Controller_Select);
             }
         }
 
         return _Player;
     }
+
+    void ButtonMove(ControllerManager.Controller _playercontroller, bool _Mychack,bool _otherchack,bool _MyDes)
+    {
+        if (_playercontroller.GetButtonDown(ControllerManager.Button.A))
+        {
+            _Mychack = true;
+            if (_otherchack)
+            {
+                _soundManager.PlaySE(SEID.General_Siren);
+            }
+            else
+            {
+                _soundManager.PlaySE(SEID.General_Controller_Decision);
+            }
+        }
+        if (_playercontroller.GetButton(ControllerManager.Button.B))
+        {
+            //キャラ選択時は選択を外す
+            if (_playercontroller.GetButtonDown(ControllerManager.Button.B))
+            {
+                _Mychack = false;
+                _soundManager.PlaySE(SEID.General_Controller_Back);
+            }
+            float difference = Time.time - Player1_Time;
+            SetSilder(difference);
+            if (difference > ReturnTime)
+            {
+                SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainMenu);
+            }
+        }
+        //説明画面
+        if (_playercontroller.GetButtonDown(ControllerManager.Button.X))
+        {
+            if (_MyDes) _MyDes = false;
+            else _MyDes = true;
+        }
+    }
     void SetSilder(float t)
     {
         if (t < ReturnSlider.value) return;
         ReturnSlider.value = t;
+    }
+    void TextColorChange()
+    {
+        //一定期間で表示・非表示
+        time += Time.deltaTime * a;
+        if (time >= interval) { a = -1; time = interval; }
+        if (time <= 0) { a = 1; time = 0; }
+        Color color = text.color;
+        color.a = time / interval;
+        text.color = color;
+
     }
 }
