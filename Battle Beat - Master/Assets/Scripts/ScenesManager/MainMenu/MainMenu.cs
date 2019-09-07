@@ -3,7 +3,14 @@ using UnityEngine;
 
 namespace MainMenu
 {
-    enum State
+    enum DisplayState {
+        Menu,
+        Config,
+        Tutorial,
+        Credit
+    }
+
+    enum MegaphoneTreeState
     {
         Left,
         Right,

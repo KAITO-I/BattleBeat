@@ -1,17 +1,20 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using MainMenu;
 
 public class MainMenuManager : MonoBehaviour
 {
     // 管理系
     private ControllerManager controller;
+    [SerializeField]
+    private EventSystem es;
 
     // 状態
-    private State state;
-    private int   selected;
-    private bool  canPressDpadY;
+    private DisplayState displayState;
+    private MegaphoneTreeState mtState;
+    private int selectedButtonNum;
 
     // 画面の移動時間
     [SerializeField]
@@ -31,17 +34,9 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField]
     private RectTransform megaphoneTree;
     [SerializeField]
-    private RectTransform megaphoneTreeUI;
+    private GameObject mtLeftUI;
     [SerializeField]
-    private RectTransform megaphoneTreeOverlay;
-    [SerializeField]
-    private int numberOfSigns;
-    [SerializeField]
-    private GameObject[] mtOverlays; // 上から覆うUI
-    [SerializeField]
-    private Sprite mtLeftSprite;
-    [SerializeField]
-    private Sprite mtRightSprite;
+    private GameObject mtRightUI;
     [SerializeField]
     private float mtLeftPosX;
     [SerializeField]
@@ -51,216 +46,208 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField]
     private float mtCenterRotateX;
     [SerializeField]
-    private float mtOverrayLeftSideRotateX;
+    private SignOverlay[] mtLeftSigns;
     [SerializeField]
-    private float mtOverrayRightSideRotateX;
-
-    /*[Header("ModeDescription")]
-    [SerializeField]
-    private Description[] Left*/
+    private SignOverlay[] mtRightSigns;
 
     private void Start()
     {
         this.controller = ControllerManager.Instance;
+        this.es.enabled = true;
 
-        this.state = State.Left;
-        this.selected = 0;
-        this.canPressDpadY = true;
-        this.megaphoneTreeUI.GetComponent<Image>().sprite = this.mtLeftSprite;
-        ChangeSign();
+        this.displayState      = DisplayState.Menu;
+        this.mtState           = MegaphoneTreeState.Left;
+        this.selectedButtonNum = 0;
+
+        this.megaphoneTree.anchoredPosition = new Vector2(this.mtLeftPosX, this.megaphoneTree.anchoredPosition.y);
+        this.mtLeftUI.SetActive(true);
+        this.mtRightUI.SetActive(false);
+        for (int i = 0; i < 3; i++) {
+            this.mtLeftSigns[i].Init();
+            this.mtRightSigns[i].Init();
+            if (i == 0) {
+                this.mtLeftSigns[i].SignSelected();
+                this.mtRightSigns[i].SignUnselected();
+            } else {
+                this.mtLeftSigns[i].SignUnselected();
+                this.mtRightSigns[i].SignUnselected();
+            }
+        }
     }
 
     private void Update()
     {
-        if (SceneLoader.Instance.isLoading) return;
-        
-        if (this.controller.GetButtonDown_Menu(ControllerManager.Button.A)) SceneLoader.Instance.LoadScene(SceneLoader.Scenes.CharacterSelect);
-
         // ロードディング画面の表示中は無効化
-        /*if (SceneLoader.Instance.isLoading) return;
+        if (SceneLoader.Instance.isLoading) return;
 
-        if (this.state != State.Changing)
-        {
-            // 十字キー処理
-            float axisY = this.controller.GetAxis_Menu(ControllerManager.Axis.DpadY);
-            if(Mathf.Abs(axisY)>0.9f)
-            {
-                if (this.canPressDpadY)
-                {
-                    if (axisY < 0)
-                    {
-                        this.selected++;
-                        if (this.selected > this.numberOfSigns - 1) this.selected = this.numberOfSigns - 1;
-                    }
-                    else
-                    {
-                        this.selected--;
-                        if (this.selected < 0) this.selected = 0;
-                    }
-                    this.canPressDpadY = false;
-                }
-            }
-            else this.canPressDpadY = true;
-
-            ChangeSign();
-
-            // ボタン処理
-            if (this.state == State.Left)
-            {
-                if (this.controller.GetButtonDown_Menu(ControllerManager.Button.A))
-                {
-                    switch (this.selected)
-                    {
-                        case 0: StartCoroutine(LeftToRight()); break;
-                    }
-                }
-            } else
-            {
-                // A
-                if (this.controller.GetButtonDown_Menu(ControllerManager.Button.A))
-                {
-                    switch (this.selected)
-                    {
-                        case 0: SceneLoader.Instance.LoadScene(SceneLoader.Scenes.CharacterSelect); break;
-                    }
-                }
-                //B
-                else if (this.controller.GetButtonDown_Menu(ControllerManager.Button.B)) StartCoroutine(RightToLeft());
-            }
-        }*/
-    }
-
-    private void ChangeSign()
-    {
-        for (int i = 0; i < this.numberOfSigns; i++)
-        {
-            if (i == this.selected) this.mtOverlays[i].SetActive(false);
-            else                    this.mtOverlays[i].SetActive(true);
+        switch (this.displayState) {
+            case DisplayState.Menu:
+                UpdateMenu();
+                break;
         }
     }
 
-    private void ChangeBoard()
-    {
+    private void UpdateMenu() {
+        // 移動していないときはボタンの選択状態に合わせてUIを変化させる
+        if (this.mtState != MegaphoneTreeState.Changing) {
+            // 看板切り替え
+            int selectedButtonNum = int.Parse(es.currentSelectedGameObject.name);
+            if (this.selectedButtonNum != selectedButtonNum) {
+                if (this.mtState == MegaphoneTreeState.Left) {
+                    this.mtLeftSigns[this.selectedButtonNum].SignUnselected();
+                    this.selectedButtonNum = selectedButtonNum;
+                    this.mtLeftSigns[this.selectedButtonNum].SignSelected();
+                } else {
+                    this.mtRightSigns[this.selectedButtonNum].SignUnselected();
+                    this.selectedButtonNum = selectedButtonNum;
+                    this.mtRightSigns[this.selectedButtonNum].SignSelected();
+                }
+            }
 
+            // ボタン操作
+            // 左UI
+            if (this.mtState == MegaphoneTreeState.Left)
+            {
+                // A
+                if (this.controller.GetButtonDown_Menu(ControllerManager.Button.A)) {
+                    switch (this.selectedButtonNum) {
+                        case 0: StartCoroutine(LeftToRight()); break;
+                        case 1: break;
+                        case 2: break;
+                    }
+                }
+                // B
+                else if (this.controller.GetButtonDown_Menu(ControllerManager.Button.B)) SceneLoader.Instance.LoadScene(SceneLoader.Scenes.Title);
+            }
+            // 右UI
+            else {
+                // A
+                if (this.controller.GetButtonDown_Menu(ControllerManager.Button.A)) {
+                    switch (this.selectedButtonNum) {
+                        case 0: SceneLoader.Instance.LoadScene(SceneLoader.Scenes.CharacterSelect); break;
+                        case 1: break;
+                        case 2: break;
+                    }
+                }
+                // B
+                else if (this.controller.GetButtonDown_Menu(ControllerManager.Button.B)) StartCoroutine(RightToLeft());
+            }
+        }
     }
-
-    private void ChangeSignToAllBlack()
-    {
-        for (int i = 0; i < this.numberOfSigns; i++) this.mtOverlays[i].SetActive(true);
-    }
-
-    //private void Change
 
     private IEnumerator LeftToRight()
     {
-        this.state = State.Changing;
-        bool mtSpriteChanged = false;
-        ChangeSignToAllBlack();
+        // 開始
+        this.es.enabled = false;
 
-        float timer = 0f;
-        while (true)
+        this.mtState = MegaphoneTreeState.Changing;
+
+        foreach (SignOverlay overlay in this.mtLeftSigns) overlay.SignUnselected();
+        
+        // 動作
+        float timer     = 0f;
+        bool  mtChanged = false;
+        while (timer <= this.moveTime)
         {
-            this.background.anchoredPosition = new Vector3(Mathf.Lerp(this.backLeftPosX, this.backRightPosX, timer / this.moveTime), this.background.anchoredPosition.y);
+            this.background.anchoredPosition = new Vector3(Mathf.Lerp(this.backRightPosX, this.backLeftPosX, timer / this.moveTime), this.background.anchoredPosition.y);
             this.megaphoneTree.anchoredPosition = new Vector3(Mathf.Lerp(this.mtLeftPosX, this.mtRightPosX, timer / this.moveTime), this.megaphoneTree.anchoredPosition.y);
 
             // 前半 0->90
             if (timer / this.moveTime <= 0.5)
             {
                 float rotateUI = Mathf.Lerp(this.mtSideRotateX, this.mtCenterRotateX, timer / this.moveTime);
-                this.megaphoneTreeUI.rotation = Quaternion.Euler(this.megaphoneTreeUI.rotation.x, rotateUI, megaphoneTreeUI.rotation.z);
+                this.megaphoneTree.rotation = Quaternion.Euler(this.megaphoneTree.rotation.x, rotateUI, megaphoneTree.rotation.z);
             }
             // 後半 90->0
             else
             {
-                if (!mtSpriteChanged)
+                if (!mtChanged)
                 {
-                    mtSpriteChanged = true;
-                    this.megaphoneTreeUI.GetComponent<Image>().sprite = this.mtRightSprite;
+                    mtChanged = true;
+                    this.mtLeftUI.SetActive(false);
+                    this.mtRightUI.SetActive(true);
                 }
                 float rotateUI = Mathf.Lerp(mtCenterRotateX, mtSideRotateX, timer / this.moveTime);
-                this.megaphoneTreeUI.rotation = Quaternion.Euler(this.megaphoneTreeUI.rotation.x, rotateUI, megaphoneTreeUI.rotation.z);
+                this.megaphoneTree.rotation = Quaternion.Euler(this.megaphoneTree.rotation.x, rotateUI, megaphoneTree.rotation.z);
             }
 
-            float rotateOverlay = Mathf.Lerp(this.mtOverrayLeftSideRotateX, this.mtOverrayRightSideRotateX, timer / this.moveTime);
-            this.megaphoneTreeOverlay.rotation = Quaternion.Euler(this.megaphoneTreeOverlay.rotation.x, rotateOverlay, this.megaphoneTreeOverlay.rotation.z);
-
             timer += Time.deltaTime;
-            if (timer >= this.moveTime) break;
-
             yield return 0;
         }
 
-        this.background.anchoredPosition = new Vector3(this.backRightPosX, this.background.anchoredPosition.y);
+        // 修正
+        this.background.anchoredPosition = new Vector3(this.backLeftPosX, this.background.anchoredPosition.y);
         this.megaphoneTree.anchoredPosition = new Vector3(this.mtRightPosX, this.megaphoneTree.anchoredPosition.y);
 
-        this.megaphoneTreeUI.rotation = Quaternion.Euler(this.megaphoneTreeUI.rotation.x, this.mtSideRotateX, this.megaphoneTreeUI.rotation.z);
+        this.megaphoneTree.rotation = Quaternion.Euler(this.megaphoneTree.rotation.x, this.mtSideRotateX, this.megaphoneTree.rotation.z);
 
-        this.state = State.Right;
-        this.selected = 0;
-        ChangeSign();
+        // 終了      
+        this.es.enabled = true;
+
+        this.mtState = MegaphoneTreeState.Right;
+        this.selectedButtonNum = 0;
+
+        for (int i = 0; i < 3; i++) {
+            if (i == 0) this.mtRightSigns[i].SignSelected();
+            else        this.mtRightSigns[i].SignUnselected();
+        }
     }
 
     private IEnumerator RightToLeft()
     {
-        this.state = State.Changing;
-        bool mtSpriteChanged = false;
-        ChangeSignToAllBlack();
+        // 開始
+        this.es.enabled = false;
 
-        float timer = 0f;
-        while (true)
+        this.mtState = MegaphoneTreeState.Changing;
+
+        foreach (SignOverlay overlay in this.mtRightSigns) overlay.SignUnselected();
+        
+        // 動作
+        float timer     = 0f;
+        bool  mtChanged = false;
+        while (timer <= this.moveTime)
         {
-            background.anchoredPosition = new Vector3(Mathf.Lerp(backRightPosX, backLeftPosX, timer / this.moveTime), background.anchoredPosition.y);
-            megaphoneTree.anchoredPosition = new Vector3(Mathf.Lerp(mtRightPosX, mtLeftPosX, timer / this.moveTime), megaphoneTree.anchoredPosition.y);
+            this.background.anchoredPosition = new Vector3(Mathf.Lerp(this.backLeftPosX, this.backRightPosX, timer / this.moveTime), this.background.anchoredPosition.y);
+            this.megaphoneTree.anchoredPosition = new Vector3(Mathf.Lerp(this.mtRightPosX, this.mtLeftPosX, timer / this.moveTime), this.megaphoneTree.anchoredPosition.y);
 
             // 前半 0->90
             if (timer / this.moveTime <= 0.5)
             {
-                float rotate = Mathf.Lerp(mtSideRotateX, mtCenterRotateX, timer / this.moveTime);
-                megaphoneTreeUI.rotation = Quaternion.Euler(megaphoneTreeUI.rotation.x, rotate, megaphoneTreeUI.rotation.z);
+                float rotateUI = Mathf.Lerp(this.mtSideRotateX, this.mtCenterRotateX, timer / this.moveTime);
+                this.megaphoneTree.rotation = Quaternion.Euler(this.megaphoneTree.rotation.x, rotateUI, megaphoneTree.rotation.z);
             }
             // 後半 90->0
             else
             {
-                if (!mtSpriteChanged)
+                if (!mtChanged)
                 {
-                    mtSpriteChanged = true;
-                    this.megaphoneTreeUI.GetComponent<Image>().sprite = this.mtLeftSprite;
+                    mtChanged = true;
+                    this.mtRightUI.SetActive(false);
+                    this.mtLeftUI.SetActive(true);
                 }
-                float rotate = Mathf.Lerp(mtCenterRotateX, mtSideRotateX, timer / this.moveTime);
-                megaphoneTreeUI.rotation = Quaternion.Euler(megaphoneTreeUI.rotation.x, rotate, megaphoneTreeUI.rotation.z);
+                float rotateUI = Mathf.Lerp(mtCenterRotateX, mtSideRotateX, timer / this.moveTime);
+                this.megaphoneTree.rotation = Quaternion.Euler(this.megaphoneTree.rotation.x, rotateUI, megaphoneTree.rotation.z);
             }
 
-            float rotateOverlay = Mathf.Lerp(mtOverrayRightSideRotateX, mtOverrayLeftSideRotateX, timer / this.moveTime);
-            megaphoneTreeOverlay.rotation = Quaternion.Euler(megaphoneTreeOverlay.rotation.x, rotateOverlay, megaphoneTreeOverlay.rotation.z);
-
             timer += Time.deltaTime;
-            if (timer >= this.moveTime) break;
-
             yield return 0;
         }
 
-        this.background.anchoredPosition = new Vector3(this.backLeftPosX, this.background.anchoredPosition.y);
-        this.megaphoneTree.position = new Vector3(this.mtLeftPosX, this.megaphoneTree.position.y);
+        // 修正
+        this.background.anchoredPosition = new Vector3(this.backRightPosX, this.background.anchoredPosition.y);
+        this.megaphoneTree.anchoredPosition = new Vector3(this.mtLeftPosX, this.megaphoneTree.anchoredPosition.y);
 
-        this.megaphoneTreeUI.rotation = Quaternion.Euler(this.megaphoneTreeUI.rotation.x, this.mtSideRotateX, this.megaphoneTreeUI.rotation.z);
+        this.megaphoneTree.rotation = Quaternion.Euler(this.megaphoneTree.rotation.x, this.mtSideRotateX, this.megaphoneTree.rotation.z);
 
-        this.state = State.Left;
-        this.selected = 0;
-        ChangeSign();
-    }
+        // 終了      
+        this.es.enabled = true;
 
-    public void LoadTitle()
-    {
-        SceneLoader.Instance.LoadScene(SceneLoader.Scenes.Title);
-    }
+        this.mtState = MegaphoneTreeState.Left;
+        this.selectedButtonNum = 0;
 
-    public void LoadCharacterSelect()
-    {
-        SceneLoader.Instance.LoadScene(SceneLoader.Scenes.CharacterSelect);
-    }
-
-    public void LoadConfig()
-    {
-        SceneLoader.Instance.LoadScene(SceneLoader.Scenes.Config);
+        for (int i = 0; i < 3; i++) {
+            if (i == 0) this.mtLeftSigns[i].SignSelected();
+            else        this.mtLeftSigns[i].SignUnselected();
+        }
     }
 }
