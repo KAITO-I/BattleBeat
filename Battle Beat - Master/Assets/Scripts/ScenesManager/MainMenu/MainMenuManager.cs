@@ -72,8 +72,12 @@ public class MainMenuManager : MonoBehaviour
 
     private void Update()
     {
-        // ロードディング画面の表示中は無効化
         if (SceneLoader.Instance.isLoading) return;
+        
+        if (this.controller.GetButtonDown_Menu(ControllerManager.Button.A)) SceneLoader.Instance.LoadScene(SceneLoader.Scenes.CharacterSelect);
+
+        // ロードディング画面の表示中は無効化
+        /*if (SceneLoader.Instance.isLoading) return;
 
         if (this.state != State.Changing)
         {
@@ -123,7 +127,7 @@ public class MainMenuManager : MonoBehaviour
                 //B
                 else if (this.controller.GetButtonDown_Menu(ControllerManager.Button.B)) StartCoroutine(RightToLeft());
             }
-        }
+        }*/
     }
 
     private void ChangeSign()
