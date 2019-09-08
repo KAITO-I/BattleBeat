@@ -78,15 +78,31 @@ public class Gauge : MonoBehaviour
     IEnumerator Reduce()
     {
         yield return new WaitForSeconds(WaitTime);
-        while (CurrentValueR > CurrentValueR2)
+        if (CurrentValueR > CurrentValueR2)
         {
-            CurrentValueR -= Speed * MaxValue *Time.deltaTime;
-            image.fillAmount = Mathf.Clamp(CurrentValueR / MaxValue, 0, 1);
-            if (CurrentValueR < CurrentValueR2)
+            while (CurrentValueR > CurrentValueR2)
             {
-                CurrentValueR = CurrentValueR2;
+                CurrentValueR -= Speed * MaxValue * Time.deltaTime;
+                image.fillAmount = Mathf.Clamp(CurrentValueR / MaxValue, 0, 1);
+                if (CurrentValueR < CurrentValueR2)
+                {
+                    CurrentValueR = CurrentValueR2;
+                }
+                yield return new WaitForFixedUpdate();
             }
-            yield return new WaitForFixedUpdate();
+        }
+        else
+        {
+            while (CurrentValueR < CurrentValueR2)
+            {
+                CurrentValueR += Speed * MaxValue * Time.deltaTime;
+                image.fillAmount = Mathf.Clamp(CurrentValueR / MaxValue, 0, 1);
+                if (CurrentValueR > CurrentValueR2)
+                {
+                    CurrentValueR = CurrentValueR2;
+                }
+                yield return new WaitForFixedUpdate();
+            }
         }
     }
 }
