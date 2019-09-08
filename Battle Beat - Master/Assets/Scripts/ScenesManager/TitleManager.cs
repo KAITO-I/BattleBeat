@@ -11,8 +11,6 @@ public class TitleManager : MonoBehaviour
     private Image fade;
     [SerializeField]
     private float darkToLightFadeTime;
-    [SerializeField]
-    private float lightToDarkFadeTime;
 
     private void Start()
     {
@@ -31,7 +29,7 @@ public class TitleManager : MonoBehaviour
         if (Input.anyKeyDown)
         {
             this.vp.Pause();
-            SceneLoader.Instance.LoadScene(SceneLoader.Scenes.CharacterSelect);
+            SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainMenu);
         }
     }
 

@@ -820,30 +820,5 @@ PrefabInstance:
       propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 7785459121382918105, guid: a9542cc574199d240acdeb56dc1e5738,
-        type: 3}
-      propertyPath: bgmClips.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7785459121382918105, guid: a9542cc574199d240acdeb56dc1e5738,
-        type: 3}
-      propertyPath: bgmClips.Array.data[0]
-      value: 
-      objectReference: {fileID: 8300000, guid: c5264a8a4f90a2f4298e0c9bb2526c7c, type: 3}
-    - target: {fileID: 7785459121382918105, guid: a9542cc574199d240acdeb56dc1e5738,
-        type: 3}
-      propertyPath: bgmClips.Array.data[1]
-      value: 
-      objectReference: {fileID: 8300000, guid: c28baa250c56e0c43b86d16eeeaee824, type: 3}
-    - target: {fileID: 7785459121382918105, guid: a9542cc574199d240acdeb56dc1e5738,
-        type: 3}
-      propertyPath: bgmClips.Array.data[2]
-      value: 
-      objectReference: {fileID: 8300000, guid: e87efda9106a058468491a5f1be6a2d2, type: 3}
-    - target: {fileID: 7785459121382918105, guid: a9542cc574199d240acdeb56dc1e5738,
-        type: 3}
-      propertyPath: bgmClips.Array.data[3]
-      value: 
-      objectReference: {fileID: 8300000, guid: 02f9979a62bdded49a38bb8b3c5d552d, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a9542cc574199d240acdeb56dc1e5738, type: 3}
