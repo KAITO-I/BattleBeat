@@ -12,7 +12,10 @@ public class Rocket : BasicAttack
     }
     public override void Init(int row, int col, bool reverse, int root)
     {
+        Quaternion rotation = transform.rotation;
         base.Init(row, col, reverse, root);
+        transform.parent = null;
+        transform.rotation = rotation*(reverse?Quaternion.Euler(0,180,0):Quaternion.identity);
         transform.position = BoardManager._instance.ToWorldPos(new Vector2Int(col, row));
         transform.position += new Vector3(0, 1f, 0);
         DamagePassed = false;
