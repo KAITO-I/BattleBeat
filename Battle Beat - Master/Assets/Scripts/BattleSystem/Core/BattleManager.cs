@@ -142,7 +142,7 @@ public class BattleManager : MonoBehaviour
                 yield return new WaitForFixedUpdate();
             }
         }
-       
-        //SceneLoader.Instance.LoadScene(SceneLoader.Scenes.Result);
+
+        SceneLoader.Instance.LoadScene(SceneLoader.Scenes.Result);
     }
 }
