@@ -29,6 +29,16 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField]
     private float backRightPosX;
 
+    [Header("ElectricBoard")]
+    [SerializeField]
+    private Transform electricBoardObj;
+    [SerializeField]
+    private ModeDescription[] mtLeftModeDescriptions;
+    [SerializeField]
+    private ModeDescription[] mtRightModeDescriptions;
+
+    private ElectricBoard electricBoard;
+
     // メガホンツリー
     [Header("MegaphoneTree")]
     [SerializeField]
@@ -59,6 +69,9 @@ public class MainMenuManager : MonoBehaviour
         this.mtState           = MegaphoneTreeState.Left;
         this.selectedButtonNum = 0;
 
+        this.electricBoard = new ElectricBoard(this.electricBoardObj.Find("Title").GetComponent<Text>(), this.electricBoardObj.Find("Description").GetComponent<Text>());
+        this.electricBoard.Set(this.mtLeftModeDescriptions[0]);
+
         this.megaphoneTree.anchoredPosition = new Vector2(this.mtLeftPosX, this.megaphoneTree.anchoredPosition.y);
         this.mtLeftUI.SetActive(true);
         this.mtRightUI.SetActive(false);
@@ -73,6 +86,9 @@ public class MainMenuManager : MonoBehaviour
                 this.mtRightSigns[i].SignUnselected();
             }
         }
+
+        // BGM
+        SoundManager.Instance.PlayBGM(BGMID.MainMenu);
     }
 
     private void Update()
@@ -102,6 +118,7 @@ public class MainMenuManager : MonoBehaviour
                     this.selectedButtonNum = selectedButtonNum;
                     this.mtRightSigns[this.selectedButtonNum].SignSelected();
                 }
+                this.electricBoard.Set((this.mtState == MegaphoneTreeState.Left) ? this.mtLeftModeDescriptions[this.selectedButtonNum] : this.mtRightModeDescriptions[this.selectedButtonNum]);
             }
 
             // ボタン操作
