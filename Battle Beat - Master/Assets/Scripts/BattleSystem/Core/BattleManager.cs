@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 public class BattleManager : MonoBehaviour
 {
     [SerializeField]
@@ -90,39 +91,81 @@ public class BattleManager : MonoBehaviour
     {
         if (onGame)
         {
+            uint winner = 0;
             if (timeSetter.isTimeOut())
             {
-                rythmManager.StopRythm();
 
-                ////TimeOutTextDisplay
-                //TextDisplayForTest("Time Out");
-
+                winner = AttackManager._instance.CheckWinnerTimeOut();
             }
-            if (AttackManager._instance.GetWinner() != 0)
+            else
             {
-                switch (AttackManager._instance.GetWinner())
+                winner = AttackManager._instance.GetWinner();
+            }
+            if (winner != 0)
+            {
+                SoundManager.Instance.StopBGM();
+                switch (winner)
                 {
                     case 1:
                         //P1Win
-                        ShowImage._instance.ShowImages(new string[] { "GAME" },4f,0f);
+                        ShowImage._instance.ShowImages(new string[] { "GAME" }, 4f, 0f);
                         StartCoroutine(WaitAndJumpScene());
+                        SoundManager.Instance.PlaySE(SEID.Game_Character_General_Finish);
                         break;
                     case 2:
                         //P2Win
                         ShowImage._instance.ShowImages(new string[] { "GAME" }, 4f, 0f);
                         StartCoroutine(WaitAndJumpScene());
+                        SoundManager.Instance.PlaySE(SEID.Game_Character_General_Finish);
                         break;
                     case 3:
                         //DRAW
                         ShowImage._instance.ShowImages(new string[] { "Draw" }, 4f, 0f);
                         StartCoroutine(WaitAndJumpScene());
+                        SoundManager.Instance.PlaySE(SEID.General_Siren);
                         break;
                 }
-                SoundManager.Instance.PlaySE(SEID.General_Siren);
+
+                //playerの動きを停止させる
+                StopPlayer();
                 onGame = false;
             }
         }
     }
+
+    private static void StopPlayer()
+    {
+        Behaviour[] pauseBehavs = null;
+        GameObject p1g = AttackManager._instance.GetPlayer(1).gameObject;
+        GameObject p2g = AttackManager._instance.GetPlayer(2).gameObject;
+        pauseBehavs = Array.FindAll(p1g.GetComponentsInChildren<Behaviour>(), (obj) =>
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+            return obj.enabled;
+        });
+
+        foreach (var com in pauseBehavs)
+        {
+            com.enabled = false;
+        }
+        pauseBehavs = Array.FindAll(p2g.GetComponentsInChildren<Behaviour>(), (obj) =>
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+            return obj.enabled;
+        });
+
+        foreach (var com in pauseBehavs)
+        {
+            com.enabled = false;
+        }
+    }
+
     //Debug
     [SerializeField]
     GameObject textObj;

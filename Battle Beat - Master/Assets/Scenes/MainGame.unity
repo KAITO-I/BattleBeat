@@ -3407,7 +3407,7 @@ MonoBehaviour:
   virtualCamera: {fileID: 558912407}
   virtualCamera2: {fileID: 253103668}
   startTime: 1.6
-  zoomTime: 2
+  zoomTime: 0.1
   zoomDistance: 10
 --- !u!1 &1408994288
 GameObject:

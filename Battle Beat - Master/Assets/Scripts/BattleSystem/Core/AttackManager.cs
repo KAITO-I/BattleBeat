@@ -180,6 +180,25 @@ public class AttackManager : MonoBehaviour
             }
         }
     }
+    public uint CheckWinnerTimeOut()
+    {
+        uint rlt = 0;
+        var hp1 = players[0].GetHp();
+        var hp2 = players[1].GetHp();
+        if (hp1 > hp2)
+        {
+            rlt = 1;
+        }
+        else if (hp1 < hp2)
+        {
+            rlt = 2;
+        }
+        else
+        {
+            rlt = 3;
+        }
+        return rlt;
+    }
     public uint GetWinner()
     {
         return winner;

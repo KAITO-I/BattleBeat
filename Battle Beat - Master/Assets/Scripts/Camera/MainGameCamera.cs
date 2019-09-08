@@ -16,7 +16,7 @@ public class MainGameCamera : MonoBehaviour
     float time0 = 0f;
 
     [SerializeField]
-    float zoomTime=1f;
+    float zoomTime=0.5f;
     [SerializeField]
     float zoomDistance=10f;
     private void Awake()
@@ -57,6 +57,7 @@ public class MainGameCamera : MonoBehaviour
         time0 = 0;
         while (time0 < zoomTime)
         {
+            
             yield return new WaitForFixedUpdate();
             time0 += Time.deltaTime;
             float x = Mathf.Clamp(time0 / zoomTime, 0, 1);
