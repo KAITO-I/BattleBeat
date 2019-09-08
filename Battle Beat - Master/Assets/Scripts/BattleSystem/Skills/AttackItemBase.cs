@@ -27,8 +27,6 @@ public class AttackItemBase : MonoBehaviour
     public int CoolDown;
     public float SpCost;
 
-    [SerializeField]
-    protected Effekseer.EffekseerEffectAsset EffekseerEffectAsset;
 
     //初期化関数
     public virtual void Init(int row, int col, bool reverse, int root)

@@ -52,3 +52,6 @@ MonoBehaviour:
   DamageFactor: 4
   BaseDamage: 5
   Delay: 2
+  attackSE: 0
+  hitSE: 0
+  waitSE: 0

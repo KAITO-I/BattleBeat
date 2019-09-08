@@ -53,10 +53,12 @@ MonoBehaviour:
   BoardSize: {x: 3, y: 6}
   CoolDown: 5
   SpCost: 0
-  EffekseerEffectAsset: {fileID: 0}
   DamageFactor: 4
   BaseDamage: 2
   Delay: 1
+  attackSE: 15
+  hitSE: 13
+  waitSE: 12
 --- !u!114 &2742597253805750457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71,7 +73,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Pos: {x: 3, y: 1}
   offSet: {x: 0, y: 0, z: 0}
-  scale: 1
+  scale: 0.5
   speed: 1
   rotation: {x: 0, y: 180, z: 0}
   effect: 4

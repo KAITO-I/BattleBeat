@@ -64,10 +64,12 @@ MonoBehaviour:
   BoardSize: {x: 3, y: 6}
   CoolDown: 0
   SpCost: 100
-  EffekseerEffectAsset: {fileID: 0}
   DamageFactor: 4
   BaseDamage: 5
   Delay: 3
+  attackSE: 17
+  hitSE: 13
+  waitSE: 12
 --- !u!114 &-4605251268263387040
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -9,7 +9,10 @@ public class ChainAttack : AttackItemBase
     Floor.Colors fColor;
 
     Kagura rootPlayer;
-
+    [SerializeField]
+    SEID chainSE;
+    [SerializeField]
+    SEID hitSE;
     public override void Init(int row, int col, bool reverse, int root)
     {
         base.Init(row, col, reverse, root);
@@ -72,6 +75,7 @@ public class ChainAttack : AttackItemBase
                 RootPlayer.IsStuned = false;
 
             }
+            SoundManager.Instance.PlaySE(chainSE);
         }
         else if (turn == 1)
         {
@@ -106,6 +110,7 @@ public class ChainAttack : AttackItemBase
             if (CheckArea(Opponent.Pos, OpponentID, Area))
             {
                 PassDamage(Opponent);
+                SoundManager.Instance.PlaySE(hitSE);
             }
         }
     }

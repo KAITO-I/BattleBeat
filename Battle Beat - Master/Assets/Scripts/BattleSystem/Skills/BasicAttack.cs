@@ -7,6 +7,12 @@ public class BasicAttack : AttackItemBase
     public float DamageFactor;
     public float BaseDamage;
     public int Delay;
+    [SerializeField]
+    SEID attackSE;
+    [SerializeField]
+    SEID hitSE;
+    [SerializeField]
+    SEID waitSE;
     protected int NowTurn;
     protected bool canMakeDamage;
     protected bool IsInterrupted;
@@ -49,6 +55,7 @@ public class BasicAttack : AttackItemBase
             ChangeFloorColor(fColor, 0);
 
             canMakeDamage = true;
+            SoundManager.Instance.PlaySE(attackSE);
             Debug.Log("ダメージ発生のターン");
         }
         else if (NowTurn == Delay+1)
@@ -67,7 +74,7 @@ public class BasicAttack : AttackItemBase
                 fColor = Floor.Colors.skyblue;
             }
             ChangeFloorColor(fColor, 0);
-
+            SoundManager.Instance.PlaySE(waitSE);
             Debug.Log(string.Format("{0}ターン後、ダメージ判定する", Delay - NowTurn));
         }
     }
@@ -88,6 +95,7 @@ public class BasicAttack : AttackItemBase
     public override void PassDamage(Player player)
     {
         Opponent.TakeDamage(RootPlayer.DamageCalc(BaseDamage) * DamageFactor);
+        SoundManager.Instance.PlaySE(hitSE);
     }
     
     public override bool isEnd()

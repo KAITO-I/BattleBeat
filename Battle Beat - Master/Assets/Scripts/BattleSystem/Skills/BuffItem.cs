@@ -14,10 +14,11 @@ public class BuffItem : AttackItemBase
         base.Init(row, col, reverse, root);
         lifeTime = Duration+1;
         emitter = gameObject.AddComponent<Effekseer.EffekseerEmitter>();
-        emitter.effectAsset = EffekseerEffectAsset;
+        emitter.effectAsset = Resources.Load<Effekseer.EffekseerEffectAsset>("Effekseer/C_Buff");
         emitter.isLooping = true;
         emitter.speed *= 1.5f;
         emitter.Play();
+        SoundManager.Instance.PlaySE(SEID.Game_Character_Homie_Buff);
     }
     public override void TurnProcessPhase2_Main()
     {

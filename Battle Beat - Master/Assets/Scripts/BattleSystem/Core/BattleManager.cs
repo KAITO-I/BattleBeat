@@ -28,31 +28,33 @@ public class BattleManager : MonoBehaviour
     }
     public void startGame()
     {
-        //StartCoroutine(startGameLoop());
-        MainGameCamera._instance.GameStart();
-        onGame = true;
-        AttackManager._instance.GetPlayer(1).onGame = true;
-        AttackManager._instance.GetPlayer(2).onGame = true;
-        timeSetter.startTimer();
-        rythmManager.StartRythm();
+        StartCoroutine(startGameLoop());
+        //MainGameCamera._instance.GameStart();
+        //onGame = true;
+        //AttackManager._instance.GetPlayer(1).onGame = true;
+        //AttackManager._instance.GetPlayer(2).onGame = true;
+        //timeSetter.startTimer();
+        //rythmManager.StartRythm();
     }
 
     IEnumerator startGameLoop()
     {
+        SoundManager.Instance.PlaySE(SEID.Game_Ready);
         MainGameCamera._instance.GameStart();
-        ShowImage._instance.ShowImages(new string[] {  "void", "void", "void", "void" }, 0.00001f, 0.0f);
+        ShowImage._instance.ShowImages(new string[] {  "void", "void", "void", "void" }, 0.8f, 0.0f);
         while (true){
             if (ShowImage._instance.IsEnd())
             {
                 if (readyFlag == false)
                 {
-                    ShowImage._instance.ShowImages(new string[] { "READY" }, 0.00001f, 0f);
+                    ShowImage._instance.ShowImages(new string[] { "READY" }, 0.8f, 0f);
                     readyFlag = true;
                 }
                 else{
                     if (readyEndFlag == false)
                     {
-                        ShowImage._instance.ShowImages(new string[] { "3", "2", "1", "GO" }, 0.00001f, 0f);
+                        SoundManager.Instance.PlaySE(SEID.Game_Countdown);
+                        ShowImage._instance.ShowImages(new string[] { "3", "2", "1", "GO" }, 0.8f, 0f);
                         readyEndFlag = true;
                     }
                     else
