@@ -42,6 +42,8 @@ public class ResultManager : MonoBehaviour
     Sprite[]  PlayerImgs;
     [SerializeField]
     GameObject WordPos;
+    [SerializeField]
+    CharaData charaDate;
     //勝利したほうの情報を受け取る
     [SerializeField]
     int WinPlayerID;
@@ -79,19 +81,22 @@ public class ResultManager : MonoBehaviour
         BlackImg.SetActive(true);
         //プレイヤー情報
         WinPlayerID = (int)AttackManager.winner;
-        _loseCharaId = 3 - WinPlayerID;
+        //_loseCharaId = 3 - WinPlayerID;
         if (WinPlayerID == 1)
         {
             WinCharaID = (int)Setting.p1c + 1;
+            _loseCharaId = (int)Setting.p2c + 1;
         }
         else if(WinPlayerID == 2)
         {
             WinCharaID = (int)Setting.p2c + 1;
+            _loseCharaId = (int)Setting.p1c + 1;
+
         }
 
         Setting.Chara winChara = (Setting.Chara) (WinCharaID-1);
         string path = "CharacterData/" + winChara.ToString();
-        CharaData winnerData = Resources.Load<CharaData>(path);
+        charaDate = Resources.Load<CharaData>(path);
         
         PlayerT = Moves[0].GetComponent<Image>();
         charatext = Moves[1].GetComponent<Image>();

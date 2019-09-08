@@ -64,8 +64,6 @@ public class SelectCountroll : MonoBehaviour
     [SerializeField]
     float _MoveTime_1P,_MoveTime_2P;
 
-    bool _oK_Move1, _oK_Move2;
-
     //Boss変数
     bool[] _boss=new bool[2] {false,false};
 
@@ -236,7 +234,6 @@ public class SelectCountroll : MonoBehaviour
         if (_1Pcontroller.GetButtonDown(ControllerManager.Button.A))
         {
             Player1_OK = true;
-            _oK_Move1 = true;
             _MoveTime_1P = 0f;
             if (Player2_OK)
             {
@@ -250,7 +247,6 @@ public class SelectCountroll : MonoBehaviour
         if (_2Pcontroller.GetButtonDown(ControllerManager.Button.A))
         {
             Player2_OK = true;
-            _oK_Move2 = true;
             _MoveTime_2P = 0f;
             if (Player1_OK)
             {
