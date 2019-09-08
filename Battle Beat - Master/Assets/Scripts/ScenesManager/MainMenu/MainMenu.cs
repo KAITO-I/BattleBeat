@@ -24,14 +24,6 @@ namespace MainMenu
         Overlay
     }
 
-    [SerializeField]
-    class Description{
-        [SerializeField]
-        private string title;
-        [SerializeField]
-        private string description;
-    }
-
     [Serializable]
     class MegaphoneTreeUI
     {
