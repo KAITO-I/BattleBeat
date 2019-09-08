@@ -61,7 +61,9 @@ public class SelectCountroll : MonoBehaviour
     float time;
     public float interval;
     float _changeTransparency = 1;
-    float _MoveTime;
+    [SerializeField]
+    float _MoveTime_1P,_MoveTime_2P;
+
     bool _oK_Move1, _oK_Move2;
 
     //Boss変数
@@ -112,7 +114,8 @@ public class SelectCountroll : MonoBehaviour
         }
 
         #region ここでテープの初期化
-        _MoveTime = 0f;
+        _MoveTime_1P = 0f;
+        _MoveTime_2P = 0f;
         for (int i = 0; i < 2; ++i)
         {
             Gole[i] = Moves[i].GetComponent<Transform>();
@@ -178,8 +181,8 @@ public class SelectCountroll : MonoBehaviour
         if (loader.isLoading) return;
         SelectMove();
         //=========ここが新しいところ==============
-        ReadyBerMove(0, Player1_OK);
-        ReadyBerMove(1, Player2_OK);
+        _MoveTime_1P= ReadyBerMove(0, Player1_OK,_MoveTime_1P);
+        _MoveTime_2P= ReadyBerMove(1, Player2_OK, _MoveTime_2P);
         //=========================================
         //Charaが二人とも選択されたとき
         if (Player1_OK&& Player2_OK)
@@ -239,7 +242,7 @@ public class SelectCountroll : MonoBehaviour
         {
             Player1_OK = true;
             _oK_Move1 = true;
-            _MoveTime = 0f;
+            _MoveTime_1P = 0f;
             if (Player2_OK)
             {
                 _soundManager.PlaySE(SEID.General_Siren);
@@ -253,7 +256,7 @@ public class SelectCountroll : MonoBehaviour
         {
             Player2_OK = true;
             _oK_Move2 = true;
-            _MoveTime = 0f;
+            _MoveTime_2P = 0f;
             if (Player1_OK)
             {
                 _soundManager.PlaySE(SEID.General_Siren);
@@ -272,7 +275,7 @@ public class SelectCountroll : MonoBehaviour
             if (_1Pcontroller.GetButtonDown(ControllerManager.Button.B))
             {
                 Player1_OK = false;
-                _MoveTime = 0;
+                _MoveTime_1P = 0;
                 _soundManager.PlaySE(SEID.General_Controller_Back);
             }
             float difference = Time.time - Player1_Time;
@@ -289,7 +292,7 @@ public class SelectCountroll : MonoBehaviour
             if (_2Pcontroller.GetButtonDown(ControllerManager.Button.B))
             {
                 Player2_OK = false;
-                _MoveTime = 0f;
+                _MoveTime_2P = 0f;
                 _soundManager.PlaySE(SEID.General_Controller_Back);
             }
             float difference = Time.time - Player2_Time;
@@ -381,14 +384,16 @@ public class SelectCountroll : MonoBehaviour
 
     }
     //新しい関数
-    void ReadyBerMove(int id,bool Chack)
+    float ReadyBerMove(int id,bool _Chack,float _MoveTime)
     {
         if (_MoveTime <= 1)
         {
             _MoveTime += 0.1f;
         }
         Transform rect = Moves[id].GetComponent<Transform>();
-        if (!Chack) Vector3.Lerp(rect.position, Gole[id].position, _MoveTime);
-        else if (Chack) Vector3.Lerp(rect.position, Gole2[id].position, _MoveTime);
+        if (!_Chack) Moves[id].GetComponent<Transform>().position= Vector3.Lerp(rect.position, Gole[id].position, _MoveTime);
+        else if (_Chack) Moves[id].GetComponent<Transform>().position = Vector3.Lerp(rect.position, Gole2[id].position, _MoveTime);
+        return _MoveTime;
+
     }
 }
