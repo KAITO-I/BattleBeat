@@ -42,8 +42,6 @@ public class ResultManager : MonoBehaviour
     Sprite[]  PlayerImgs;
     [SerializeField]
     GameObject WordPos;
-    [SerializeField]
-    CharaData charaDate;
     //勝利したほうの情報を受け取る
     [SerializeField]
     int WinPlayerID;
@@ -91,12 +89,14 @@ public class ResultManager : MonoBehaviour
         {
             WinCharaID = (int)Setting.p2c + 1;
             _loseCharaId = (int)Setting.p1c + 1;
-
         }
-
         Setting.Chara winChara = (Setting.Chara) (WinCharaID-1);
         string path = "CharacterData/" + winChara.ToString();
-        charaDate = Resources.Load<CharaData>(path);
+        CharaData winnerData = Resources.Load<CharaData>(path);
+        if (winnerData.backGraund == null)
+        {
+            Debug.Log("背景が挿入されていません");
+        }
         
         PlayerT = Moves[0].GetComponent<Image>();
         charatext = Moves[1].GetComponent<Image>();
