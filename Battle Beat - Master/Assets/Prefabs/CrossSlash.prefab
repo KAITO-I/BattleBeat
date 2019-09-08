@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7091604541718360685}
   - component: {fileID: 4036827284047022568}
   - component: {fileID: 8902767407984929937}
+  - component: {fileID: -6843202747832122597}
   m_Layer: 0
   m_Name: CrossSlash
   m_TagString: Untagged
@@ -54,6 +55,7 @@ MonoBehaviour:
   BoardSize: {x: 3, y: 6}
   CoolDown: 0
   SpCost: 100
+  EffekseerEffectAsset: {fileID: 0}
   DamageFactor: 4
   BaseDamage: 6
   Delay: 2
@@ -70,3 +72,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ColIdx: 2
+--- !u!114 &-6843202747832122597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2836272470564040027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7854e10597168d54891d00701094e1e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Pos: {x: 2, y: 1}
+  offSet: {x: 0, y: 0, z: 0}
+  scale: 1
+  speed: 1
+  effect: 8

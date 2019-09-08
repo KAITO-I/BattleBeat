@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6506936011088225526}
   - component: {fileID: 5214080695571800971}
+  - component: {fileID: 2017033552057228473}
   m_Layer: 0
   m_Name: LinearSlash
   m_TagString: Untagged
@@ -53,6 +54,24 @@ MonoBehaviour:
   BoardSize: {x: 3, y: 6}
   CoolDown: 5
   SpCost: 0
+  EffekseerEffectAsset: {fileID: 0}
   DamageFactor: 4
   BaseDamage: 4
   Delay: 1
+--- !u!114 &2017033552057228473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8598021396870418982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7854e10597168d54891d00701094e1e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Pos: {x: 2, y: 1}
+  offSet: {x: 0, y: 0, z: 0}
+  scale: 1
+  speed: 1
+  effect: 7

@@ -9,21 +9,33 @@ public class BaseEffect
     const string waitEffectPath = "S_Weight_Beat_maru";
     const string musicwaveEffectPath = "musicwave";
     const string homei1EffectPath = "homie_attack";
-    const string homei2EffectPath = "homie_attack2";
+    const string homei2EffectPath = "C_fome_S2";
+    const string homei4EffectPath = "C_fome_SP";
+    const string kagura1EffectPath = "Kagura1";
+    const string kagura2EffectPath = "Kagura2";
+    const string kagura4EffectPath = "Kagura4";
     public enum Effect
     {
         DAMAGE,
         WAIT,
         MUSICWAVE,
         HOMEI1,
-        HOMEI2
+        HOMEI2,
+        HOMEI4,
+        KAGURA1,
+        KAGURA2,
+        KAGURA4
     }
     Dictionary<Effect, string> effectPath = new Dictionary<Effect, string> {
         { Effect.DAMAGE,damageEffectPath},
         { Effect.WAIT,waitEffectPath},
         { Effect.MUSICWAVE,musicwaveEffectPath},
         { Effect.HOMEI1,homei1EffectPath},
-        { Effect.HOMEI2,homei2EffectPath}
+        { Effect.HOMEI2,homei2EffectPath},
+        { Effect.HOMEI4,homei4EffectPath},
+        { Effect.KAGURA1,kagura1EffectPath},
+        { Effect.KAGURA2,kagura2EffectPath},
+        { Effect.KAGURA4,kagura4EffectPath}
     };
 
 

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7292332256843601937}
   - component: {fileID: -4832031845409587946}
+  - component: {fileID: -4605251268263387040}
   m_Layer: 0
   m_Name: ForceOfAmplifier
   m_TagString: Untagged
@@ -67,3 +68,20 @@ MonoBehaviour:
   DamageFactor: 4
   BaseDamage: 5
   Delay: 3
+--- !u!114 &-4605251268263387040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4781102525549998572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7854e10597168d54891d00701094e1e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Pos: {x: 1, y: 1}
+  offSet: {x: 0, y: 0, z: 0}
+  scale: 1
+  speed: 1
+  effect: 5
