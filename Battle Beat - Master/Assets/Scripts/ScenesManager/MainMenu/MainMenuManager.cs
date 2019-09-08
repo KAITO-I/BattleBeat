@@ -16,9 +16,6 @@ public class MainMenuManager : MonoBehaviour
     private int selectedNum;
     private bool canPushDPadY;
 
-    [SerializeField]
-    private Button button0;
-
     // 画面の移動時間
     [SerializeField]
     private float moveTime;
@@ -65,9 +62,19 @@ public class MainMenuManager : MonoBehaviour
 
     [Header("Config")]
     [SerializeField]
+    private GameObject configObj;
+    [SerializeField]
     private AudioMixer gameAudio;
     [SerializeField]
-    private Slider[] sliders;
+    private GameObject[] volumeSliders;
+    [SerializeField]
+    private Color sliderSelectColor;
+    [SerializeField]
+    private Color sliderUnselectColor;
+    [SerializeField]
+    private float volumeSliderSpeed;
+
+    private VolumeController[] volumeControllers;
 
     private void Start()
     {
@@ -95,6 +102,30 @@ public class MainMenuManager : MonoBehaviour
                 this.mtRightSigns[i].SignUnselected();
             }
         }
+
+        this.configObj.SetActive(false);
+
+        this.volumeControllers = new VolumeController[3];
+        this.volumeControllers[0] = new VolumeController(
+            "MasterVol",
+            this.gameAudio,
+            this.volumeSliders[0].transform.Find("MasterSlider").GetComponent<Slider>(),
+            this.sliderUnselectColor
+        );
+
+        this.volumeControllers[1] = new VolumeController(
+            "BGMVol",
+            this.gameAudio,
+            this.volumeSliders[1].transform.Find("MasterSlider").GetComponent<Slider>(),
+            this.sliderUnselectColor
+        );
+
+        this.volumeControllers[2] = new VolumeController(
+            "SEVol",
+            this.gameAudio,
+            this.volumeSliders[2].transform.Find("MasterSlider").GetComponent<Slider>(),
+            this.sliderUnselectColor
+        );
 
         // BGM
         SoundManager.Instance.PlayBGM(BGMID.MainMenu);
@@ -163,7 +194,10 @@ public class MainMenuManager : MonoBehaviour
                         case 0: StartCoroutine(LeftToRight()); break;
                         case 1:
                             this.displayState = DisplayState.Config;
+                            this.configObj.SetActive(true);
                             this.selectedNum = 0;
+                            this.canPushDPadY = true;
+                            for (int i = 0; i < 3; i++) this.volumeControllers[i].SetColor((i == 0) ? this.sliderSelectColor : this.sliderUnselectColor);
                             break;
                         case 2: break;
                     }
@@ -314,34 +348,42 @@ public class MainMenuManager : MonoBehaviour
     }
 
     private void UpdateConfig() {
-            int selectedNum = this.selectedNum;
-
-            float axisY = this.controller.GetAxis_Menu(ControllerManager.Axis.DpadY);
-            if (Mathf.Abs(axisY) > 0.5) {
-                if (this.canPushDPadY) {
-                    this.canPushDPadY = false;
-                    if (axisY < 0) {
-                        selectedNum++;
-                        if (selectedNum > 2) selectedNum = 2;
-                    } else {
-                        selectedNum--;
-                        if (selectedNum < 0) selectedNum = 0;
-                    }
-                }
-            } else this.canPushDPadY = true;
-
-            if (this.selectedNum != selectedNum) {
-                SoundManager.Instance.PlaySE(SEID.General_Controller_Select);
-                if (this.mtState == MegaphoneTreeState.Left) {
-                    this.mtLeftSigns[this.selectedNum].SignUnselected();
-                    this.selectedNum = selectedNum;
-                    this.mtLeftSigns[this.selectedNum].SignSelected();
+        int selectedNum = this.selectedNum;
+        float axisY = this.controller.GetAxis_Menu(ControllerManager.Axis.DpadY);
+        if (Mathf.Abs(axisY) > 0.5) {
+            if (this.canPushDPadY) {
+                this.canPushDPadY = false;
+                if (axisY < 0) {
+                    selectedNum++;
+                    if (selectedNum > 2) selectedNum = 2;
                 } else {
-                    this.mtRightSigns[this.selectedNum].SignUnselected();
-                    this.selectedNum = selectedNum;
-                    this.mtRightSigns[this.selectedNum].SignSelected();
+                    selectedNum--;
+                    if (selectedNum < 0) selectedNum = 0;
                 }
-                this.electricBoard.Set((this.mtState == MegaphoneTreeState.Left) ? this.mtLeftModeDescriptions[this.selectedNum] : this.mtRightModeDescriptions[this.selectedNum]);
             }
+        } else this.canPushDPadY = true;
+        
+        if (this.selectedNum != selectedNum)
+        {
+            SoundManager.Instance.PlaySE(SEID.General_Controller_Select);
+            this.selectedNum = selectedNum;
+            for (int i = 0; i < 3; i++) this.volumeControllers[i].SetColor((i == this.selectedNum) ? this.sliderSelectColor : this.sliderUnselectColor);
+        }
+
+        float axisX = this.controller.GetAxis_Menu(ControllerManager.Axis.DpadX);
+        if (Mathf.Abs(axisX) > 0.5)
+        {
+            if (axisX > 0) this.volumeControllers[this.selectedNum].SetVolume(this.volumeControllers[this.selectedNum].Slider.value + this.volumeSliderSpeed);
+            else           this.volumeControllers[this.selectedNum].SetVolume(this.volumeControllers[this.selectedNum].Slider.value - this.volumeSliderSpeed);
+        }
+
+        if (this.controller.GetButtonDown_Menu(ControllerManager.Button.B))
+        {
+            SoundManager.Instance.PlaySE(SEID.General_Controller_Back);
+            this.displayState = DisplayState.Menu;
+            this.configObj.SetActive(false);
+            this.selectedNum = 1;
+            this.canPushDPadY = true;
+        }
     }
 }
