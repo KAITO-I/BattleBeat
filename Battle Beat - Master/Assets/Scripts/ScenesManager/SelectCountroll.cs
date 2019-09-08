@@ -35,8 +35,8 @@ public class SelectCountroll : MonoBehaviour
     [SerializeField]
     GameObject[] Moves = new GameObject[2];
 
-    Transform[] Gole = new Transform[2];
-    Transform[] Gole2 = new Transform[2];
+    Transform[] Gole = new Transform[2];//画面にいる
+    Transform[] Gole2 = new Transform[2];//画面外
     List<CharaSelectObj> CharaObj;
     int length;
 
@@ -240,7 +240,7 @@ public class SelectCountroll : MonoBehaviour
         {
             Player1_OK = true;
             _oK_Move1 = true;
-
+            MoveTime = 0f;
             if (Player2_OK)
             {
                 _soundManager.PlaySE(SEID.General_Siren);
@@ -254,6 +254,7 @@ public class SelectCountroll : MonoBehaviour
         {
             Player2_OK = true;
             _oK_Move2 = true;
+            MoveTime = 0f;
             if (Player1_OK)
             {
                 _soundManager.PlaySE(SEID.General_Siren);
@@ -272,6 +273,7 @@ public class SelectCountroll : MonoBehaviour
             if (_1Pcontroller.GetButtonDown(ControllerManager.Button.B))
             {
                 Player1_OK = false;
+                MoveTime = 0;
                 _soundManager.PlaySE(SEID.General_Controller_Back);
             }
             float difference = Time.time - Player1_Time;
@@ -288,7 +290,8 @@ public class SelectCountroll : MonoBehaviour
             if (_2Pcontroller.GetButtonDown(ControllerManager.Button.B))
             {
                 Player2_OK = false;
-                    _soundManager.PlaySE(SEID.General_Controller_Back);
+                MoveTime = 0f;
+                _soundManager.PlaySE(SEID.General_Controller_Back);
             }
             float difference = Time.time - Player2_Time;
             SetSilder(difference);
@@ -380,9 +383,12 @@ public class SelectCountroll : MonoBehaviour
     //新しい関数
     void ReadyBerMove(int id,bool Chack)
     {
+        if (MoveTime < 1)
+        {
+            MoveTime += 0.1f;
+        }
         Transform rect = Moves[id].GetComponent<Transform>();
         if (!Chack) Vector3.Lerp(rect.position, Gole[id].position, MoveTime);
         else if (Chack) Vector3.Lerp(rect.position, Gole2[id].position, MoveTime);
     }
-
 }
