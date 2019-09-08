@@ -152,6 +152,7 @@ public class AttackManager : MonoBehaviour
                 
                 break;
             case 17 - 4:
+                SoundManager.Instance.PlaySE(SEID.Game_Countdown);
                 ShowImage._instance.ShowImages(new string[] { "3", "2", "1", "TempoUp" }, 0.8f, 0.0f);
                 break;
 
@@ -159,7 +160,8 @@ public class AttackManager : MonoBehaviour
                 rythmManager.TempoUp(150);
                 break;
             case 80- 4:
-                ShowImage._instance.ShowImages(new string[] { "3", "2", "1", "TempoUp" }, 0.8f, 0.0f);
+                SoundManager.Instance.PlaySE(SEID.Game_Countdown2);
+                ShowImage._instance.ShowImages(new string[] { "3", "2", "1", "TempoUp" }, 60f/113f, 0.0f);
                 break;
                 
         }

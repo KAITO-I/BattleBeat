@@ -39,7 +39,7 @@ public class BattleManager : MonoBehaviour
 
     IEnumerator startGameLoop()
     {
-        SoundManager.Instance.PlaySE(SEID.Game_Ready);
+        
         MainGameCamera._instance.GameStart();
         ShowImage._instance.ShowImages(new string[] {  "void", "void", "void", "void" }, 0.8f, 0.0f);
         while (true){
@@ -47,7 +47,8 @@ public class BattleManager : MonoBehaviour
             {
                 if (readyFlag == false)
                 {
-                    ShowImage._instance.ShowImages(new string[] { "READY" }, 0.8f, 0f);
+                    SoundManager.Instance.PlaySE(SEID.Game_Ready);
+                    ShowImage._instance.ShowImages(new string[] { "READY" }, 3.2f, 0f);
                     readyFlag = true;
                 }
                 else{
@@ -103,20 +104,22 @@ public class BattleManager : MonoBehaviour
                 {
                     case 1:
                         //P1Win
-                        ShowImage._instance.ShowImages(new string[] { "GAME" });
+                        ShowImage._instance.ShowImages(new string[] { "GAME" },4f,0f);
                         StartCoroutine(WaitAndJumpScene());
                         break;
                     case 2:
                         //P2Win
-                        ShowImage._instance.ShowImages(new string[] { "GAME" });
+                        ShowImage._instance.ShowImages(new string[] { "GAME" }, 4f, 0f);
                         StartCoroutine(WaitAndJumpScene());
                         break;
                     case 3:
                         //DRAW
-                        ShowImage._instance.ShowImages(new string[] { "Draw" });
+                        ShowImage._instance.ShowImages(new string[] { "Draw" }, 4f, 0f);
                         StartCoroutine(WaitAndJumpScene());
                         break;
                 }
+                SoundManager.Instance.PlaySE(SEID.General_Siren);
+                onGame = false;
             }
         }
     }
@@ -132,7 +135,9 @@ public class BattleManager : MonoBehaviour
     {
         rythmManager.StopRythm();
         timeSetter.stop();
-
+        if (AttackManager._instance.GetWinner() != 3) {
+            MainGameCamera._instance.ChangeAndZoomUp(3 - (int)AttackManager._instance.GetWinner());
+        }
         while (true)
         {
             if (ShowImage._instance.IsEnd())
@@ -144,7 +149,13 @@ public class BattleManager : MonoBehaviour
                 yield return new WaitForFixedUpdate();
             }
         }
-
-        SceneLoader.Instance.LoadScene(SceneLoader.Scenes.Result);
+        if (AttackManager._instance.GetWinner() == 3)
+        {
+            SceneLoader.Instance.LoadScene(SceneLoader.Scenes.Title);
+        }
+        else
+        {
+            SceneLoader.Instance.LoadScene(SceneLoader.Scenes.Result);
+        }
     }
 }

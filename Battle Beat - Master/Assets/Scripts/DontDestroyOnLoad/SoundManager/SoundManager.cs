@@ -40,7 +40,8 @@ public enum SEID {
     Game_Character_Homie_Buff,
     Game_Character_Kagura_Sword,
     Game_Character_Kagura_SwordSP,
-    Game_Character_Kagura_Chain
+    Game_Character_Kagura_Chain,
+    Game_Countdown2
 }
 
 public class SoundManager : MonoBehaviour {

@@ -57,7 +57,7 @@ MonoBehaviour:
   BaseDamage: 2
   Delay: 1
   attackSE: 15
-  hitSE: 13
+  hitSE: 11
   waitSE: 12
 --- !u!114 &2742597253805750457
 MonoBehaviour:
