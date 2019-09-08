@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.Audio;
 using MainMenu;
 
 public class MainMenuManager : MonoBehaviour
@@ -62,6 +63,12 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField]
     private SignOverlay[] mtRightSigns;
 
+    [Header("Config")]
+    [SerializeField]
+    private AudioMixer gameAudio;
+    [SerializeField]
+    private Slider[] sliders;
+
     private void Start()
     {
         this.controller = ControllerManager.Instance;
@@ -101,6 +108,10 @@ public class MainMenuManager : MonoBehaviour
         switch (this.displayState) {
             case DisplayState.Menu:
                 UpdateMenu();
+                break;
+
+            case DisplayState.Config:
+                UpdateConfig();
                 break;
         }
     }
@@ -150,7 +161,10 @@ public class MainMenuManager : MonoBehaviour
                     switch (this.selectedNum)
                     {
                         case 0: StartCoroutine(LeftToRight()); break;
-                        case 1: break;
+                        case 1:
+                            this.displayState = DisplayState.Config;
+                            this.selectedNum = 0;
+                            break;
                         case 2: break;
                     }
                 }
@@ -297,5 +311,37 @@ public class MainMenuManager : MonoBehaviour
             if (i == 0) this.mtLeftSigns[i].SignSelected();
             else        this.mtLeftSigns[i].SignUnselected();
         }
+    }
+
+    private void UpdateConfig() {
+            int selectedNum = this.selectedNum;
+
+            float axisY = this.controller.GetAxis_Menu(ControllerManager.Axis.DpadY);
+            if (Mathf.Abs(axisY) > 0.5) {
+                if (this.canPushDPadY) {
+                    this.canPushDPadY = false;
+                    if (axisY < 0) {
+                        selectedNum++;
+                        if (selectedNum > 2) selectedNum = 2;
+                    } else {
+                        selectedNum--;
+                        if (selectedNum < 0) selectedNum = 0;
+                    }
+                }
+            } else this.canPushDPadY = true;
+
+            if (this.selectedNum != selectedNum) {
+                SoundManager.Instance.PlaySE(SEID.General_Controller_Select);
+                if (this.mtState == MegaphoneTreeState.Left) {
+                    this.mtLeftSigns[this.selectedNum].SignUnselected();
+                    this.selectedNum = selectedNum;
+                    this.mtLeftSigns[this.selectedNum].SignSelected();
+                } else {
+                    this.mtRightSigns[this.selectedNum].SignUnselected();
+                    this.selectedNum = selectedNum;
+                    this.mtRightSigns[this.selectedNum].SignSelected();
+                }
+                this.electricBoard.Set((this.mtState == MegaphoneTreeState.Left) ? this.mtLeftModeDescriptions[this.selectedNum] : this.mtRightModeDescriptions[this.selectedNum]);
+            }
     }
 }
