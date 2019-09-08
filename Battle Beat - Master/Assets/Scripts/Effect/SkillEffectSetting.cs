@@ -6,6 +6,7 @@ using UnityEditor;
 public class SkillEffectSetting : MonoBehaviour
 {
     [SerializeField]
+    [HideInInspector]
     public Vector2Int Pos;
     [SerializeField]
     public Vector3 offSet;
@@ -13,7 +14,8 @@ public class SkillEffectSetting : MonoBehaviour
     public float scale;
     [SerializeField]
     public float speed;
-
+    [SerializeField]
+    public Vector3 rotation;
     [SerializeField]
     public BaseEffect.Effect effect;
 }

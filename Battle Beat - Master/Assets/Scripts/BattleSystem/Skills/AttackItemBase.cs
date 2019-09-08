@@ -84,7 +84,7 @@ public class AttackItemBase : MonoBehaviour
                     {
                         pos = BoardManager._instance.ToWorldPos(boardPos) + skillEffectSetting.offSet;
                     }
-                    AttackManager._instance.AddEffect(pos, Reverse, skillEffectSetting.effect, false, skillEffectSetting.scale, skillEffectSetting.speed);
+                    AttackManager._instance.AddEffect(pos, Reverse, skillEffectSetting.effect, Quaternion.Euler(skillEffectSetting.rotation),false, skillEffectSetting.scale, skillEffectSetting.speed);
                 }
             }
 
