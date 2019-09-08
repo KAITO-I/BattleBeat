@@ -115,7 +115,7 @@ public class MainMenuManager : MonoBehaviour
             if (Mathf.Abs(axisY) > 0.5) {
                 if (this.canPushDPadY) {
                     this.canPushDPadY = false;
-                    if (axisY > 0) {
+                    if (axisY < 0) {
                         selectedNum++;
                         if (selectedNum > 2) selectedNum = 2;
                     } else {
