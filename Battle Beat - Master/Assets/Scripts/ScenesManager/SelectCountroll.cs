@@ -35,8 +35,8 @@ public class SelectCountroll : MonoBehaviour
     [SerializeField]
     GameObject[] Moves = new GameObject[2];
 
-    RectTransform[] Gole = new RectTransform[2];
-    RectTransform[] Gole2 = new RectTransform[2];
+    Transform[] Gole = new Transform[2];
+    Transform[] Gole2 = new Transform[2];
     List<CharaSelectObj> CharaObj;
     int length;
 
@@ -116,7 +116,9 @@ public class SelectCountroll : MonoBehaviour
         {
             c.Init();
         }
-        for(int i = 0; i < 2; ++i)
+
+        #region ここでテープの初期化
+        for (int i = 0; i < 2; ++i)
         {
             Gole[i] = Moves[i].GetComponent<RectTransform>();
             Gole[i].position = Moves[i].transform.position;
@@ -128,7 +130,9 @@ public class SelectCountroll : MonoBehaviour
             Gole2[i] = Moves[i].GetComponent<RectTransform>();
             Gole2[i].position = Moves[i].transform.position;
         }
+        #endregion
 
+        #region　ここで1P、2Pのオブジェクトの初期化
         _Player1 = _Player2 = 0;
         Player1_OK = Player2_OK = false;
         _1PDes = _2PDes= false;
@@ -144,8 +148,12 @@ public class SelectCountroll : MonoBehaviour
         Player01_Obj.transform.localScale = new Vector3(_xSize[_Player1], _ySize[_Player1], 1);
         Player02_Obj.transform.localScale = new Vector3(_xSize[_Player2], _ySize[_Player2], 1);
 
+        Description_1P.sprite = ChareDescriptions[_Player1];
+        Description_2P.sprite = ChareDescriptions[_Player2];
+
         Description_1P.enabled = _1PDes;
         Description_2P.enabled = _2PDes;
+        #endregion
 
         //戻り時間
         ReturnTime = 1.5f;
@@ -372,7 +380,7 @@ public class SelectCountroll : MonoBehaviour
     //新しい関数
     void ReadyBerMove(int id,bool Chack)
     {
-        RectTransform rect = Moves[id].GetComponent<RectTransform>();
+        Transform rect = Moves[id].GetComponent<Transform>();
         if (!Chack) Vector3.Lerp(rect.position, Gole[id].position, MoveTime);
         else if (Chack) Vector3.Lerp(rect.position, Gole2[id].position, MoveTime);
     }
