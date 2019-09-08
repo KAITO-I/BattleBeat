@@ -11,6 +11,9 @@ public class AttackManager : MonoBehaviour
     [SerializeField]
     List<Player> players;
 
+    [SerializeField]
+    List<GameObject> stages;
+    BaseEffect baseEffect = new BaseEffect();
     public RythmManager rythmManager;
     public static uint winner;
 
@@ -41,6 +44,13 @@ public class AttackManager : MonoBehaviour
     //ターン処理
     public void NextTurn()
     {
+        //ステージエフェクト
+        foreach(var obj in stages)
+        {
+            baseEffect.NewAndPlay(obj, BaseEffect.Effect.MUSICWAVE,false,40f,1f);
+        }
+        baseEffect.CheckAndDestroy();
+
         //ターン始まる時の処理(playerやattackitemなどのオブジェクトのカウンターなどの処理をする)
         foreach (var item in attackItems)
         {

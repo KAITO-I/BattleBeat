@@ -7,15 +7,18 @@ public class BaseEffect
     const string EffectPathRoot = "Effekseer/";
     const string damageEffectPath = "S_Hit_damege1";
     const string waitEffectPath = "S_Weight_Beat_maru";
+    const string musicwaveEffectPath = "musicwave";
 
     public enum Effect
     {
         DAMAGE,
-        WAIT
+        WAIT,
+        MUSICWAVE
     }
     Dictionary<Effect, string> effectPath = new Dictionary<Effect, string> {
         { Effect.DAMAGE,damageEffectPath},
-        { Effect.WAIT,waitEffectPath}
+        { Effect.WAIT,waitEffectPath},
+        { Effect.MUSICWAVE,musicwaveEffectPath}
     };
 
 
@@ -35,15 +38,19 @@ public class BaseEffect
         effectEmitter.speed *= speed;
         effectEmitter.isLooping = loop;
         effectEmitter.Play();
+        emitterObjs.Add(EffectObj);
         return EffectObj;
     }
     public void CheckAndDestroy()
     {
         foreach (var obj in emitterObjs)
         {
+            if (obj == null)
+            {
+                continue;
+            }
             if (!obj.GetComponent<Effekseer.EffekseerEmitter>().exists)
             {
-                emitterObjs.Remove(obj);
                 GameObject.Destroy(obj);
             }
         }
