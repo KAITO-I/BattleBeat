@@ -8,13 +8,12 @@ public class MainMenuManager : MonoBehaviour
 {
     // 管理系
     private ControllerManager controller;
-    [SerializeField]
-    private EventSystem es;
 
     // 状態
     private DisplayState displayState;
     private MegaphoneTreeState mtState;
-    private int selectedButtonNum;
+    private int selectedNum;
+    private bool canPushDPadY;
 
     [SerializeField]
     private Button button0;
@@ -66,11 +65,11 @@ public class MainMenuManager : MonoBehaviour
     private void Start()
     {
         this.controller = ControllerManager.Instance;
-        this.es.enabled = true;
 
         this.displayState      = DisplayState.Menu;
         this.mtState           = MegaphoneTreeState.Left;
-        this.selectedButtonNum = 0;
+        this.selectedNum       = 0;
+        this.canPushDPadY      = true;
 
         this.electricBoard = new ElectricBoard(this.electricBoardObj.Find("Title").GetComponent<Text>(), this.electricBoardObj.Find("Description").GetComponent<Text>());
         this.electricBoard.Set(this.mtLeftModeDescriptions[0]);
@@ -110,19 +109,32 @@ public class MainMenuManager : MonoBehaviour
         // 移動していないときはボタンの選択状態に合わせてUIを変化させる
         if (this.mtState != MegaphoneTreeState.Changing) {
             // 看板切り替え
-            int selectedButtonNum = int.Parse(es.currentSelectedGameObject.name);
-            if (this.selectedButtonNum != selectedButtonNum) {
+            int selectedNum = this.selectedNum;
+
+            float axisY = this.controller.GetAxis_Menu(ControllerManager.Axis.DpadY);
+            if (Mathf.Abs(axisY) > 0.5 && this.canPushDPadY) {
+                this.canPushDPadY = false;
+                if (axisY > 0) {
+                    selectedNum++;
+                    if (selectedNum > 2) selectedNum = 2;
+                } else {
+                    selectedNum--;
+                    if (selectedNum < 0) selectedNum = 0;
+                }
+            } else this.canPushDPadY = true;
+
+            if (this.selectedNum != selectedNum) {
                 SoundManager.Instance.PlaySE(SEID.General_Controller_Select);
                 if (this.mtState == MegaphoneTreeState.Left) {
-                    this.mtLeftSigns[this.selectedButtonNum].SignUnselected();
-                    this.selectedButtonNum = selectedButtonNum;
-                    this.mtLeftSigns[this.selectedButtonNum].SignSelected();
+                    this.mtLeftSigns[this.selectedNum].SignUnselected();
+                    this.selectedNum = selectedNum;
+                    this.mtLeftSigns[this.selectedNum].SignSelected();
                 } else {
-                    this.mtRightSigns[this.selectedButtonNum].SignUnselected();
-                    this.selectedButtonNum = selectedButtonNum;
-                    this.mtRightSigns[this.selectedButtonNum].SignSelected();
+                    this.mtRightSigns[this.selectedNum].SignUnselected();
+                    this.selectedNum = selectedNum;
+                    this.mtRightSigns[this.selectedNum].SignSelected();
                 }
-                this.electricBoard.Set((this.mtState == MegaphoneTreeState.Left) ? this.mtLeftModeDescriptions[this.selectedButtonNum] : this.mtRightModeDescriptions[this.selectedButtonNum]);
+                this.electricBoard.Set((this.mtState == MegaphoneTreeState.Left) ? this.mtLeftModeDescriptions[this.selectedNum] : this.mtRightModeDescriptions[this.selectedNum]);
             }
 
             // ボタン操作
@@ -133,7 +145,7 @@ public class MainMenuManager : MonoBehaviour
                 if (this.controller.GetButtonDown_Menu(ControllerManager.Button.A))
                 {
                     SoundManager.Instance.PlaySE(SEID.General_Controller_Decision);
-                    switch (this.selectedButtonNum)
+                    switch (this.selectedNum)
                     {
                         case 0: StartCoroutine(LeftToRight()); break;
                         case 1: break;
@@ -154,7 +166,7 @@ public class MainMenuManager : MonoBehaviour
                 if (this.controller.GetButtonDown_Menu(ControllerManager.Button.A))
                 {
                     SoundManager.Instance.PlaySE(SEID.General_Controller_Decision);
-                    switch (this.selectedButtonNum)
+                    switch (this.selectedNum)
                     {
                         case 0: SceneLoader.Instance.LoadScene(SceneLoader.Scenes.CharacterSelect); break;
                         case 1: break;
@@ -170,8 +182,6 @@ public class MainMenuManager : MonoBehaviour
     private IEnumerator LeftToRight()
     {
         // 開始
-        this.es.enabled = false;
-
         this.mtState = MegaphoneTreeState.Changing;
 
         this.electricBoard.Set("", "");
@@ -216,10 +226,8 @@ public class MainMenuManager : MonoBehaviour
         this.megaphoneTree.rotation = Quaternion.Euler(this.megaphoneTree.rotation.x, this.mtSideRotateX, this.megaphoneTree.rotation.z);
 
         // 終了      
-        this.es.enabled = true;
-
         this.mtState = MegaphoneTreeState.Right;
-        this.selectedButtonNum = 0;
+        this.selectedNum = 0;
 
         this.electricBoard.Set(this.mtRightModeDescriptions[0]);
 
@@ -234,8 +242,6 @@ public class MainMenuManager : MonoBehaviour
         SoundManager.Instance.PlaySE(SEID.General_Controller_Back);
 
         // 開始
-        this.es.enabled = false;
-
         this.mtState = MegaphoneTreeState.Changing;
 
         this.electricBoard.Set("", "");
@@ -279,11 +285,9 @@ public class MainMenuManager : MonoBehaviour
 
         this.megaphoneTree.rotation = Quaternion.Euler(this.megaphoneTree.rotation.x, this.mtSideRotateX, this.megaphoneTree.rotation.z);
 
-        // 終了      
-        this.es.enabled = true;
-
+        // 終了
         this.mtState = MegaphoneTreeState.Left;
-        this.selectedButtonNum = 0;
+        this.selectedNum = 0;
 
         this.electricBoard.Set(this.mtLeftModeDescriptions[0]);
 
