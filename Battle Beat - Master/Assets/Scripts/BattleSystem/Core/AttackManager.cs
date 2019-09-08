@@ -41,6 +41,12 @@ public class AttackManager : MonoBehaviour
     {
         attackItems.Add(attackItem);
     }
+    //
+    public void AddEffect(Vector3 Pos, bool Reverse, BaseEffect.Effect effect, bool loop = false, float scale = 2f, float speed = 7f)
+    {
+        Quaternion rotation = Reverse ? players[1].transform.rotation : players[0].transform.rotation;
+        baseEffect.NewAndPlay(Pos, rotation, effect, loop, scale, speed);
+    }
     //ターン処理
     public void NextTurn()
     {

@@ -274,28 +274,28 @@ public class Player : MonoBehaviour
         {
             case MoveComand.Left:
                 TempX -= 1;
-                if (!BoardManager._instance.Is_In_Stage(TempX, TempY, PlayerID))
+                if (!BoardManager.Is_In_Stage(TempX, TempY, PlayerID))
                 {
                     TempX = Pos.x;
                 }
                 break;
             case MoveComand.Right:
                 TempX += 1;
-                if (!BoardManager._instance.Is_In_Stage(TempX, TempY, PlayerID))
+                if (!BoardManager.Is_In_Stage(TempX, TempY, PlayerID))
                 {
                     TempX = Pos.x;
                 }
                 break;
             case MoveComand.Up:
                 TempY -= 1;
-                if (!BoardManager._instance.Is_In_Stage(TempX, TempY, PlayerID))
+                if (!BoardManager.Is_In_Stage(TempX, TempY, PlayerID))
                 {
                     TempY = Pos.y;
                 }
                 break;
             case MoveComand.Down:
                 TempY += 1;
-                if (!BoardManager._instance.Is_In_Stage(TempX, TempY, PlayerID))
+                if (!BoardManager.Is_In_Stage(TempX, TempY, PlayerID))
                 {
                     TempY = Pos.y;
                 }
@@ -353,7 +353,7 @@ public class Player : MonoBehaviour
         {
             temptemp = temp;
             temp.x += sign;
-            if (!BoardManager._instance.Is_In_Stage(temp.x, temp.y, PlayerID))
+            if (!BoardManager.Is_In_Stage(temp.x, temp.y, PlayerID))
             {
                 temp = temptemp;
                 break;
@@ -364,7 +364,7 @@ public class Player : MonoBehaviour
         {
             temptemp = temp;
             temp.y += sign;
-            if (!BoardManager._instance.Is_In_Stage(temp.x, temp.y, PlayerID))
+            if (!BoardManager.Is_In_Stage(temp.x, temp.y, PlayerID))
             {
                 temp = temptemp;
                 break;

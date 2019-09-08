@@ -68,9 +68,29 @@ public class AttackItemBase : MonoBehaviour
                     PassDamage(Opponent);
                 }
             }
+
+            //エフェクト
+            SkillEffectSetting skillEffectSetting = GetComponent<SkillEffectSetting>();
+            if (skillEffectSetting != null)
+            {
+                Vector2Int boardPos = AreaProcess(skillEffectSetting.Pos);
+                Vector3 pos = Vector3.zero;
+                if (BoardManager.Is_In_Stage(boardPos.x, boardPos.y) ){
+                    if (Reverse)
+                    {
+                        pos = BoardManager._instance.ToWorldPos(boardPos) - skillEffectSetting.offSet;
+                    }
+                    else
+                    {
+                        pos = BoardManager._instance.ToWorldPos(boardPos) + skillEffectSetting.offSet;
+                    }
+                    AttackManager._instance.AddEffect(pos, Reverse, skillEffectSetting.effect, false, skillEffectSetting.scale, skillEffectSetting.speed);
+                }
+            }
+
         }
     }
-    public virtual void TurnPostprocess() { }
+    public virtual void TurnPostprocess() {}
 
     //攻撃が終わってるか
     public virtual bool isEnd() { return isCancel; }

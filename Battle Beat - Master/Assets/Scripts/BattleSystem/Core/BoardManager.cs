@@ -27,7 +27,7 @@ public class BoardManager : MonoBehaviour
         }
     }
     //Is_In_Stage(x座標,y座標,何Playerなのか)
-    public bool Is_In_Stage(int Col, int Row, int pID)
+    public static bool Is_In_Stage(int Col, int Row, int pID)
     {
         switch (pID)
         {
@@ -46,6 +46,19 @@ public class BoardManager : MonoBehaviour
             default:
                 return false;
         }
+    }
+
+    public static bool Is_In_Stage(int Col, int Row)
+    {
+        if (Col >= 0 && Row >= 0 && Col < COLMax && Row < ROWMax)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
     }
     //(vector(現在のX,現在のY),何プレイヤーなのか)
     public Vector3 ToWorldPos(Vector2Int BoardPos)

@@ -23,6 +23,7 @@ public class BaseEffect
 
 
     List<GameObject> emitterObjs = new List<GameObject>();
+    List<GameObject> removeList = new List<GameObject>();
 
     public GameObject NewAndPlay(GameObject gameObject, Effect effect, bool loop = false,float scale = 2f,float speed = 7f)
     {
@@ -31,6 +32,22 @@ public class BaseEffect
         EffectObj.transform.SetParent(gameObject.transform);
         EffectObj.transform.localPosition = Vector3.zero;
         EffectObj.transform.localRotation = Quaternion.identity;
+        EffectObj.transform.localScale *= scale;
+        Effekseer.EffekseerEmitter effectEmitter = EffectObj.AddComponent<Effekseer.EffekseerEmitter>();
+        effectAsset = Resources.Load<Effekseer.EffekseerEffectAsset>(EffectPathRoot + effectPath[effect]);
+        effectEmitter.effectAsset = effectAsset;
+        effectEmitter.speed *= speed;
+        effectEmitter.isLooping = loop;
+        effectEmitter.Play();
+        emitterObjs.Add(EffectObj);
+        return EffectObj;
+    }
+    public GameObject NewAndPlay(Vector3 Pos,Quaternion rotation,Effect effect, bool loop = false, float scale = 2f, float speed = 7f)
+    {
+        Effekseer.EffekseerEffectAsset effectAsset;
+        GameObject EffectObj = new GameObject();
+        EffectObj.transform.position = Pos;
+        EffectObj.transform.rotation = rotation;
         EffectObj.transform.localScale *= scale;
         Effekseer.EffekseerEmitter effectEmitter = EffectObj.AddComponent<Effekseer.EffekseerEmitter>();
         effectAsset = Resources.Load<Effekseer.EffekseerEffectAsset>(EffectPathRoot + effectPath[effect]);
@@ -52,7 +69,16 @@ public class BaseEffect
             if (!obj.GetComponent<Effekseer.EffekseerEmitter>().exists)
             {
                 GameObject.Destroy(obj);
+                removeList.Add(obj);
             }
+        }
+        if (removeList.Count > 0)
+        {
+            foreach (var obj in removeList)
+            {
+                emitterObjs.Remove(obj);
+            }
+            removeList.Clear();
         }
     }
     public void CheckAndDestroy(GameObject obj)
