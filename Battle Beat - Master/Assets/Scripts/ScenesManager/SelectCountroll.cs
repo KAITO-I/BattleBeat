@@ -120,14 +120,14 @@ public class SelectCountroll : MonoBehaviour
         #region ここでテープの初期化
         for (int i = 0; i < 2; ++i)
         {
-            Gole[i] = Moves[i].GetComponent<RectTransform>();
+            Gole[i] = Moves[i].GetComponent<Transform>();
             Gole[i].position = Moves[i].transform.position;
         }
         Moves[0].transform.position +=new Vector3(-500f,0,0);
         Moves[1].transform.position +=new Vector3(500f,0,0);
         for(int i = 0; i < 2; ++i)
         {
-            Gole2[i] = Moves[i].GetComponent<RectTransform>();
+            Gole2[i] = Moves[i].GetComponent<Transform>();
             Gole2[i].position = Moves[i].transform.position;
         }
         #endregion
