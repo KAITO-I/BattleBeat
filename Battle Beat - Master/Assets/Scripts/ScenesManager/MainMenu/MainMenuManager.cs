@@ -2,22 +2,20 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.Audio;
 using MainMenu;
 
 public class MainMenuManager : MonoBehaviour
 {
     // 管理系
     private ControllerManager controller;
-    [SerializeField]
-    private EventSystem es;
 
     // 状態
     private DisplayState displayState;
     private MegaphoneTreeState mtState;
-    private int selectedButtonNum;
-
-    [SerializeField]
-    private Button button0;
+    private int selectedNum;
+    private bool canPushDPadX;
+    private bool canPushDPadY;
 
     // 画面の移動時間
     [SerializeField]
@@ -63,14 +61,39 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField]
     private SignOverlay[] mtRightSigns;
 
+    [Header("Config")]
+    [SerializeField]
+    private GameObject configObj;
+    [SerializeField]
+    private AudioMixer gameAudio;
+    [SerializeField]
+    private GameObject[] volumeSliders;
+    [SerializeField]
+    private Color sliderSelectColor;
+    [SerializeField]
+    private Color sliderUnselectColor;
+    [SerializeField]
+    private float volumeSliderSpeed;
+
+    private VolumeController[] volumeControllers;
+
+    [Header("Credit")]
+    [SerializeField]
+    private MainMenuImageChanger creditImageChanger;
+
+    [Header("Tutorial")]
+    [SerializeField]
+    private MainMenuImageChanger tutorialImageChanger;
+
     private void Start()
     {
         this.controller = ControllerManager.Instance;
-        this.es.enabled = true;
 
         this.displayState      = DisplayState.Menu;
         this.mtState           = MegaphoneTreeState.Left;
-        this.selectedButtonNum = 0;
+        this.selectedNum       = 0;
+        this.canPushDPadX      = true;
+        this.canPushDPadY      = true;
 
         this.electricBoard = new ElectricBoard(this.electricBoardObj.Find("Title").GetComponent<Text>(), this.electricBoardObj.Find("Description").GetComponent<Text>());
         this.electricBoard.Set(this.mtLeftModeDescriptions[0]);
@@ -90,6 +113,36 @@ public class MainMenuManager : MonoBehaviour
             }
         }
 
+        this.configObj.SetActive(false);
+
+        this.volumeControllers = new VolumeController[3];
+        this.volumeControllers[0] = new VolumeController(
+            "MasterVol",
+            this.gameAudio,
+            this.volumeSliders[0].transform.Find("MasterSlider").GetComponent<Slider>(),
+            this.sliderUnselectColor
+        );
+
+        this.volumeControllers[1] = new VolumeController(
+            "BGMVol",
+            this.gameAudio,
+            this.volumeSliders[1].transform.Find("MasterSlider").GetComponent<Slider>(),
+            this.sliderUnselectColor
+        );
+
+        this.volumeControllers[2] = new VolumeController(
+            "SEVol",
+            this.gameAudio,
+            this.volumeSliders[2].transform.Find("MasterSlider").GetComponent<Slider>(),
+            this.sliderUnselectColor
+        );
+
+        this.creditImageChanger.Init();
+        this.creditImageChanger.parentGameObject.SetActive(false);
+
+        this.tutorialImageChanger.Init();
+        this.tutorialImageChanger.parentGameObject.SetActive(false);
+
         // BGM
         SoundManager.Instance.PlayBGM(BGMID.MainMenu);
     }
@@ -103,6 +156,18 @@ public class MainMenuManager : MonoBehaviour
             case DisplayState.Menu:
                 UpdateMenu();
                 break;
+
+            case DisplayState.Config:
+                UpdateConfig();
+                break;
+
+            case DisplayState.Credit:
+                UpdateCredit();
+                break;
+
+            case DisplayState.Tutorial:
+                UpdateTutorial();
+                break;
         }
     }
 
@@ -110,19 +175,34 @@ public class MainMenuManager : MonoBehaviour
         // 移動していないときはボタンの選択状態に合わせてUIを変化させる
         if (this.mtState != MegaphoneTreeState.Changing) {
             // 看板切り替え
-            int selectedButtonNum = int.Parse(es.currentSelectedGameObject.name);
-            if (this.selectedButtonNum != selectedButtonNum) {
+            int selectedNum = this.selectedNum;
+
+            float axisY = this.controller.GetAxis_Menu(ControllerManager.Axis.DpadY);
+            if (Mathf.Abs(axisY) > 0.5) {
+                if (this.canPushDPadY) {
+                    this.canPushDPadY = false;
+                    if (axisY < 0) {
+                        selectedNum++;
+                        if (selectedNum > 2) selectedNum = 2;
+                    } else {
+                        selectedNum--;
+                        if (selectedNum < 0) selectedNum = 0;
+                    }
+                }
+            } else this.canPushDPadY = true;
+
+            if (this.selectedNum != selectedNum) {
                 SoundManager.Instance.PlaySE(SEID.General_Controller_Select);
                 if (this.mtState == MegaphoneTreeState.Left) {
-                    this.mtLeftSigns[this.selectedButtonNum].SignUnselected();
-                    this.selectedButtonNum = selectedButtonNum;
-                    this.mtLeftSigns[this.selectedButtonNum].SignSelected();
+                    this.mtLeftSigns[this.selectedNum].SignUnselected();
+                    this.selectedNum = selectedNum;
+                    this.mtLeftSigns[this.selectedNum].SignSelected();
                 } else {
-                    this.mtRightSigns[this.selectedButtonNum].SignUnselected();
-                    this.selectedButtonNum = selectedButtonNum;
-                    this.mtRightSigns[this.selectedButtonNum].SignSelected();
+                    this.mtRightSigns[this.selectedNum].SignUnselected();
+                    this.selectedNum = selectedNum;
+                    this.mtRightSigns[this.selectedNum].SignSelected();
                 }
-                this.electricBoard.Set((this.mtState == MegaphoneTreeState.Left) ? this.mtLeftModeDescriptions[this.selectedButtonNum] : this.mtRightModeDescriptions[this.selectedButtonNum]);
+                this.electricBoard.Set((this.mtState == MegaphoneTreeState.Left) ? this.mtLeftModeDescriptions[this.selectedNum] : this.mtRightModeDescriptions[this.selectedNum]);
             }
 
             // ボタン操作
@@ -133,11 +213,22 @@ public class MainMenuManager : MonoBehaviour
                 if (this.controller.GetButtonDown_Menu(ControllerManager.Button.A))
                 {
                     SoundManager.Instance.PlaySE(SEID.General_Controller_Decision);
-                    switch (this.selectedButtonNum)
+                    switch (this.selectedNum)
                     {
                         case 0: StartCoroutine(LeftToRight()); break;
-                        case 1: break;
-                        case 2: break;
+                        case 1:
+                            this.displayState = DisplayState.Config;
+                            this.configObj.SetActive(true);
+                            this.selectedNum = 0;
+                            this.canPushDPadY = true;
+                            for (int i = 0; i < 3; i++) this.volumeControllers[i].SetColor((i == 0) ? this.sliderSelectColor : this.sliderUnselectColor);
+                            break;
+                        case 2:
+                            this.displayState = DisplayState.Credit;
+                            this.creditImageChanger.Init();
+                            this.creditImageChanger.parentGameObject.SetActive(true);
+                            this.canPushDPadX = true;
+                            break;
                     }
                 }
                 // B
@@ -154,11 +245,16 @@ public class MainMenuManager : MonoBehaviour
                 if (this.controller.GetButtonDown_Menu(ControllerManager.Button.A))
                 {
                     SoundManager.Instance.PlaySE(SEID.General_Controller_Decision);
-                    switch (this.selectedButtonNum)
+                    switch (this.selectedNum)
                     {
                         case 0: SceneLoader.Instance.LoadScene(SceneLoader.Scenes.CharacterSelect); break;
                         case 1: break;
-                        case 2: break;
+                        case 2:
+                            this.displayState = DisplayState.Tutorial;
+                            this.tutorialImageChanger.Init();
+                            this.tutorialImageChanger.parentGameObject.SetActive(true);
+                            this.canPushDPadX = true;
+                            break;
                     }
                 }
                 // B
@@ -170,8 +266,6 @@ public class MainMenuManager : MonoBehaviour
     private IEnumerator LeftToRight()
     {
         // 開始
-        this.es.enabled = false;
-
         this.mtState = MegaphoneTreeState.Changing;
 
         this.electricBoard.Set("", "");
@@ -216,10 +310,8 @@ public class MainMenuManager : MonoBehaviour
         this.megaphoneTree.rotation = Quaternion.Euler(this.megaphoneTree.rotation.x, this.mtSideRotateX, this.megaphoneTree.rotation.z);
 
         // 終了      
-        this.es.enabled = true;
-
         this.mtState = MegaphoneTreeState.Right;
-        this.selectedButtonNum = 0;
+        this.selectedNum = 0;
 
         this.electricBoard.Set(this.mtRightModeDescriptions[0]);
 
@@ -234,8 +326,6 @@ public class MainMenuManager : MonoBehaviour
         SoundManager.Instance.PlaySE(SEID.General_Controller_Back);
 
         // 開始
-        this.es.enabled = false;
-
         this.mtState = MegaphoneTreeState.Changing;
 
         this.electricBoard.Set("", "");
@@ -279,17 +369,102 @@ public class MainMenuManager : MonoBehaviour
 
         this.megaphoneTree.rotation = Quaternion.Euler(this.megaphoneTree.rotation.x, this.mtSideRotateX, this.megaphoneTree.rotation.z);
 
-        // 終了      
-        this.es.enabled = true;
-
+        // 終了
         this.mtState = MegaphoneTreeState.Left;
-        this.selectedButtonNum = 0;
+        this.selectedNum = 0;
 
         this.electricBoard.Set(this.mtLeftModeDescriptions[0]);
 
         for (int i = 0; i < 3; i++) {
             if (i == 0) this.mtLeftSigns[i].SignSelected();
             else        this.mtLeftSigns[i].SignUnselected();
+        }
+    }
+
+    private void UpdateConfig() {
+        int selectedNum = this.selectedNum;
+        float axisY = this.controller.GetAxis_Menu(ControllerManager.Axis.DpadY);
+        if (Mathf.Abs(axisY) > 0.5) {
+            if (this.canPushDPadY) {
+                this.canPushDPadY = false;
+                if (axisY < 0) {
+                    selectedNum++;
+                    if (selectedNum > 2) selectedNum = 2;
+                } else {
+                    selectedNum--;
+                    if (selectedNum < 0) selectedNum = 0;
+                }
+            }
+        } else this.canPushDPadY = true;
+        
+        if (this.selectedNum != selectedNum)
+        {
+            SoundManager.Instance.PlaySE(SEID.General_Controller_Select);
+            this.selectedNum = selectedNum;
+            for (int i = 0; i < 3; i++) this.volumeControllers[i].SetColor((i == this.selectedNum) ? this.sliderSelectColor : this.sliderUnselectColor);
+        }
+
+        float axisX = this.controller.GetAxis_Menu(ControllerManager.Axis.DpadX);
+        if (Mathf.Abs(axisX) > 0.5)
+        {
+            if (axisX > 0) this.volumeControllers[this.selectedNum].SetVolume(this.volumeControllers[this.selectedNum].Slider.value + this.volumeSliderSpeed);
+            else           this.volumeControllers[this.selectedNum].SetVolume(this.volumeControllers[this.selectedNum].Slider.value - this.volumeSliderSpeed);
+        }
+
+        if (this.controller.GetButtonDown_Menu(ControllerManager.Button.B))
+        {
+            SoundManager.Instance.PlaySE(SEID.General_Controller_Back);
+            this.displayState = DisplayState.Menu;
+            this.configObj.SetActive(false);
+            this.selectedNum = 1;
+            this.canPushDPadY = true;
+        }
+    }
+
+    private void UpdateCredit()
+    {
+        // キー操作
+        float axisX = this.controller.GetAxis_Menu(ControllerManager.Axis.DpadX);
+        if (Mathf.Abs(axisX) > 0.5)
+        {
+            if (this.canPushDPadX)
+            {
+                this.canPushDPadX = false;
+                if (axisX > 0) this.creditImageChanger.Next();
+                else           this.creditImageChanger.Back();
+            }
+        }
+        else this.canPushDPadX = true;
+
+        // ボタン操作
+        if (this.controller.GetButtonDown_Menu(ControllerManager.Button.B))
+        {
+            this.displayState = DisplayState.Menu;
+            this.creditImageChanger.parentGameObject.SetActive(false);
+        }
+    }
+
+    private void UpdateTutorial()
+    {
+        // キー操作
+        float axisX = this.controller.GetAxis_Menu(ControllerManager.Axis.DpadX);
+        if (Mathf.Abs(axisX) > 0.5)
+        {
+            if (this.canPushDPadX)
+            {
+                this.canPushDPadX = false;
+                if (axisX > 0) this.tutorialImageChanger.Next();
+                else           this.tutorialImageChanger.Back();
+            }
+        }
+        else this.canPushDPadX = true;
+
+        // ボタン操作
+        if (this.controller.GetButtonDown_Menu(ControllerManager.Button.B))
+        {
+            SoundManager.Instance.PlaySE(SEID.General_Controller_Back);
+            this.displayState = DisplayState.Menu;
+            this.tutorialImageChanger.parentGameObject.SetActive(false);
         }
     }
 }
