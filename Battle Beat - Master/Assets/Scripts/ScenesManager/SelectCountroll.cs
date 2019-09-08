@@ -25,7 +25,7 @@ public class SelectCountroll : MonoBehaviour
     [SerializeField]
     Sprite _void;
     [SerializeField]
-    GameObject Ready;
+    GameObject _Ready;
     [SerializeField]
     Sprite[] _ChataText, ChareDescriptions;
     [SerializeField]
@@ -60,8 +60,8 @@ public class SelectCountroll : MonoBehaviour
     bool _1PDes,_2PDes;
     float time;
     public float interval;
-    float a = 1;
-    public float MoveTime;
+    float _changeTransparency = 1;
+    float _MoveTime;
     bool _oK_Move1, _oK_Move2;
 
     //Boss変数
@@ -97,13 +97,7 @@ public class SelectCountroll : MonoBehaviour
 
     void Start()
     {
-        Player01 = Player01_Obj.GetComponent<SpriteRenderer>();
-        Player02 = Player02_Obj . GetComponent<SpriteRenderer>();
 
-        Ready.SetActive(false);
-
-        Text01.SetActive(false);
-        Text02.SetActive(false);
         CharaObj = new List<CharaSelectObj>();
         foreach (Transform v in FlameObj.transform)
         {
@@ -118,21 +112,24 @@ public class SelectCountroll : MonoBehaviour
         }
 
         #region ここでテープの初期化
+        _MoveTime = 0f;
         for (int i = 0; i < 2; ++i)
         {
             Gole[i] = Moves[i].GetComponent<Transform>();
             Gole[i].position = Moves[i].transform.position;
-        }
-        Moves[0].transform.position +=new Vector3(-500f,0,0);
-        Moves[1].transform.position +=new Vector3(500f,0,0);
-        for(int i = 0; i < 2; ++i)
-        {
             Gole2[i] = Moves[i].GetComponent<Transform>();
-            Gole2[i].position = Moves[i].transform.position;
+            if(i==0) Gole2[i].position=Moves[i].transform.position+ new Vector3(-500f, 0, 0);
+            else if(i==1) Gole2[i].position = Moves[i].transform.position + new Vector3(500f, 0, 0);
         }
         #endregion
 
         #region　ここで1P、2Pのオブジェクトの初期化
+        Player01 = Player01_Obj.GetComponent<SpriteRenderer>();
+        Player02 = Player02_Obj.GetComponent<SpriteRenderer>();
+
+        Text01.SetActive(false);
+        Text02.SetActive(false);
+
         _Player1 = _Player2 = 0;
         Player1_OK = Player2_OK = false;
         _1PDes = _2PDes= false;
@@ -154,6 +151,8 @@ public class SelectCountroll : MonoBehaviour
         Description_1P.enabled = _1PDes;
         Description_2P.enabled = _2PDes;
         #endregion
+
+        _Ready.SetActive(false);
 
         //戻り時間
         ReturnTime = 1.5f;
@@ -201,12 +200,12 @@ public class SelectCountroll : MonoBehaviour
                 Debug.Log("battleSceneへ");
             }
             _ReadyBackGraund.SetActive(true);
-            Ready.SetActive(true);
+            _Ready.SetActive(true);
             TextColorChange();
             return;
         }
         _ReadyBackGraund.SetActive(false);
-        Ready.SetActive(false);
+        _Ready.SetActive(false);
     }
 
     void SelectMove()
@@ -240,7 +239,7 @@ public class SelectCountroll : MonoBehaviour
         {
             Player1_OK = true;
             _oK_Move1 = true;
-            MoveTime = 0f;
+            _MoveTime = 0f;
             if (Player2_OK)
             {
                 _soundManager.PlaySE(SEID.General_Siren);
@@ -254,7 +253,7 @@ public class SelectCountroll : MonoBehaviour
         {
             Player2_OK = true;
             _oK_Move2 = true;
-            MoveTime = 0f;
+            _MoveTime = 0f;
             if (Player1_OK)
             {
                 _soundManager.PlaySE(SEID.General_Siren);
@@ -273,7 +272,7 @@ public class SelectCountroll : MonoBehaviour
             if (_1Pcontroller.GetButtonDown(ControllerManager.Button.B))
             {
                 Player1_OK = false;
-                MoveTime = 0;
+                _MoveTime = 0;
                 _soundManager.PlaySE(SEID.General_Controller_Back);
             }
             float difference = Time.time - Player1_Time;
@@ -290,7 +289,7 @@ public class SelectCountroll : MonoBehaviour
             if (_2Pcontroller.GetButtonDown(ControllerManager.Button.B))
             {
                 Player2_OK = false;
-                MoveTime = 0f;
+                _MoveTime = 0f;
                 _soundManager.PlaySE(SEID.General_Controller_Back);
             }
             float difference = Time.time - Player2_Time;
@@ -320,6 +319,7 @@ public class SelectCountroll : MonoBehaviour
             ReturnSlider.value = 0f;
         }
         #endregion
+
         Text01.SetActive(Player1_OK);
         Text02.SetActive(Player2_OK);
         Description_1P.enabled = _1PDes;
@@ -372,9 +372,9 @@ public class SelectCountroll : MonoBehaviour
     void TextColorChange()//ここでテキストのフェードイン、アウトをしている
     {
         //一定期間で表示・非表示
-        time += Time.deltaTime * a;
-        if (time >= interval) { a = -1; time = interval; }
-        if (time <= 0) { a = 1; time = 0; }
+        time += Time.deltaTime * _changeTransparency;
+        if (time >= interval) { _changeTransparency = -1; time = interval; }
+        if (time <= 0) { _changeTransparency = 1; time = 0; }
         Color color = text.color;
         color.a = time / interval;
         text.color = color;
@@ -383,12 +383,12 @@ public class SelectCountroll : MonoBehaviour
     //新しい関数
     void ReadyBerMove(int id,bool Chack)
     {
-        if (MoveTime < 1)
+        if (_MoveTime <= 1)
         {
-            MoveTime += 0.1f;
+            _MoveTime += 0.1f;
         }
         Transform rect = Moves[id].GetComponent<Transform>();
-        if (!Chack) Vector3.Lerp(rect.position, Gole[id].position, MoveTime);
-        else if (Chack) Vector3.Lerp(rect.position, Gole2[id].position, MoveTime);
+        if (!Chack) Vector3.Lerp(rect.position, Gole[id].position, _MoveTime);
+        else if (Chack) Vector3.Lerp(rect.position, Gole2[id].position, _MoveTime);
     }
 }
