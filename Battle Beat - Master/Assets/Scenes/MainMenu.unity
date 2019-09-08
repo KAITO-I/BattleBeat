@@ -2371,7 +2371,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07b1f9ffb6673482fa330233e22731ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  es: {fileID: 1234410727}
   button0: {fileID: 0}
   moveTime: 0.7
   background: {fileID: 1131933888}

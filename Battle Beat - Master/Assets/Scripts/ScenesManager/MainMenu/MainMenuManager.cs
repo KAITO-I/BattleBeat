@@ -112,14 +112,16 @@ public class MainMenuManager : MonoBehaviour
             int selectedNum = this.selectedNum;
 
             float axisY = this.controller.GetAxis_Menu(ControllerManager.Axis.DpadY);
-            if (Mathf.Abs(axisY) > 0.5 && this.canPushDPadY) {
-                this.canPushDPadY = false;
-                if (axisY > 0) {
-                    selectedNum++;
-                    if (selectedNum > 2) selectedNum = 2;
-                } else {
-                    selectedNum--;
-                    if (selectedNum < 0) selectedNum = 0;
+            if (Mathf.Abs(axisY) > 0.5) {
+                if (this.canPushDPadY) {
+                    this.canPushDPadY = false;
+                    if (axisY > 0) {
+                        selectedNum++;
+                        if (selectedNum > 2) selectedNum = 2;
+                    } else {
+                        selectedNum--;
+                        if (selectedNum < 0) selectedNum = 0;
+                    }
                 }
             } else this.canPushDPadY = true;
 
