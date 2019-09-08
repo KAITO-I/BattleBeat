@@ -170,15 +170,10 @@ public class SelectCountroll : MonoBehaviour
     {
         if (loader.isLoading) return;
         SelectMove();
-        //SelectMoveDebug();
-        if (_oK_Move1)
-        {
-            ReadyBerMove(0, Player1_OK);
-        }
-        else if (_oK_Move2)
-        {
-            ReadyBerMove(1, Player2_OK);
-        }
+        //=========ここが新しいところ==============
+        ReadyBerMove(0, Player1_OK);
+        ReadyBerMove(1, Player2_OK);
+        //=========================================
         //Charaが二人とも選択されたとき
         if (Player1_OK&& Player2_OK)
         {
@@ -232,7 +227,7 @@ public class SelectCountroll : MonoBehaviour
             Description_2P.sprite = _void;
         }
 
-        //選択時//渡す値を決定する
+        #region=============ここからボタン操作======================
         if (_1Pcontroller.GetButtonDown(ControllerManager.Button.A))
         {
             Player1_OK = true;
@@ -313,119 +308,13 @@ public class SelectCountroll : MonoBehaviour
             //片方が入力しているとそのまま継続
             ReturnSlider.value = 0f;
         }
+        #endregion
         Text01.SetActive(Player1_OK);
         Text02.SetActive(Player2_OK);
         Description_1P.enabled = _1PDes;
         Description_2P.enabled = _2PDes;
     }
-
-    void SelectMoveDebug()
-    {
-        //1P処理
-        if (Input.GetKeyDown(KeyCode.S) && !Player1_OK)
-        {
-            CharaObj[_Player1].charaSelect(1, false);
-            _Player1++;
-            _Player1 = _Player1 % length;
-            CharaObj[_Player1].charaSelect(1, true);
-
-            Player01.sprite = CharaObj[_Player1].GetCharaSprite;
-            _player1Text.sprite = _ChataText[_Player1];
-
-            Player01_Obj.transform.localScale = new Vector3(_xSize[_Player1], _ySize[_Player1], 1);
-        }
-        else if (Input.GetKeyDown(KeyCode.W) && !Player1_OK)
-        {
-            CharaObj[_Player1].charaSelect(1, false);
-            _Player1--;
-            _Player1 = _Player1 % length;
-            if (_Player1 < 0) _Player1 = 3;
-            CharaObj[_Player1].charaSelect(1, true);
-
-            Player01.sprite = CharaObj[_Player1].GetCharaSprite;
-            _player1Text.sprite = _ChataText[_Player1];
-
-            Player01_Obj.transform.localScale = new Vector3(_xSize[_Player1], _ySize[_Player1], 1);
-        }
-        //2P処理
-        if (Input.GetKeyDown(KeyCode.DownArrow) && !Player2_OK)
-        {
-            CharaObj[_Player2].charaSelect(2, false);
-            _Player2++;
-            _Player2 = _Player2 % length;
-            CharaObj[_Player2].charaSelect(2, true);
-
-            Player02.sprite = CharaObj[_Player2].GetCharaSprite;
-            _player2Text.sprite = _ChataText[_Player2];
-            Player02_Obj.transform.localScale = new Vector3(_xSize[_Player2], _ySize[_Player2], 1);
-
-        }
-        else if (Input.GetKeyDown(KeyCode.UpArrow) && !Player2_OK)
-        {
-            CharaObj[_Player2].charaSelect(2, false);
-            _Player2--;
-            _Player2 = _Player2 % length;
-            if (_Player2 < 0) _Player2 = 3;
-            CharaObj[_Player2].charaSelect(2, true);
-
-            Player02.sprite = CharaObj[_Player2].GetCharaSprite;
-            _player2Text.sprite = _ChataText[_Player2];
-
-            Player02_Obj.transform.localScale = new Vector3(_xSize[_Player2], _ySize[_Player2], 1);
-        }
-
-        //選択時//渡す値を決定する
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            Player1_OK = true;
-        }
-        if (Input.GetKeyDown(KeyCode.RightShift))
-        {
-            Player2_OK = true;
-        }
-
-        //×ボタンの処理
-        //長押しで画面移動処理
-        if (Input.GetKey(KeyCode.LeftControl))
-        {
-            //キャラ選択時は選択を外す
-            if (Input.GetKeyDown(KeyCode.LeftControl))
-            {
-                Player1_OK = false;
-            }
-            float difference = Time.time - Player1_Time;
-            SetSilder(difference);
-            if (difference > ReturnTime)
-            {
-                Debug.Log("一つ前の画面へ");
-            }
-        }
-        if (Input.GetKey(KeyCode.RightControl))
-        {
-            //キャラ選択時は選択を外す
-            if (Input.GetKeyDown(KeyCode.RightControl))
-            {
-                Player2_OK = false;
-            }
-            float difference = Time.time - Player2_Time;
-            SetSilder(difference);
-            if (difference > ReturnTime)
-            {
-                Debug.Log("一つ前の画面へ");
-            }
-        }
-        //両方入力されていない
-        if (!Input.GetKey(KeyCode.RightControl) && !Input.GetKey(KeyCode.LeftControl))
-        {
-            Player1_Time = Time.time;
-            Player2_Time = Time.time;
-            //片方が入力しているとそのまま継続
-            ReturnSlider.value = 0f;
-        }
-        Text01.SetActive(Player1_OK);
-        Text02.SetActive(Player2_OK);
-    }
-
+    //上下移動のところ
     private int InputProcess(GameObject Player_Obj, Image _playerText, ControllerManager.Controller _controller, SpriteRenderer Player, int _Player, bool Player_OK,SpriteRenderer _Description, int _playerid)
     {
         if (!Player_OK)
@@ -469,7 +358,7 @@ public class SelectCountroll : MonoBehaviour
         if (t < ReturnSlider.value) return;
         ReturnSlider.value = t;
     }
-    void TextColorChange()
+    void TextColorChange()//ここでテキストのフェードイン、アウトをしている
     {
         //一定期間で表示・非表示
         time += Time.deltaTime * a;
@@ -480,44 +369,12 @@ public class SelectCountroll : MonoBehaviour
         text.color = color;
 
     }
-
+    //新しい関数
     void ReadyBerMove(int id,bool Chack)
     {
         RectTransform rect = Moves[id].GetComponent<RectTransform>();
-        float a = 0;
-        if (id == 0)
-        {
-            Vector3 pos = new Vector3(MoveTime * a, 0, 0);
-            rect.position += pos;
-
-            if (Chack && rect.position.x >= Gole[id].position.x)
-            {
-                _oK_Move1 = false;
-            }
-            else if (!Chack && rect.position.x <= Gole2[id].position.x)
-            {
-                _oK_Move1 = false;
-            }
-            else if (Chack) a = 1;
-            else if(!Chack) a = -1;
-        }
-        if (id == 1)
-        {
-            Vector3 pos = new Vector3(MoveTime * a, 0, 0);
-            rect.position += pos;
-            if (Chack) a = -1;
-            else if (!Chack) a = 1;
-
-            if (Chack && rect.position.x >= Gole[id].position.x)
-            {
-                _oK_Move2 = false;
-            }
-            else if (!Chack && rect.position.x <= Gole2[id].position.x)
-            {
-                _oK_Move2 = false;
-            }
-
-        }
+        if (!Chack) Vector3.Lerp(rect.position, Gole[id].position, MoveTime);
+        else if (Chack) Vector3.Lerp(rect.position, Gole2[id].position, MoveTime);
     }
 
 }
