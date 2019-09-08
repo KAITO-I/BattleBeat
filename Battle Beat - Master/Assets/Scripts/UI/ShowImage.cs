@@ -24,6 +24,10 @@ public class ShowImage : MonoBehaviour
 
     public void ShowImages(string[] textureNames,float time = 0.5f,float time2=0.1f)
     {
+        if (coroutine != null)
+        {
+            StopCoroutine(coroutine);
+        }
         displayTime = time;
         interval = time2;
         index = 0;
