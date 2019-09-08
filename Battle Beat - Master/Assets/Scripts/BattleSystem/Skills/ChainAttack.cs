@@ -61,7 +61,7 @@ public class ChainAttack : AttackItemBase
             if (RootPlayer.ChainAttackHit == true && RootPlayer.IsStuned != true)
             {
                 RootPlayer.StunTurn += 2;
-                Opponent.StunTurn += 3;
+                Opponent.StunTurn += 2;
                 Opponent.IsStuned = true;
                 RootPlayer.IsStuned = true;
             }

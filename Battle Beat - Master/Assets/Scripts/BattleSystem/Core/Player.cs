@@ -27,6 +27,13 @@ public class Player : MonoBehaviour
     //ボード上の座標（col、row）
     public Vector2Int Pos;
 
+    //エフェクト
+    List<Effekseer.EffekseerEmitter> emitters = new List<Effekseer.EffekseerEmitter>();
+
+    Effekseer.EffekseerEffectAsset damageAsset;
+
+    const string EffectPath = "Effekseer/";
+    const string damageEffectPath = "S_Hit_damege1";
     //溜め攻撃が自分で中断できないので、そのカウンター
     [SerializeField]
     protected int wait;
@@ -63,6 +70,10 @@ public class Player : MonoBehaviour
         //タメのリセット
         wait = 0;
         SetSp(Damage* DamageToSPFactor+GetSp());
+
+        Effekseer.EffekseerEmitter damageEffect = new Effekseer.EffekseerEmitter();
+        damageEffect.effectAsset = damageAsset;
+        emitters.Add()
     }
     //ダメージ計算関数群（プレーヤーが他のプレーヤーにダメージを与え時にバフやらを考慮して攻撃力の計算）
     public virtual float DamageCalc(float p1) { return p1; }
@@ -72,8 +83,6 @@ public class Player : MonoBehaviour
 
     
     public int[] CoolDownCount = new int[4];
-
-    List<Effekseer.EffekseerEmitter> emitters=new List<Effekseer.EffekseerEmitter>();
 
 
     public enum MoveComand
@@ -147,6 +156,9 @@ public class Player : MonoBehaviour
         wait = 0;
         nowAttack = null;
         StunTurn = 0;
+
+
+        damageAsset = Resources.Load<Effekseer.EffekseerEffectAsset>(EffectPath + damageEffectPath);
     }
     public virtual void TurnPreprocess() {
         if (wait > 0)
@@ -196,6 +208,15 @@ public class Player : MonoBehaviour
 
         //Spが時間経過で増やす
         SetSp(GetSp()+Time.deltaTime / OneGameTime * SpMax);
+
+        //effect終わり判定
+        foreach(var emitter in emitters)
+        {
+            if (!emitter.exists)
+            {
+                emitters.Remove(emitter);
+            }
+        }
     }
 
     public virtual void Turn_MovePhase()
