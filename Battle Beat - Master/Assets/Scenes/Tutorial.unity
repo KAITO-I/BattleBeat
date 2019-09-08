@@ -489,6 +489,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TutorialImages:
   - {fileID: 21300000, guid: d711bbfc2dbb3dc4ea271dda2b70a623, type: 3}
+  - {fileID: 21300000, guid: d711bbfc2dbb3dc4ea271dda2b70a623, type: 3}
+  - {fileID: 21300000, guid: d711bbfc2dbb3dc4ea271dda2b70a623, type: 3}
+  - {fileID: 21300000, guid: d711bbfc2dbb3dc4ea271dda2b70a623, type: 3}
+  - {fileID: 21300000, guid: d711bbfc2dbb3dc4ea271dda2b70a623, type: 3}
+  - {fileID: 21300000, guid: d711bbfc2dbb3dc4ea271dda2b70a623, type: 3}
   TutorialPanel: {fileID: 990360112}
   pageCount: 0
 --- !u!1 &1833670137

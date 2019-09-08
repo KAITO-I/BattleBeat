@@ -16,6 +16,9 @@ public class MainMenuManager : MonoBehaviour
     private MegaphoneTreeState mtState;
     private int selectedButtonNum;
 
+    [SerializeField]
+    private Button button0;
+
     // 画面の移動時間
     [SerializeField]
     private float moveTime;
