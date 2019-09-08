@@ -9,7 +9,8 @@ public class Setting : MonoBehaviour
         HOMI,
         KAGURA,
         ANA,
-        YUNIZON
+        YUNIZON,
+        BOSS
     }
     public bool testMode;
     public Chara p1;

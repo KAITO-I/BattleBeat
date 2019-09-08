@@ -28,25 +28,31 @@ public class BattleManager : MonoBehaviour
     }
     public void startGame()
     {
-        StartCoroutine(startGameLoop());
+        //StartCoroutine(startGameLoop());
+        MainGameCamera._instance.GameStart();
+        onGame = true;
+        AttackManager._instance.GetPlayer(1).onGame = true;
+        AttackManager._instance.GetPlayer(2).onGame = true;
+        timeSetter.startTimer();
+        rythmManager.StartRythm();
     }
 
     IEnumerator startGameLoop()
     {
         MainGameCamera._instance.GameStart();
-        ShowImage._instance.ShowImages(new string[] {  "void", "void", "void", "void" }, 0.7f, 0.1f);
+        ShowImage._instance.ShowImages(new string[] {  "void", "void", "void", "void" }, 0.00001f, 0.0f);
         while (true){
             if (ShowImage._instance.IsEnd())
             {
                 if (readyFlag == false)
                 {
-                    ShowImage._instance.ShowImages(new string[] { "READY" }, 3.1f, 0.1f);
+                    ShowImage._instance.ShowImages(new string[] { "READY" }, 0.00001f, 0f);
                     readyFlag = true;
                 }
                 else{
                     if (readyEndFlag == false)
                     {
-                        ShowImage._instance.ShowImages(new string[] { "3", "2", "1", "GO" }, 0.8f, 0f);
+                        ShowImage._instance.ShowImages(new string[] { "3", "2", "1", "GO" }, 0.00001f, 0f);
                         readyEndFlag = true;
                     }
                     else

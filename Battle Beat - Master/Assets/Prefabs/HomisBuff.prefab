@@ -47,5 +47,8 @@ MonoBehaviour:
   Area: []
   BoardSize: {x: 0, y: 0}
   CoolDown: 10
+  SpCost: 0
+  EffekseerEffectAsset: {fileID: 11400000, guid: 6db9cd2768f6c9846b7637ee9c1a562a,
+    type: 2}
   Power: 2
   Duration: 5

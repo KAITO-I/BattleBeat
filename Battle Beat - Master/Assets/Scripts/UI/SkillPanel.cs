@@ -9,6 +9,8 @@ public class SkillPanel : MonoBehaviour
     SKillGrid[] sKillGrids = new SKillGrid[4];
     [SerializeField]
     Player p;
+    [SerializeField]
+    UltimateSkillMask skillMask;
 
     public void Init(Setting.Chara chara, Player p)
     {
@@ -35,6 +37,14 @@ public class SkillPanel : MonoBehaviour
         {
             sKillGrids[i].SetTurn(p.CoolDownCount[i]);
             sKillGrids[i].SetOnUse(p.getWaitingAttack() == i);
+        }
+        if (p.Sp == 100f)
+        {
+            skillMask.setAvailable(false);
+        }
+        else
+        {
+            skillMask.setAvailable(true);
         }
     }
 }

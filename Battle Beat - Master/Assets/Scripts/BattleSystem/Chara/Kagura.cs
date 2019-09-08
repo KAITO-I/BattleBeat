@@ -33,7 +33,6 @@ public class Kagura : Player
 
     protected override void Attack_1()
     {
-        ClassicAttackProcess(0);
         var rlt = ClassicAttackProcess(0);
 
         if (rlt)

@@ -12,12 +12,10 @@ public class Rocket : BasicAttack
     }
     public override void Init(int row, int col, bool reverse, int root)
     {
+        base.Init(row, col, reverse, root);
         transform.position = BoardManager._instance.ToWorldPos(new Vector2Int(col, row));
         transform.position += new Vector3(0, 1f, 0);
         DamagePassed = false;
-        
-        base.Init(row, col, reverse, root);
-        
         canMakeDamage = true;//baseを上書きする
     }
     public override void TurnProcessPhase1_Main()
