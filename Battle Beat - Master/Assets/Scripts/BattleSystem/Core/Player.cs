@@ -73,6 +73,7 @@ public class Player : MonoBehaviour
 
         Effekseer.EffekseerEmitter damageEffect = new Effekseer.EffekseerEmitter();
         damageEffect.effectAsset = damageAsset;
+        damageEffect.Play();
     }
     //ダメージ計算関数群（プレーヤーが他のプレーヤーにダメージを与え時にバフやらを考慮して攻撃力の計算）
     public virtual float DamageCalc(float p1) { return p1; }
