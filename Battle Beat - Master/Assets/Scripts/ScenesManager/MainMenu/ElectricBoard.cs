@@ -20,6 +20,12 @@ namespace MainMenu
             this.Title.text       = md.Title;
             this.Description.text = md.Description;
         }
+
+        public void Set(string title, string description)
+        {
+            this.Title.text       = title;
+            this.Description.text = description;
+        }
     }
 
     [Serializable]
