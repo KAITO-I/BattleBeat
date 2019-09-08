@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: HOMI
   m_EditorClassIdentifier: 
   Name: "\u30DB\u30FC\u30DF\u30FC"
-  Avatar: {fileID: 21300000, guid: 823e22aad650b6d449152b804c4fe4af, type: 3}
+  Avatar: {fileID: 21300000, guid: f6330b388eee3f746a0acb79a9419f0c, type: 3}
   SkillIcons:
   - {fileID: 21300000, guid: 5b36853538652174ea2005d938b89550, type: 3}
   - {fileID: 21300000, guid: a3c2bd923d733084bad8dc265517dc8e, type: 3}

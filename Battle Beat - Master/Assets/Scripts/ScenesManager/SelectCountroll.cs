@@ -162,7 +162,8 @@ public class SelectCountroll : MonoBehaviour
                 if (!_boss[0])
                 {
                     Setting.p1c = (Setting.Chara)_Player1;
-                }else if (!_boss[1])
+                }
+                if (!_boss[1])
                 {
                     Setting.p2c = (Setting.Chara)_Player2;
                 }
@@ -170,7 +171,7 @@ public class SelectCountroll : MonoBehaviour
                 SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainGame);
                 Debug.Log("battleSceneへ");
             }
-            _ReadyBackGraund.SetActive(false);
+            _ReadyBackGraund.SetActive(true);
             Ready.SetActive(true);
             TextColorChange();
             return;
@@ -204,79 +205,76 @@ public class SelectCountroll : MonoBehaviour
             _player2Text.sprite = _void;
             Description_2P.sprite = _void;
         }
-        //ボタンの関数
-        ButtonMove(_1Pcontroller, Player1_OK, Player2_OK, _1PDes);
-        ButtonMove(_2Pcontroller, Player2_OK, Player1_OK, _2PDes);
 
-        ////選択時//渡す値を決定する
-        //if (_1Pcontroller.GetButtonDown(ControllerManager.Button.A))
-        //{
-        //    Player1_OK = true;
-        //    if (Player2_OK)
-        //    {
-        //        _soundManager.PlaySE(SEID.General_Siren);
-        //    }
-        //    else
-        //    {
-        //        _soundManager.PlaySE(SEID.General_Controller_Decision);
-        //    }
-        //}
-        //if (_2Pcontroller.GetButtonDown(ControllerManager.Button.A))
-        //{
-        //    Player2_OK = true;
-        //    if (Player1_OK)
-        //    {
-        //        _soundManager.PlaySE(SEID.General_Siren);
-        //    }
-        //    else
-        //    {
-        //        _soundManager.PlaySE(SEID.General_Controller_Decision);
-        //    }
+        //選択時//渡す値を決定する
+        if (_1Pcontroller.GetButtonDown(ControllerManager.Button.A))
+        {
+            Player1_OK = true;
+            if (Player2_OK)
+            {
+                _soundManager.PlaySE(SEID.General_Siren);
+            }
+            else
+            {
+                _soundManager.PlaySE(SEID.General_Controller_Decision);
+            }
+        }
+        if (_2Pcontroller.GetButtonDown(ControllerManager.Button.A))
+        {
+            Player2_OK = true;
+            if (Player1_OK)
+            {
+                _soundManager.PlaySE(SEID.General_Siren);
+            }
+            else
+            {
+                _soundManager.PlaySE(SEID.General_Controller_Decision);
+            }
 
-        //}
-        ////×ボタンの処理
-        ////長押しで画面移動処理
-        //if (_1Pcontroller.GetButton(ControllerManager.Button.B))
-        //{
-        //    //キャラ選択時は選択を外す
-        //    if (_1Pcontroller.GetButtonDown(ControllerManager.Button.B))
-        //    {
-        //          Player1_OK = false;
-        //          _soundManager.PlaySE(SEID.General_Controller_Back);
-        //    }
-        //    float difference = Time.time - Player1_Time;
-        //    SetSilder(difference);
-        //    if (difference > ReturnTime)
-        //    {
-        //        SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainMenu);
-        //    }
-        //}
-        //if (_2Pcontroller.GetButton(ControllerManager.Button.B))
-        //{
-        //    //キャラ選択時は選択を外す
-        //    if (_2Pcontroller.GetButtonDown(ControllerManager.Button.B))
-        //    {
-        //        Player2_OK = false;
-        //        _soundManager.PlaySE(SEID.General_Controller_Back);
-        //    }
-        //    float difference = Time.time - Player2_Time;
-        //    SetSilder(difference);
-        //    if (difference > ReturnTime)
-        //    {
-        //        SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainMenu);
-        //    }
-        //}
-        ////説明画面
-        //if (_1Pcontroller.GetButtonDown(ControllerManager.Button.X))
-        //{
-        //    if (_1PDes) _1PDes = false;
-        //    else _1PDes = true;
-        //}
-        //if (_2Pcontroller.GetButtonDown(ControllerManager.Button.X))
-        //{
-        //    if (_2PDes) _2PDes = false;
-        //    else _2PDes =true;
-        //}
+        }
+        //×ボタンの処理
+        //長押しで画面移動処理
+        if (_1Pcontroller.GetButton(ControllerManager.Button.B))
+        {
+            //キャラ選択時は選択を外す
+            if (_1Pcontroller.GetButtonDown(ControllerManager.Button.B))
+            {
+                Player1_OK = false;
+                _soundManager.PlaySE(SEID.General_Controller_Back);
+            }
+            float difference = Time.time - Player1_Time;
+            SetSilder(difference);
+            if (difference > ReturnTime)
+            {
+                SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainMenu);
+            }
+        }
+        if (_2Pcontroller.GetButton(ControllerManager.Button.B))
+        {
+            //キャラ選択時は選択を外す
+            if (_2Pcontroller.GetButtonDown(ControllerManager.Button.B))
+            {
+                Player2_OK = false;
+                _soundManager.PlaySE(SEID.General_Controller_Back);
+            }
+            float difference = Time.time - Player2_Time;
+            SetSilder(difference);
+            if (difference > ReturnTime)
+            {
+                SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainMenu);
+            }
+        }
+        //説明画面
+        if (_1Pcontroller.GetButtonDown(ControllerManager.Button.X))
+        {
+            if (_1PDes) _1PDes = false;
+            else _1PDes = true;
+        }
+        if (_2Pcontroller.GetButtonDown(ControllerManager.Button.X))
+        {
+            if (_2PDes) _2PDes = false;
+            else _2PDes = true;
+        }
         //両方入力されていない
         if (!_1Pcontroller.GetButton(ControllerManager.Button.B) && !_2Pcontroller.GetButton(ControllerManager.Button.B))
         {
@@ -436,42 +434,6 @@ public class SelectCountroll : MonoBehaviour
         return _Player;
     }
 
-    void ButtonMove(ControllerManager.Controller _playercontroller, bool _Mychack,bool _otherchack,bool _MyDes)
-    {
-        if (_playercontroller.GetButtonDown(ControllerManager.Button.A))
-        {
-            _Mychack = true;
-            if (_otherchack)
-            {
-                _soundManager.PlaySE(SEID.General_Siren);
-            }
-            else
-            {
-                _soundManager.PlaySE(SEID.General_Controller_Decision);
-            }
-        }
-        if (_playercontroller.GetButton(ControllerManager.Button.B))
-        {
-            //キャラ選択時は選択を外す
-            if (_playercontroller.GetButtonDown(ControllerManager.Button.B))
-            {
-                _Mychack = false;
-                _soundManager.PlaySE(SEID.General_Controller_Back);
-            }
-            float difference = Time.time - Player1_Time;
-            SetSilder(difference);
-            if (difference > ReturnTime)
-            {
-                SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainMenu);
-            }
-        }
-        //説明画面
-        if (_playercontroller.GetButtonDown(ControllerManager.Button.X))
-        {
-            if (_MyDes) _MyDes = false;
-            else _MyDes = true;
-        }
-    }
     void SetSilder(float t)
     {
         if (t < ReturnSlider.value) return;

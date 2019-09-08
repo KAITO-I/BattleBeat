@@ -7,6 +7,7 @@ public class ResultManager : MonoBehaviour
 {
     ControllerManager.Controller _1Pcontroller = ControllerManager.Instance.Player1;
     ControllerManager.Controller _2Pcontroller = ControllerManager.Instance.Player2;
+    SoundManager _soundManager = SoundManager.Instance;
 
 
     enum ResultState
@@ -52,11 +53,14 @@ public class ResultManager : MonoBehaviour
     [Range(0.001f, 0.3f)]
     float intervalForCharacterDisplay = 0.05f;  // 1文字の表示にかかる時間
     public float MoveTime;
-    float _yPos = -91;
+    float _yPos = -91;//アナの位置直し
+    float _xPos = -255;//ホーミーの位置直し
+
 
     //キャラの位置調節に必要
     float[] _xSize =
     {
+        0f,
         1.2f,
         1f,
         1.2f,
@@ -64,7 +68,8 @@ public class ResultManager : MonoBehaviour
     };
     float[] _ySize =
     {
-        1.3f,
+        0f,
+        0.8f,
         1.3f,
         1.2f,
         1f
@@ -80,7 +85,7 @@ public class ResultManager : MonoBehaviour
         {
             WinCharaID = (int)Setting.p1c + 1;
         }
-        else if(WinCharaID == 2)
+        else if(WinPlayerID == 2)
         {
             WinCharaID = (int)Setting.p2c + 1;
         }
@@ -109,6 +114,12 @@ public class ResultManager : MonoBehaviour
             _vec.y += _yPos;
             CharaImg.GetComponent<RectTransform>().position = _vec;
         }
+        else if (WinCharaID == 1)
+        {
+            Vector3 _vec = rect.position;
+            _vec.x += _xPos;
+            CharaImg.GetComponent<RectTransform>().position = _vec;
+        }
         rect.transform.localScale = new Vector3(_xSize[WinCharaID], _ySize[WinCharaID], 1f);
 
         //背景
@@ -127,6 +138,8 @@ public class ResultManager : MonoBehaviour
 
         WordPos.SetActive(false);
         state = ResultState.BackDis;
+
+        _soundManager.PlayBGM(BGMID.Result);
     }
 
     // Update is called once per frame
@@ -137,6 +150,7 @@ public class ResultManager : MonoBehaviour
             case ResultState.BackDis:
                 BlackImg.transform.position += new Vector3(150f, 0f, 0f);
                 if (BlackImg.transform.position.x > 3000) state = ResultState.TextMove;
+                _soundManager.PlaySE(SEID.Game_Character_General_Move);
                 break;
             case ResultState.TextMove:
                 TextMove();
@@ -172,10 +186,12 @@ public class ResultManager : MonoBehaviour
         if (_1Pcontroller.GetButtonDown(ControllerManager.Button.A)|| _2Pcontroller.GetButtonDown(ControllerManager.Button.A))
         {
             SceneLoader.Instance.LoadScene(SceneLoader.Scenes.CharacterSelect);
+            _soundManager.PlaySE(SEID.General_Controller_Decision);
         }
         else if (_1Pcontroller.GetButtonDown(ControllerManager.Button.B) || _2Pcontroller.GetButtonDown(ControllerManager.Button.B))
         {
             SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainMenu);
+            _soundManager.PlaySE(SEID.General_Controller_Decision);
         }
     }
     //キャラクターコメント表示
@@ -254,6 +270,7 @@ public class ResultManager : MonoBehaviour
                 if (vec[flag].x <= Gole[flag].position.x)
                 {
                     flag++;
+                    _soundManager.PlaySE(SEID.Game_Character_General_Move);
                 }
                 break;
             case 1:
@@ -262,6 +279,7 @@ public class ResultManager : MonoBehaviour
                 if (vec[flag].x <= Gole[flag].position.x)
                 {
                     flag++;
+                    _soundManager.PlaySE(SEID.Game_Character_General_Move);
                 }
                 break;
             case 2:
