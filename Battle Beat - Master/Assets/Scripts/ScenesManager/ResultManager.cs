@@ -53,7 +53,7 @@ public class ResultManager : MonoBehaviour
     [Range(0.001f, 0.3f)]
     float intervalForCharacterDisplay = 0.05f;  // 1文字の表示にかかる時間
     public float MoveTime;
-    float _yPos = -91;//アナの位置直し
+    float _yPos = -200;//アナの位置直し
     float _xPos = -300f;
 
     //キャラの位置調節に必要
