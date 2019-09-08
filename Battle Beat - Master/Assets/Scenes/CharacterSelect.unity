@@ -892,7 +892,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 109.1001, y: -13}
+  m_AnchoredPosition: {x: 109.100586, y: -13}
   m_SizeDelta: {x: 200, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &412725580
@@ -1127,7 +1127,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 102.1001, y: -100.1001}
+  m_AnchoredPosition: {x: 102.100586, y: -100.1001}
   m_SizeDelta: {x: 200, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &503409241
@@ -2789,7 +2789,7 @@ MonoBehaviour:
   Commands: 0000000001000000040000000500000007000000
   _boss_Sprite: {fileID: 21300000, guid: 92c95ff9e1d57e3498cd0f7dfe92a005, type: 3}
   _void: {fileID: 21300000, guid: 9ca0c66b97421054daf20b8a6431db71, type: 3}
-  Ready: {fileID: 468595717}
+  _Ready: {fileID: 0}
   _ChataText:
   - {fileID: 21300000, guid: 0e549c8be99a4474b9a448c4de5bae71, type: 3}
   - {fileID: 21300000, guid: 97edc4613de313f43b40fc4a0234c8ab, type: 3}
@@ -2806,7 +2806,6 @@ MonoBehaviour:
   - {fileID: 1673245589}
   - {fileID: 83256378}
   interval: 0.5
-  MoveTime: 0.6
 --- !u!4 &1356310773
 Transform:
   m_ObjectHideFlags: 0
