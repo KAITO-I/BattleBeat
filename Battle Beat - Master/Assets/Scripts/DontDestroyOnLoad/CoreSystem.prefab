@@ -818,7 +818,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: cddb5a35880534021b440c1278dbbec7, type: 3}
   - {fileID: 8300000, guid: 1cca15aa1b32c45dd9be7d289fc930c7, type: 3}
   - {fileID: 8300000, guid: e783d535ab65b408e9f55726f4f479a8, type: 3}
-  canPlaySECount: 5
+  canPlaySECount: 10
 --- !u!1 &8222755677167755527
 GameObject:
   m_ObjectHideFlags: 0

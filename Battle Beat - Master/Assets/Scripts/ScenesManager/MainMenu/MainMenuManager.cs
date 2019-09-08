@@ -109,6 +109,7 @@ public class MainMenuManager : MonoBehaviour
             // 看板切り替え
             int selectedButtonNum = int.Parse(es.currentSelectedGameObject.name);
             if (this.selectedButtonNum != selectedButtonNum) {
+                SoundManager.Instance.PlaySE(SEID.General_Controller_Select);
                 if (this.mtState == MegaphoneTreeState.Left) {
                     this.mtLeftSigns[this.selectedButtonNum].SignUnselected();
                     this.selectedButtonNum = selectedButtonNum;
@@ -126,21 +127,32 @@ public class MainMenuManager : MonoBehaviour
             if (this.mtState == MegaphoneTreeState.Left)
             {
                 // A
-                if (this.controller.GetButtonDown_Menu(ControllerManager.Button.A)) {
-                    switch (this.selectedButtonNum) {
+                if (this.controller.GetButtonDown_Menu(ControllerManager.Button.A))
+                {
+                    SoundManager.Instance.PlaySE(SEID.General_Controller_Decision);
+                    switch (this.selectedButtonNum)
+                    {
                         case 0: StartCoroutine(LeftToRight()); break;
                         case 1: break;
                         case 2: break;
                     }
                 }
                 // B
-                else if (this.controller.GetButtonDown_Menu(ControllerManager.Button.B)) SceneLoader.Instance.LoadScene(SceneLoader.Scenes.Title);
+                else if (this.controller.GetButtonDown_Menu(ControllerManager.Button.B))
+                {
+                    SoundManager.Instance.PlaySE(SEID.General_Controller_Back);
+                    SceneLoader.Instance.LoadScene(SceneLoader.Scenes.Title);
+                }
             }
             // 右UI
-            else {
+            else
+            {
                 // A
-                if (this.controller.GetButtonDown_Menu(ControllerManager.Button.A)) {
-                    switch (this.selectedButtonNum) {
+                if (this.controller.GetButtonDown_Menu(ControllerManager.Button.A))
+                {
+                    SoundManager.Instance.PlaySE(SEID.General_Controller_Decision);
+                    switch (this.selectedButtonNum)
+                    {
                         case 0: SceneLoader.Instance.LoadScene(SceneLoader.Scenes.CharacterSelect); break;
                         case 1: break;
                         case 2: break;
@@ -158,6 +170,8 @@ public class MainMenuManager : MonoBehaviour
         this.es.enabled = false;
 
         this.mtState = MegaphoneTreeState.Changing;
+
+        this.electricBoard.Set("", "");
 
         foreach (SignOverlay overlay in this.mtLeftSigns) overlay.SignUnselected();
         
@@ -204,6 +218,8 @@ public class MainMenuManager : MonoBehaviour
         this.mtState = MegaphoneTreeState.Right;
         this.selectedButtonNum = 0;
 
+        this.electricBoard.Set(this.mtRightModeDescriptions[0]);
+
         for (int i = 0; i < 3; i++) {
             if (i == 0) this.mtRightSigns[i].SignSelected();
             else        this.mtRightSigns[i].SignUnselected();
@@ -212,10 +228,14 @@ public class MainMenuManager : MonoBehaviour
 
     private IEnumerator RightToLeft()
     {
+        SoundManager.Instance.PlaySE(SEID.General_Controller_Back);
+
         // 開始
         this.es.enabled = false;
 
         this.mtState = MegaphoneTreeState.Changing;
+
+        this.electricBoard.Set("", "");
 
         foreach (SignOverlay overlay in this.mtRightSigns) overlay.SignUnselected();
         
@@ -261,6 +281,8 @@ public class MainMenuManager : MonoBehaviour
 
         this.mtState = MegaphoneTreeState.Left;
         this.selectedButtonNum = 0;
+
+        this.electricBoard.Set(this.mtLeftModeDescriptions[0]);
 
         for (int i = 0; i < 3; i++) {
             if (i == 0) this.mtLeftSigns[i].SignSelected();

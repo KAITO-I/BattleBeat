@@ -109,13 +109,13 @@ public class SceneLoader : MonoBehaviour
 
         // ロード文字初期化
         this.loadingText.text = this.loadingTextMsg;
+        this.loadingText.color = new Color(this.loadingText.color.r, this.loadingText.color.g, this.loadingText.color.b, 0f);
 
         //===== タイトル以外への遷移 =====
         if (target != Scenes.Title)
         {
             loadingObjTF.position = new Vector3(SceneLoader.canvasCenterX, SceneLoader.canvasCenterY + Screen.height);
             this.pressButtonText.color = new Color(this.pressButtonText.color.r, this.pressButtonText.color.g, this.pressButtonText.color.b, 0f);
-            this.loadingText.color = new Color(this.loadingText.color.r, this.loadingText.color.g, this.loadingText.color.b, title ? 0f : 1f);
             this.loadingGauge.fillAmount = 0f;
 
             //===== シャッター降下 =====
@@ -135,6 +135,7 @@ public class SceneLoader : MonoBehaviour
             SoundManager.Instance.PlaySE(SEID.Shutter_Close);
             loadingObjTF.position = new Vector3(SceneLoader.canvasCenterX, SceneLoader.canvasCenterY);
 
+            // タイトルならLoading文字表示して待機
             if (title)
             {
                 this.pressButtonText.GetComponent<Animation>().Play();
@@ -142,6 +143,7 @@ public class SceneLoader : MonoBehaviour
                 {
                     if (Input.anyKeyDown)
                     {
+                        SoundManager.Instance.PlaySE(SEID.General_Controller_Decision);
                         this.pressButtonText.GetComponent<Animation>().Stop();
                         this.pressButtonText.color = new Color(this.pressButtonText.color.r, this.pressButtonText.color.g, this.pressButtonText.color.b, 0f);
                         break;
@@ -170,6 +172,7 @@ public class SceneLoader : MonoBehaviour
             // StopCoroutine(loadingTextAnim);
 
             this.loadingText.color = new Color(this.loadingText.color.r, this.loadingText.color.g, this.loadingText.color.b, 0f);
+            this.loadingGauge.fillAmount = 0f;
             async.allowSceneActivation = true;
 
             yield return 0;
