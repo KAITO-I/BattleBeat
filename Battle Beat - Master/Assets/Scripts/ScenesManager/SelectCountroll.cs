@@ -246,6 +246,7 @@ public class SelectCountroll : MonoBehaviour
             SetSilder(difference);
             if (difference > ReturnTime)
             {
+                _soundManager.PlaySE(SEID.General_Controller_Back);
                 SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainMenu);
             }
         }
