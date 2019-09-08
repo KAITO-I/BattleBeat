@@ -63,6 +63,7 @@ MonoBehaviour:
   BoardSize: {x: 3, y: 6}
   CoolDown: 0
   SpCost: 100
+  EffekseerEffectAsset: {fileID: 0}
   DamageFactor: 4
   BaseDamage: 5
   Delay: 3
