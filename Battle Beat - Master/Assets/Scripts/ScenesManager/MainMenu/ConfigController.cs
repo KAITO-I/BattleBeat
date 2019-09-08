@@ -33,7 +33,7 @@ public class ConfigController : MonoBehaviour
     {
         switch (int.Parse(this.es.currentSelectedGameObject.name))
         {
-            case 0:
+            case 0:break;
         }
     }
 }
