@@ -32,8 +32,11 @@ public class SelectCountroll : MonoBehaviour
     GameObject _ReadyBackGraund;
     [SerializeField]
     Text text;
+    [SerializeField]
+    GameObject[] Moves = new GameObject[2];
 
-
+    RectTransform[] Gole = new RectTransform[2];
+    RectTransform[] Gole2 = new RectTransform[2];
     List<CharaSelectObj> CharaObj;
     int length;
 
@@ -58,6 +61,8 @@ public class SelectCountroll : MonoBehaviour
     float time;
     public float interval;
     float a = 1;
+    public float MoveTime;
+    bool _oK_Move1, _oK_Move2;
 
     //Boss変数
     bool[] _boss=new bool[2] {false,false};
@@ -111,6 +116,18 @@ public class SelectCountroll : MonoBehaviour
         {
             c.Init();
         }
+        for(int i = 0; i < 2; ++i)
+        {
+            Gole[i] = Moves[i].GetComponent<RectTransform>();
+            Gole[i].position = Moves[i].transform.position;
+        }
+        Moves[0].transform.position +=new Vector3(-500f,0,0);
+        Moves[1].transform.position +=new Vector3(500f,0,0);
+        for(int i = 0; i < 2; ++i)
+        {
+            Gole2[i] = Moves[i].GetComponent<RectTransform>();
+            Gole2[i].position = Moves[i].transform.position;
+        }
 
         _Player1 = _Player2 = 0;
         Player1_OK = Player2_OK = false;
@@ -145,6 +162,7 @@ public class SelectCountroll : MonoBehaviour
         Color color = text.color;
         color.a = 0;
         text.color = color;
+
     }
 
     // Update is called once per frame
@@ -153,6 +171,14 @@ public class SelectCountroll : MonoBehaviour
         if (loader.isLoading) return;
         SelectMove();
         //SelectMoveDebug();
+        if (_oK_Move1)
+        {
+            ReadyBerMove(0, Player1_OK);
+        }
+        else if (_oK_Move2)
+        {
+            ReadyBerMove(1, Player2_OK);
+        }
         //Charaが二人とも選択されたとき
         if (Player1_OK&& Player2_OK)
         {
@@ -210,6 +236,8 @@ public class SelectCountroll : MonoBehaviour
         if (_1Pcontroller.GetButtonDown(ControllerManager.Button.A))
         {
             Player1_OK = true;
+            _oK_Move1 = true;
+
             if (Player2_OK)
             {
                 _soundManager.PlaySE(SEID.General_Siren);
@@ -222,6 +250,7 @@ public class SelectCountroll : MonoBehaviour
         if (_2Pcontroller.GetButtonDown(ControllerManager.Button.A))
         {
             Player2_OK = true;
+            _oK_Move2 = true;
             if (Player1_OK)
             {
                 _soundManager.PlaySE(SEID.General_Siren);
@@ -256,7 +285,7 @@ public class SelectCountroll : MonoBehaviour
             if (_2Pcontroller.GetButtonDown(ControllerManager.Button.B))
             {
                 Player2_OK = false;
-                _soundManager.PlaySE(SEID.General_Controller_Back);
+                    _soundManager.PlaySE(SEID.General_Controller_Back);
             }
             float difference = Time.time - Player2_Time;
             SetSilder(difference);
@@ -451,4 +480,44 @@ public class SelectCountroll : MonoBehaviour
         text.color = color;
 
     }
+
+    void ReadyBerMove(int id,bool Chack)
+    {
+        RectTransform rect = Moves[id].GetComponent<RectTransform>();
+        float a = 0;
+        if (id == 0)
+        {
+            Vector3 pos = new Vector3(MoveTime * a, 0, 0);
+            rect.position += pos;
+
+            if (Chack && rect.position.x >= Gole[id].position.x)
+            {
+                _oK_Move1 = false;
+            }
+            else if (!Chack && rect.position.x <= Gole2[id].position.x)
+            {
+                _oK_Move1 = false;
+            }
+            else if (Chack) a = 1;
+            else if(!Chack) a = -1;
+        }
+        if (id == 1)
+        {
+            Vector3 pos = new Vector3(MoveTime * a, 0, 0);
+            rect.position += pos;
+            if (Chack) a = -1;
+            else if (!Chack) a = 1;
+
+            if (Chack && rect.position.x >= Gole[id].position.x)
+            {
+                _oK_Move2 = false;
+            }
+            else if (!Chack && rect.position.x <= Gole2[id].position.x)
+            {
+                _oK_Move2 = false;
+            }
+
+        }
+    }
+
 }

@@ -80,8 +80,8 @@ public class Setting : MonoBehaviour
         p2p.transform.rotation = Quaternion.Euler(0, -90, 0);
         p1p.Init();
         p2p.Init();
-        p1p.controller = ControllerManager.Instance.Player1;
-        p2p.controller = ControllerManager.Instance.Player2;
+        //p1p.controller = ControllerManager.Instance.Player1;
+        //p2p.controller = ControllerManager.Instance.Player2;
         AttackManager._instance.SetPlayers(p1p, p2p);
 
         //Set Gauge

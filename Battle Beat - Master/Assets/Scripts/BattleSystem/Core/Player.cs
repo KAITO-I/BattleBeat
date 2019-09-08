@@ -28,12 +28,7 @@ public class Player : MonoBehaviour
     public Vector2Int Pos;
 
     //エフェクト
-    List<Effekseer.EffekseerEmitter> emitters = new List<Effekseer.EffekseerEmitter>();
-
-    Effekseer.EffekseerEffectAsset damageAsset;
-
-    const string EffectPath = "Effekseer/";
-    const string damageEffectPath = "S_Hit_damege1";
+    BaseEffect baseEffect = new BaseEffect();
     //溜め攻撃が自分で中断できないので、そのカウンター
     [SerializeField]
     protected int wait;
@@ -71,9 +66,8 @@ public class Player : MonoBehaviour
         wait = 0;
         SetSp(Damage* DamageToSPFactor+GetSp());
 
-        Effekseer.EffekseerEmitter damageEffect = new Effekseer.EffekseerEmitter();
-        damageEffect.effectAsset = damageAsset;
-        damageEffect.Play();
+        //エフェクト
+        baseEffect.NewAndPlay(gameObject, BaseEffect.Effect.DAMAGE);
     }
     //ダメージ計算関数群（プレーヤーが他のプレーヤーにダメージを与え時にバフやらを考慮して攻撃力の計算）
     public virtual float DamageCalc(float p1) { return p1; }
@@ -158,7 +152,7 @@ public class Player : MonoBehaviour
         StunTurn = 0;
 
 
-        damageAsset = Resources.Load<Effekseer.EffekseerEffectAsset>(EffectPath + damageEffectPath);
+       
     }
     public virtual void TurnPreprocess() {
         if (wait > 0)
@@ -187,36 +181,30 @@ public class Player : MonoBehaviour
         //プレーヤー入力
         if (canInput&&wait==0)
         {
-            //if (Input.GetKeyDown(keySets.LeftKey)) input = MoveComand.Left;
-            //else if (Input.GetKeyDown(keySets.RightKey)) input = MoveComand.Right;
-            //else if (Input.GetKeyDown(keySets.UpKey)) input = MoveComand.Up;
-            //else if (Input.GetKeyDown(keySets.DownKey)) input = MoveComand.Down;
-            //else if (Input.GetKeyDown(keySets.Attack_1Key)) input = MoveComand.Attack_1;
-            //else if (Input.GetKeyDown(keySets.Attack_2Key)) input = MoveComand.Attack_2;
-            //else if (Input.GetKeyDown(keySets.Attack_3Key)) input = MoveComand.Attack_3;
-            //else if (Input.GetKeyDown(keySets.Attack_4Key)) input = MoveComand.Attack_4;
-            if (input != MoveComand.None) canInput = false;
-            else if (controller.GetAxis(ControllerManager.Axis.DpadX) < 0) input = MoveComand.Left;
-            else if (controller.GetAxis(ControllerManager.Axis.DpadX) > 0) input = MoveComand.Right;
-            else if (controller.GetAxis(ControllerManager.Axis.DpadY) > 0) input = MoveComand.Up;
-            else if (controller.GetAxis(ControllerManager.Axis.DpadY) < 0) input = MoveComand.Down;
-            else if (controller.GetButtonDown(ControllerManager.Button.Y)) input = MoveComand.Attack_1;
-            else if (controller.GetButtonDown(ControllerManager.Button.X)) input = MoveComand.Attack_2;
-            else if (controller.GetButtonDown(ControllerManager.Button.A)) input = MoveComand.Attack_3;
-            else if (controller.GetButtonDown(ControllerManager.Button.B)) input = MoveComand.Attack_4;
+            if (Input.GetKeyDown(keySets.LeftKey)) input = MoveComand.Left;
+            else if (Input.GetKeyDown(keySets.RightKey)) input = MoveComand.Right;
+            else if (Input.GetKeyDown(keySets.UpKey)) input = MoveComand.Up;
+            else if (Input.GetKeyDown(keySets.DownKey)) input = MoveComand.Down;
+            else if (Input.GetKeyDown(keySets.Attack_1Key)) input = MoveComand.Attack_1;
+            else if (Input.GetKeyDown(keySets.Attack_2Key)) input = MoveComand.Attack_2;
+            else if (Input.GetKeyDown(keySets.Attack_3Key)) input = MoveComand.Attack_3;
+            else if (Input.GetKeyDown(keySets.Attack_4Key)) input = MoveComand.Attack_4;
+            //if (input != MoveComand.None) canInput = false;
+            //else if (controller.GetAxis(ControllerManager.Axis.DpadX) < 0) input = MoveComand.Left;
+            //else if (controller.GetAxis(ControllerManager.Axis.DpadX) > 0) input = MoveComand.Right;
+            //else if (controller.GetAxis(ControllerManager.Axis.DpadY) > 0) input = MoveComand.Up;
+            //else if (controller.GetAxis(ControllerManager.Axis.DpadY) < 0) input = MoveComand.Down;
+            //else if (controller.GetButtonDown(ControllerManager.Button.Y)) input = MoveComand.Attack_1;
+            //else if (controller.GetButtonDown(ControllerManager.Button.X)) input = MoveComand.Attack_2;
+            //else if (controller.GetButtonDown(ControllerManager.Button.A)) input = MoveComand.Attack_3;
+            //else if (controller.GetButtonDown(ControllerManager.Button.B)) input = MoveComand.Attack_4;
         }
 
         //Spが時間経過で増やす
         SetSp(GetSp()+Time.deltaTime / OneGameTime * SpMax);
 
         //effect終わり判定
-        foreach(var emitter in emitters)
-        {
-            if (!emitter.exists)
-            {
-                emitters.Remove(emitter);
-            }
-        }
+        baseEffect.CheckAndDestroy();
     }
 
     public virtual void Turn_MovePhase()
@@ -268,6 +256,12 @@ public class Player : MonoBehaviour
                 case MoveComand.None:
                     break;
             }
+        }
+
+        //wait Effect
+        if (wait > 0)
+        {
+            baseEffect.NewAndPlay(gameObject, BaseEffect.Effect.WAIT);
         }
     }
 
