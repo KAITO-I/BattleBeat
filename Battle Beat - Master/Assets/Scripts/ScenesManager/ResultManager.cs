@@ -54,14 +54,13 @@ public class ResultManager : MonoBehaviour
     float intervalForCharacterDisplay = 0.05f;  // 1文字の表示にかかる時間
     public float MoveTime;
     float _yPos = -91;//アナの位置直し
-    float _xPos = -255;//ホーミーの位置直し
 
 
     //キャラの位置調節に必要
     float[] _xSize =
     {
         0f,
-        1.2f,
+        1.4f,
         1f,
         1.2f,
         1f
@@ -112,12 +111,6 @@ public class ResultManager : MonoBehaviour
         {
             Vector3 _vec = rect.position;
             _vec.y += _yPos;
-            CharaImg.GetComponent<RectTransform>().position = _vec;
-        }
-        else if (WinCharaID == 1)
-        {
-            Vector3 _vec = rect.position;
-            _vec.x += _xPos;
             CharaImg.GetComponent<RectTransform>().position = _vec;
         }
         rect.transform.localScale = new Vector3(_xSize[WinCharaID], _ySize[WinCharaID], 1f);

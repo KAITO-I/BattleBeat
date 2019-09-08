@@ -11,7 +11,6 @@ using UnityEngine;
 // BGMで使う音源のリスト
 public enum BGMID {
     None = -1,
-    Title,
     MainMenu,
     CharacterSelect,
     InGame,

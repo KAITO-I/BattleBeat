@@ -10,7 +10,7 @@ public class SoundEffect : MonoBehaviour {
     public void Play(AudioClip clip) {
         this.audio.clip = clip;
         this.audio.Play();
-        Invoke("EndCheck", clip.length);
+        Invoke("EndPlay", clip.length);
     }
 
     private void EndPlay() {
