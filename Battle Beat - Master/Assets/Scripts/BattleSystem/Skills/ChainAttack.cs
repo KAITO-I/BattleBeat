@@ -101,10 +101,12 @@ public class ChainAttack : AttackItemBase
     public override void DamegePhase()
     {
         int OpponentID = 3 - RootID;
-
-        if (CheckArea(Opponent.Pos, OpponentID, Area))
+        if (turn == 1)
         {
-            PassDamage(RootPlayer);
+            if (CheckArea(Opponent.Pos, OpponentID, Area))
+            {
+                PassDamage(Opponent);
+            }
         }
     }
     public override bool isEnd()
