@@ -45,10 +45,7 @@ public class ResultManager : MonoBehaviour
     //勝利したほうの情報を受け取る
     [SerializeField]
     int WinPlayerID;
-    [SerializeField]
-    int WinCharaID;
-    [SerializeField]
-    int _loseCharaId;
+
     [SerializeField]
     [Range(0.001f, 0.3f)]
     float intervalForCharacterDisplay = 0.05f;  // 1文字の表示にかかる時間
@@ -56,10 +53,11 @@ public class ResultManager : MonoBehaviour
     float _yPos = -200;//アナの位置直し
     float _xPos = -300f;
 
+    Setting.Chara winChara = Setting.Chara.HOMI;
+    Setting.Chara loseChara = Setting.Chara.HOMI;
     //キャラの位置調節に必要
     float[] _xSize =
     {
-        0f,
         1.4f,
         1f,
         1.2f,
@@ -67,7 +65,6 @@ public class ResultManager : MonoBehaviour
     };
     float[] _ySize =
     {
-        0f,
         0.8f,
         1.3f,
         1.2f,
@@ -80,17 +77,17 @@ public class ResultManager : MonoBehaviour
         //プレイヤー情報
         WinPlayerID = (int)AttackManager.winner;
         //_loseCharaId = 3 - WinPlayerID;
+        
         if (WinPlayerID == 1)
         {
-            WinCharaID = (int)Setting.p1c + 1;
-            _loseCharaId = (int)Setting.p2c + 1;
+            winChara = Setting.p1c;
+            loseChara = Setting.p2c;
         }
         else if(WinPlayerID == 2)
         {
-            WinCharaID = (int)Setting.p2c + 1;
-            _loseCharaId = (int)Setting.p1c + 1;
+            winChara = Setting.p2c;
+            loseChara = Setting.p1c;
         }
-        Setting.Chara winChara = (Setting.Chara) (WinCharaID-1);
         string path = "CharacterData/" + winChara.ToString();
         CharaData winnerData = Resources.Load<CharaData>(path);
         if (winnerData.backGraund == null)
@@ -112,19 +109,19 @@ public class ResultManager : MonoBehaviour
         }
         //アナのみ立ち絵位置修正
         RectTransform rect = CharaImg.GetComponent<RectTransform>();
-        if (WinCharaID == 3)
+        if (winChara == Setting.Chara.ANA)
         {
             Vector3 _vec = rect.position;
             _vec.y += _yPos;
             CharaImg.GetComponent<RectTransform>().position = _vec;
         }
-        else if (WinCharaID == 1)
+        else if (winChara == Setting.Chara.HOMI)
         {
             Vector3 _vec = rect.position;
             _vec.x += _xPos;
             CharaImg.GetComponent<RectTransform>().position = _vec;
         }
-        rect.transform.localScale = new Vector3(_xSize[WinCharaID], _ySize[WinCharaID], 1f);
+        rect.transform.localScale = new Vector3(_xSize[(int)winChara], _ySize[(int)winChara], 1f);
 
         //背景
         BackGraund.sprite = winnerData.backGraund;
@@ -220,16 +217,16 @@ public class ResultManager : MonoBehaviour
     string CharaWoadInstance(CharaData data)
     {
         string _charaText = null;
-        if (WinPlayerID == _loseCharaId)
+        if (winChara == loseChara)
         {
             int _index = Random.Range(0, 2);
             switch (_index)
             {
                 case 0:
-                    _charaText = data.Serifs[WinPlayerID - 1];
+                    _charaText = data.Serifs[(int)winChara];
                     break;
                 case 1:
-                    _charaText = data.Serifs[4];
+                    _charaText = data.Serifs[data.Serifs.Length-1];
                     break;
             }
         }
@@ -239,13 +236,13 @@ public class ResultManager : MonoBehaviour
             switch (_index)
             {
                 case 0:
-                    _charaText = data.Serifs[_loseCharaId - 1];
+                    _charaText = data.Serifs[(int)loseChara];
                     break;
                 case 1:
-                    _charaText = data.Serifs[WinPlayerID - 1];
+                    _charaText = data.Serifs[(int)winChara];
                     break;
                 case 2:
-                    _charaText = data.Serifs[4];
+                    _charaText = data.Serifs[data.Serifs.Length - 1];
                     break;
             }
         }
