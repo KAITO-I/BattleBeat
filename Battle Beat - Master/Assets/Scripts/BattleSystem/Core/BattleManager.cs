@@ -199,7 +199,7 @@ public class BattleManager : MonoBehaviour
         }
         if (AttackManager._instance.GetWinner() == 3)
         {
-            SceneLoader.Instance.LoadScene(SceneLoader.Scenes.Title);
+            SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainMenu);
         }
         else
         {
