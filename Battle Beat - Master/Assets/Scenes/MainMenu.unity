@@ -2042,7 +2042,7 @@ MonoBehaviour:
   creditImageChanger:
     image: {fileID: 1066415008}
     sprites:
-    - {fileID: 21300000, guid: 6d26610eb2e5d6348ab4d900104216f2, type: 3}
+    - {fileID: 21300000, guid: 2459e72ada69645108ce93c0ad37c6b4, type: 3}
     - {fileID: 21300000, guid: 7b1142d364f0d6f458ba00d0c1488060, type: 3}
   tutorialImageChanger:
     image: {fileID: 396260571}
