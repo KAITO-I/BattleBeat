@@ -197,6 +197,7 @@ public class AttackManager : MonoBehaviour
         {
             rlt = 3;
         }
+        winner = rlt;
         return rlt;
     }
     public uint GetWinner()
