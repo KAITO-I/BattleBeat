@@ -791,7 +791,7 @@ MonoBehaviour:
   bgmClips:
   - {fileID: 8300000, guid: c5264a8a4f90a2f4298e0c9bb2526c7c, type: 3}
   - {fileID: 8300000, guid: c28baa250c56e0c43b86d16eeeaee824, type: 3}
-  - {fileID: 8300000, guid: e87efda9106a058468491a5f1be6a2d2, type: 3}
+  - {fileID: 8300000, guid: d7ec17b8d722c2f4caf6fb93ef7bdcd5, type: 3}
   - {fileID: 8300000, guid: 02f9979a62bdded49a38bb8b3c5d552d, type: 3}
   seObjectParent: {fileID: 7296762785727379927}
   seObject: {fileID: 4203803503992176354}
