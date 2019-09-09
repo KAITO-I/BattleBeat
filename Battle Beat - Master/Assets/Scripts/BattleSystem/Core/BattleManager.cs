@@ -87,6 +87,8 @@ public class BattleManager : MonoBehaviour
     private CountUp[] countUp;
     int index = 0;
     float timer = 0f;
+    
+    int rltwinner = 0;
     private void Update()
     {
         if (onGame)
@@ -108,18 +110,21 @@ public class BattleManager : MonoBehaviour
                 {
                     case 1:
                         //P1Win
+                        rltwinner = 1;
                         ShowImage._instance.ShowImages(new string[] { "GAME" }, 4f, 0f);
                         StartCoroutine(WaitAndJumpScene());
                         SoundManager.Instance.PlaySE(SEID.Game_Character_General_Finish);
                         break;
                     case 2:
                         //P2Win
+                        rltwinner = 2;
                         ShowImage._instance.ShowImages(new string[] { "GAME" }, 4f, 0f);
                         StartCoroutine(WaitAndJumpScene());
                         SoundManager.Instance.PlaySE(SEID.Game_Character_General_Finish);
                         break;
                     case 3:
                         //DRAW
+                        rltwinner = 3;
                         ShowImage._instance.ShowImages(new string[] { "Draw" }, 4f, 0f);
                         StartCoroutine(WaitAndJumpScene());
                         SoundManager.Instance.PlaySE(SEID.General_Siren);
@@ -178,8 +183,8 @@ public class BattleManager : MonoBehaviour
     {
         rythmManager.StopRythm();
         timeSetter.stop();
-        if (AttackManager._instance.GetWinner() != 3) {
-            MainGameCamera._instance.ChangeAndZoomUp(3 - (int)AttackManager._instance.GetWinner());
+        if (rltwinner != 3) {
+            MainGameCamera._instance.ChangeAndZoomUp(3 - rltwinner);
         }
         while (true)
         {
