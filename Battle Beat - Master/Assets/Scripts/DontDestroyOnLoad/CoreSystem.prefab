@@ -796,9 +796,9 @@ MonoBehaviour:
   seObjectParent: {fileID: 7296762785727379927}
   seObject: {fileID: 4203803503992176354}
   seClips:
-  - {fileID: 8300000, guid: 6658317547094492aa725a3cdb7935d3, type: 3}
-  - {fileID: 8300000, guid: d6b440622542d448f958b01fbc5444f4, type: 3}
-  - {fileID: 8300000, guid: 6ba8598f9692941e6a60c2ec7fb00e54, type: 3}
+  - {fileID: 8300000, guid: 72e12aff45e924710b08535f6630eee8, type: 3}
+  - {fileID: 8300000, guid: ec0e8597b02014fbfa7f33f9f0583c6c, type: 3}
+  - {fileID: 8300000, guid: 0582a9125b1144d89a00e515faf368cd, type: 3}
   - {fileID: 8300000, guid: 85ec9595402754c83847ab312266fc09, type: 3}
   - {fileID: 8300000, guid: 583f6322dc46e4b56b3fe4c3391610e0, type: 3}
   - {fileID: 8300000, guid: 456dd09d3ca194b7d9c4cc63c0d5b5b8, type: 3}
