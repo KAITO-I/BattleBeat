@@ -40,7 +40,7 @@ public class BattleManager : MonoBehaviour
 
     IEnumerator startGameLoop()
     {
-        
+        SoundManager.Instance.PlayBGM(BGMID.InGame);
         MainGameCamera._instance.GameStart();
         ShowImage._instance.ShowImages(new string[] {  "void", "void", "void", "void" }, 0.8f, 0.0f);
         while (true){
