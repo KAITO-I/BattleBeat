@@ -439,6 +439,7 @@ public class MainMenuManager : MonoBehaviour
         // ボタン操作
         if (this.controller.GetButtonDown_Menu(ControllerManager.Button.B))
         {
+            SoundManager.Instance.PlaySE(SEID.General_Controller_Back);
             this.displayState = DisplayState.Menu;
             this.creditImageChanger.parentGameObject.SetActive(false);
         }
