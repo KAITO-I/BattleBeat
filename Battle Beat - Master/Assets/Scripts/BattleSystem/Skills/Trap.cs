@@ -14,6 +14,7 @@ public class Trap : BasicAttack
     public override void Init(int row, int col, bool reverse, int root)
     {
         base.Init(row, col, reverse, root);
+        transform.parent = null;
         if (!reverse)
         {
             transform.position = BoardManager._instance.ToWorldPos(new Vector2Int(col+ Area[0].x, row));

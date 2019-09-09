@@ -154,7 +154,8 @@ public class SelectCountroll : MonoBehaviour
         {
             commandStr += v.ToString();
         }
-        CommandManager.instance.registCommand(commandStr, (int i)=> { Debug.Log("Boss!"); _boss[i] = true; });
+        //CommandManager.instance.registCommand(commandStr, (int i)=> { Debug.Log("Boss!"); _boss[i] = true; });
+        CommandManager.instance.registCommand(commandStr, BossSelect);
         _soundManager.PlayBGM(BGMID.CharacterSelect);
 
         _ReadyBackGraund.SetActive(false);
