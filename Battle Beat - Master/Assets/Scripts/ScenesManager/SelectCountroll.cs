@@ -15,8 +15,6 @@ public class SelectCountroll : MonoBehaviour
     [SerializeField]
     Slider ReturnSlider;
     [SerializeField]
-    GameObject Text01,Text02;
-    [SerializeField]
     GameObject FlameObj;
     [SerializeField,Header("ボスコマンド設定")]
     ControllerManager.Button[] Commands;
@@ -123,9 +121,6 @@ public class SelectCountroll : MonoBehaviour
         #region　ここで1P、2Pのオブジェクトの初期化
         Player01 = Player01_Obj.GetComponent<SpriteRenderer>();
         Player02 = Player02_Obj.GetComponent<SpriteRenderer>();
-
-        Text01.SetActive(false);
-        Text02.SetActive(false);
 
         _Player1 = _Player2 = 0;
         Player1_OK = Player2_OK = false;
@@ -312,8 +307,6 @@ public class SelectCountroll : MonoBehaviour
             ReturnSlider.value = 0f;
         }
         #endregion
-        Text01.SetActive(Player1_OK);
-        Text02.SetActive(Player2_OK);
         Description_1P.enabled = _1PDes;
         Description_2P.enabled = _2PDes;
     }

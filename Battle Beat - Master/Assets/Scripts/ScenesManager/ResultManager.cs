@@ -226,7 +226,7 @@ public class ResultManager : MonoBehaviour
             switch (_index)
             {
                 case 0:
-                    _charaText = data.Serifs[WinPlayerID];
+                    _charaText = data.Serifs[WinPlayerID - 1];
                     break;
                 case 1:
                     _charaText = data.Serifs[4];
@@ -239,10 +239,10 @@ public class ResultManager : MonoBehaviour
             switch (_index)
             {
                 case 0:
-                    _charaText = data.Serifs[_loseCharaId];
+                    _charaText = data.Serifs[_loseCharaId - 1];
                     break;
                 case 1:
-                    _charaText = data.Serifs[WinPlayerID];
+                    _charaText = data.Serifs[WinPlayerID - 1];
                     break;
                 case 2:
                     _charaText = data.Serifs[4];
