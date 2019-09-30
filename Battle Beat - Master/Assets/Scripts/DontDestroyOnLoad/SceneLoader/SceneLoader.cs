@@ -43,9 +43,6 @@ public class SceneLoader : MonoBehaviour
     // class
     //==============================
     // フェード用
-    private const float canvasCenterX = 960f;
-    private const float canvasCenterY = 540f;
-
     [SerializeField] GameObject loadingObj;
 
     // シャッターアニメーション
@@ -79,11 +76,16 @@ public class SceneLoader : MonoBehaviour
         if (SceneLoader.instance != null) return;
         SceneLoader.instance = this;
 
+        Screen.SetResolution(1920, 1080, true);
+        Cursor.visible = false;
+
         this.isLoading = false;
         this.pressButtonText.color = new Color(this.pressButtonText.color.r, this.pressButtonText.color.g, this.pressButtonText.color.b);
         this.loadingText.color     = new Color(this.loadingText.color.r, this.loadingText.color.g, this.loadingText.color.b);
         this.loadingTextMsg        = this.loadingText.text;
         this.loadingGauge.color    = new Color(this.loadingGauge.color.r, this.loadingGauge.color.g, this.loadingGauge.color.b);
+
+        this.loadingObj.transform.position = new Vector3(Screen.width / 2.0f, Screen.height / 2.0f + Screen.height);
     }
 
     //------------------------------
@@ -114,7 +116,7 @@ public class SceneLoader : MonoBehaviour
         //===== タイトル以外への遷移 =====
         if (target != Scenes.Title)
         {
-            loadingObjTF.position = new Vector3(SceneLoader.canvasCenterX, SceneLoader.canvasCenterY + Screen.height);
+            loadingObjTF.position = new Vector3(Screen.width / 2.0f, Screen.height / 2.0f + Screen.height);
             this.pressButtonText.color = new Color(this.pressButtonText.color.r, this.pressButtonText.color.g, this.pressButtonText.color.b, 0f);
             this.loadingGauge.fillAmount = 0f;
 
@@ -125,15 +127,15 @@ public class SceneLoader : MonoBehaviour
             {
                 loadingObjTF.position =
                     new Vector3(
-                        SceneLoader.canvasCenterX,
-                        Mathf.Lerp(SceneLoader.canvasCenterY + Screen.height, SceneLoader.canvasCenterY, time / this.shutterDownTime)
+                        Screen.width / 2.0f,
+                        Mathf.Lerp(Screen.height / 2.0f + Screen.height, Screen.height / 2.0f, time / this.shutterDownTime)
                     );
                 time += Time.deltaTime;
                 yield return null;
             }
 
             SoundManager.Instance.PlaySE(SEID.Shutter_Close);
-            loadingObjTF.position = new Vector3(SceneLoader.canvasCenterX, SceneLoader.canvasCenterY);
+            loadingObjTF.position = new Vector3(Screen.width / 2.0f, Screen.height / 2.0f);
 
             // タイトルならLoading文字表示して待機
             if (title)
@@ -184,15 +186,15 @@ public class SceneLoader : MonoBehaviour
             {
                 loadingObjTF.position =
                     new Vector3(
-                        SceneLoader.canvasCenterX,
-                        Mathf.Lerp(SceneLoader.canvasCenterY, SceneLoader.canvasCenterY + Screen.height, time / this.shutterUpTime)
+                        Screen.width / 2.0f,
+                        Mathf.Lerp(Screen.height / 2.0f, Screen.height / 2.0f + Screen.height, time / this.shutterUpTime)
                     );
                 time += Time.deltaTime;
                 yield return null;
             }
 
             // 修正
-            loadingObjTF.position = new Vector3(SceneLoader.canvasCenterX, SceneLoader.canvasCenterY + Screen.height);
+            loadingObjTF.position = new Vector3(Screen.width / 2.0f, Screen.height / 2.0f + Screen.height);
         }
         //===== タイトルへの遷移 =====
         else
