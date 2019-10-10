@@ -20,8 +20,7 @@ public class BasePlayerAnimation:MonoBehaviour
 
     //自分のとぐろ
     public MeshRenderer _renderer;
-    public bool AnimCheck;
-    public float interval;
+    float interval;
 
     protected int PosID;
     protected Animator anim;
@@ -81,7 +80,6 @@ public class BasePlayerAnimation:MonoBehaviour
         info_ = anim.GetCurrentAnimatorStateInfo(0);
         //いつでも来てしまうため
         if (!info_.IsName("idol")) return;
-        AnimCheck = true;
         switch (comand)
         {
             case Player.MoveComand.None:
