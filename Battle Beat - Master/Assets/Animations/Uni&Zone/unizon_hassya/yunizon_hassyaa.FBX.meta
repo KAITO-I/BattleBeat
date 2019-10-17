@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 215f8758f84a198468a36fe10366820b
+guid: 7cbf17668c780b34887a1d253354662b
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
@@ -42,37 +42,33 @@ ModelImporter:
     100072: Bip001 Spine
     100074: Bip001 Spine1
     100076: body
-    100078: Camera001
-    100080: Camera002
-    100082: Dummy001
-    100084: Dummy002
-    100086: Dummy003
-    100088: Dummy004
-    100090: Dummy006
-    100092: Dummy008
-    100094: Dummy009
-    100096: Dummy010
-    100098: Dummy011
-    100100: Dummy012
-    100102: Dummy013
-    100104: Dummy014
-    100106: Dummy015
-    100108: Omni001
-    100110: polySurface3
-    100112: polySurface4
-    100114: polySurface5
-    100116: polySurface6
-    100118: Sky001
-    100120: transform1
-    100122: //RootNode
-    100124: wrench1
-    100126: "\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8001"
-    100128: "\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8001 1"
-    100130: "\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8002"
-    100132: "\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8003"
-    100134: "\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8004"
-    100136: "\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8005"
-    100138: "\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8006"
+    100078: Dummy001
+    100080: Dummy002
+    100082: Dummy003
+    100084: Dummy004
+    100086: Dummy006
+    100088: Dummy008
+    100090: Dummy009
+    100092: Dummy010
+    100094: Dummy011
+    100096: Dummy012
+    100098: Dummy013
+    100100: Dummy014
+    100102: Dummy015
+    100104: polySurface3
+    100106: polySurface4
+    100108: polySurface5
+    100110: polySurface6
+    100112: transform1
+    100114: wrench1
+    100116: //RootNode
+    100118: "\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8001"
+    100120: "\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8001 1"
+    100122: "\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8002"
+    100124: "\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8003"
+    100126: "\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8004"
+    100128: "\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8005"
+    100130: "\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8006"
     400000: Bip001
     400002: Bip001 Footsteps
     400004: Bip001 Head
@@ -112,39 +108,33 @@ ModelImporter:
     400072: Bip001 Spine
     400074: Bip001 Spine1
     400076: body
-    400078: Camera001
-    400080: Camera002
-    400082: Dummy001
-    400084: Dummy002
-    400086: Dummy003
-    400088: Dummy004
-    400090: Dummy006
-    400092: Dummy008
-    400094: Dummy009
-    400096: Dummy010
-    400098: Dummy011
-    400100: Dummy012
-    400102: Dummy013
-    400104: Dummy014
-    400106: Dummy015
-    400108: Omni001
-    400110: polySurface3
-    400112: polySurface4
-    400114: polySurface5
-    400116: polySurface6
-    400118: Sky001
-    400120: transform1
-    400122: //RootNode
-    400124: wrench1
-    400126: "\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8001"
-    400128: "\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8001 1"
-    400130: "\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8002"
-    400132: "\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8003"
-    400134: "\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8004"
-    400136: "\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8005"
-    400138: "\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8006"
-    2000000: Camera001
-    2000002: Camera002
+    400078: Dummy001
+    400080: Dummy002
+    400082: Dummy003
+    400084: Dummy004
+    400086: Dummy006
+    400088: Dummy008
+    400090: Dummy009
+    400092: Dummy010
+    400094: Dummy011
+    400096: Dummy012
+    400098: Dummy013
+    400100: Dummy014
+    400102: Dummy015
+    400104: polySurface3
+    400106: polySurface4
+    400108: polySurface5
+    400110: polySurface6
+    400112: transform1
+    400114: wrench1
+    400116: //RootNode
+    400118: "\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8001"
+    400120: "\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8001 1"
+    400122: "\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8002"
+    400124: "\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8003"
+    400126: "\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8004"
+    400128: "\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8005"
+    400130: "\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8006"
     2100000: 'Material #30'
     2100002: 'Material #32'
     2100004: 'Material #31'
@@ -194,8 +184,6 @@ ModelImporter:
     4300022: wrench1
     7400000: hassya
     9500000: //RootNode
-    10800000: Omni001
-    10800002: Sky001
     13700000: body
   externalObjects: {}
   materials:
@@ -229,7 +217,7 @@ ModelImporter:
       name: hassya
       takeName: Take 001
       firstFrame: 0
-      lastFrame: 18
+      lastFrame: 36
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
