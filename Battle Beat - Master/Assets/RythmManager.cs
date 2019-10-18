@@ -90,4 +90,9 @@ public class RythmManager : MonoBehaviour
         this.bpm = tempo;
         this.bps = 60 / (float)bpm;
     }
+
+    public bool IsTiming()
+    {
+        return (this.time < 0.1 || this.time > this.bps - 0.1);
+    }
 }
