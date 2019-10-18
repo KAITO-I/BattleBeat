@@ -9,6 +9,8 @@ public class Select1P : BaseSelect
     {
         _controller = ControllerManager.Instance.Player1;
 
+
+
         _playerID = 0;
         _playerOK = false;
         _playerDecritionOK = false;
