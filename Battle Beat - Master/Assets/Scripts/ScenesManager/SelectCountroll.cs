@@ -13,8 +13,6 @@ public class SelectCountroll : MonoBehaviour
     [SerializeField]
     SpriteRenderer Description_1P, Description_2P;
     [SerializeField]
-    Slider ReturnSlider;
-    [SerializeField]
     GameObject FlameObj;
     [SerializeField,Header("ボスコマンド設定")]
     ControllerManager.Button[] Commands;
@@ -25,9 +23,7 @@ public class SelectCountroll : MonoBehaviour
     [SerializeField]
     GameObject _Ready;
     [SerializeField]
-    Sprite[] _ChataText, ChareDescriptions;
-    [SerializeField]
-    GameObject _ReadyBackGraund;
+    public Sprite[] _ChataText, ChareDescriptions;
     [SerializeField]
     Text text;
     [SerializeField]
@@ -35,7 +31,7 @@ public class SelectCountroll : MonoBehaviour
 
     Vector3[] Gole = new Vector3[2];//画面にいる
     Vector3[] Gole2 = new Vector3[2];//画面外
-    List<CharaSelectObj> CharaObj;
+    public List<CharaSelectObj> CharaObj;//中央を動かしている
     int length;
 
     ControllerManager.Controller _1Pcontroller = ControllerManager.Instance.Player1;
@@ -49,19 +45,15 @@ public class SelectCountroll : MonoBehaviour
     int _Player1, _Player2;
     //キャラクター選択
     bool Player1_OK,Player2_OK;
-    //戻る時間
-    float Player1_Time, Player2_Time;
-    //戻る画面移動時間
-    float ReturnTime;
-    float ReturnTimeValumes;
+
     //説明表示
     bool _1PDes,_2PDes;
     float time;
     public float interval;
     float _changeTransparency = 1;
+    //OKのテープ
     [SerializeField]
     float _MoveTime_1P,_MoveTime_2P;
-
     //Boss変数
     bool[] _boss=new bool[2] {false,false};
 
@@ -93,6 +85,11 @@ public class SelectCountroll : MonoBehaviour
         0.35f
     };
 
+    //スクリプト改変用
+    BaseSelect _1P;
+    BaseSelect _2P;
+    Sprite[] _charaPictiures;//立ち絵//立ち絵などを変えるのはManagerでする
+
     void Start()
     {
         CharaObj = new List<CharaSelectObj>();
@@ -117,7 +114,6 @@ public class SelectCountroll : MonoBehaviour
             else if(i==1) Gole2[i]= Moves[i].transform.position + new Vector3(500f, 0, 0);
         }
         #endregion
-
         #region　ここで1P、2Pのオブジェクトの初期化
         Player01 = Player01_Obj.GetComponent<SpriteRenderer>();
         Player02 = Player02_Obj.GetComponent<SpriteRenderer>();
@@ -146,9 +142,6 @@ public class SelectCountroll : MonoBehaviour
 
         _Ready.SetActive(false);
 
-        //戻り時間
-        ReturnTime = 1.5f;
-        ReturnSlider.maxValue = ReturnTime;
         string commandStr = string.Empty;
         foreach(var v in Commands)
         {
@@ -158,14 +151,14 @@ public class SelectCountroll : MonoBehaviour
         CommandManager.instance.registCommand(commandStr, BossSelect);
         _soundManager.PlayBGM(BGMID.CharacterSelect);
 
-        _ReadyBackGraund.SetActive(false);
+        //_ReadyBackGraund.SetActive(false);
         Color color = text.color;
         color.a = 0;
         text.color = color;
 
+        //スクリプト改変用
+        _1P = new Select1P(this,_soundManager);
     }
-
-    // Update is called once per frame
     void Update()
     {
         if (loader.isLoading) return;
@@ -192,12 +185,12 @@ public class SelectCountroll : MonoBehaviour
                 SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainGame);
                 Debug.Log("battleSceneへ");
             }
-            _ReadyBackGraund.SetActive(true);
+            //_ReadyBackGraund.SetActive(true);
             _Ready.SetActive(true);
-            TextColorChange();
+            TextColorChange();//Startボタンで開始テキスト表示
             return;
         }
-        _ReadyBackGraund.SetActive(false);
+        //_ReadyBackGraund.SetActive(false);
         _Ready.SetActive(false);
     }
 
@@ -225,7 +218,6 @@ public class SelectCountroll : MonoBehaviour
             _player2Text.sprite = _void;
             Description_2P.sprite = _void;
         }
-
         #region=============ここからボタン操作======================
         if (_1Pcontroller.GetButtonDown(ControllerManager.Button.A))
         {
@@ -255,37 +247,35 @@ public class SelectCountroll : MonoBehaviour
         }
         //×ボタンの処理
         //長押しで画面移動処理
-        if (_1Pcontroller.GetButton(ControllerManager.Button.B))
+        if (_1Pcontroller.GetButtonDown(ControllerManager.Button.B))
         {
             //キャラ選択時は選択を外す
-            if (_1Pcontroller.GetButtonDown(ControllerManager.Button.B))
+            if (Player1_OK)
             {
                 Player1_OK = false;
                 _MoveTime_1P = 0;
                 _soundManager.PlaySE(SEID.General_Controller_Back);
             }
-            float difference = Time.time - Player1_Time;
-            SetSilder(difference);
-            if (difference > ReturnTime)
+            //ホップアップで表示
+            if (false)
             {
-                _soundManager.PlaySE(SEID.General_Controller_Back);
-                SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainMenu);
+                if (true) SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainMenu);
             }
         }
-        if (_2Pcontroller.GetButton(ControllerManager.Button.B))
+        if (_2Pcontroller.GetButtonDown(ControllerManager.Button.B))
         {
             //キャラ選択時は選択を外す
-            if (_2Pcontroller.GetButtonDown(ControllerManager.Button.B))
+            if (Player2_OK)
             {
                 Player2_OK = false;
                 _MoveTime_2P = 0f;
                 _soundManager.PlaySE(SEID.General_Controller_Back);
             }
-            float difference = Time.time - Player2_Time;
-            SetSilder(difference);
-            if (difference > ReturnTime)
+
+            //ホップアップで表示
+            if (false)
             {
-                SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainMenu);
+                if (true) SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainMenu);
             }
         }
         //説明画面
@@ -302,10 +292,6 @@ public class SelectCountroll : MonoBehaviour
         //両方入力されていない
         if (!_1Pcontroller.GetButton(ControllerManager.Button.B) && !_2Pcontroller.GetButton(ControllerManager.Button.B))
         {
-            Player1_Time = Time.time;
-            Player2_Time = Time.time;
-            //片方が入力しているとそのまま継続
-            ReturnSlider.value = 0f;
         }
         #endregion
         Description_1P.enabled = _1PDes;
@@ -346,14 +332,7 @@ public class SelectCountroll : MonoBehaviour
                 _soundManager.PlaySE(SEID.General_Controller_Select);
             }
         }
-
         return _Player;
-    }
-
-    void SetSilder(float t)
-    {
-        if (t < ReturnSlider.value) return;
-        ReturnSlider.value = t;
     }
     void TextColorChange()//ここでテキストのフェードイン、アウトをしている
     {

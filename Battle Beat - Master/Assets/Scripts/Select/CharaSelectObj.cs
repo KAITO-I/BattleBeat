@@ -9,7 +9,7 @@ public class CharaSelectObj : MonoBehaviour
     public Sprite[] Flames = new Sprite[3];
     SpriteRenderer _sprite;
     [SerializeField]
-    Sprite CharaSprite;
+    Sprite CharaSprite;//一体一体入れている
     public Sprite GetCharaSprite
     {
         get { return CharaSprite; }

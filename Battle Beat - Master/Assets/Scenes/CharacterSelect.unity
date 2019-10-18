@@ -278,7 +278,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -15}
 --- !u!1 &137871773
 GameObject:
@@ -961,7 +961,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &468595718
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -999,7 +999,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 6
   m_Sprite: {fileID: 21300000, guid: ccc78ad9eeaa79541985d4a249920716, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1018,12 +1018,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 468595717}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.3, y: 1.5648713, z: -0.4781573}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 11.020356, y: 4.7885256, z: -767.0012}
+  m_LocalScale: {x: 8.477198, y: 8.477198, z: 8.477198}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_Father: {fileID: 1715705475}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &474263060
 GameObject:
@@ -2706,7 +2706,7 @@ MonoBehaviour:
   Commands: 0000000001000000040000000500000007000000
   _boss_Sprite: {fileID: 21300000, guid: 92c95ff9e1d57e3498cd0f7dfe92a005, type: 3}
   _void: {fileID: 21300000, guid: 9ca0c66b97421054daf20b8a6431db71, type: 3}
-  _Ready: {fileID: 468595717}
+  _Ready: {fileID: 1715705471}
   _ChataText:
   - {fileID: 21300000, guid: 0e549c8be99a4474b9a448c4de5bae71, type: 3}
   - {fileID: 21300000, guid: 97edc4613de313f43b40fc4a0234c8ab, type: 3}
@@ -2717,7 +2717,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: b819e586df5c42a4e870da9e7e9c2056, type: 3}
   - {fileID: 21300000, guid: e638b1d8ca37e774186ee2374ebfe14a, type: 3}
   - {fileID: 21300000, guid: f8f2aea621fe5b34f90417d732fbb06c, type: 3}
-  _ReadyBackGraund: {fileID: 1028000619}
   text: {fileID: 820978146}
   Moves:
   - {fileID: 1673245589}
@@ -3248,7 +3247,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 15}
 --- !u!1 &1707773527
 GameObject:
@@ -3416,6 +3415,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 1028000620}
+  - {fileID: 468595719}
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
