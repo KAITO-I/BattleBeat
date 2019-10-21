@@ -92,15 +92,9 @@ public abstract class BaseSelect: MonoBehaviour
     protected void SelectMove()
     {
         //1P処理
-        if (!_boss[0] && _1Pcontroller.GetAxis(ControllerManager.Axis.DpadY) != 0)
+        if ( _controller.GetAxis(ControllerManager.Axis.DpadY) != 0)
         {
             _Player1 = InputProcess(Player01_Obj, _player1Text, _1Pcontroller, Player01, _Player1, Player1_OK, Description_1P, 1);
-        }
-        else if (_boss[0])
-        {
-            Player01.sprite = _boss_Sprite;
-            _player1Text.sprite = _void;
-            Description_1P.sprite = _void;
         }
         #region=============ここからボタン操作======================
         if (_1Pcontroller.GetButtonDown(ControllerManager.Button.A))
