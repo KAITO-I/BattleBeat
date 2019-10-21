@@ -33,7 +33,7 @@ public class BasePlayerAnimation:MonoBehaviour
         _renderer = transform.GetChild(1).GetComponent<MeshRenderer>();
         _renderer.enabled = false;
         rythm = GameObject.Find("Manager").GetComponent<RythmManager>();
-        interval = rythm.getbps;
+        interval = rythm.getbps/2;
     }
 
     protected virtual void Update()
@@ -59,7 +59,7 @@ public class BasePlayerAnimation:MonoBehaviour
     }
 
     //タイミングを同じにするため(動かすもの,到達点)
-    IEnumerator enumerator(GameObject obj, Vector3 Goal)
+    protected IEnumerator enumerator(GameObject obj, Vector3 Goal)
     {
         float time = 0;
 

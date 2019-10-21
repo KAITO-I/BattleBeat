@@ -6,7 +6,6 @@ using UnityEngine;
 public class KaguraAnimation :BasePlayerAnimation
 {
     MeshRenderer _enemyRenderer;
-    //[SerializeField]
     Animator _kusariAnim;
     Animator _toguroAnim;
     AnimatorStateInfo _KusariInfo;
@@ -14,7 +13,7 @@ public class KaguraAnimation :BasePlayerAnimation
     {
         base.Start();
         _kusariAnim = gameObject.transform.GetChild(2).GetComponent<Animator>();
-        anim.SetTrigger("Start");
+        //anim.SetTrigger("Start");
     }
 
     protected override void Update()

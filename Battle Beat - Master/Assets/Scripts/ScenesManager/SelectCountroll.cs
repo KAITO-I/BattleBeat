@@ -15,9 +15,9 @@ public class SelectCountroll : MonoBehaviour
     [SerializeField]
     GameObject FlameObj;
     [SerializeField,Header("ボスコマンド設定")]
-    ControllerManager.Button[] Commands;
+    ControllerManager.Button[] Commands;//Boss
     [SerializeField]
-    Sprite _boss_Sprite;
+    Sprite _boss_Sprite;//Boss立ち絵
     [SerializeField]
     Sprite _void;
     [SerializeField]

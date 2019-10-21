@@ -2676,6 +2676,7 @@ GameObject:
   - component: {fileID: 1356310773}
   - component: {fileID: 1356310772}
   - component: {fileID: 1356310774}
+  - component: {fileID: 1356310775}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -2720,6 +2721,7 @@ MonoBehaviour:
   Moves:
   - {fileID: 1673245589}
   - {fileID: 83256378}
+  CharaObj: []
   interval: 0.5
   _MoveTime_1P: 0
   _MoveTime_2P: 0
@@ -2749,6 +2751,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9df5a63321b41f9418f8f956dad2aa83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1356310775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1356310771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f0b6affd78798d439eb81cfd154617c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerPicture: {fileID: 0}
+  _playerDescrition: {fileID: 0}
+  _playerNameImg: {fileID: 0}
 --- !u!1001 &1362050577
 PrefabInstance:
   m_ObjectHideFlags: 0

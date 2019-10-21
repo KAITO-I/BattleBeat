@@ -11,11 +11,9 @@ public abstract class BaseSelect: MonoBehaviour
     [SerializeField]
     protected SpriteRenderer _playerPicture, _playerDescrition;
     [SerializeField]
-    protected int _playerID;
-    [SerializeField]
-    protected bool _playerOK, _playerDecritionOK;
-    [SerializeField]
     protected Image _playerNameImg;
+    protected int _playerID;
+    protected bool _playerOK, _playerDecritionOK;
 
     protected  BaseSelect(SelectCountroll c ,SoundManager s) 
     {

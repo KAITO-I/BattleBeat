@@ -8,9 +8,6 @@ public class Select1P : BaseSelect
     public Select1P(SelectCountroll c,SoundManager s):base(c,s)
     {
         _controller = ControllerManager.Instance.Player1;
-
-
-
         _playerID = 0;
         _playerOK = false;
         _playerDecritionOK = false;
@@ -37,7 +34,7 @@ public class Select1P : BaseSelect
             {
                 _controll.CharaObj[_playerID].charaSelect(1, false);
                 _playerID++;
-                _playerID = _playerID % length;
+                //_playerID = _playerID % length;
                 _controll.CharaObj[_playerID].charaSelect(1, true);
 
                 //Player_Obj.transform.localScale = new Vector3(_xSize[_Player], _ySize[_Player], 1);
@@ -47,7 +44,7 @@ public class Select1P : BaseSelect
             {
                 _controll.CharaObj[_playerID].charaSelect(1, false);
                 _playerID--;
-                _playerID = _playerID % length;
+                //_playerID = _playerID % length;
                 if (_playerID < 0) _playerID = 3;
                 _controll.CharaObj[_playerID].charaSelect(1, true);
 
