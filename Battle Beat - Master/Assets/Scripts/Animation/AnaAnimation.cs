@@ -4,24 +4,38 @@ using UnityEngine;
 
 public class AnaAnimation : BasePlayerAnimation
 {
+    [SerializeField]
+    GameObject[] AnaAnimObj = new GameObject[4];
     protected override void Attack1()
     {
-        anim.SetTrigger("Attack1");
+        //anim.SetTrigger("Attack1");
+        gameObject.SetActive(false);
+        GameObject obj=  Instantiate(AnaAnimObj[0], transform.position, transform.rotation);
+        obj.transform.parent = gameObject.transform;//アナprefabの子にする
         PlayAnim = "Attack1";
     }
     protected override void Attack2()
     {
-        anim.SetTrigger("Wait");
+        //anim.SetTrigger("Wait");
+        gameObject.SetActive(false);
+        GameObject obj = Instantiate(AnaAnimObj[0], transform.position, transform.rotation);
+        obj.transform.parent = gameObject.transform;//アナprefabの子にする
         PlayAnim = "Wait";
     }
     protected override void Attack3()
     {
-        anim.SetTrigger("Wait");
+        //anim.SetTrigger("Wait");
+        gameObject.SetActive(false);
+        GameObject obj = Instantiate(AnaAnimObj[0], transform.position, transform.rotation);
+        obj.transform.parent = gameObject.transform;//アナprefabの子にする
         PlayAnim = "Wait";
     }
     protected override void Attack4()
     {
-        anim.SetTrigger("Wait");
+        //anim.SetTrigger("Wait");
+        gameObject.SetActive(false);
+        GameObject obj = Instantiate(AnaAnimObj[0], transform.position, transform.rotation);
+        obj.transform.parent = gameObject.transform;//アナprefabの子にする
         PlayAnim = "Wait";
     }
     public override void AttackWaitEnd(int waitAttackId)

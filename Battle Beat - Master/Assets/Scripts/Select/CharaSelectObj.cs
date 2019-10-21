@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class CharaSelectObj : MonoBehaviour
 {
-    //status
+    //枠の色
     public Sprite[] Flames = new Sprite[3];
     SpriteRenderer _sprite;
     [SerializeField]
@@ -40,7 +40,7 @@ public class CharaSelectObj : MonoBehaviour
                 P2select = OK;
                 break;
         }
-        //枠の画像を変更する
+        //枠の色を変更する
         if (P1select && P2select)
         {
             _sprite.sprite = Flames[0];

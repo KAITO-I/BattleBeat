@@ -48,9 +48,11 @@ public class SelectCountroll : MonoBehaviour
 
     //説明表示
     bool _1PDes,_2PDes;
+    //テキストの透明度変更
     float time;
     public float interval;
     float _changeTransparency = 1;
+
     //OKのテープ
     [SerializeField]
     float _MoveTime_1P,_MoveTime_2P;
@@ -88,7 +90,6 @@ public class SelectCountroll : MonoBehaviour
     //スクリプト改変用
     BaseSelect _1P;
     BaseSelect _2P;
-    Sprite[] _charaPictiures;//立ち絵//立ち絵などを変えるのはManagerでする
 
     void Start()
     {
@@ -183,7 +184,6 @@ public class SelectCountroll : MonoBehaviour
                 }
                 _soundManager.PlaySE(SEID.CharacterSelect_GameStart);
                 SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainGame);
-                Debug.Log("battleSceneへ");
             }
             //_ReadyBackGraund.SetActive(true);
             _Ready.SetActive(true);

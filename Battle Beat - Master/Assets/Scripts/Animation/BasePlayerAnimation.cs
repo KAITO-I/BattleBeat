@@ -14,7 +14,7 @@ public class BasePlayerAnimation:MonoBehaviour
     }
     [SerializeField]
     protected GameObject PlayerObj;
-    protected Player player;
+    protected Player _playerClass;
     AnimatorStateInfo info_;
     RythmManager rythm;
 
@@ -29,7 +29,7 @@ public class BasePlayerAnimation:MonoBehaviour
     protected virtual void Start()
     {
         anim = GetComponent<Animator>();
-        player = PlayerObj.GetComponent<Player>();
+        _playerClass = PlayerObj.GetComponent<Player>();
         _renderer = transform.GetChild(1).GetComponent<MeshRenderer>();
         _renderer.enabled = false;
         rythm = GameObject.Find("Manager").GetComponent<RythmManager>();
@@ -62,7 +62,6 @@ public class BasePlayerAnimation:MonoBehaviour
     protected IEnumerator enumerator(GameObject obj, Vector3 Goal)
     {
         float time = 0;
-
         Vector3 Oragin = obj.transform.position;
         Vector3 pos = Vector3.Lerp(Oragin, Goal,time/interval);
         obj.transform.position = pos;
@@ -85,7 +84,7 @@ public class BasePlayerAnimation:MonoBehaviour
             case Player.MoveComand.None:
                 break;
             case Player.MoveComand.Left:
-                if (player.PlayerID == 1)
+                if (_playerClass.PlayerID == 1)
                 {
                     MoveBack();
                 }
@@ -95,7 +94,7 @@ public class BasePlayerAnimation:MonoBehaviour
                 }
                 break;
             case Player.MoveComand.Right:
-                if (player.PlayerID == 2)
+                if (_playerClass.PlayerID == 2)
                 {
                     MoveBack();
                 }
@@ -105,7 +104,7 @@ public class BasePlayerAnimation:MonoBehaviour
                 }
                 break;
             case Player.MoveComand.Up:
-                if (player.PlayerID == 1)
+                if (_playerClass.PlayerID == 1)
                 {
                     MoveLeft();
                 }
@@ -115,7 +114,7 @@ public class BasePlayerAnimation:MonoBehaviour
                 }
                 break;
             case Player.MoveComand.Down:
-                if (player.PlayerID == 2)
+                if (_playerClass.PlayerID == 2)
                 {
                     MoveLeft();
                 }
@@ -157,7 +156,6 @@ public class BasePlayerAnimation:MonoBehaviour
 
     }
 
-    //2P視点
     //移動は同じなので継承しない
     private void MoveFront()
     {

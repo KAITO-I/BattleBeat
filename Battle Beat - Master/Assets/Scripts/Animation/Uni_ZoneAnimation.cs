@@ -34,7 +34,6 @@ public class Uni_ZoneAnimation : BasePlayerAnimation
                 PlayAnim = "BombAttack";
                 break;
             default:
-                Debug.Log("入力が違います");
                 break;
         }
     }
