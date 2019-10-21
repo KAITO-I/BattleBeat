@@ -12,7 +12,7 @@ public class BattleManager : MonoBehaviour
     TimeSetter timeSetter;
     [SerializeField]
     float TotalTime = 60f;
-
+    
     bool onGame;
 
     bool readyFlag = false;
@@ -36,11 +36,13 @@ public class BattleManager : MonoBehaviour
         //AttackManager._instance.GetPlayer(2).onGame = true;
         //timeSetter.startTimer();
         //rythmManager.StartRythm();
+
     }
 
     IEnumerator startGameLoop()
     {
         SoundManager.Instance.PlayBGM(BGMID.InGame);
+        yield return new WaitForSeconds(0.1f);
         MainGameCamera._instance.GameStart();
         ShowImage._instance.ShowImages(new string[] {  "void", "void", "void", "void" }, 0.8f, 0.0f);
         while (true){

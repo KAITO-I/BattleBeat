@@ -122,6 +122,10 @@ public class SoundManager : MonoBehaviour {
         this.bgm.Play();
     }
 
+    public void PlayBGM(BGMID bgmID,float offset)
+    {
+        StartCoroutine(DelayBGM(bgmID, offset));
+    }
     //------------------------------
     // BGM停止
     //------------------------------
@@ -152,5 +156,11 @@ public class SoundManager : MonoBehaviour {
     public void SEEndCallBack(SoundEffect se) {
         this.usedSEGameObject.Remove(se);
         this.unusedSEGameObject.Add(se);
+    }
+
+    IEnumerator DelayBGM(BGMID bgmID,float offset)
+    {
+        yield return new WaitForSeconds(offset);
+        PlayBGM(bgmID);
     }
 }

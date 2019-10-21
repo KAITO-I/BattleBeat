@@ -31,6 +31,10 @@ public class RythmManager : MonoBehaviour
     private float time;
     private int   tempoCount;
 
+    [SerializeField]
+    NotesManager notesManager;
+    [SerializeField]
+    NotesManager notesManager2;
     public float getbps
     {
         get { return bps; }
@@ -49,10 +53,15 @@ public class RythmManager : MonoBehaviour
         this.time       += this.bps + 0.00001f;
         this.tempoCount = 0;
         Running = false;
+
+        notesManager.nextDuration = bps;
+        notesManager2.nextDuration = bps;
     }
     public void StartRythm()
     {
         Running = true;
+        notesManager.Init();
+        notesManager2.Init();
     }
     public void StopRythm()
     {
@@ -82,6 +91,8 @@ public class RythmManager : MonoBehaviour
                     if (this.bpm >= this.maxBpm) this.tempoUpCount = -1;
                 }*/
             }
+            notesManager.MoveNotes(time+0.1f);
+            notesManager2.MoveNotes(time + 0.1f);
         }
     }
 
@@ -89,10 +100,12 @@ public class RythmManager : MonoBehaviour
     {
         this.bpm = tempo;
         this.bps = 60 / (float)bpm;
+        notesManager.nextDuration = bps;
+        notesManager2.nextDuration = bps;
     }
 
     public bool IsTiming()
     {
-        return (this.time < 0.1 || this.time > this.bps - 0.1);
+        return (this.time > this.bps - 0.2);
     }
 }
