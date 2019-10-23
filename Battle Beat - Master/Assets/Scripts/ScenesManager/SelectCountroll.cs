@@ -89,6 +89,8 @@ public class SelectCountroll : MonoBehaviour
     void Update()
     {
         if (loader.isLoading) return;
+        _1P.playerUpdate();
+        _2P.playerUpdate();
         //Charaが二人とも選択されたとき
         if (_1P.GetItem<bool>("player")&& _2P.GetItem<bool>("player"))
         {
