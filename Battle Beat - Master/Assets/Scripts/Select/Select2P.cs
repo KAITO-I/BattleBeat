@@ -1,25 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class Select1P : BaseSelect
+public class Select2P :BaseSelect
 {
-
     public override void Inctance(SelectCountroll c, SoundManager s)
     {
-        _controller = ControllerManager.Instance.Player1;
-        _controll.CharaObj[_charactorID].charaSelect(1, true);//選択画面の枠を変える処理
+        _controller = ControllerManager.Instance.Player2;
+        _controll.CharaObj[_charactorID].charaSelect(2, true);//選択画面の枠を変える処理
         Gole = Teap.transform.position;
-        Gole2 = Teap.transform.position + new Vector3(-500f, 0, 0);
+        Gole2 = Teap.transform.position + new Vector3(500f, 0, 0);
         base.Inctance(c, s);
     }
-
     public override void playerUpdate()
     {
-        InputProcess(1);
+        InputProcess(2);
         ButtonInput();
         _teapMoveTime = ReadyBerMove(_playerOK, _teapMoveTime);
+
     }
 
 }

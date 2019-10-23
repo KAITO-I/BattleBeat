@@ -7,58 +7,32 @@ using UnityEngine.EventSystems;
 public class SelectCountroll : MonoBehaviour
 {
     [SerializeField]
-    GameObject Player01_Obj,Player02_Obj;
-    [SerializeField]
-    Image _player1Text, _player2Text;
-    [SerializeField]
-    SpriteRenderer Description_1P, Description_2P;
-    [SerializeField]
     GameObject FlameObj;
     [SerializeField,Header("ボスコマンド設定")]
-    ControllerManager.Button[] Commands;//Boss
+    public ControllerManager.Button[] Commands;//Boss
     [SerializeField]
     Sprite _boss_Sprite;//Boss立ち絵
     [SerializeField]
-    Sprite _void;
+    Sprite _void;//ボスの時にひつよう
     [SerializeField]
     GameObject _Ready;
     [SerializeField]
-    public Sprite[] _ChataText, ChareDescriptions;
-    [SerializeField]
     Text text;
-    [SerializeField]
-    GameObject[] Moves = new GameObject[2];
 
-    Vector3[] Gole = new Vector3[2];//画面にいる
-    Vector3[] Gole2 = new Vector3[2];//画面外
     public List<CharaSelectObj> CharaObj;//中央を動かしている
-    int length;
 
     ControllerManager.Controller _1Pcontroller = ControllerManager.Instance.Player1;
     ControllerManager.Controller _2Pcontroller = ControllerManager.Instance.Player2;
     SceneLoader loader = SceneLoader.Instance;
     SoundManager _soundManager=SoundManager.Instance;
 
-    //キャラ立ち絵
-    SpriteRenderer Player01, Player02;
-    //キャラクターID
-    int _Player1, _Player2;
-    //キャラクター選択
-    bool Player1_OK,Player2_OK;
-
-    //説明表示
-    bool _1PDes,_2PDes;
     //テキストの透明度変更
     float time;
     public float interval;
     float _changeTransparency = 1;
 
-    //OKのテープ
-    [SerializeField]
-    float _MoveTime_1P,_MoveTime_2P;
     //Boss変数
     bool[] _boss=new bool[2] {false,false};
-
     void BossSelect(int playerid)
     {
         if( playerid==0) {
@@ -72,21 +46,6 @@ public class SelectCountroll : MonoBehaviour
         }
     }
 
-    float[] _xSize =
-    {
-        0.7f,
-        0.4f,
-        0.3f,
-        0.35f
-    };
-    float[] _ySize =
-    {
-        0.7f,
-        0.4f,
-        0.3f,
-        0.35f
-    };
-
     //スクリプト改変用
     BaseSelect _1P;
     BaseSelect _2P;
@@ -97,49 +56,13 @@ public class SelectCountroll : MonoBehaviour
         foreach (Transform v in FlameObj.transform)
         {
             var CObj = v.GetComponent<CharaSelectObj>();
+            CObj.Init();
             CharaObj.Add(CObj);
         }
-        length = FlameObj.transform.childCount;
-
-        foreach (var c in CharaObj)
-        {
-            c.Init();
-        }
-
-        #region ここでテープの初期化
-        _MoveTime_1P = _MoveTime_2P = 0f;
-        for (int i = 0; i < 2; ++i)
-        {
-            Gole[i] = Moves[i].transform.position;
-            if(i==0) Gole2[i]=Moves[i].transform.position+ new Vector3(-500f, 0, 0);
-            else if(i==1) Gole2[i]= Moves[i].transform.position + new Vector3(500f, 0, 0);
-        }
-        #endregion
-        #region　ここで1P、2Pのオブジェクトの初期化
-        Player01 = Player01_Obj.GetComponent<SpriteRenderer>();
-        Player02 = Player02_Obj.GetComponent<SpriteRenderer>();
-
-        _Player1 = _Player2 = 0;
-        Player1_OK = Player2_OK = false;
-        _1PDes = _2PDes= false;
-
-        CharaObj[_Player1].charaSelect(1, true);
-        CharaObj[_Player2].charaSelect(2, true);
-        _player1Text.sprite = _ChataText[_Player1];
-        _player2Text.sprite = _ChataText[_Player2];
-
-        Player01.sprite = CharaObj[_Player1].GetCharaSprite;
-        Player02.sprite = CharaObj[_Player2].GetCharaSprite;
-
-        Player01_Obj.transform.localScale = new Vector3(_xSize[_Player1], _ySize[_Player1], 1);
-        Player02_Obj.transform.localScale = new Vector3(_xSize[_Player2], _ySize[_Player2], 1);
-
-        Description_1P.sprite = ChareDescriptions[_Player1];
-        Description_2P.sprite = ChareDescriptions[_Player2];
-
-        Description_1P.enabled = _1PDes;
-        Description_2P.enabled = _2PDes;
-        #endregion
+        //foreach (var c in CharaObj)
+        //{
+        //    c.Init();
+        //}
 
         _Ready.SetActive(false);
 
@@ -158,181 +81,38 @@ public class SelectCountroll : MonoBehaviour
         text.color = color;
 
         //スクリプト改変用
-        _1P = new Select1P(this,_soundManager);
+        _1P = GetComponent<Select1P>();
+        _2P= GetComponent<Select1P>();
+        _1P.Inctance(this,_soundManager);
+        _2P.Inctance(this, _soundManager);
     }
     void Update()
     {
         if (loader.isLoading) return;
-        SelectMove();
-        //=========ここが新しいところ==============
-        _MoveTime_1P= ReadyBerMove(0, Player1_OK,_MoveTime_1P);
-        _MoveTime_2P= ReadyBerMove(1, Player2_OK, _MoveTime_2P);
-        //=========================================
         //Charaが二人とも選択されたとき
-        if (Player1_OK&& Player2_OK)
+        if (_1P.GetItem<bool>("player")&& _2P.GetItem<bool>("player"))
         {
             //決定ボタンを入力したら
             if (ControllerManager.Instance.GetButtonDown_Menu(ControllerManager.Button.Start))
             {
                 if (!_boss[0])
                 {
-                    Setting.p1c = (Setting.Chara)_Player1;
+                    Setting.p1c = (Setting.Chara)_1P.GetItem<int>();
                 }
                 if (!_boss[1])
                 {
-                    Setting.p2c = (Setting.Chara)_Player2;
+                    Setting.p2c = (Setting.Chara)_2P.GetItem<int>();
                 }
                 _soundManager.PlaySE(SEID.CharacterSelect_GameStart);
                 SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainGame);
             }
             //_ReadyBackGraund.SetActive(true);
             _Ready.SetActive(true);
-            TextColorChange();//Startボタンで開始テキスト表示
+            TextColorChange();//「Startボタンで開始」テキスト表示
             return;
         }
         //_ReadyBackGraund.SetActive(false);
         _Ready.SetActive(false);
-    }
-
-    void SelectMove()
-    {
-        //1P処理
-        if (!_boss[0]&& _1Pcontroller.GetAxis(ControllerManager.Axis.DpadY) != 0)
-        {
-            _Player1 = InputProcess(Player01_Obj, _player1Text, _1Pcontroller, Player01, _Player1, Player1_OK, Description_1P, 1);
-        }
-        else if(_boss[0])
-        {
-            Player01.sprite = _boss_Sprite;
-            _player1Text.sprite = _void;
-            Description_1P.sprite = _void;
-        }
-        //2P処理
-        if (!_boss[1] && _2Pcontroller.GetAxis(ControllerManager.Axis.DpadY) != 0)
-        {
-            _Player2 = InputProcess(Player02_Obj, _player2Text, _2Pcontroller, Player02, _Player2, Player2_OK, Description_2P, 2);
-        }
-        else if (_boss[1])
-        {
-            Player02.sprite = _boss_Sprite;
-            _player2Text.sprite = _void;
-            Description_2P.sprite = _void;
-        }
-        #region=============ここからボタン操作======================
-        if (_1Pcontroller.GetButtonDown(ControllerManager.Button.A))
-        {
-            Player1_OK = true;
-            _MoveTime_1P = 0f;
-            if (Player2_OK)
-            {
-                _soundManager.PlaySE(SEID.General_Siren);
-            }
-            else
-            {
-                _soundManager.PlaySE(SEID.General_Controller_Decision);
-            }
-        }
-        if (_2Pcontroller.GetButtonDown(ControllerManager.Button.A))
-        {
-            Player2_OK = true;
-            _MoveTime_2P = 0f;
-            if (Player1_OK)
-            {
-                _soundManager.PlaySE(SEID.General_Siren);
-            }
-            else
-            {
-                _soundManager.PlaySE(SEID.General_Controller_Decision);
-            }
-        }
-        //×ボタンの処理
-        //長押しで画面移動処理
-        if (_1Pcontroller.GetButtonDown(ControllerManager.Button.B))
-        {
-            //キャラ選択時は選択を外す
-            if (Player1_OK)
-            {
-                Player1_OK = false;
-                _MoveTime_1P = 0;
-                _soundManager.PlaySE(SEID.General_Controller_Back);
-            }
-            //ホップアップで表示
-            if (false)
-            {
-                if (true) SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainMenu);
-            }
-        }
-        if (_2Pcontroller.GetButtonDown(ControllerManager.Button.B))
-        {
-            //キャラ選択時は選択を外す
-            if (Player2_OK)
-            {
-                Player2_OK = false;
-                _MoveTime_2P = 0f;
-                _soundManager.PlaySE(SEID.General_Controller_Back);
-            }
-
-            //ホップアップで表示
-            if (false)
-            {
-                if (true) SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainMenu);
-            }
-        }
-        //説明画面
-        if (_1Pcontroller.GetButtonDown(ControllerManager.Button.X))
-        {
-            if (_1PDes) _1PDes = false;
-            else _1PDes = true;
-        }
-        if (_2Pcontroller.GetButtonDown(ControllerManager.Button.X))
-        {
-            if (_2PDes) _2PDes = false;
-            else _2PDes = true;
-        }
-        //両方入力されていない
-        if (!_1Pcontroller.GetButton(ControllerManager.Button.B) && !_2Pcontroller.GetButton(ControllerManager.Button.B))
-        {
-        }
-        #endregion
-        Description_1P.enabled = _1PDes;
-        Description_2P.enabled = _2PDes;
-    }
-    //上下移動のところ
-    private int InputProcess(GameObject Player_Obj, Image _playerText, ControllerManager.Controller _controller, SpriteRenderer Player, int _Player, bool Player_OK,SpriteRenderer _Description, int _playerid)
-    {
-        if (!Player_OK)
-        {
-            if (_controller.GetAxisUp(ControllerManager.Axis.DpadY) < 0)//上入力
-            {
-                CharaObj[_Player].charaSelect(_playerid, false);
-                _Player++;
-                _Player = _Player % length;
-                CharaObj[_Player].charaSelect(_playerid, true);
-
-                Player.sprite = CharaObj[_Player].GetCharaSprite;
-                _playerText.sprite = _ChataText[_Player];
-                _Description.sprite = ChareDescriptions[_Player];
-
-                Player_Obj.transform.localScale = new Vector3(_xSize[_Player], _ySize[_Player], 1);
-                _soundManager.PlaySE(SEID.General_Controller_Select);
-            }
-            else if (_controller.GetAxisUp(ControllerManager.Axis.DpadY) > 0)//下入力
-            {
-                CharaObj[_Player].charaSelect(_playerid, false);
-                _Player--;
-                _Player = _Player % length;
-                if (_Player < 0) _Player = 3;
-                CharaObj[_Player].charaSelect(_playerid, true);
-
-                Player.sprite = CharaObj[_Player].GetCharaSprite;
-                _playerText.sprite = _ChataText[_Player];
-                _Description.sprite = ChareDescriptions[_Player];
-
-                Player_Obj.transform.localScale = new Vector3(_xSize[_Player], _ySize[_Player], 1);
-                _soundManager.PlaySE(SEID.General_Controller_Select);
-            }
-        }
-        return _Player;
     }
     void TextColorChange()//ここでテキストのフェードイン、アウトをしている
     {
@@ -343,17 +123,5 @@ public class SelectCountroll : MonoBehaviour
         Color color = text.color;
         color.a = time / interval;
         text.color = color;
-    }
-    //新しい関数
-    float ReadyBerMove(int id,bool _Chack,float _MoveTime)
-    {
-        if (_MoveTime <= 1)
-        {
-            _MoveTime += 0.1f;
-        }
-        Transform rect = Moves[id].GetComponent<Transform>();
-        if (!_Chack) Moves[id].GetComponent<Transform>().position= Vector3.Lerp(rect.position, Gole2[id], _MoveTime);
-        else if (_Chack) Moves[id].GetComponent<Transform>().position = Vector3.Lerp(rect.position, Gole[id], _MoveTime);
-        return _MoveTime;
     }
 }
