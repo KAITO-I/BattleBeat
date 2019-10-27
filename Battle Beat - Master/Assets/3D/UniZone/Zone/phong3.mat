@@ -7,9 +7,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: 'Material #26'
+  m_Name: phong3
   m_Shader: {fileID: 4800000, guid: 9baf30ce95c751649b14d96da3a4b4d5, type: 3}
-  m_ShaderKeywords: _ _ALPHAPREMULTIPLY_ON _EMISSIVE_SIMPLE _OUTLINE_NML
+  m_ShaderKeywords: _ _EMISSIVE_SIMPLE _OUTLINE_NML
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -64,7 +64,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: f693c7ade42c68342939ed76490c000a, type: 3}
+        m_Texture: {fileID: 2800000, guid: fb06b2af616335043bc343c0db1e3225, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MatCap_Sampler:
@@ -139,7 +139,7 @@ Material:
     - _CullMode: 2
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
-    - _DstBlend: 10
+    - _DstBlend: 0
     - _EMISSIVE: 0
     - _Farthest_Distance: 100
     - _GI_Intensity: 0
@@ -180,7 +180,7 @@ Material:
     - _LightDirection_MaskOn: 0
     - _MatCap: 0
     - _Metallic: 0
-    - _Mode: 3
+    - _Mode: 0
     - _Nearest_Distance: 0.5
     - _OUTLINE: 0
     - _OcclusionStrength: 1
@@ -216,7 +216,7 @@ Material:
     - _Unlit_Intensity: 1
     - _Use_1stAs2nd: 0
     - _Use_BaseAs1st: 0
-    - _ZWrite: 0
+    - _ZWrite: 1
     - _simpleUI: 0
     - _utsTechnique: 0
     - _utsVersion: 2.075
