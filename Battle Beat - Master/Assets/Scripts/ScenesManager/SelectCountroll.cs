@@ -59,11 +59,6 @@ public class SelectCountroll : MonoBehaviour
             CObj.Init();
             CharaObj.Add(CObj);
         }
-        //foreach (var c in CharaObj)
-        //{
-        //    c.Init();
-        //}
-
         _Ready.SetActive(false);
 
         string commandStr = string.Empty;
@@ -71,11 +66,9 @@ public class SelectCountroll : MonoBehaviour
         {
             commandStr += v.ToString();
         }
-        //CommandManager.instance.registCommand(commandStr, (int i)=> { Debug.Log("Boss!"); _boss[i] = true; });
         CommandManager.instance.registCommand(commandStr, BossSelect);
         _soundManager.PlayBGM(BGMID.CharacterSelect);
 
-        //_ReadyBackGraund.SetActive(false);
         Color color = text.color;
         color.a = 0;
         text.color = color;
@@ -108,12 +101,10 @@ public class SelectCountroll : MonoBehaviour
                 _soundManager.PlaySE(SEID.CharacterSelect_GameStart);
                 SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainGame);
             }
-            //_ReadyBackGraund.SetActive(true);
             _Ready.SetActive(true);
             TextColorChange();//「Startボタンで開始」テキスト表示
             return;
         }
-        //_ReadyBackGraund.SetActive(false);
         _Ready.SetActive(false);
     }
     void TextColorChange()//ここでテキストのフェードイン、アウトをしている
