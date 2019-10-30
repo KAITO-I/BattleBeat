@@ -7,8 +7,9 @@ public class BackDis :BaseResultState
 {
     GameObject Blackobj;
     Image _backImg;
-    public BackDis(SoundManager s,CharaData date,GameObject g,Image img) : base(s,date)
+    public BackDis(SoundManager s,GameObject g,Image img) : base(s)
     {
+        _className = ClassName.BackDis;
         _backImg = img;
         Blackobj = g;
         Blackobj.SetActive(true);

@@ -7,10 +7,12 @@ public class CharaDis : BaseResultState
 {
     Color changecolor = new Color();
     Image CharaImg;
-    CharaDis(SoundManager s,CharaData date,Image c):base(s,date)
+    public CharaDis(SoundManager s,Image c):base(s)
     {
+        _className = ClassName.CharaDis;
+
         CharaImg = c;
-        CharaImg.sprite = date.Avatar;
+        CharaImg.sprite = _date.Avatar;
         ////色初期化
         changecolor = Color.white;
         //changecolor.a = 0.1f;

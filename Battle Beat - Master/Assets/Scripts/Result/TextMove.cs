@@ -13,8 +13,10 @@ public class TextMove : BaseResultState
     Image _playerStandImg,_charaNameImg;
     float MoveTime;
 
-    TextMove(SoundManager s,CharaData date,Transform[] move,Sprite[] p) : base(s,date)
+    public TextMove(SoundManager s,Transform[] move) : base(s)
     {
+        _className = ClassName.TextMove;
+
         flag = 0;
         MoveTime = 0f;
         _id = (int)AttackManager.winner;
@@ -23,7 +25,7 @@ public class TextMove : BaseResultState
         Gole = move;
         //勝利したほうを表示
         _playerStandImg = Moves[0].GetComponent<Image>();
-        _playerStandImg.sprite = p[_id - 1];
+        _playerStandImg.sprite = _date.Avatar;
         _charaNameImg = Moves[1].GetComponent<Image>();
         _charaNameImg.sprite = _date.CharaTextImage;
 

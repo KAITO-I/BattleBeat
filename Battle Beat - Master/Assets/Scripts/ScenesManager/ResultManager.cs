@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,17 +7,9 @@ public class ResultManager : MonoBehaviour
     ControllerManager.Controller _1Pcontroller = ControllerManager.Instance.Player1;
     ControllerManager.Controller _2Pcontroller = ControllerManager.Instance.Player2;
     SoundManager _soundManager = SoundManager.Instance;
+    Setting.Chara winChara = Setting.Chara.HOMI;
+    Setting.Chara loseChara = Setting.Chara.HOMI;
 
-    enum ResultState
-    {
-        BackDis,
-        TextMove,
-        CharaDis,
-        TextDis,
-        SceneJump
-    }
-
-    ResultState state;
     Transform[] Gole;
 
     [SerializeField]
@@ -35,17 +26,14 @@ public class ResultManager : MonoBehaviour
     //勝利したほうの情報を受け取る
     [SerializeField]
     int WinPlayerID;
-
     [SerializeField]
     [Range(0.001f, 0.3f)]
     float intervalForCharacterDisplay = 0.05f;  // 1文字の表示にかかる時間
 
+    //キャラの位置調節に必要 
     float _yPos = -200;//アナの位置直し
     float _xPos = -300f;
 
-    Setting.Chara winChara = Setting.Chara.HOMI;
-    Setting.Chara loseChara = Setting.Chara.HOMI;
-    //キャラの位置調節に必要
     float[] _xSize =
     {
         1.4f,
@@ -65,17 +53,8 @@ public class ResultManager : MonoBehaviour
     
     void Start()
     {
-        string path = "CharacterData/" + winChara.ToString();
-        CharaData winnerData = Resources.Load<CharaData>(path);
-        if (winnerData.backGraund == null)
-        {
-            Debug.Log("背景が挿入されていません");
-        }
-        _state = new BackDis(_soundManager,winnerData, BlackImg,BackGraund);
-
         //プレイヤー情報
         WinPlayerID = (int)AttackManager.winner;
-        //_loseCharaId = 3 - WinPlayerID;
         
         if (WinPlayerID == 1)
         {
@@ -87,8 +66,6 @@ public class ResultManager : MonoBehaviour
             winChara = Setting.p2c;
             loseChara = Setting.p1c;
         }
-
-
         //動かすオブジェクト初期化
         for (int i = 0; i < 3; i++)
         {
@@ -112,27 +89,25 @@ public class ResultManager : MonoBehaviour
         rect.transform.localScale = new Vector3(_xSize[(int)winChara], _ySize[(int)winChara], 1f);
         #endregion
         WordPos.SetActive(false);
-        state = ResultState.BackDis;
 
+        _state = new BackDis(_soundManager, BlackImg, BackGraund);
         _soundManager.PlayBGM(BGMID.Result);
     }
 
     // Update is called once per frame
     void Update()
     {
-        switch (state)
-        {
-            case ResultState.TextDis:
-                break;
-            case ResultState.SceneJump:
-                OnClick();
-                break;
-        }
 
         if (_state.Update())
         {
+            switch (_state._className)//処理が終わったら
+            { /* BackDis->TextMove-> CharaDis->TextDis */
+                case BaseResultState.ClassName.BackDis: new TextMove(_soundManager, Gole); break;
+                case BaseResultState.ClassName.TextMove: new CharaDis(_soundManager, CharaImg); break;
+                case BaseResultState.ClassName.CharaDis: new TextDis(_soundManager, intervalForCharacterDisplay); break;
+                case BaseResultState.ClassName.TextDis: OnClick(); break;
+            }
         }
-
     }
     //シーン移動
     void OnClick()
