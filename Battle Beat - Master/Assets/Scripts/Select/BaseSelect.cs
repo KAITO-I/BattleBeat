@@ -16,7 +16,7 @@ public abstract class BaseSelect: MonoBehaviour
     [SerializeField]
     protected Sprite[] _charaName;
     [SerializeField]
-    protected Sprite[,] _charaDescrition;
+    protected List<DiscritionClass> discritions = new List<DiscritionClass>();
     [SerializeField]
     protected GameObject Teap;
     protected Vector3 Gole, Gole2;
@@ -53,7 +53,7 @@ public abstract class BaseSelect: MonoBehaviour
         _playerNameImg.sprite = _charaName[_charactorID];
         _playerPicture.sprite = _controll.CharaObj[_charactorID].GetCharaSprite;
         //Player01_Obj.transform.localScale = new Vector3(_xSize[_Player1], _ySize[_Player1], 1);
-        _playerDescrition.sprite = _charaDescrition[_charactorDecritionID,_charactorID];
+        _playerDescrition.sprite = discritions[_charactorID]._discritionSprites[_charactorDecritionID];
         _playerDescrition.enabled = _playerDecritionOK;
         length = _charaName.Length;
         _teapMoveTime = 0f;
@@ -171,5 +171,15 @@ public abstract class BaseSelect: MonoBehaviour
 
         return default(T);
     }
-
+}
+//二次元配列用のクラス
+[System.Serializable]
+public class DiscritionClass
+{
+    public string Name;
+    public List<Sprite> _discritionSprites = new List<Sprite>();
+    public DiscritionClass(List<Sprite> list)
+    {
+        _discritionSprites = list;
+    }
 }

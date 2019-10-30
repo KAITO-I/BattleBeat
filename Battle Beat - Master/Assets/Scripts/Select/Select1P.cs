@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class Select1P : BaseSelect
 {
-
     public override void Inctance(SelectCountroll c, SoundManager s)
     {
         _controller = ControllerManager.Instance.Player1;
@@ -20,8 +19,9 @@ public class Select1P : BaseSelect
         InputProcess(1);
         ButtonInput();
         _teapMoveTime = ReadyBerMove(_playerOK, _teapMoveTime);
-        _playerDescrition.sprite = _charaDescrition[_charactorDecritionID,_charactorID];
+        _playerDescrition.sprite = discritions[_charactorID]._discritionSprites[_charactorDecritionID];
         _playerDescrition.enabled = _playerDecritionOK;
+
     }
 
 }
