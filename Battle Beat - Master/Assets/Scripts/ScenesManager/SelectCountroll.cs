@@ -90,11 +90,11 @@ public class SelectCountroll : MonoBehaviour
             //決定ボタンを入力したら
             if (ControllerManager.Instance.GetButtonDown_Menu(ControllerManager.Button.Start))
             {
-                if (!_boss[0])
+                if (!_boss[0])//ボスではない
                 {
                     Setting.p1c = (Setting.Chara)_1P.GetItem<int>();
                 }
-                if (!_boss[1])
+                if (!_boss[1])//ボスではない
                 {
                     Setting.p2c = (Setting.Chara)_2P.GetItem<int>();
                 }

@@ -17,6 +17,8 @@ public class Select2P :BaseSelect
         InputProcess(2);
         ButtonInput();
         _teapMoveTime = ReadyBerMove(_playerOK, _teapMoveTime);
+        _playerDescrition.sprite = _charaDescrition[_charactorDecritionID, _charactorID];
+        _playerDescrition.enabled = _playerDecritionOK;
 
     }
 

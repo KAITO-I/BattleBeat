@@ -16,7 +16,7 @@ public abstract class BaseSelect: MonoBehaviour
     [SerializeField]
     protected Sprite[] _charaName;
     [SerializeField]
-    protected Sprite[] _charaDescrition;
+    protected Sprite[,] _charaDescrition;
     [SerializeField]
     protected GameObject Teap;
     protected Vector3 Gole, Gole2;
@@ -24,6 +24,7 @@ public abstract class BaseSelect: MonoBehaviour
 
     protected int length;//操作キャラ数
     protected int _charactorID;//選択されているキャラ
+    protected int _charactorDecritionID;//説明の枚数
     protected bool _playerOK, _playerDecritionOK;//選択されているか、説明を出すか
     protected float _teapMoveTime;
 
@@ -52,7 +53,7 @@ public abstract class BaseSelect: MonoBehaviour
         _playerNameImg.sprite = _charaName[_charactorID];
         _playerPicture.sprite = _controll.CharaObj[_charactorID].GetCharaSprite;
         //Player01_Obj.transform.localScale = new Vector3(_xSize[_Player1], _ySize[_Player1], 1);
-        _playerDescrition.sprite = _charaDescrition[_charactorID];
+        _playerDescrition.sprite = _charaDescrition[_charactorDecritionID,_charactorID];
         _playerDescrition.enabled = _playerDecritionOK;
         length = _charaName.Length;
         _teapMoveTime = 0f;
@@ -85,6 +86,18 @@ public abstract class BaseSelect: MonoBehaviour
                 _soundManager.PlaySE(SEID.General_Controller_Select);
             }
         }
+        if (_playerDecritionOK)//キャラ説明が表示されている
+        {
+            if (_controller.GetAxisUp(ControllerManager.Axis.DpadX) < 0)//左入力
+            {
+                _charactorDecritionID++;
+            }
+            else if (_controller.GetAxisUp(ControllerManager.Axis.DpadX) > 0)//右入力
+            {
+                _charactorDecritionID--;
+            }
+        }
+        else _charactorDecritionID = 0;//最初から見るように初期化
     }
     //ボタン操作関数
     protected void ButtonInput()
@@ -115,7 +128,7 @@ public abstract class BaseSelect: MonoBehaviour
         _playerDescrition.enabled = _playerDecritionOK;
 
     }
-    //新しい関数
+    //テープを動かす処理
     protected float ReadyBerMove(bool _Chack, float _MoveTime)
     {
         if (_MoveTime <= 1)

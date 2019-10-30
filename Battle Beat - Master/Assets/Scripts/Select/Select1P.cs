@@ -20,6 +20,8 @@ public class Select1P : BaseSelect
         InputProcess(1);
         ButtonInput();
         _teapMoveTime = ReadyBerMove(_playerOK, _teapMoveTime);
+        _playerDescrition.sprite = _charaDescrition[_charactorDecritionID,_charactorID];
+        _playerDescrition.enabled = _playerDecritionOK;
     }
 
 }
