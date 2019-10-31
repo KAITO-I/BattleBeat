@@ -1,29 +1,43 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class CoreSystem : MonoBehaviour
+namespace CoreManager
 {
-    private static CoreSystem instance;
-
-    [SerializeField] ControllerManager controllerManager;
-    [SerializeField] SceneLoader       sceneLoader;
-
-    private void Awake()
+    public class CoreSystem : MonoBehaviour
     {
-        if (CoreSystem.instance != null)
+        private static CoreSystem instance;
+
+        [SerializeField] ControllerManager controllerManager;
+        [SerializeField] SceneLoader sceneLoader;
+
+        [Header("PopupManager")]
+        [SerializeField]
+        GameObject popup;
+
+        PopupManager popupManager;
+
+        void Awake()
         {
-            Destroy(this.gameObject);
-            return;
+            if (CoreSystem.instance != null)
+            {
+                Destroy(this.gameObject);
+                return;
+            }
+
+            CoreSystem.instance = this;
+            DontDestroyOnLoad(this.gameObject);
+
+            this.controllerManager.Init();
+            this.sceneLoader.Init();
+
+            this.popupManager = new PopupManager(this.popup);
+
+            //Cursor.lockState = CursorLockMode.Locked;
+            //Cursor.visible = false;
         }
 
-        CoreSystem.instance = this;
-        DontDestroyOnLoad(this.gameObject);
-
-        this.controllerManager.Init();
-        this.sceneLoader.Init();
-
-        //Cursor.lockState = CursorLockMode.Locked;
-        //Cursor.visible = false;
+        void Update()
+        {
+            this.popupManager.Update();
+        }
     }
 }
