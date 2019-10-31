@@ -62,42 +62,64 @@ public abstract class BaseSelect: MonoBehaviour
 
     protected void InputProcess(int _ID)
     {
-        if (!_playerOK)
+        int old = _charactorID;
+        if (!_playerOK)//選択されていないとき
         {
             if (_controller.GetAxisUp(ControllerManager.Axis.DpadY) < 0)//上入力
             {
                 _controll.CharaObj[_charactorID].charaSelect(_ID, false);
-                _charactorID++;
-                _charactorID = _charactorID % length;
+                _charactorID = (_charactorID++) % 3;
+                //左->0:右->3足す
+                if (old >= 3) _charactorID += 3;
                 _controll.CharaObj[_charactorID].charaSelect(_ID, true);
-
                 //Player_Obj.transform.localScale = new Vector3(_xSize[_Player], _ySize[_Player], 1);
                 _soundManager.PlaySE(SEID.General_Controller_Select);
             }
             else if (_controller.GetAxisUp(ControllerManager.Axis.DpadY) > 0)//下入力
             {
                 _controll.CharaObj[_charactorID].charaSelect(_ID, false);
-                _charactorID--;
-                _charactorID = _charactorID % length;
-                if (_charactorID < 0) _charactorID = 3;
+                _charactorID = (_charactorID - 1 + 3) % 3;
+                //左->0:右->3足す
+                if (old >= 3) _charactorID += 3;
                 _controll.CharaObj[_charactorID].charaSelect(_ID, true);
-
                 //Player_Obj.transform.localScale = new Vector3(_xSize[_Player], _ySize[_Player], 1);
                 _soundManager.PlaySE(SEID.General_Controller_Select);
             }
         }
-        if (_playerDecritionOK)//キャラ説明が表示されている
+
+        if (_controller.GetAxisUp(ControllerManager.Axis.DpadX) < 0)//左入力
         {
-            if (_controller.GetAxisUp(ControllerManager.Axis.DpadX) < 0)//左入力
-            {
+            if (_playerDecritionOK)//キャラ説明が表示されている
                 _charactorDecritionID++;
-            }
-            else if (_controller.GetAxisUp(ControllerManager.Axis.DpadX) > 0)//右入力
+            else 
             {
+                _charactorDecritionID = 0;//最初から見るように初期化
+                if (!_playerOK)
+                {
+                    _controll.CharaObj[_charactorID].charaSelect(_ID, false);
+                    _charactorID = (_charactorID - 3 + 6) % 6;
+                    _controll.CharaObj[_charactorID].charaSelect(_ID, true);
+                    _soundManager.PlaySE(SEID.General_Controller_Select);
+                }
+            }
+
+        }
+        else if (_controller.GetAxisUp(ControllerManager.Axis.DpadX) > 0)//右入力
+        {
+            if (_playerDecritionOK)//キャラ説明が表示されている
                 _charactorDecritionID--;
+            else
+            {
+                _charactorDecritionID = 0;//最初から見るように初期化
+                if (!_playerOK)
+                {
+                    _controll.CharaObj[_charactorID].charaSelect(_ID, false);
+                    _charactorID = (_charactorID + 3) % 6;
+                    _controll.CharaObj[_charactorID].charaSelect(_ID, true);
+                    _soundManager.PlaySE(SEID.General_Controller_Select);
+                }
             }
         }
-        else _charactorDecritionID = 0;//最初から見るように初期化
     }
     //ボタン操作関数
     protected void ButtonInput()
@@ -108,7 +130,6 @@ public abstract class BaseSelect: MonoBehaviour
             _teapMoveTime = 0f;
         }
         //×ボタンの処理
-        //長押しで画面移動処理
         if (_controller.GetButtonDown(ControllerManager.Button.B))
         {
             //キャラ選択時は選択を外す

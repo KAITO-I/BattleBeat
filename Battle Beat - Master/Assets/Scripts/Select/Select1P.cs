@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Select1P : BaseSelect
 {
@@ -21,7 +20,7 @@ public class Select1P : BaseSelect
         _teapMoveTime = ReadyBerMove(_playerOK, _teapMoveTime);
         _playerDescrition.sprite = discritions[_charactorID]._discritionSprites[_charactorDecritionID];
         _playerDescrition.enabled = _playerDecritionOK;
-
+        _playerPicture.sprite = _controll.CharaObj[_charactorID].GetCharaSprite;
     }
 
 }

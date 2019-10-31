@@ -5,6 +5,8 @@ using UnityEngine;
 //攻撃は違うのでクラスを分ける
 public class Uni_ZoneAnimation : BasePlayerAnimation
 {
+    [SerializeField]
+    GameObject Uni;
     protected override void Attack1()
     {
         anim.SetTrigger("Wait");
@@ -18,6 +20,7 @@ public class Uni_ZoneAnimation : BasePlayerAnimation
     protected override void Attack3()
     {
         anim.SetTrigger("Trap");
+        Uni.SetActive(false);
         PlayAnim = "Trap";
     }
     protected override void Attack4()
