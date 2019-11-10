@@ -140,11 +140,14 @@ MonoBehaviour:
   SkillPrefabs:
   - {fileID: 6660486584687797973, guid: 3590fb84d940e0f4cb8207e942872d8e, type: 3}
   - {fileID: 2661390269113452054, guid: da7d9c26aa5ea9d4cbd1e385a4a53982, type: 3}
-  - {fileID: 1119904956139624259, guid: ef94b8a5405cc94479865eb68f635089, type: 3}
+  - {fileID: 1119904956139624259, guid: 1e0b78042bf2e154fbeff2bfe13b58c5, type: 3}
   - {fileID: 7850170818662004598, guid: 739e0729b85766c46987e050a008cb6c, type: 3}
   AnimationController: {fileID: 4882877871646710935}
   CoolDownCount: 00000000000000000000000000000000
   onGame: 0
+  bulletMax: 3
+  bulletCounterPrefab: {fileID: 5248756991847439647, guid: d2f357d591016d545baf6ed2b74a378f,
+    type: 3}
 --- !u!95 &-5158517085444911650
 Animator:
   serializedVersion: 3
@@ -187,10 +190,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4320667415473011651}
     m_Modifications:
-    - target: {fileID: 100000, guid: 879e128bb1494b243b25aec9bd8e3cd9, type: 3}
-      propertyPath: m_Name
-      value: kusari_toguro
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 879e128bb1494b243b25aec9bd8e3cd9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.04
@@ -235,6 +234,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 879e128bb1494b243b25aec9bd8e3cd9, type: 3}
+      propertyPath: m_Name
+      value: kusari_toguro
+      objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: 879e128bb1494b243b25aec9bd8e3cd9, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -254,11 +257,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4320667415473011651}
     m_Modifications:
-    - target: {fileID: -927199367670048503, guid: 674860e366c5f5049a1df975b4d86241,
-        type: 3}
-      propertyPath: m_Name
-      value: ana
-      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 674860e366c5f5049a1df975b4d86241,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -328,6 +326,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 674860e366c5f5049a1df975b4d86241,
+        type: 3}
+      propertyPath: m_Name
+      value: ana
       objectReference: {fileID: 0}
     - target: {fileID: -1504981713932161579, guid: 674860e366c5f5049a1df975b4d86241,
         type: 3}

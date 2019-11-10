@@ -106,6 +106,7 @@ public class RythmManager : MonoBehaviour
 
     public bool IsTiming()
     {
+        return true;
         return (this.time > this.bps - 0.2);
     }
 }
