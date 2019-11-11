@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Face
-  m_Shader: {fileID: 4800000, guid: e8e7d781c3155254b9ea8956c5bd1218, type: 3}
+  m_Name: megaphone toon
+  m_Shader: {fileID: 4800000, guid: 9baf30ce95c751649b14d96da3a4b4d5, type: 3}
   m_ShaderKeywords: _ _EMISSIVE_SIMPLE _OUTLINE_NML
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -39,10 +39,6 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _ClippingMask:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -68,7 +64,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 3df3c37def3ce094c96efc5f5377847d, type: 3}
+        m_Texture: {fileID: 2800000, guid: 6e762972727720b409c074752c7c14cd, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MatCap_Sampler:
@@ -139,7 +135,6 @@ Material:
     - _BumpScale: 1
     - _BumpScaleMatcap: 1
     - _CameraRolling_Stabilizer: 0
-    - _Clipping_Level: 0
     - _ColorShift_Speed: 0
     - _CullMode: 2
     - _Cutoff: 0.5
@@ -152,10 +147,8 @@ Material:
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _HighColor_Power: 0
-    - _Inverse_Clipping: 0
     - _Inverse_MatcapMask: 0
     - _Inverse_Z_Axis_BLD: 1
-    - _IsBaseMapAlphaAsClippingMask: 1
     - _Is_BLD: 0
     - _Is_BakedNormal: 0
     - _Is_BlendAddToHiColor: 0
@@ -194,7 +187,7 @@ Material:
     - _Offset_X_Axis_BLD: -0.05
     - _Offset_Y_Axis_BLD: 0.09
     - _Offset_Z: 0
-    - _Outline_Width: 3
+    - _Outline_Width: 0
     - _Parallax: 0.02
     - _RimLight: 0
     - _RimLight_FeatherOff: 0
@@ -219,7 +212,6 @@ Material:
     - _Tweak_MatcapMaskLevel: 0
     - _Tweak_RimLightMaskLevel: 0
     - _Tweak_SystemShadowsLevel: 0
-    - _Tweak_transparency: 0
     - _UVSec: 0
     - _Unlit_Intensity: 1
     - _Use_1stAs2nd: 0
