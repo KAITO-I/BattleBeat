@@ -75,8 +75,8 @@ public class SelectCountroll : MonoBehaviour
 
         //スクリプト改変用
         _1P = GetComponent<Select1P>();
-        _2P= GetComponent<Select1P>();
-        _1P.Inctance(this,_soundManager);
+        _2P = GetComponent<Select2P>();
+        _1P.Inctance(this, _soundManager);
         _2P.Inctance(this, _soundManager);
     }
     void Update()

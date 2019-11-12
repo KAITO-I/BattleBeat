@@ -45,7 +45,7 @@ public abstract class BaseSelect: MonoBehaviour
 
     public virtual void Inctance(SelectCountroll c, SoundManager s)
     {
-        c = _controll;
+        _controll = c;
         _soundManager = s;
         _charactorID = 0;
         _playerOK = false;
@@ -58,17 +58,19 @@ public abstract class BaseSelect: MonoBehaviour
         length = _charaName.Length;
         _teapMoveTime = 0f;
     }
+
     public abstract void playerUpdate();
 
+    //十字キーの処理
     protected void InputProcess(int _ID)
     {
         int old = _charactorID;
-        if (!_playerOK)//選択されていないとき
+        if (!_playerOK&&!_playerDecritionOK)//選択されていないとき,説明画面が表示されていないとき
         {
             if (_controller.GetAxisUp(ControllerManager.Axis.DpadY) < 0)//上入力
             {
                 _controll.CharaObj[_charactorID].charaSelect(_ID, false);
-                _charactorID = (_charactorID++) % 3;
+                _charactorID = (_charactorID + 1) % 3;
                 //左->0:右->3足す
                 if (old >= 3) _charactorID += 3;
                 _controll.CharaObj[_charactorID].charaSelect(_ID, true);
@@ -89,9 +91,12 @@ public abstract class BaseSelect: MonoBehaviour
 
         if (_controller.GetAxisUp(ControllerManager.Axis.DpadX) < 0)//左入力
         {
-            if (_playerDecritionOK)//キャラ説明が表示されている
-                _charactorDecritionID++;
-            else 
+            if (_playerDecritionOK)
+            {//キャラ説明が表示されている
+                _charactorDecritionID = (_charactorDecritionID - 1 + discritions[_charactorID]._discritionSprites.Count) % discritions[_charactorID]._discritionSprites.Count;
+
+            }
+            else
             {
                 _charactorDecritionID = 0;//最初から見るように初期化
                 if (!_playerOK)
@@ -106,8 +111,10 @@ public abstract class BaseSelect: MonoBehaviour
         }
         else if (_controller.GetAxisUp(ControllerManager.Axis.DpadX) > 0)//右入力
         {
-            if (_playerDecritionOK)//キャラ説明が表示されている
-                _charactorDecritionID--;
+            if (_playerDecritionOK)
+            {//キャラ説明が表示されている
+                _charactorDecritionID = (_charactorDecritionID + 1) % discritions[_charactorID]._discritionSprites.Count;
+            }
             else
             {
                 _charactorDecritionID = 0;//最初から見るように初期化
