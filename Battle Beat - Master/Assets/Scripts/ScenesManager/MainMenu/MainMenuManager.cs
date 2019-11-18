@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Audio;
 using MainMenu;
+using CoreManager;
 
 public class MainMenuManager : MonoBehaviour
 {
@@ -172,6 +173,9 @@ public class MainMenuManager : MonoBehaviour
     }
 
     private void UpdateMenu() {
+        // ポップアップ表示中なら実行しない
+        if (PopupManager.IsActive) return;
+
         // 移動していないときはボタンの選択状態に合わせてUIを変化させる
         if (this.mtState != MegaphoneTreeState.Changing) {
             // 看板切り替え
@@ -235,7 +239,7 @@ public class MainMenuManager : MonoBehaviour
                 else if (this.controller.GetButtonDown_Menu(ControllerManager.Button.B))
                 {
                     SoundManager.Instance.PlaySE(SEID.General_Controller_Back);
-                    SceneLoader.Instance.LoadScene(SceneLoader.Scenes.Title);
+                    PopupManager.Display(("タイトルに戻る", BackToTitle), ("ゲームを終わる", GameEnd));
                 }
             }
             // 右UI
@@ -261,6 +265,16 @@ public class MainMenuManager : MonoBehaviour
                 else if (this.controller.GetButtonDown_Menu(ControllerManager.Button.B)) StartCoroutine(RightToLeft());
             }
         }
+    }
+
+    private void BackToTitle()
+    {
+        SceneLoader.Instance.LoadScene(SceneLoader.Scenes.Title);
+    }
+
+    private void GameEnd()
+    {
+        UnityEditor.EditorApplication.isPlaying = false;
     }
 
     private IEnumerator LeftToRight()

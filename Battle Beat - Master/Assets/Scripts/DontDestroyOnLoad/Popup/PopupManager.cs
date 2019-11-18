@@ -8,26 +8,50 @@ namespace CoreManager
 
     class PopupManager
     {
+        //==============================
+        // static
+        //==============================
         static PopupManager instance;
-        public static PopupManager Instance
+        
+        public static bool IsActive { get { return PopupManager.instance.isDisplaying; } }
+
+        //==============================
+        // 表示
+        //==============================
+        public static void Display((string text, CalloutProcess process) upCallout, (string text, CalloutProcess) downCallout)
         {
-            get {
-                if (instance == null) Debug.LogError("PopupManagerがインスタンスされていません。");
-                return instance;
+            if (PopupManager.instance == null)
+            {
+                Debug.LogError("instanceされていないため、実行できません。");
+                return;
             }
+
+            // 表示
+            PopupManager.instance.DisplayPopup(upCallout, downCallout);
         }
 
+        //==============================
+        // class
+        //==============================
         ControllerManager controllerManager;
 
+        // ポップアップ本体
         GameObject popupObject;
         bool       isDisplaying;
 
-        Text message;
-
+        // 吹き出し情報と選択状態
         PopupCollout[] collouts;
         int selectedButtonNum;
 
-        public PopupManager(GameObject popupObject)
+        //==============================
+        // コンストラクタ
+        //==============================
+        public PopupManager(
+            GameObject popupObject,
+            (Vector2 selectLocalPos, Vector2 unselectLocalPos) upCallout,
+            (Vector2 selectLocalPos, Vector2 unselectLocalPos) downCallout,
+            Vector2 unselectLocalScale
+        )
         {
             if (instance != null) return;
             instance = this;
@@ -37,92 +61,122 @@ namespace CoreManager
             (this.popupObject = popupObject).SetActive(false);
             this.isDisplaying = false;
 
-            this.message = popupObject.transform.Find("Background").Find("Message").GetComponent<Text>();
 
             Transform parentButton = popupObject.transform.Find("Background").Find("Callouts");
             this.collouts = new PopupCollout[2];
-            this.collouts[0] = new PopupCollout(parentButton.Find("Up").gameObject);
-            this.collouts[1] = new PopupCollout(parentButton.Find("Down").gameObject);
+            this.collouts[0] = new PopupCollout(parentButton.Find("Up").gameObject, upCallout, unselectLocalScale);
+            this.collouts[1] = new PopupCollout(parentButton.Find("Down").gameObject, downCallout, unselectLocalScale);
 
             this.selectedButtonNum = 0;
-        }
-
-        void Display(string message, (string text, CalloutProcess process) leftButtons, (string text, CalloutProcess process) rightButtons)
-        {
-            this.message.text = message;
-
-            this.collouts[0].SetButtonData(leftButtons.text, leftButtons.process);
-            this.collouts[1].SetButtonData(rightButtons.text, rightButtons.process);
-
-            this.popupObject.SetActive(this.isDisplaying = true);
-            this.collouts[0].Selected(true);
-            this.collouts[1].Selected(false);
         }
 
         //==============================
         // Update
         //==============================
-        internal void Update()
+        public void Update()
         {
             if (!this.isDisplaying) return;
 
             // 表示中の処理
             // 上下の入力
-            float dpadY = ControllerManager.Instance.GetAxis_Menu(ControllerManager.Axis.DpadY);
+            float dpadY = this.controllerManager.GetAxis_Menu(ControllerManager.Axis.DpadY);
             if (Mathf.Abs(dpadY) > 0.5)
             {
                 if (dpadY > 0)
                 {
                     // 上入力
                     this.selectedButtonNum = 0;
-                    this.collouts[0].Selected(true);
-                    this.collouts[1].Selected(false);
-                } else
+                    this.collouts[0].Select(true);
+                    this.collouts[1].Select(false);
+                }
+                else
                 {
                     // 下入力
                     this.selectedButtonNum = 1;
-                    this.collouts[0].Selected(false);
-                    this.collouts[1].Selected(true);
+                    this.collouts[0].Select(false);
+                    this.collouts[1].Select(true);
                 }
             }
 
-            if (ControllerManager.Instance.GetButtonDown_Menu(ControllerManager.Button.A))
+            if (this.controllerManager.GetButtonDown_Menu(ControllerManager.Button.A))
             {
                 this.popupObject.SetActive(this.isDisplaying = false);
-                this.collouts[this.selectedButtonNum].Press();
+                this.collouts[this.selectedButtonNum].Selected();
             }
 
-            if (ControllerManager.Instance.GetButtonDown_Menu(ControllerManager.Button.B)) this.popupObject.SetActive(this.isDisplaying = false);
+            if (this.controllerManager.GetButtonDown_Menu(ControllerManager.Button.B)) this.popupObject.SetActive(this.isDisplaying = false);
+        }
+
+        //==============================
+        // 表示
+        //==============================
+        void DisplayPopup((string text, CalloutProcess process) upCollout, (string text, CalloutProcess process) downCallout)
+        {
+            this.collouts[0].SetButtonData(upCollout.text, upCollout.process);
+            this.collouts[1].SetButtonData(downCallout.text, downCallout.process);
+
+            this.popupObject.SetActive(this.isDisplaying = true);
+            this.collouts[0].Select(true);
+            this.collouts[1].Select(false);
         }
     }
-    
+
+    //==============================
+    // 各吹き出し
+    //==============================
     class PopupCollout
     {
         Image          image;
         Text           text;
         CalloutProcess process;
 
-        internal PopupCollout(GameObject buttonObject)
+        Vector2 selectLocalPos;
+        Vector2 unselectLocalPos;
+        Vector2 unselectLocalScale;
+
+        //==============================
+        // コンストラクタ
+        //==============================
+        public PopupCollout(GameObject calloutObject, (Vector2 selectLocalPos, Vector2 unselectLocalPos) pos, Vector2 unselectLocalScale)
         {
-            this.image = buttonObject.transform.Find("Image").GetComponent<Image>();
-            this.text  = buttonObject.transform.Find("Text").GetComponent<Text>();
+            this.image = calloutObject.GetComponent<Image>();
+            this.text  = calloutObject.transform.Find("Text").GetComponent<Text>();
+
+            this.selectLocalPos     = pos.selectLocalPos;
+            this.unselectLocalPos   = pos.unselectLocalPos;
+            this.unselectLocalScale = unselectLocalScale;
         }
 
-        internal void SetButtonData(string text, CalloutProcess buttonProcess)
+        //==============================
+        // データ設定
+        //==============================
+        public void SetButtonData(string text, CalloutProcess buttonProcess)
         {
             this.text.text = text;
             this.process   = buttonProcess;
         }
 
-        internal void Selected(bool selected)
+        //==============================
+        // 選択
+        //==============================
+        public void Select(bool select)
         {
-            this.image.rectTransform.localScale = selected ? new Vector2(1.5f, 1.5f) : new Vector2(1f, 1f);
+            this.image.rectTransform.localPosition = select ? this.selectLocalPos : this.unselectLocalPos;
+            this.image.rectTransform.localScale = select ? new Vector2(1f, 1f) : this.unselectLocalScale;
         }
 
-        internal void Press()
+        //==============================
+        // 決定
+        //==============================
+        public void Selected()
         {
-            Timer timer = new Timer(1000);
-            timer += ()
+            // アニメーション
+            /*Timer timer = new Timer(1000);
+            timer.Elapsed += (sender, e) =>
+            {
+            
+            }*/
+
             this.process();
         }
     }
