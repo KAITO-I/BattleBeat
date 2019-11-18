@@ -22,6 +22,7 @@ public class Uni_ZoneAnimation : BasePlayerAnimation
         anim.SetTrigger("Trap");
         Uni.SetActive(false);
         PlayAnim = "Trap";
+        //ユニ単体出現
     }
     protected override void Attack4()
     {

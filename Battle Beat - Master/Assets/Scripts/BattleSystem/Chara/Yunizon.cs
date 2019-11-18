@@ -11,7 +11,7 @@ public class Yunizon : Player
         Guard = false;
     }
 
-    private void ClassicAttackProcess(int i)
+    private bool ClassicAttackProcess(int i)
     {
         var Skill = SkillPrefabs[i].GetComponent<AttackItemBase>() as BasicAttack;
         if (CoolDownCount[i] == 0 && Skill.SpCost <= Sp)
@@ -28,20 +28,37 @@ public class Yunizon : Player
             }
             nowAttack = Skill;
             AttackManager._instance.Add(Skill);
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
     protected override void Attack_1()
     {
-        ClassicAttackProcess(0);
+        var rlt = ClassicAttackProcess(0);
+        if (rlt)
+        {
+            base.Attack_1();
+        }
     }
     protected override void Attack_2()
     {
-        ClassicAttackProcess(1);
+        var rlt = ClassicAttackProcess(1);
+        if (rlt)
+        {
+            base.Attack_2();
+        }
     }
     protected override void Attack_3()
     {
-        ClassicAttackProcess(2);
+        var rlt = ClassicAttackProcess(2);
+        if (rlt)
+        {
+            base.Attack_3();
+        }
     }
     protected override void Attack_4()
     {
@@ -59,6 +76,7 @@ public class Yunizon : Player
                 waitAttackId = 3;
             }
             AttackManager._instance.Add(Skill);
+            base.Attack_4();
         }
     }
     public override void Turn_AttackPhase()

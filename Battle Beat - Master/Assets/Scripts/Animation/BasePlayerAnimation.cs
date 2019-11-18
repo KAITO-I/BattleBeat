@@ -21,6 +21,7 @@ public class BasePlayerAnimation:MonoBehaviour
     //自分のとぐろ
     public MeshRenderer _renderer;
     float interval;
+    float oldbps;
 
     protected int PosID;
     protected Animator anim;
@@ -34,18 +35,22 @@ public class BasePlayerAnimation:MonoBehaviour
         _renderer.enabled = false;
         rythm = GameObject.Find("Manager").GetComponent<RythmManager>();
         interval = rythm.getbps/2;
+        oldbps = rythm.getbps;
     }
 
     protected virtual void Update()
     {
+        //rythm:0.8->0.5
         interval = rythm.getbps / 2;
-        anim.speed = rythm.getbps * 2;
+        //リズムの値が大きくなるため、ずれる
+        float dif = oldbps - rythm.getbps;
+        anim.speed = (oldbps + dif) * 2.0f;
     }
     //（プレイヤーの場所,目的地,コマンド）
     public virtual void Move(GameObject Player,Vector3 Goal, Player.MoveComand comand)
     {
         AnimFunc(comand);
-        StartCoroutine(enumerator(Player, Goal));
+        StartCoroutine(MoveColutin(Player, Goal));
     }
     //（コマンド）
     public void Attack(Player.MoveComand comand)
@@ -59,7 +64,7 @@ public class BasePlayerAnimation:MonoBehaviour
     }
 
     //タイミングを同じにするため(動かすもの,到達点)
-    protected IEnumerator enumerator(GameObject obj, Vector3 Goal)
+    protected IEnumerator MoveColutin(GameObject obj, Vector3 Goal)
     {
         float time = 0;
         Vector3 Oragin = obj.transform.position;
@@ -73,6 +78,7 @@ public class BasePlayerAnimation:MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
     }
+
     //アニメーション再生
     void AnimFunc(Player.MoveComand comand)
     {

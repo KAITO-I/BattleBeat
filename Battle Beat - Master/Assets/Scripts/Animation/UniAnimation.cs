@@ -11,17 +11,9 @@ public class UniAnimation : BasePlayerAnimation
         Attack,
         Back
     }
-    protected override void Start()
-    {
-        base.Start();
-    }
-
-    protected override void Update()
-    {
-        base.Update();
-    }
 
     //トラップの時はこの関数を呼んでもらう
+    //(現在の状況、ユニのオブジェクト,目的地)
     public void UniAnim(UniState state,GameObject player=null, Vector3? Gole=null)
     {
         Vector3 _Gole = Gole ?? Vector3.zero;//デフォルトでいらないため
@@ -35,7 +27,7 @@ public class UniAnimation : BasePlayerAnimation
                     vec += new Vector3(1, 0, -1);
                 }
                 else vec += new Vector3(-1, 0, -1);
-                StartCoroutine(enumerator(player,_Gole));//移動
+                StartCoroutine(MoveColutin(player,vec));//移動
                 break;
             case UniState.Wait:
                 anim.SetTrigger("Wait");
@@ -45,7 +37,7 @@ public class UniAnimation : BasePlayerAnimation
                 break;
             case UniState.Back:
                 anim.SetTrigger("Back");
-                StartCoroutine(enumerator(player, _Gole));//移動/戻るときはゾーンのいる位置に行く
+                StartCoroutine(MoveColutin(player, _Gole));//移動/戻るときはゾーンのいる位置に行く
                 break;
         }
     }
