@@ -69,10 +69,6 @@ public class SceneLoader : MonoBehaviour
     [SerializeField]
     private float fadeTime;
 
-    bool popupdisping = false;
-    [SerializeField]
-    Sprite hotbarrr;
-
     //------------------------------
     // 初期化
     //------------------------------
@@ -150,20 +146,10 @@ public class SceneLoader : MonoBehaviour
                 {
                     if (Input.anyKeyDown)
                     {
-                        /*SoundManager.Instance.PlaySE(SEID.General_Controller_Decision);
+                        SoundManager.Instance.PlaySE(SEID.General_Controller_Decision);
                         this.pressButtonText.GetComponent<Animation>().Stop();
-                        this.pressButtonText.color = new Color(this.pressButtonText.color.r, this.pressButtonText.color.g, this.pressButtonText.color.b, 0f);*/
-                        this.popupdisping = true;
-
-                        PopupProcess pp = popupdisp;
-                        PopupManager.Instance.Display(this.hotbarrr, "テストメッセージ", (ControllerManager.Button.A, pp));
-                        break;
+                        this.pressButtonText.color = new Color(this.pressButtonText.color.r, this.pressButtonText.color.g, this.pressButtonText.color.b, 0f);
                     }
-                    yield return null;
-                }
-
-                while (this.popupdisping)
-                {
                     yield return null;
                 }
             }
@@ -254,10 +240,5 @@ public class SceneLoader : MonoBehaviour
 
             yield return new WaitForSeconds(1.0f);
         }
-    }
-
-    void popupdisp()
-    {
-        this.popupdisping = false;
     }
 }

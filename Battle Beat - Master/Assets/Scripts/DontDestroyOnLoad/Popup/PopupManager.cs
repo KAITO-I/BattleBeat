@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using System.Timers;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace CoreManager
 {
-    delegate void PopupProcess();
+    delegate void CalloutProcess();
 
     class PopupManager
     {
@@ -23,10 +24,10 @@ namespace CoreManager
 
         Text message;
 
-        (ControllerManager.Button, PopupButton)[] popupButtons;
+        PopupCollout[] collouts;
         int selectedButtonNum;
 
-        internal PopupManager(GameObject popupObject)
+        public PopupManager(GameObject popupObject)
         {
             if (instance != null) return;
             instance = this;
@@ -38,26 +39,24 @@ namespace CoreManager
 
             this.message = popupObject.transform.Find("Background").Find("Message").GetComponent<Text>();
 
-            Transform parentButton = popupObject.transform.Find("Background").Find("Buttons");
-            this.popupButtons = new (ControllerManager.Button, PopupButton)[2];
-            this.popupButtons[0].Item2 = new PopupButton(parentButton.Find("LeftButton").gameObject);
-            this.popupButtons[1].Item2 = new PopupButton(parentButton.Find("RightButton").gameObject);
+            Transform parentButton = popupObject.transform.Find("Background").Find("Callouts");
+            this.collouts = new PopupCollout[2];
+            this.collouts[0] = new PopupCollout(parentButton.Find("Up").gameObject);
+            this.collouts[1] = new PopupCollout(parentButton.Find("Down").gameObject);
 
             this.selectedButtonNum = 0;
         }
 
-        public void Display(string message, (ControllerManager.Button button, string text, PopupProcess process) leftButtons, (ControllerManager.Button button, string text, PopupProcess process) rightButtons)
+        void Display(string message, (string text, CalloutProcess process) leftButtons, (string text, CalloutProcess process) rightButtons)
         {
             this.message.text = message;
 
-            this.popupButtons[0].Item1 = leftButtons.button;
-            this.popupButtons[0].Item2.SetButtonData(leftButtons.text, leftButtons.process);
-
-            this.popupButtons[1].Item1 = rightButtons.button;
-            this.popupButtons[1].Item2.SetButtonData(rightButtons.text, rightButtons.process);
+            this.collouts[0].SetButtonData(leftButtons.text, leftButtons.process);
+            this.collouts[1].SetButtonData(rightButtons.text, rightButtons.process);
 
             this.popupObject.SetActive(this.isDisplaying = true);
-            this.popupButtons[0].Item2.Selected(true);
+            this.collouts[0].Selected(true);
+            this.collouts[1].Selected(false);
         }
 
         //==============================
@@ -68,70 +67,63 @@ namespace CoreManager
             if (!this.isDisplaying) return;
 
             // 表示中の処理
-            // 左右の入力
-            if (Input.GetKeyDown(KeyCode.RightArrow))
+            // 上下の入力
+            float dpadY = ControllerManager.Instance.GetAxis_Menu(ControllerManager.Axis.DpadY);
+            if (Mathf.Abs(dpadY) > 0.5)
             {
-                this.selectedButtonNum++;
-                if (this.selectedButtonNum > 1) this.selectedButtonNum = 1;
-            }
-
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
-            {
-                this.selectedButtonNum--;
-                if (this.selectedButtonNum < 0) this.selectedButtonNum = 0;
-            }
-            Debug.Log(this.selectedButtonNum);
-            for (int i = 0; i < 2; i++)
-            {
-                this.popupButtons[i].Item2.Selected(this.selectedButtonNum == i);
-            }
-
-            // ボタン判定
-            /*foreach ((ControllerManager.Button button, PopupButton popupButton) in this.popupButtons)
-            {
-                if (this.controllerManager.GetButtonDown_Menu(button))
+                if (dpadY > 0)
                 {
-                    this.popupObject.SetActive(this.isDisplaying = false);
-                    popupButton.Press();
-                    break;
+                    // 上入力
+                    this.selectedButtonNum = 0;
+                    this.collouts[0].Selected(true);
+                    this.collouts[1].Selected(false);
+                } else
+                {
+                    // 下入力
+                    this.selectedButtonNum = 1;
+                    this.collouts[0].Selected(false);
+                    this.collouts[1].Selected(true);
                 }
-            }*/
-            if (Input.GetKeyDown(KeyCode.Space))
+            }
+
+            if (ControllerManager.Instance.GetButtonDown_Menu(ControllerManager.Button.A))
             {
                 this.popupObject.SetActive(this.isDisplaying = false);
-                this.popupButtons[this.selectedButtonNum].Item2.Press();
+                this.collouts[this.selectedButtonNum].Press();
             }
+
+            if (ControllerManager.Instance.GetButtonDown_Menu(ControllerManager.Button.B)) this.popupObject.SetActive(this.isDisplaying = false);
         }
     }
-
     
-    class PopupButton
+    class PopupCollout
     {
-        Image        buttonImage;
-        Text         buttonText;
-        PopupProcess buttonProcess;
+        Image          image;
+        Text           text;
+        CalloutProcess process;
 
-        internal PopupButton(GameObject buttonObject)
+        internal PopupCollout(GameObject buttonObject)
         {
-            this.buttonImage = buttonObject.transform.Find("Image").GetComponent<Image>();
-            this.buttonText  = buttonObject.transform.Find("Text").GetComponent<Text>();
+            this.image = buttonObject.transform.Find("Image").GetComponent<Image>();
+            this.text  = buttonObject.transform.Find("Text").GetComponent<Text>();
         }
 
-        internal void SetButtonData(string text, PopupProcess buttonProcess)
+        internal void SetButtonData(string text, CalloutProcess buttonProcess)
         {
-            this.buttonText.text = text;
-            this.buttonProcess   = buttonProcess;
+            this.text.text = text;
+            this.process   = buttonProcess;
         }
 
         internal void Selected(bool selected)
         {
-            this.buttonImage.color = selected ? Color.red : Color.white;
+            this.image.rectTransform.localScale = selected ? new Vector2(1.5f, 1.5f) : new Vector2(1f, 1f);
         }
 
         internal void Press()
         {
-            this.buttonImage.color = Color.yellow;
-            this.buttonProcess();
+            Timer timer = new Timer(1000);
+            timer += ()
+            this.process();
         }
     }
 }
