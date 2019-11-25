@@ -17,7 +17,7 @@ MonoBehaviour:
   - path: Texture/Burst01.png
     texture: {fileID: 2800000, guid: bf8130b3e37a06d4fb910ab643a09690, type: 3}
   - path: Texture/Particle01.png
-    texture: {fileID: 0}
+    texture: {fileID: 2800000, guid: e90d56f9c4e72eb4ebc6443c8cf7650a, type: 3}
   soundResources: []
   modelResources: []
   Scale: 1
