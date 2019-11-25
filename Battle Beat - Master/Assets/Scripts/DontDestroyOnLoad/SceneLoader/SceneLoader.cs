@@ -149,6 +149,7 @@ public class SceneLoader : MonoBehaviour
                         SoundManager.Instance.PlaySE(SEID.General_Controller_Decision);
                         this.pressButtonText.GetComponent<Animation>().Stop();
                         this.pressButtonText.color = new Color(this.pressButtonText.color.r, this.pressButtonText.color.g, this.pressButtonText.color.b, 0f);
+                        break;
                     }
                     yield return null;
                 }

@@ -151,7 +151,8 @@ public class MainMenuManager : MonoBehaviour
     private void Update()
     {
         // ロードディング画面の表示中は無効化
-        if (SceneLoader.Instance.isLoading) return;
+        // ポップアップ表示中なら実行しない
+        if (SceneLoader.Instance.isLoading || PopupManager.IsActive) return;
 
         switch (this.displayState) {
             case DisplayState.Menu:
@@ -173,9 +174,6 @@ public class MainMenuManager : MonoBehaviour
     }
 
     private void UpdateMenu() {
-        // ポップアップ表示中なら実行しない
-        if (PopupManager.IsActive) return;
-
         // 移動していないときはボタンの選択状態に合わせてUIを変化させる
         if (this.mtState != MegaphoneTreeState.Changing) {
             // 看板切り替え
@@ -239,7 +237,24 @@ public class MainMenuManager : MonoBehaviour
                 else if (this.controller.GetButtonDown_Menu(ControllerManager.Button.B))
                 {
                     SoundManager.Instance.PlaySE(SEID.General_Controller_Back);
-                    PopupManager.Display(("タイトルに戻る", BackToTitle), ("ゲームを終わる", GameEnd));
+                    PopupManager.Show(
+                        ("タイトルニ　　モドル", () =>
+                            {
+                                SceneLoader.Instance.LoadScene(SceneLoader.Scenes.Title);
+                            }
+                        ),
+                        ("ゲームヲ\n　　オワル",() =>
+                            {
+                            #if UNITY_EDITOR
+                                UnityEditor.EditorApplication.isPlaying = false;
+                            #endif
+
+                            #if UNITY_STANDALONE
+                                Application.Quit();
+                            #endif
+                            }
+                        )
+                    );
                 }
             }
             // 右UI
@@ -265,16 +280,6 @@ public class MainMenuManager : MonoBehaviour
                 else if (this.controller.GetButtonDown_Menu(ControllerManager.Button.B)) StartCoroutine(RightToLeft());
             }
         }
-    }
-
-    private void BackToTitle()
-    {
-        SceneLoader.Instance.LoadScene(SceneLoader.Scenes.Title);
-    }
-
-    private void GameEnd()
-    {
-        UnityEditor.EditorApplication.isPlaying = false;
     }
 
     private IEnumerator LeftToRight()

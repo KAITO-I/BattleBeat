@@ -23,8 +23,6 @@ namespace CoreManager
         [SerializeField]
         Vector2 unselectLocalScale;
 
-        PopupManager popupManager;
-
         void Awake()
         {
             if (CoreSystem.instance != null)
@@ -39,7 +37,7 @@ namespace CoreManager
             this.controllerManager.Init();
             this.sceneLoader.Init();
 
-            this.popupManager = new PopupManager(
+            PopupManager.Init(
                 this.popup,
                 (this.upCalloutSelectLocalPos, this.upCalloutUnelectLocalPos),
                 (this.downCalloutSelectLocalPos, this.downCalloutUnelectLocalPos),
@@ -52,7 +50,7 @@ namespace CoreManager
 
         void Update()
         {
-            this.popupManager.Update();
+            PopupManager.Update();
         }
     }
 }

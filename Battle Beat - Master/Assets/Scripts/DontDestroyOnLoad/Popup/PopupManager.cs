@@ -11,113 +11,104 @@ namespace CoreManager
         //==============================
         // static
         //==============================
-        static PopupManager instance;
-        
-        public static bool IsActive { get { return PopupManager.instance.isDisplaying; } }
+        static GameObject     popupObject;
+        static PopupCollout[] callouts;
+
+        static int selectedCalloutNum;
+
+        static bool isActive;
+        public static bool IsActive { get; private set; }
 
         //==============================
-        // 表示
+        // 初期化
         //==============================
-        public static void Display((string text, CalloutProcess process) upCallout, (string text, CalloutProcess) downCallout)
-        {
-            if (PopupManager.instance == null)
-            {
-                Debug.LogError("instanceされていないため、実行できません。");
-                return;
-            }
-
-            // 表示
-            PopupManager.instance.DisplayPopup(upCallout, downCallout);
-        }
-
-        //==============================
-        // class
-        //==============================
-        ControllerManager controllerManager;
-
-        // ポップアップ本体
-        GameObject popupObject;
-        bool       isDisplaying;
-
-        // 吹き出し情報と選択状態
-        PopupCollout[] collouts;
-        int selectedButtonNum;
-
-        //==============================
-        // コンストラクタ
-        //==============================
-        public PopupManager(
+        public static void Init(
             GameObject popupObject,
             (Vector2 selectLocalPos, Vector2 unselectLocalPos) upCallout,
             (Vector2 selectLocalPos, Vector2 unselectLocalPos) downCallout,
             Vector2 unselectLocalScale
         )
         {
-            if (instance != null) return;
-            instance = this;
+            if (PopupManager.popupObject != null) return;
+            (PopupManager.popupObject = popupObject).SetActive(false);
 
-            this.controllerManager = ControllerManager.Instance;
+            Transform calloutsTF = popupObject.transform.Find("Background").Find("Callouts");
+            PopupManager.callouts    = new PopupCollout[2];
+            PopupManager.callouts[0] = new PopupCollout(calloutsTF.Find("Up").gameObject, upCallout, unselectLocalScale);
+            PopupManager.callouts[1] = new PopupCollout(calloutsTF.Find("Down").gameObject, downCallout, unselectLocalScale);
 
-            (this.popupObject = popupObject).SetActive(false);
-            this.isDisplaying = false;
+            PopupManager.selectedCalloutNum = 0;
 
-
-            Transform parentButton = popupObject.transform.Find("Background").Find("Callouts");
-            this.collouts = new PopupCollout[2];
-            this.collouts[0] = new PopupCollout(parentButton.Find("Up").gameObject, upCallout, unselectLocalScale);
-            this.collouts[1] = new PopupCollout(parentButton.Find("Down").gameObject, downCallout, unselectLocalScale);
-
-            this.selectedButtonNum = 0;
+            PopupManager.isActive = false;
+            PopupManager.IsActive = false;
         }
 
         //==============================
         // Update
         //==============================
-        public void Update()
+        public static void Update()
         {
-            if (!this.isDisplaying) return;
+            // IsActive情報(false)は1F後に更新する
+            PopupManager.IsActive = PopupManager.isActive;
 
-            // 表示中の処理
-            // 上下の入力
-            float dpadY = this.controllerManager.GetAxis_Menu(ControllerManager.Axis.DpadY);
+            if (!PopupManager.IsActive) return;
+
+            //===== 表示中の処理 =====
+            // 上下入力
+            float dpadY = ControllerManager.Instance.GetAxis_Menu(ControllerManager.Axis.DpadY);
             if (Mathf.Abs(dpadY) > 0.5)
             {
                 if (dpadY > 0)
                 {
-                    // 上入力
-                    this.selectedButtonNum = 0;
-                    this.collouts[0].Select(true);
-                    this.collouts[1].Select(false);
+                    if (PopupManager.selectedCalloutNum == 0) return;
+
+                    SoundManager.Instance.PlaySE(SEID.General_Controller_Select);
+                    PopupManager.selectedCalloutNum = 0;
+                    PopupManager.callouts[0].Select(true);
+                    PopupManager.callouts[1].Select(false);
                 }
                 else
                 {
-                    // 下入力
-                    this.selectedButtonNum = 1;
-                    this.collouts[0].Select(false);
-                    this.collouts[1].Select(true);
+                    if (PopupManager.selectedCalloutNum == 1) return;
+
+                    SoundManager.Instance.PlaySE(SEID.General_Controller_Select);
+                    PopupManager.selectedCalloutNum = 1;
+                    PopupManager.callouts[0].Select(false);
+                    PopupManager.callouts[1].Select(true);
                 }
             }
 
-            if (this.controllerManager.GetButtonDown_Menu(ControllerManager.Button.A))
-            {
-                this.popupObject.SetActive(this.isDisplaying = false);
-                this.collouts[this.selectedButtonNum].Selected();
-            }
+            // A入力
+            if (ControllerManager.Instance.GetButtonDown_Menu(ControllerManager.Button.A))
+                PopupManager.callouts[PopupManager.selectedCalloutNum].Selected();
 
-            if (this.controllerManager.GetButtonDown_Menu(ControllerManager.Button.B)) this.popupObject.SetActive(this.isDisplaying = false);
+            // B入力
+            if (ControllerManager.Instance.GetButtonDown_Menu(ControllerManager.Button.B))
+            {
+                SoundManager.Instance.PlaySE(SEID.General_Controller_Back);
+                Hide();
+            }
         }
 
         //==============================
         // 表示
         //==============================
-        void DisplayPopup((string text, CalloutProcess process) upCollout, (string text, CalloutProcess process) downCallout)
+        public static void Show((string text, CalloutProcess process) upCallout, (string text, CalloutProcess process) downCallout)
         {
-            this.collouts[0].SetButtonData(upCollout.text, upCollout.process);
-            this.collouts[1].SetButtonData(downCallout.text, downCallout.process);
+            PopupManager.callouts[0].SetButtonData(upCallout.text, upCallout.process);
+            PopupManager.callouts[1].SetButtonData(downCallout.text, downCallout.process);
 
-            this.popupObject.SetActive(this.isDisplaying = true);
-            this.collouts[0].Select(true);
-            this.collouts[1].Select(false);
+            PopupManager.popupObject.SetActive(PopupManager.IsActive = PopupManager.isActive = true);
+            PopupManager.callouts[0].Select(true);
+            PopupManager.callouts[1].Select(false);
+        }
+
+        //==============================
+        // 非表示
+        //==============================
+        internal static void Hide()
+        {
+            PopupManager.popupObject.SetActive(PopupManager.isActive = false);
         }
     }
 
@@ -171,12 +162,15 @@ namespace CoreManager
         public void Selected()
         {
             // アニメーション
-            /*Timer timer = new Timer(1000);
+            /*
+            Timer timer = new Timer(1000);
             timer.Elapsed += (sender, e) =>
             {
-            
-            }*/
 
+            };
+            timer.Start();
+            */
+            PopupManager.Hide();
             this.process();
         }
     }
