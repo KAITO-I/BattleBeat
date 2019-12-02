@@ -224,7 +224,7 @@ public class MainMenuManager : MonoBehaviour
                             this.configObj.SetActive(true);
                             this.selectedNum = 0;
                             this.canPushDPadY = true;
-                            this.volumeControllers[0].Select(false);
+                            this.volumeControllers[0].Select(true);
                             this.volumeControllers[1].Select(false);
                             this.volumeControllers[2].Select(false);
                             break;

@@ -48,11 +48,13 @@ namespace MainMenu
 
         void SetVolume(float linear)
         {
-            var decibel = (linear > 0f) ? Mathf.Max(20 * Mathf.Log10(linear), -80) : 0f;
+            linear = Mathf.Clamp(linear, 0f, 1f);
+
+            var decibel = Mathf.Max(20 * Mathf.Log10(linear), -80);
 
             this.audioMixer.SetFloat(this.volumeName, decibel);
             this.Slider.value = linear;
-            this.percentText.text = ((int)Mathf.Lerp(0, 100, (this.Slider.value + 80) / 80)).ToString();
+            this.percentText.text = ((int)(linear * 100)).ToString();
         }
 
         public void Save()
