@@ -3218,7 +3218,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb861cbface225045b2fc14f2dc47b48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testMode: 0
+  testMode: 1
   p1: 0
   p2: 3
   charaPrefabs:

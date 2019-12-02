@@ -1,0 +1,14 @@
+アニメーションレイヤーを分ける
+・layerMaskを使用する方法
+https://gametukurikata.com/animationanimator/layeravatar
+・UnityのMecanimでキャラクターを動かす
+https://qiita.com/yando/items/601e6fd35002e77ae9c8
+
+問題点
+・Avaterの部分をhumanoidに変更しないとパーツ別に動かすことが出来ないかも
+・Avaterを変更する際、下記のサイトのようなエラーが発生してしまうため、リテイクが必要になる
+おそらく、ボーンの一部がおかしいのと、ノードの部分に余分の者が挿入されている可能性
+
+https://forum.unity.com/threads/time-range-447406-for-translation-curve-s-on-node-bone001-on-take-take-001-what-the.311408/
+https://answers.unity.com/questions/372425/error-importing-fbx.html
+

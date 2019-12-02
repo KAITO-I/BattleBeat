@@ -14,14 +14,14 @@ public class BasePlayerAnimation:MonoBehaviour
     }
     [SerializeField]
     protected GameObject PlayerObj;
-    protected Player player;
+    protected Player _playerClass;
     AnimatorStateInfo info_;
     RythmManager rythm;
 
     //自分のとぐろ
     public MeshRenderer _renderer;
-    public bool AnimCheck;
-    public float interval;
+    float interval;
+    float oldbps;
 
     protected int PosID;
     protected Animator anim;
@@ -30,23 +30,27 @@ public class BasePlayerAnimation:MonoBehaviour
     protected virtual void Start()
     {
         anim = GetComponent<Animator>();
-        player = PlayerObj.GetComponent<Player>();
+        _playerClass = PlayerObj.GetComponent<Player>();
         _renderer = transform.GetChild(1).GetComponent<MeshRenderer>();
         _renderer.enabled = false;
         rythm = GameObject.Find("Manager").GetComponent<RythmManager>();
-        interval = rythm.getbps;
+        interval = rythm.getbps/2;
+        oldbps = rythm.getbps;
     }
 
     protected virtual void Update()
     {
+        //rythm:0.8->0.5
         interval = rythm.getbps / 2;
-        anim.speed = rythm.getbps * 2;
+        //リズムの値が大きくなるため、ずれる
+        float dif = oldbps - rythm.getbps;
+        anim.speed = (oldbps + dif) * 2.0f;
     }
     //（プレイヤーの場所,目的地,コマンド）
     public virtual void Move(GameObject Player,Vector3 Goal, Player.MoveComand comand)
     {
         AnimFunc(comand);
-        StartCoroutine(enumerator(Player, Goal));
+        StartCoroutine(MoveColutin(Player, Goal));
     }
     //（コマンド）
     public void Attack(Player.MoveComand comand)
@@ -60,10 +64,9 @@ public class BasePlayerAnimation:MonoBehaviour
     }
 
     //タイミングを同じにするため(動かすもの,到達点)
-    IEnumerator enumerator(GameObject obj, Vector3 Goal)
+    protected IEnumerator MoveColutin(GameObject obj, Vector3 Goal)
     {
         float time = 0;
-
         Vector3 Oragin = obj.transform.position;
         Vector3 pos = Vector3.Lerp(Oragin, Goal,time/interval);
         obj.transform.position = pos;
@@ -75,19 +78,19 @@ public class BasePlayerAnimation:MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
     }
+
     //アニメーション再生
     void AnimFunc(Player.MoveComand comand)
     {
         info_ = anim.GetCurrentAnimatorStateInfo(0);
         //いつでも来てしまうため
         if (!info_.IsName("idol")) return;
-        AnimCheck = true;
         switch (comand)
         {
             case Player.MoveComand.None:
                 break;
             case Player.MoveComand.Left:
-                if (player.PlayerID == 1)
+                if (_playerClass.PlayerID == 1)
                 {
                     MoveBack();
                 }
@@ -97,7 +100,7 @@ public class BasePlayerAnimation:MonoBehaviour
                 }
                 break;
             case Player.MoveComand.Right:
-                if (player.PlayerID == 2)
+                if (_playerClass.PlayerID == 2)
                 {
                     MoveBack();
                 }
@@ -107,7 +110,7 @@ public class BasePlayerAnimation:MonoBehaviour
                 }
                 break;
             case Player.MoveComand.Up:
-                if (player.PlayerID == 1)
+                if (_playerClass.PlayerID == 1)
                 {
                     MoveLeft();
                 }
@@ -117,7 +120,7 @@ public class BasePlayerAnimation:MonoBehaviour
                 }
                 break;
             case Player.MoveComand.Down:
-                if (player.PlayerID == 2)
+                if (_playerClass.PlayerID == 2)
                 {
                     MoveLeft();
                 }
@@ -159,7 +162,6 @@ public class BasePlayerAnimation:MonoBehaviour
 
     }
 
-    //2P視点
     //移動は同じなので継承しない
     private void MoveFront()
     {

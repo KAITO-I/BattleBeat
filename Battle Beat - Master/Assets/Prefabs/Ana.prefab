@@ -178,8 +178,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerObj: {fileID: 4320667415473011673}
   _renderer: {fileID: 0}
-  AnimCheck: 0
-  interval: 0
 --- !u!1001 &2795594176360514183
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -187,10 +185,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4320667415473011651}
     m_Modifications:
-    - target: {fileID: 100000, guid: 879e128bb1494b243b25aec9bd8e3cd9, type: 3}
-      propertyPath: m_Name
-      value: kusari_toguro
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 879e128bb1494b243b25aec9bd8e3cd9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.04
@@ -234,6 +228,10 @@ PrefabInstance:
     - target: {fileID: 400000, guid: 879e128bb1494b243b25aec9bd8e3cd9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 879e128bb1494b243b25aec9bd8e3cd9, type: 3}
+      propertyPath: m_Name
+      value: kusari_toguro
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: 879e128bb1494b243b25aec9bd8e3cd9, type: 3}
       propertyPath: m_Materials.Array.data[0]
