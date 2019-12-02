@@ -77,7 +77,6 @@ public class SceneLoader : MonoBehaviour
         SceneLoader.instance = this;
 
         Screen.SetResolution(1920, 1080, true);
-        Cursor.visible = false;
 
         this.isLoading = false;
         this.pressButtonText.color = new Color(this.pressButtonText.color.r, this.pressButtonText.color.g, this.pressButtonText.color.b);

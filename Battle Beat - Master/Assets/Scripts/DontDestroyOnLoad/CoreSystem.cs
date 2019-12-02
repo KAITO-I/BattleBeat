@@ -23,7 +23,7 @@ public class CoreSystem : MonoBehaviour
         this.controllerManager.Init();
         this.sceneLoader.Init();
 
-        //Cursor.lockState = CursorLockMode.Locked;
-        //Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 }
