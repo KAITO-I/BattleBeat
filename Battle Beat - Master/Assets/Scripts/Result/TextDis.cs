@@ -42,9 +42,9 @@ public class TextDis : BaseResultState
         //すべて表示したら飛べるようにする
         if (displayCharacterCount == WordText.Length)
         {
-            _finish = true;
+            _updateMove = true;
         }
-        return _finish;
+        return _updateMove;
     }
 
     string CharaWoadInstance()

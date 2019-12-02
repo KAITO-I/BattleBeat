@@ -26,13 +26,13 @@ public class CharaDis : BaseResultState
         {
             changecolor.a = 1f;
             CharaImg.color = changecolor;
-            _finish = true;
+            _updateMove = true;
         }
         else
         {
             CharaImg.color = changecolor;
         }
-        return _finish;
+        return _updateMove;
     }
 
 }

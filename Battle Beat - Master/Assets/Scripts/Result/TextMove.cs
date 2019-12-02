@@ -8,12 +8,12 @@ public class TextMove : BaseResultState
 {
     int flag;
     int _id;
-    Transform[] Moves;
-    Transform[] Gole;
+    List<Transform> Moves;
+    List<Transform> Gole;
     Image _playerStandImg,_charaNameImg;
     float MoveTime;
 
-    public TextMove(SoundManager s,Transform[] move) : base(s)
+    public TextMove(SoundManager s,List<Transform> move) : base(s)
     {
         _className = ClassName.TextMove;
 
@@ -49,13 +49,13 @@ public class TextMove : BaseResultState
             MoveTime = 0f;
             if (flag == 3)
             {
-                _finish = true;
+                _updateMove = false;
             }
             else
             {
                 _soundManager.PlaySE(SEID.Game_Character_General_Move);
             }
         }
-        return _finish;
+        return _updateMove;
     }
 }

@@ -10,7 +10,7 @@ public class ResultManager : MonoBehaviour
     Setting.Chara winChara = Setting.Chara.HOMI;
     Setting.Chara loseChara = Setting.Chara.HOMI;
 
-    Transform[] Gole;
+    List<Transform> Gole = new List<Transform>();
 
     [SerializeField]
     Image BackGraund, CharaImg;
@@ -69,7 +69,7 @@ public class ResultManager : MonoBehaviour
         //動かすオブジェクト初期化
         for (int i = 0; i < 3; i++)
         {
-            Gole[i] = Moves[i].GetComponent<RectTransform>();
+            Gole.Add(Moves[i].GetComponent<RectTransform>());
         }
         #region========立ち絵修正===========
         //アナ立ち絵位置修正
@@ -98,7 +98,7 @@ public class ResultManager : MonoBehaviour
     void Update()
     {
 
-        if (_state.Update())
+        if (!_state.Update())
         {
             switch (_state._className)//処理が終わったら
             { /* BackDis->TextMove-> CharaDis->TextDis */

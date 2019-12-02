@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class BaseResultState 
 {
     protected SoundManager _soundManager;
-    protected bool _finish;
+    protected bool _updateMove;
     protected CharaData _date;
     protected Setting.Chara winChara;
     protected Setting.Chara loseChara;
@@ -26,10 +26,10 @@ public abstract class BaseResultState
       _date = Resources.Load<CharaData>(path);
         if (_date.backGraund == null)
         {
-            Debug.Log("背景が挿入されていません");
+            Debug.Log("データが存在しておりません");
         }
         _soundManager = sound;
-        _finish = false;
+        _updateMove = true;
     }
 
     public abstract bool Update();
