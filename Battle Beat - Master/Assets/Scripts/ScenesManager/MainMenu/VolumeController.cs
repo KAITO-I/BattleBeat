@@ -8,33 +8,56 @@ namespace MainMenu
     {
         public Slider Slider { get; private set; }
 
-        private string     volumeName;
-        private AudioMixer audioMixer;
-        private Text       percentText;
-        private Image      sliderImage;
+        string     volumeName;
+        AudioMixer audioMixer;
+        Color      selectColor;
+        Color      unselectColor;
 
-        public VolumeController(string volumeName, AudioMixer audioMixer, Slider slider, Color unselectColor)
+        Text  percentText;
+        Image sliderImage;
+
+        public VolumeController(string volumeName, AudioMixer audioMixer, Slider slider, Color selectColor, Color unselectColor)
         {
             this.Slider = slider;
 
-            this.volumeName  = volumeName;
-            this.audioMixer  = audioMixer;
-            this.percentText = slider.transform.Find("Handle Slide Area").Find("Handle").Find("Text").GetComponent<Text>();
-            this.sliderImage = slider.transform.Find("Handle Slide Area").Find("Handle").GetComponent<Image>();
+            this.volumeName    = volumeName;
+            this.audioMixer    = audioMixer;
+            this.selectColor   = selectColor;
+            this.unselectColor = unselectColor;
+            this.percentText   = slider.transform.Find("Handle Slide Area").Find("Handle").Find("Text").GetComponent<Text>();
+            this.sliderImage   = slider.transform.Find("Handle Slide Area").Find("Handle").GetComponent<Image>();
 
-            SetColor(unselectColor);
+            Select(false);
+            SetVolume(PlayerPrefs.GetFloat("AudioVolume." + this.volumeName, 1f));
         }
 
-        public void SetVolume(float volume)
+        public void Select(bool select)
         {
-            this.audioMixer.SetFloat(this.volumeName, volume);
-            this.Slider.value     = volume;
+            this.sliderImage.color = select ? this.selectColor : this.unselectColor;
+        }
+
+        public void AddVolume(float value)
+        {
+            SetVolume(this.Slider.value + value);
+        }
+
+        public void SubVolume(float value)
+        {
+            SetVolume(this.Slider.value - value);
+        }
+
+        void SetVolume(float linear)
+        {
+            var decibel = (linear > 0f) ? Mathf.Max(20 * Mathf.Log10(linear), -80) : 0f;
+
+            this.audioMixer.SetFloat(this.volumeName, decibel);
+            this.Slider.value = linear;
             this.percentText.text = ((int)Mathf.Lerp(0, 100, (this.Slider.value + 80) / 80)).ToString();
         }
 
-        public void SetColor(Color color)
+        public void Save()
         {
-            this.sliderImage.color = color;
+            PlayerPrefs.GetFloat("AudioVolume." + this.volumeName, this.Slider.value);
         }
     }
 }
