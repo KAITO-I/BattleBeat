@@ -24,7 +24,7 @@ public class MainMenuManager : MonoBehaviour
     // 背景
     [Header("Background")]
     [SerializeField]
-    private RectTransform background;
+    private Transform background;
     [SerializeField]
     private float backLeftPosX;
     [SerializeField]
@@ -43,7 +43,7 @@ public class MainMenuManager : MonoBehaviour
     // メガホンツリー
     [Header("MegaphoneTree")]
     [SerializeField]
-    private RectTransform megaphoneTree;
+    private Transform megaphoneTree;
     [SerializeField]
     private GameObject mtLeftUI;
     [SerializeField]
@@ -53,13 +53,13 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField]
     private float mtRightPosX;
     [SerializeField]
-    private float mtSideRotateX;
+    private float mtLeftRotateX;
     [SerializeField]
-    private float mtCenterRotateX;
+    private float mtRightRotateX;
     [SerializeField]
-    private SignOverlay[] mtLeftSigns;
+    private SignSelector[] mtLeftSigns;
     [SerializeField]
-    private SignOverlay[] mtRightSigns;
+    private SignSelector[] mtRightSigns;
 
     [Header("Config")]
     [SerializeField]
@@ -98,7 +98,7 @@ public class MainMenuManager : MonoBehaviour
         this.electricBoard = new ElectricBoard(this.electricBoardObj.Find("Title").GetComponent<Text>(), this.electricBoardObj.Find("Description").GetComponent<Text>());
         this.electricBoard.Set(this.mtLeftModeDescriptions[0]);
 
-        this.megaphoneTree.anchoredPosition = new Vector2(this.mtLeftPosX, this.megaphoneTree.anchoredPosition.y);
+        // ツリーの状態
         this.mtLeftUI.SetActive(true);
         this.mtRightUI.SetActive(false);
         for (int i = 0; i < 3; i++) {
@@ -263,6 +263,9 @@ public class MainMenuManager : MonoBehaviour
         }
     }
 
+    //==============================
+    // メガホンツリーを左から右へ移動
+    //==============================
     private IEnumerator LeftToRight()
     {
         // 開始
@@ -270,24 +273,19 @@ public class MainMenuManager : MonoBehaviour
 
         this.electricBoard.Set("", "");
 
-        foreach (SignOverlay overlay in this.mtLeftSigns) overlay.SignUnselected();
+        foreach (SignSelector overlay in this.mtLeftSigns) overlay.SignUnselected();
         
         // 動作
         float timer     = 0f;
         bool  mtChanged = false;
         while (timer <= this.moveTime)
         {
-            this.background.anchoredPosition = new Vector3(Mathf.Lerp(this.backRightPosX, this.backLeftPosX, timer / this.moveTime), this.background.anchoredPosition.y);
-            this.megaphoneTree.anchoredPosition = new Vector3(Mathf.Lerp(this.mtLeftPosX, this.mtRightPosX, timer / this.moveTime), this.megaphoneTree.anchoredPosition.y);
+            this.background.transform.localPosition = new Vector3(Mathf.Lerp(this.backLeftPosX, this.backRightPosX, timer / this.moveTime), this.background.transform.localPosition.y, 0f);
+            this.megaphoneTree.transform.localPosition = new Vector3(Mathf.Lerp(this.mtLeftPosX, this.mtRightPosX, timer / this.moveTime), this.megaphoneTree.transform.localPosition.y, 0f);
 
-            // 前半 0->90
-            if (timer / this.moveTime <= 0.5)
-            {
-                float rotateUI = Mathf.Lerp(this.mtSideRotateX, this.mtCenterRotateX, timer / this.moveTime);
-                this.megaphoneTree.rotation = Quaternion.Euler(this.megaphoneTree.rotation.x, rotateUI, megaphoneTree.rotation.z);
-            }
-            // 後半 90->0
-            else
+            // 回転
+            var rotateUI = Mathf.Lerp(this.mtLeftRotateX, this.mtRightRotateX, timer / this.moveTime);
+            if (timer / this.moveTime >= 0.5f)
             {
                 if (!mtChanged)
                 {
@@ -295,19 +293,18 @@ public class MainMenuManager : MonoBehaviour
                     this.mtLeftUI.SetActive(false);
                     this.mtRightUI.SetActive(true);
                 }
-                float rotateUI = Mathf.Lerp(mtCenterRotateX, mtSideRotateX, timer / this.moveTime);
-                this.megaphoneTree.rotation = Quaternion.Euler(this.megaphoneTree.rotation.x, rotateUI, megaphoneTree.rotation.z);
             }
 
+            this.megaphoneTree.localRotation = Quaternion.Euler(this.megaphoneTree.localRotation.x, rotateUI, this.megaphoneTree.localRotation.z);
             timer += Time.deltaTime;
             yield return 0;
         }
 
         // 修正
-        this.background.anchoredPosition = new Vector3(this.backLeftPosX, this.background.anchoredPosition.y);
-        this.megaphoneTree.anchoredPosition = new Vector3(this.mtRightPosX, this.megaphoneTree.anchoredPosition.y);
+        this.background.transform.localPosition = new Vector3(this.backRightPosX, this.background.transform.localPosition.y);
+        this.megaphoneTree.transform.localPosition = new Vector3(this.mtRightPosX, this.megaphoneTree.transform.localPosition.y);
 
-        this.megaphoneTree.rotation = Quaternion.Euler(this.megaphoneTree.rotation.x, this.mtSideRotateX, this.megaphoneTree.rotation.z);
+        this.megaphoneTree.localRotation = Quaternion.Euler(this.megaphoneTree.localRotation.x, this.mtRightRotateX, this.megaphoneTree.localRotation.z);
 
         // 終了      
         this.mtState = MegaphoneTreeState.Right;
@@ -330,44 +327,38 @@ public class MainMenuManager : MonoBehaviour
 
         this.electricBoard.Set("", "");
 
-        foreach (SignOverlay overlay in this.mtRightSigns) overlay.SignUnselected();
+        foreach (SignSelector overlay in this.mtRightSigns) overlay.SignUnselected();
         
         // 動作
         float timer     = 0f;
         bool  mtChanged = false;
         while (timer <= this.moveTime)
         {
-            this.background.anchoredPosition = new Vector3(Mathf.Lerp(this.backLeftPosX, this.backRightPosX, timer / this.moveTime), this.background.anchoredPosition.y);
-            this.megaphoneTree.anchoredPosition = new Vector3(Mathf.Lerp(this.mtRightPosX, this.mtLeftPosX, timer / this.moveTime), this.megaphoneTree.anchoredPosition.y);
+            this.background.transform.localPosition = new Vector3(Mathf.Lerp(this.backRightPosX, this.backLeftPosX, timer / this.moveTime), this.background.transform.localPosition.y);
+            this.megaphoneTree.transform.localPosition = new Vector3(Mathf.Lerp(this.mtRightPosX, this.mtLeftPosX, timer / this.moveTime), this.megaphoneTree.transform.localPosition.y);
 
-            // 前半 0->90
-            if (timer / this.moveTime <= 0.5)
-            {
-                float rotateUI = Mathf.Lerp(this.mtSideRotateX, this.mtCenterRotateX, timer / this.moveTime);
-                this.megaphoneTree.rotation = Quaternion.Euler(this.megaphoneTree.rotation.x, rotateUI, megaphoneTree.rotation.z);
-            }
-            // 後半 90->0
-            else
+            // 回転
+            var rotateUI = Mathf.Lerp(this.mtRightRotateX, this.mtLeftRotateX, timer / this.moveTime);
+            if (timer / this.moveTime >= 0.5f)
             {
                 if (!mtChanged)
                 {
                     mtChanged = true;
-                    this.mtRightUI.SetActive(false);
                     this.mtLeftUI.SetActive(true);
+                    this.mtRightUI.SetActive(false);
                 }
-                float rotateUI = Mathf.Lerp(mtCenterRotateX, mtSideRotateX, timer / this.moveTime);
-                this.megaphoneTree.rotation = Quaternion.Euler(this.megaphoneTree.rotation.x, rotateUI, megaphoneTree.rotation.z);
             }
+            this.megaphoneTree.localRotation = Quaternion.Euler(this.megaphoneTree.localRotation.x, rotateUI, megaphoneTree.localRotation.z);
 
             timer += Time.deltaTime;
             yield return 0;
         }
 
         // 修正
-        this.background.anchoredPosition = new Vector3(this.backRightPosX, this.background.anchoredPosition.y);
-        this.megaphoneTree.anchoredPosition = new Vector3(this.mtLeftPosX, this.megaphoneTree.anchoredPosition.y);
+        this.background.transform.localPosition = new Vector3(this.backLeftPosX, this.background.transform.localPosition.y);
+        this.megaphoneTree.transform.localPosition = new Vector3(this.mtLeftPosX, this.megaphoneTree.transform.localPosition.y);
 
-        this.megaphoneTree.rotation = Quaternion.Euler(this.megaphoneTree.rotation.x, this.mtSideRotateX, this.megaphoneTree.rotation.z);
+        this.megaphoneTree.localRotation = Quaternion.Euler(this.megaphoneTree.localRotation.x, this.mtLeftRotateX, this.megaphoneTree.localRotation.z);
 
         // 終了
         this.mtState = MegaphoneTreeState.Left;

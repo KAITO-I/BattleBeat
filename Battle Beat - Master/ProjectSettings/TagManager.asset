@@ -41,3 +41,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: HighlightUI
+    uniqueID: 3258097467
+    locked: 0
+  - name: ForegroundUI
+    uniqueID: 1484501565
+    locked: 0
