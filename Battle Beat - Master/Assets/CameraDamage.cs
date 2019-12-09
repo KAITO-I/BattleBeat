@@ -22,8 +22,8 @@ public class CameraDamage : MonoBehaviour
     }
 
     [SerializeField] private ShakeMode shakeMode = ShakeMode.Horizontal; //揺れ方
-    [Range(0, 10)][SerializeField] private float shakeTime = 0; //揺れる時間
-    [Range(0, 5)][SerializeField] private float shakeWidth = 0; //揺れ幅
+    [Range(0, 1.5f)][SerializeField] private float shakeTime = 0; //揺れる時間
+    [Range(0, 1)][SerializeField] private float shakeWidth = 0; //揺れ幅
     
     private Vector3 camPos; //カメラの初期位置
     private Quaternion camRot; //カメラの初期角度
@@ -34,6 +34,7 @@ public class CameraDamage : MonoBehaviour
         camRot = transform.rotation;
     }
 
+    #region MainMethod
     // Update is called once per frame
     void Update()
     {
@@ -107,7 +108,9 @@ public class CameraDamage : MonoBehaviour
         transform.localPosition = camPos;
         transform.rotation = camRot;
     }
+    #endregion
 
+    #region RandomMethod
     /// <summary>
     /// Shakeする時のランダムな数値を返す
     /// </summary>
@@ -165,4 +168,5 @@ public class CameraDamage : MonoBehaviour
             return camRot.z + -shakeNum;
         }
     }
+    #endregion
 }
