@@ -495,11 +495,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6302ca09f7bc5db4285575a5a40fbdc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debug: 1
-  cameraMove: 1
-  speed: 0.1
-  amount: 1
-  count: 120
+  shakeMode: 0
+  shakeTime: 1
+  shakeWidth: 2.54
 --- !u!1 &1403423494
 GameObject:
   m_ObjectHideFlags: 0

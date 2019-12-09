@@ -2,134 +2,167 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// ダメージを受けた時にカメラを揺らす処理
+/// 【注意点】
+/// ・コルーチンを使用している為、ポーズを実装する場合は処理を書き直す必要がある
+/// ・Startの時点でMainCameraのPositionを保存している為、Cameraが移動をする場合は書き直す必要がある
+/// </summary>
 public class CameraDamage : MonoBehaviour
 {
-    private enum CameraMove
+    private enum ShakeMode
     {
         Vertical,
         Horizontal,
-        Wobble
+        Wobble,
+        ConstantWobble,
+        VerHorMix,
+        AllMix_W,
+        AllMix_CW
     }
 
-    [SerializeField] private bool debug = false;
-    [SerializeField] private CameraMove cameraMove = CameraMove.Horizontal; //揺れ方
-    [SerializeField] private float speed = 0; //揺れる速度
-    [SerializeField] private float amount = 0; //揺れる量
-    [SerializeField] private int count = 0; //揺れる回数
-    private int resetCount;
-    private Vector3 cameraPos;
+    [SerializeField] private ShakeMode shakeMode = ShakeMode.Horizontal; //揺れ方
+    [Range(0, 10)][SerializeField] private float shakeTime = 0; //揺れる時間
+    [Range(0, 5)][SerializeField] private float shakeWidth = 0; //揺れ幅
+    
+    private Vector3 camPos; //カメラの初期位置
+    private Quaternion camRot; //カメラの初期角度
 
     private void Start()
     {
-        resetCount = count;
+        camPos = transform.position;
+        camRot = transform.rotation;
     }
 
     // Update is called once per frame
     void Update()
     {
-        cameraPos = transform.position;
-        if (debug)
+        if (Input.GetMouseButtonDown(0))
         {
-            //左クリックされた場合実行される
-            if (!Input.GetMouseButtonDown(0))
-            {
-                return;
-            }
-            ResetCount();
-        }
-
-        switch (cameraMove)
-        {
-            case CameraMove.Horizontal:
-                HorizontalShaking();
-                break;
-            case CameraMove.Vertical:
-                VerticalShaking();
-                break;
-            case CameraMove.Wobble:
-                WobbleShaking();
-                break;
-            default:
-                break;
-        }
+            StartCoroutine(Shake());
+        }   
     }
 
-    #region 揺れ処理
-    /// <summary>
-    /// 横揺れ
-    /// </summary>
-    private void HorizontalShaking()
+    private IEnumerator Shake()
     {
-        bool right = true;
-        //指定したカウント分揺らす
-        for(int i = 0; i <= count; i++)
+        float measure = 0; //時間計測用
+        float saveRotZ = 0; //1ループ前のRotZの値を保存する用の変数
+        while(measure < shakeTime)
         {
-            //右揺れ
-            if (right)
+            float x = camPos.x;
+            float y = camPos.y;
+            float rotZ = camRot.z;
+
+            switch (shakeMode)
             {
-                //設定した揺れ幅より小さい
-                if (amount > cameraPos.x)
-                {
-                    Debug.Log("RightIN");
-                    //座標を右にずらす
-                    cameraPos.x += speed * Time.deltaTime;
-                    PositionChange();
-                }
-                else //端まで来た
-                {
-                    Debug.Log("RightCount");
-                    //フラグをleftにし、カウント
-                    right = false;
-                    i++;
-                }
+                //横揺れ
+                case ShakeMode.Horizontal:
+                    x = RandomX();
+                    break;
+                //縦揺れ
+                case ShakeMode.Vertical:
+                    y = RandomY();
+                    break;
+                //ぐらつき揺れ(ランダム)
+                case ShakeMode.Wobble:
+                    rotZ = ShakeRotationZ(saveRotZ, true);
+                    break;
+                //ぐらつき揺れ(定数)
+                case ShakeMode.ConstantWobble:
+                    rotZ = ShakeRotationZ(saveRotZ, false);
+                    break;
+                 //縦横複合揺れ
+                case ShakeMode.VerHorMix:
+                    x = RandomX();
+                    y = RandomY();
+                    break;
+                //全ミックス(ぐらつきランダム)
+                case ShakeMode.AllMix_W:
+                    x = RandomX();
+                    y = RandomY();
+                    rotZ = ShakeRotationZ(saveRotZ, true);
+                    break;
+                 //全ミックス(ぐらつき定数揺れ)
+                case ShakeMode.AllMix_CW:
+                    x = RandomX();
+                    y = RandomY();
+                    rotZ = ShakeRotationZ(saveRotZ, false);
+                    break;
+                default:
+                    break;
             }
-            //左揺れ
-            else
-            {
-                //設定した揺れ幅より大きい(負の数)
-                if (-amount < cameraPos.x)
-                {
-                    Debug.Log("LeftIN");
-                    //座標を左にずらす
-                    cameraPos.x -= speed * Time.deltaTime;
-                    PositionChange();
-                }
-                else
-                {
-                    Debug.Log("LeftCount");
-                    //フラグをrightにし、カウント
-                    right = true;
-                    i++;
-                }
-            }
-            Debug.Log(i);
+
+            //このフレームのRotZの数値を保存
+            saveRotZ = rotZ;
+            //回転(ぐらつき)処理
+            transform.Rotate(0, 0, rotZ);
+            //ポジションの移動(揺れ)
+            transform.localPosition = new Vector3(x, y, camPos.z);
+            //タイムの加算
+            measure += Time.deltaTime;
+            yield return null;
         }
+
+        //揺れ後は元の位置、角度に戻す
+        transform.localPosition = camPos;
+        transform.rotation = camRot;
     }
 
     /// <summary>
-    /// 縦揺れ
+    /// Shakeする時のランダムな数値を返す
     /// </summary>
-    private void VerticalShaking()
+    /// <returns>ShakeWidthの±範囲内のランダムな数値</returns>
+    private float RandomShakeNumber()
     {
-
+        return Random.Range(-shakeWidth, shakeWidth);
     }
 
     /// <summary>
-    /// ぐらつく揺れ
+    /// X軸の揺れ
     /// </summary>
-    private void WobbleShaking()
+    /// <returns>揺れる大きさ(数値)</returns>
+    private float RandomX()
     {
-
+        return camPos.x + RandomShakeNumber();
     }
 
-    private void ResetCount()
+    /// <summary>
+    /// Y軸の揺れ
+    /// </summary>
+    /// <returns>揺れる大きさ(数値)</returns>
+    private float RandomY()
     {
-        count = resetCount;
+        return camPos.y + RandomShakeNumber();
     }
 
-    private void PositionChange()
+    /// <summary>
+    /// ぐらつき揺れの回転値を返す
+    /// </summary>
+    /// <param name="save">１フレーム前の回転値</param>
+    /// <param name="random">ランダムか定数か</param>
+    /// <returns>回転する値</returns>
+    private float ShakeRotationZ(float save, bool random)
     {
-        transform.position = cameraPos;
+        float shakeNum = 0;
+        if (random)
+        {
+            shakeNum = camRot.z + RandomShakeNumber();
+        }
+        else
+        {
+            shakeNum = shakeWidth;
+        }
+
+        Debug.Log(shakeNum);
+
+        //RotZの値をplusとminusで交互に入れ替える為の条件分岐
+        if (save <= 0)
+        {
+            return camRot.z + shakeNum;
+        }
+        else
+        {
+            return camRot.z + -shakeNum;
+        }
     }
-    #endregion
 }
