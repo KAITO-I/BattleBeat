@@ -15,14 +15,13 @@ public class BackDis :BaseResultState
         Blackobj.SetActive(true);
         //背景
         _backImg.sprite = _date.backGraund;
-
+        _soundManager.PlaySE(SEID.Game_Character_General_Move);
     }
 
     public override bool Update()
     {
-        Blackobj.transform.position += new Vector3(150f, 0f, 0f);
-        if (Blackobj.transform.position.x > 3000) _updateMove = true;
-        _soundManager.PlaySE(SEID.Game_Character_General_Move);
+        if (Blackobj.transform.position.x > 3000) _updateMove = false;
+        else Blackobj.transform.position += new Vector3(150f, 0f, 0f);
         return _updateMove;
     }
 }

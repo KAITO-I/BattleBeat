@@ -10,7 +10,7 @@ public class ResultManager : MonoBehaviour
     Setting.Chara winChara = Setting.Chara.HOMI;
     Setting.Chara loseChara = Setting.Chara.HOMI;
 
-    List<Transform> Gole = new List<Transform>();
+    List<Vector3> Gole = new List<Vector3>();
 
     [SerializeField]
     Image BackGraund, CharaImg;
@@ -53,9 +53,9 @@ public class ResultManager : MonoBehaviour
     
     void Start()
     {
+        //==========立ち絵がちゃんとできていたら消す=========
         //プレイヤー情報
         WinPlayerID = (int)AttackManager.winner;
-        
         if (WinPlayerID == 1)
         {
             winChara = Setting.p1c;
@@ -65,11 +65,6 @@ public class ResultManager : MonoBehaviour
         {
             winChara = Setting.p2c;
             loseChara = Setting.p1c;
-        }
-        //動かすオブジェクト初期化
-        for (int i = 0; i < 3; i++)
-        {
-            Gole.Add(Moves[i].GetComponent<RectTransform>());
         }
         #region========立ち絵修正===========
         //アナ立ち絵位置修正
@@ -88,8 +83,13 @@ public class ResultManager : MonoBehaviour
         }
         rect.transform.localScale = new Vector3(_xSize[(int)winChara], _ySize[(int)winChara], 1f);
         #endregion
+        //======================================
+        //動かすオブジェクト初期化
+        for (int i = 0; i < 3; i++)
+        {
+            Gole.Add(Moves[i].GetComponent<Transform>().position);   //<-ゴール地点は今の場所だから
+        }
         WordPos.SetActive(false);
-
         _state = new BackDis(_soundManager, BlackImg, BackGraund);
         _soundManager.PlayBGM(BGMID.Result);
     }
@@ -97,14 +97,13 @@ public class ResultManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (!_state.Update())
         {
             switch (_state._className)//処理が終わったら
             { /* BackDis->TextMove-> CharaDis->TextDis */
-                case BaseResultState.ClassName.BackDis: new TextMove(_soundManager, Gole); break;
-                case BaseResultState.ClassName.TextMove: new CharaDis(_soundManager, CharaImg); break;
-                case BaseResultState.ClassName.CharaDis: new TextDis(_soundManager, intervalForCharacterDisplay); break;
+                case BaseResultState.ClassName.BackDis: _state = new TextMove(_soundManager,Moves, Gole,PlayerImgs); break;
+                case BaseResultState.ClassName.TextMove: _state = new CharaDis(_soundManager, CharaImg); break;
+                case BaseResultState.ClassName.CharaDis: _state = new TextDis(_soundManager, intervalForCharacterDisplay,WordPos); break;
                 case BaseResultState.ClassName.TextDis: OnClick(); break;
             }
         }

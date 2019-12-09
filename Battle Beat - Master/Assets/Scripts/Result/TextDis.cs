@@ -15,12 +15,15 @@ public class TextDis : BaseResultState
     private string WordText;
 
 
-    public TextDis(SoundManager s, float interval) : base(s)
+    public TextDis(SoundManager s, float interval,GameObject w) : base(s)
     {
         _className = ClassName.TextDis;
         WordText = CharaWoadInstance();
 
         intervalForCharacterDisplay = interval;
+        WordPos = w;
+        Word = w.transform.GetChild(0).GetComponent<Text>();
+        Word.text = "";
         WordPos.SetActive(true);
         // 想定表示時間と現在の時刻をキャッシュ
         timeUntilDisplay = WordText.Length * intervalForCharacterDisplay;
@@ -42,7 +45,7 @@ public class TextDis : BaseResultState
         //すべて表示したら飛べるようにする
         if (displayCharacterCount == WordText.Length)
         {
-            _updateMove = true;
+            _updateMove = false;
         }
         return _updateMove;
     }

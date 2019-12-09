@@ -15,8 +15,8 @@ public class CharaDis : BaseResultState
         CharaImg.sprite = _date.Avatar;
         ////色初期化
         changecolor = Color.white;
-        //changecolor.a = 0.1f;
-        //CharaImg.color = changecolor;
+        changecolor.a = 0.1f;
+        CharaImg.color = changecolor;
 
     }
     public override bool Update()
@@ -26,7 +26,7 @@ public class CharaDis : BaseResultState
         {
             changecolor.a = 1f;
             CharaImg.color = changecolor;
-            _updateMove = true;
+            _updateMove = false;
         }
         else
         {

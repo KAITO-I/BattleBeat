@@ -22,9 +22,21 @@ public abstract class BaseResultState
 
     protected BaseResultState(SoundManager sound)
     {
+        //勝者を保存
+        int _id = (int)AttackManager.winner;
+        if (_id == 1)
+        {
+            winChara = Setting.p1c;
+            loseChara = Setting.p2c;
+        }
+        else if (_id == 2)
+        {
+            winChara = Setting.p2c;
+            loseChara = Setting.p1c;
+        }
         string path = "CharacterData/" + winChara.ToString();
       _date = Resources.Load<CharaData>(path);
-        if (_date.backGraund == null)
+        if (_date == null)
         {
             Debug.Log("データが存在しておりません");
         }
