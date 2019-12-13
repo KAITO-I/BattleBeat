@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -29,11 +30,9 @@ public class ResultManager : MonoBehaviour
     [SerializeField]
     [Range(0.001f, 0.3f)]
     float intervalForCharacterDisplay = 0.05f;  // 1文字の表示にかかる時間
-
-    //キャラの位置調節に必要 
+    //=============キャラの位置調節に必要 =============//
     float _yPos = -200;//アナの位置直し
     float _xPos = -300f;
-
     float[] _xSize =
     {
         1.4f,
@@ -48,8 +47,9 @@ public class ResultManager : MonoBehaviour
         1.2f,
         1f
     };
-
-    BaseResultState _state;
+    //================================================//
+    BaseResultState[] _states = new BaseResultState[4];
+    int _stateid;
     
     void Start()
     {
@@ -90,25 +90,35 @@ public class ResultManager : MonoBehaviour
             Gole.Add(Moves[i].GetComponent<Transform>().position);   //<-ゴール地点は今の場所だから
         }
         WordPos.SetActive(false);
-        _state = new BackDis(_soundManager, BlackImg, BackGraund);
-        _soundManager.PlayBGM(BGMID.Result);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (!_state.Update())
+        //=========動かすクラスを一度にすべて初期化===========
+        foreach(var v in Enum.GetValues(typeof(BaseResultState.ClassName)))
         {
-            switch (_state._className)//処理が終わったら
-            { /* BackDis->TextMove-> CharaDis->TextDis */
-                case BaseResultState.ClassName.BackDis: _state = new TextMove(_soundManager,Moves, Gole,PlayerImgs); break;
-                case BaseResultState.ClassName.TextMove: _state = new CharaDis(_soundManager, CharaImg); break;
-                case BaseResultState.ClassName.CharaDis: _state = new TextDis(_soundManager, intervalForCharacterDisplay,WordPos); break;
-                case BaseResultState.ClassName.TextDis: OnClick(); break;
+            switch (v)
+            {/* BackDis->TextMove-> CharaDis->TextDis */
+                case BaseResultState.ClassName.BackDis: _states[0] = new BackDis(_soundManager, BlackImg, BackGraund);break;
+                case BaseResultState.ClassName.TextMove: _states[1] = new TextMove(_soundManager, Moves, Gole, PlayerImgs); break;
+                case BaseResultState.ClassName.CharaDis: _states[2] = new CharaDis(_soundManager, CharaImg); break;
+                case BaseResultState.ClassName.TextDis: _states[3] = new TextDis(_soundManager, intervalForCharacterDisplay, WordPos); break;
             }
         }
+        //====================================================
+        _soundManager.PlayBGM(BGMID.Result);
+        _stateid = 0;
     }
-    //シーン移動
+    void Update()
+    {
+        //===========終わり次第falseが来る===========//
+        if (!_states[_stateid].Update())
+        {
+            _stateid++;
+            if (_stateid == 4)//すべて終わり次第
+            {
+                OnClick();
+            }
+        }
+        //==========================================//
+    }
+    //==============シーン移動するため==================//
     void OnClick()
     {
         if (_1Pcontroller.GetButtonDown(ControllerManager.Button.A)|| _2Pcontroller.GetButtonDown(ControllerManager.Button.A))
@@ -122,4 +132,5 @@ public class ResultManager : MonoBehaviour
             _soundManager.PlaySE(SEID.General_Controller_Decision);
         }
     }
+    //==================================================//
 }
