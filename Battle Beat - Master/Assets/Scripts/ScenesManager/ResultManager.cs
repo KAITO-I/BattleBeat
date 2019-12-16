@@ -107,14 +107,15 @@ public class ResultManager : MonoBehaviour
     }
     void Update()
     {
+        if (_stateid == 4)//すべて終わり次第
+        {
+            OnClick();
+            return;
+        }
         //===========終わり次第falseが来る===========//
         if (!_states[_stateid].Update())
         {
             _stateid++;
-            if (_stateid == 4)//すべて終わり次第
-            {
-                OnClick();
-            }
         }
         //==========================================//
     }

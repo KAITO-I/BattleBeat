@@ -13,6 +13,7 @@ public class TextDis : BaseResultState
     private float timeElapsed = 1;          // 文字列の表示を開始した時間
     private int lastUpdateCharacter = -1;       // 表示中の文字数
     private string WordText;
+    private bool once = true;
 
 
     public TextDis(SoundManager s, float interval,GameObject w) : base(s)
@@ -25,15 +26,19 @@ public class TextDis : BaseResultState
         Word = w.transform.GetChild(0).GetComponent<Text>();
         Word.text = "";
         WordPos.SetActive(true);
-        // 想定表示時間と現在の時刻をキャッシュ
-        timeUntilDisplay = WordText.Length * intervalForCharacterDisplay;
-        timeElapsed = Time.time;
-        // 文字カウントを初期化
-        lastUpdateCharacter = -1;
     }
 
     public override bool Update()
     {
+        if (once)
+        {
+            // 想定表示時間と現在の時刻をキャッシュ
+            timeUntilDisplay = WordText.Length * intervalForCharacterDisplay;
+            timeElapsed = Time.time;
+            // 文字カウントを初期化
+            lastUpdateCharacter = -1;
+            once = false;
+        }
         // クリックから経過した時間が想定表示時間の何%か確認し、表示文字数を出す
         int displayCharacterCount = (int)(Mathf.Clamp01((Time.time - timeElapsed) / timeUntilDisplay) * WordText.Length);
         // 表示文字数が前回の表示文字数と異なるならテキストを更新する

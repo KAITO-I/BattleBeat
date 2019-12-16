@@ -107,7 +107,8 @@ public class SelectCountroll : MonoBehaviour
         }
         _Ready.SetActive(false);
     }
-    void TextColorChange()//ここでテキストのフェードイン、アウトをしている
+    //==============テキストのフェードイン、アウト============
+    void TextColorChange()
     {
         //一定期間で表示・非表示
         time += Time.deltaTime * _changeTransparency;
@@ -117,4 +118,5 @@ public class SelectCountroll : MonoBehaviour
         color.a = time / interval;
         text.color = color;
     }
+    //==========================================
 }

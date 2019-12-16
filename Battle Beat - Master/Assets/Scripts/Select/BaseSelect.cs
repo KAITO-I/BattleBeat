@@ -61,28 +61,30 @@ public abstract class BaseSelect: MonoBehaviour
 
     public abstract void playerUpdate();
 
-    //十字キーの処理
+    //===============十字キーの処理==================
     protected void InputProcess(int _ID)
     {
         int old = _charactorID;
         if (!_playerOK&&!_playerDecritionOK)//選択されていないとき,説明画面が表示されていないとき
         {
-            if (_controller.GetAxisUp(ControllerManager.Axis.DpadY) < 0)//上入力
+            if (_controller.GetAxisUp(ControllerManager.Axis.DpadY) < 0)//下入力
             {
                 _controll.CharaObj[_charactorID].charaSelect(_ID, false);
-                _charactorID = (_charactorID + 1) % 3;
-                //左->0:右->3足す
-                if (old >= 3) _charactorID += 3;
+                _charactorID = (_charactorID + 1) % 2;
+                //左->0:中央->2右->4足す
+                if (old >= 2 && old <= 3) _charactorID += 2;
+                else if (old >= 4 && old <= 5) _charactorID += 4;
                 _controll.CharaObj[_charactorID].charaSelect(_ID, true);
                 //Player_Obj.transform.localScale = new Vector3(_xSize[_Player], _ySize[_Player], 1);
                 _soundManager.PlaySE(SEID.General_Controller_Select);
             }
-            else if (_controller.GetAxisUp(ControllerManager.Axis.DpadY) > 0)//下入力
+            else if (_controller.GetAxisUp(ControllerManager.Axis.DpadY) > 0)//上入力
             {
                 _controll.CharaObj[_charactorID].charaSelect(_ID, false);
-                _charactorID = (_charactorID - 1 + 3) % 3;
-                //左->0:右->3足す
-                if (old >= 3) _charactorID += 3;
+                _charactorID = (_charactorID - 1 + 2) % 2;
+                //左->0:中央->2右->4足す
+                if (old >= 2 && old <= 3) _charactorID += 2;
+                else if (old >= 4 && old <= 5) _charactorID += 4;
                 _controll.CharaObj[_charactorID].charaSelect(_ID, true);
                 //Player_Obj.transform.localScale = new Vector3(_xSize[_Player], _ySize[_Player], 1);
                 _soundManager.PlaySE(SEID.General_Controller_Select);
@@ -91,18 +93,18 @@ public abstract class BaseSelect: MonoBehaviour
 
         if (_controller.GetAxisUp(ControllerManager.Axis.DpadX) < 0)//左入力
         {
-            if (_playerDecritionOK)
-            {//キャラ説明が表示されている
+            if (_playerDecritionOK)//キャラ説明が表示されている
+            {
                 _charactorDecritionID = (_charactorDecritionID - 1 + discritions[_charactorID]._discritionSprites.Count) % discritions[_charactorID]._discritionSprites.Count;
 
             }
-            else
+            else//普通の選択移動
             {
                 _charactorDecritionID = 0;//最初から見るように初期化
                 if (!_playerOK)
                 {
                     _controll.CharaObj[_charactorID].charaSelect(_ID, false);
-                    _charactorID = (_charactorID - 3 + 6) % 6;
+                    _charactorID = (_charactorID - 2 + 6) % 6;
                     _controll.CharaObj[_charactorID].charaSelect(_ID, true);
                     _soundManager.PlaySE(SEID.General_Controller_Select);
                 }
@@ -121,14 +123,14 @@ public abstract class BaseSelect: MonoBehaviour
                 if (!_playerOK)
                 {
                     _controll.CharaObj[_charactorID].charaSelect(_ID, false);
-                    _charactorID = (_charactorID + 3) % 6;
+                    _charactorID = (_charactorID + 2) % 6;
                     _controll.CharaObj[_charactorID].charaSelect(_ID, true);
                     _soundManager.PlaySE(SEID.General_Controller_Select);
                 }
             }
         }
     }
-    //ボタン操作関数
+    //=============ボタン操作関数================
     protected void ButtonInput()
     {
         if (_controller.GetButtonDown(ControllerManager.Button.A))
@@ -156,7 +158,7 @@ public abstract class BaseSelect: MonoBehaviour
         _playerDescrition.enabled = _playerDecritionOK;
 
     }
-    //テープを動かす処理
+    //==============テープを動かす処理============
     protected float ReadyBerMove(bool _Chack, float _MoveTime)
     {
         if (_MoveTime <= 1)
@@ -168,8 +170,7 @@ public abstract class BaseSelect: MonoBehaviour
         else if (_Chack) Teap.GetComponent<Transform>().position = Vector3.Lerp(rect.position, Gole, _MoveTime);
         return _MoveTime;
     }
-
-    //指定されたものを返す関数
+    //=============指定されたものを返す関数==========
     public T GetItem<T>(string item=null)
     {
         if (typeof(T) == typeof(SpriteRenderer))
