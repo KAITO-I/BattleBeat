@@ -179,7 +179,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerObj: {fileID: 4320667415473011673}
   _renderer: {fileID: 4551820116402990842}
-  Uni: {fileID: 5585238248082747835}
+  _onUni: {fileID: 5585238248082747835}
+  _uniObj: {fileID: 0}
 --- !u!1001 &4551820116400961178
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -187,6 +188,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4320667415473011651}
     m_Modifications:
+    - target: {fileID: 100000, guid: 879e128bb1494b243b25aec9bd8e3cd9, type: 3}
+      propertyPath: m_Name
+      value: kusari_toguro
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 879e128bb1494b243b25aec9bd8e3cd9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -243,10 +248,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 30
       objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: 879e128bb1494b243b25aec9bd8e3cd9, type: 3}
-      propertyPath: m_Name
-      value: kusari_toguro
-      objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: 879e128bb1494b243b25aec9bd8e3cd9, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -272,6 +273,42 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4320667415473011651}
     m_Modifications:
+    - target: {fileID: 100122, guid: 27fa46310d7f6e249aaa1301ed99004d, type: 3}
+      propertyPath: m_Name
+      value: unizon_idol02
+      objectReference: {fileID: 0}
+    - target: {fileID: 100122, guid: 27fa46310d7f6e249aaa1301ed99004d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100076, guid: 27fa46310d7f6e249aaa1301ed99004d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100078, guid: 27fa46310d7f6e249aaa1301ed99004d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100080, guid: 27fa46310d7f6e249aaa1301ed99004d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100108, guid: 27fa46310d7f6e249aaa1301ed99004d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100118, guid: 27fa46310d7f6e249aaa1301ed99004d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400118, guid: 27fa46310d7f6e249aaa1301ed99004d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.72
+      objectReference: {fileID: 0}
+    - target: {fileID: 400118, guid: 27fa46310d7f6e249aaa1301ed99004d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.242
+      objectReference: {fileID: 0}
     - target: {fileID: 400122, guid: 27fa46310d7f6e249aaa1301ed99004d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -327,38 +364,6 @@ PrefabInstance:
     - target: {fileID: 400122, guid: 27fa46310d7f6e249aaa1301ed99004d, type: 3}
       propertyPath: m_LocalScale.z
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 100122, guid: 27fa46310d7f6e249aaa1301ed99004d, type: 3}
-      propertyPath: m_Name
-      value: unizon_idol02
-      objectReference: {fileID: 0}
-    - target: {fileID: 100078, guid: 27fa46310d7f6e249aaa1301ed99004d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 100080, guid: 27fa46310d7f6e249aaa1301ed99004d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 100108, guid: 27fa46310d7f6e249aaa1301ed99004d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 100118, guid: 27fa46310d7f6e249aaa1301ed99004d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400118, guid: 27fa46310d7f6e249aaa1301ed99004d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.72
-      objectReference: {fileID: 0}
-    - target: {fileID: 400118, guid: 27fa46310d7f6e249aaa1301ed99004d, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 1.242
-      objectReference: {fileID: 0}
-    - target: {fileID: 100076, guid: 27fa46310d7f6e249aaa1301ed99004d, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 27fa46310d7f6e249aaa1301ed99004d, type: 3}

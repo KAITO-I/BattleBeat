@@ -58,9 +58,7 @@ public abstract class BaseSelect: MonoBehaviour
         length = _charaName.Length;
         _teapMoveTime = 0f;
     }
-
     public abstract void playerUpdate();
-
     //===============十字キーの処理==================
     protected void InputProcess(int _ID)
     {

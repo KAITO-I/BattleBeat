@@ -7,8 +7,6 @@ public class Uni_ZoneAnimation : BasePlayerAnimation
 {
     [SerializeField]
     GameObject _onUni;//上のユニを非表示
-    [SerializeField]
-    GameObject _uniObj;
     protected override void Attack1()
     {
         anim.SetTrigger("Wait");
