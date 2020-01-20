@@ -7,6 +7,13 @@ public class Uni_ZoneAnimation : BasePlayerAnimation
 {
     [SerializeField]
     GameObject _onUni;//上のユニを非表示
+
+    protected override void Start()
+    {
+        base.Start();
+        _renderer = transform.GetChild(1).GetComponent<MeshRenderer>();
+        _renderer.enabled = false;
+    }
     protected override void Attack1()
     {
         anim.SetTrigger("Wait");

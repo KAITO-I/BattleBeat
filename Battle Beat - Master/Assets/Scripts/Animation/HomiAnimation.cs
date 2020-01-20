@@ -5,6 +5,13 @@ using UnityEngine;
 //攻撃は違うのでクラスを分ける
 public class HomiAnimation : BasePlayerAnimation
 {
+    protected override void Start()
+    {
+        base.Start();
+        _renderer = transform.GetChild(1).GetComponent<MeshRenderer>();
+        _renderer.enabled = false;
+    }
+
     protected override void Attack1()
     {
         anim.SetTrigger("Attack1");

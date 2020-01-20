@@ -34,7 +34,7 @@ public class Trap : BasicAttack
 
         canMakeDamage = true;//baseを上書きする
         //==========アニメーション処理==========//
-        //エラーが起こる//リズムが来るたびに呼ばれるため注意//
+        //エラーが起こる//トラップ発動中、リズムが来るたびに呼ばれるため注意//
         GameObject _uniObj = transform.GetChild(0).gameObject;
         _uniObj.transform.position = vec;//ユニゾンの位置にする
         UniAnimation _uniAnim = _uniObj.GetComponent<UniAnimation>();

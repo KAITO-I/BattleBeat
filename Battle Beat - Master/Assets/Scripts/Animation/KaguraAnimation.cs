@@ -12,6 +12,8 @@ public class KaguraAnimation :BasePlayerAnimation
     protected override void Start()
     {
         base.Start();
+        _renderer = transform.GetChild(1).GetComponent<MeshRenderer>();
+        _renderer.enabled = false;
         _kusariAnim = gameObject.transform.GetChild(2).GetComponent<Animator>();
         //anim.SetTrigger("Start");
     }

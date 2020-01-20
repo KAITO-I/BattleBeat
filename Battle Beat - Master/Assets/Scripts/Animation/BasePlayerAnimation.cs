@@ -12,8 +12,6 @@ public class BasePlayerAnimation:MonoBehaviour
         Start,
         Finish
     }
-    [SerializeField]
-    protected GameObject PlayerObj;
     protected Player _playerClass;
     AnimatorStateInfo info_;
     RythmManager rythm;
@@ -30,9 +28,7 @@ public class BasePlayerAnimation:MonoBehaviour
     protected virtual void Start()
     {
         anim = GetComponent<Animator>();
-        _playerClass = PlayerObj.GetComponent<Player>();
-        _renderer = transform.GetChild(1).GetComponent<MeshRenderer>();
-        _renderer.enabled = false;
+        _playerClass = GetComponent<Player>();
         rythm = GameObject.Find("Manager").GetComponent<RythmManager>();
         interval = rythm.getbps/2;
         oldbps = rythm.getbps;

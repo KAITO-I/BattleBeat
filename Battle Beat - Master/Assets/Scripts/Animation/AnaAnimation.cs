@@ -6,6 +6,13 @@ public class AnaAnimation : BasePlayerAnimation
 {
     [SerializeField]
     GameObject[] AnaAnimObj = new GameObject[4];
+    protected override void Start()
+    {
+        base.Start();
+        _renderer = transform.GetChild(1).GetComponent<MeshRenderer>();
+        _renderer.enabled = false;
+    }
+
     protected override void Attack1()
     {
         //anim.SetTrigger("Attack1");
