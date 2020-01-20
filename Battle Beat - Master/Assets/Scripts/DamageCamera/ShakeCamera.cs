@@ -1,18 +1,10 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class ShakeCamera : MonoBehaviour
+public class ShakeCamera
 {
     private const float shakeTime = 0.2f;
     private const float shakeWidth = 0.15f;
-
-    /// <summary>
-    /// 外部呼出しメソッド
-    /// </summary>
-    public void Shake()
-    {
-        StartCoroutine(ShakeCoroutine());
-    }
 
     /// <summary>
     /// 揺れ処理を行うコルーチン

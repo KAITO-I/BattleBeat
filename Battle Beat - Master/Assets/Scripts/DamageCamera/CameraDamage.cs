@@ -9,6 +9,7 @@ public class CameraDamage : MonoBehaviour
 
     private void Update()
     {
+        //ダメージを受けた
         if (Input.GetMouseButtonDown(0))
         {
             shake.Shake();
