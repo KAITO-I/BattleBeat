@@ -131,12 +131,21 @@ public abstract class BaseSelect: MonoBehaviour
     //=============ボタン操作関数================
     protected void ButtonInput()
     {
+        //決定ボタンの処理
         if (_controller.GetButtonDown(ControllerManager.Button.A))
         {
-            _playerOK = true;
-            _teapMoveTime = 0f;
+            //キャラがないところを決定した際の処理
+            if (_charactorID == 4 && _charactorID == 5)
+            {
+                _playerOK = false;
+            }
+            else
+            {
+                _playerOK = true;
+                _teapMoveTime = 0f;
+            }
         }
-        //×ボタンの処理
+        //キャンセルボタンの処理
         if (_controller.GetButtonDown(ControllerManager.Button.B))
         {
             //キャラ選択時は選択を外す
@@ -169,7 +178,7 @@ public abstract class BaseSelect: MonoBehaviour
         return _MoveTime;
     }
     //=============指定されたものを返す関数==========
-    public T GetItem<T>(string item=null)
+    public T GetItem<T>(string item=null)//引数で同じ型の変数だが、別の変数を判定している
     {
         if (typeof(T) == typeof(SpriteRenderer))
         {
