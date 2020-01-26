@@ -76,7 +76,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: naguru 0
+  m_Name: naguru0
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -103,7 +103,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Back 1
+  m_Name: Back1
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -362,7 +362,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Back 0
+  m_Name: Back0
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -457,7 +457,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: dashu 0
+  m_Name: dashu0
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:

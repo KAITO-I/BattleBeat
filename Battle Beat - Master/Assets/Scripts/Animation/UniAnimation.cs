@@ -27,11 +27,22 @@ public class UniAnimation : BasePlayerAnimation
     {
         base.Update();
         AnimatorStateInfo _info = anim.GetCurrentAnimatorStateInfo(0);
-        if (_info.IsName("Attack") || _info.IsName("Back"))//「攻撃」と「戻る」のをワンテンポで行うため
+        if (_info.IsName("naguru") || _info.IsName("Back"))//
         {
             anim.speed *= 2;//①テンポで帰らなければならないため
             if (_info.IsName("Back"))
             {
+                StartCoroutine(MoveColutin(gameObject, _uniZoneObj.transform.position));
+            }
+        }
+        else if (_info.IsName("Back0"))
+        {
+            StartCoroutine(MoveColutin(gameObject, _uniZoneObj.transform.position));
+        }
+        else if (_info.IsName("dashu0") || _info.IsName("naguru0") || _info.IsName("Back1"))//指定した場所に敵がいた場合
+        {
+            anim.speed *= 3;//①テンポで帰らなければならないため
+            if (_info.IsName("Back1")){
                 StartCoroutine(MoveColutin(gameObject, _uniZoneObj.transform.position));
             }
         }
@@ -55,17 +66,21 @@ public class UniAnimation : BasePlayerAnimation
                 break;
             case UniState.Attack://攻撃時は自動的に戻るアニメーションが再生される
                 anim.SetTrigger("Attack");
-                GetSetUniZoneObj.GetComponent<Uni_ZoneAnimation>().UniDisFunction(true);
                 break;
             case UniState.Back:
                 anim.SetTrigger("Back");
-                GetSetUniZoneObj.GetComponent<Uni_ZoneAnimation>().UniDisFunction(true);
                 break;
         }
     }
     protected override IEnumerator MoveColutin(GameObject obj, Vector3 Goal)
     {
         yield return StartCoroutine(base.MoveColutin(obj,Goal));
+        AnimatorStateInfo _info = anim.GetCurrentAnimatorStateInfo(0);
+        if (_info.IsName("Back")|| _info.IsName("Back0") || _info.IsName("Back1"))
+        {
+            GetSetUniZoneObj.GetComponent<Uni_ZoneAnimation>().UniDisFunction(true);
+            Destroy(gameObject);
+        }
         gameObject.transform.Rotate(0, 180, 0);
         yield return new WaitForFixedUpdate();
     }
