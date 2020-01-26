@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class UniAnimation : BasePlayerAnimation
 {
-    GameObject _playerObj;
     public enum UniState
     {
         Start,
@@ -12,6 +11,12 @@ public class UniAnimation : BasePlayerAnimation
         Back
     }
     Vector3 _Gole;
+
+    protected override void Start()
+    {
+        base.Start();
+    }
+
     protected override void Update()
     {
         base.Update();
@@ -26,18 +31,16 @@ public class UniAnimation : BasePlayerAnimation
         }
     }
     //トラップの時はこの関数を呼んでもらう
-    //(現在の状況、ユニのオブジェクト,目的地)
-    public void UniAnim(UniState state,GameObject uni, Vector3 Gole)
+    //(現在の状況、ユニのオブジェクト,目的地,どっちが出したか)
+    public void UniAnim(UniState state,GameObject uni=null, Vector3? Gole = null, bool pID=false)
     {
-        base.Start();
-        _playerObj = GameObject.Find("");
-        _playerClass = _playerObj.GetComponent<Player>();
-        _Gole = Gole;//戻るときにUpdate関数で行わなければならないため<-攻撃か戻るかが不明なため
+        Vector3 position = Gole ?? Vector3.zero;
+        _Gole = position;//戻るときにUpdate関数で行わなければならないため
         switch (state)
         {
             case UniState.Start:
                 Vector3 vec = _Gole;
-                if (_playerClass.PlayerID == 1)//プレイヤーごとに位置を変えるため
+                if (!pID)//デバッグできないため未確認
                 {
                     vec += new Vector3(1, 0, -1);
                 }

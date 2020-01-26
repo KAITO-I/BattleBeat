@@ -12,6 +12,8 @@ public class BasePlayerAnimation:MonoBehaviour
         Start,
         Finish
     }
+    [SerializeField]
+    protected GameObject PlayerObj;
     protected Player _playerClass;
     AnimatorStateInfo info_;
     RythmManager rythm;
@@ -28,7 +30,11 @@ public class BasePlayerAnimation:MonoBehaviour
     protected virtual void Start()
     {
         anim = GetComponent<Animator>();
-        _playerClass = GetComponent<Player>();
+        if (PlayerObj != null)//ユニアニメーション時には必要ないため
+        {
+            _playerClass = PlayerObj.GetComponent<Player>();
+        }
+        _renderer.enabled = false;
         rythm = GameObject.Find("Manager").GetComponent<RythmManager>();
         interval = rythm.getbps/2;
         oldbps = rythm.getbps;
@@ -63,16 +69,19 @@ public class BasePlayerAnimation:MonoBehaviour
     protected IEnumerator MoveColutin(GameObject obj, Vector3 Goal)
     {
         float time = 0;
-        Vector3 Oragin = obj.transform.position;
-        Vector3 pos = Vector3.Lerp(Oragin, Goal,time/interval);
+        Vector3 Origin = obj.transform.position;
+        Vector3 pos = Origin;
         obj.transform.position = pos;
         //移動
-        while (time<interval)
+        do
         {
             time += Time.deltaTime;
-            obj.transform.position  = Vector3.Lerp(Oragin, Goal, time / interval);
+            obj.transform.position = Vector3.Lerp(Origin, Goal, time / interval);
+            Debug.Log(interval);
             yield return new WaitForFixedUpdate();
-        }
+        } while (time < interval);
+        Debug.Log("到達" + Origin + "から" + Goal + "まで");
+        Debug.Log(obj.transform.position);
     }
 
     //アニメーション再生

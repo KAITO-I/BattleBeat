@@ -177,9 +177,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ce72a1ae5ed35e468760a9e2da6250d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerObj: {fileID: 4320667415473011673}
+  PlayerObj: {fileID: 4320667415473011673}
   _renderer: {fileID: 4551820116402990842}
   _onUni: {fileID: 5585238248082747835}
+  _uniObj: {fileID: 0}
 --- !u!1001 &4551820116400961178
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -276,7 +277,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: unizon_idol02
       objectReference: {fileID: 0}
-    - target: {fileID: 100122, guid: 27fa46310d7f6e249aaa1301ed99004d, type: 3}
+    - target: {fileID: 100000, guid: 27fa46310d7f6e249aaa1301ed99004d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100028, guid: 27fa46310d7f6e249aaa1301ed99004d, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -299,6 +304,14 @@ PrefabInstance:
     - target: {fileID: 100118, guid: 27fa46310d7f6e249aaa1301ed99004d, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400118, guid: 27fa46310d7f6e249aaa1301ed99004d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.72
+      objectReference: {fileID: 0}
+    - target: {fileID: 400118, guid: 27fa46310d7f6e249aaa1301ed99004d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.242
       objectReference: {fileID: 0}
     - target: {fileID: 400122, guid: 27fa46310d7f6e249aaa1301ed99004d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -355,14 +368,6 @@ PrefabInstance:
     - target: {fileID: 400122, guid: 27fa46310d7f6e249aaa1301ed99004d, type: 3}
       propertyPath: m_LocalScale.z
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 400118, guid: 27fa46310d7f6e249aaa1301ed99004d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.72
-      objectReference: {fileID: 0}
-    - target: {fileID: 400118, guid: 27fa46310d7f6e249aaa1301ed99004d, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 1.242
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: 27fa46310d7f6e249aaa1301ed99004d, type: 3}
