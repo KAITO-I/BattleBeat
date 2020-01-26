@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Audio;
 using MainMenu;
+using CoreManager;
 
 public class MainMenuManager : MonoBehaviour
 {
@@ -150,7 +151,8 @@ public class MainMenuManager : MonoBehaviour
     private void Update()
     {
         // ロードディング画面の表示中は無効化
-        if (SceneLoader.Instance.isLoading) return;
+        // ポップアップ表示中なら実行しない
+        if (SceneLoader.Instance.isLoading || PopupManager.IsActive) return;
 
         switch (this.displayState) {
             case DisplayState.Menu:
@@ -235,7 +237,24 @@ public class MainMenuManager : MonoBehaviour
                 else if (this.controller.GetButtonDown_Menu(ControllerManager.Button.B))
                 {
                     SoundManager.Instance.PlaySE(SEID.General_Controller_Back);
-                    SceneLoader.Instance.LoadScene(SceneLoader.Scenes.Title);
+                    PopupManager.Show(
+                        ("タイトルへ\n戻ル", () =>
+                            {
+                                SceneLoader.Instance.LoadScene(SceneLoader.Scenes.Title);
+                            }
+                        ),
+                        ("ゲームを\nヤメル",() =>
+                            {
+                            #if UNITY_EDITOR
+                                UnityEditor.EditorApplication.isPlaying = false;
+                            #endif
+
+                            #if UNITY_STANDALONE
+                                Application.Quit();
+                            #endif
+                            }
+                        )
+                    );
                 }
             }
             // 右UI

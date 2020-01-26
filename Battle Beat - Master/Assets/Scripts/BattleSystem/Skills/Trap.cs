@@ -7,7 +7,6 @@ public class Trap : BasicAttack
     bool DamagePassed;
     public int LiftTime;
     //=====アニメーション=======//
-    GameObject _uniObj ;
     UniAnimation _uniAnim ;
     public override void PassDamage(Player player)
     {
@@ -39,7 +38,7 @@ public class Trap : BasicAttack
         //エラーが起こる//トラップ発動中、リズムが来るたびに呼ばれるため注意//
         GameObject _uniObj = transform.GetChild(0).gameObject;
         _uniObj.transform.position = vec;//ユニゾンの位置にする
-        UniAnimation _uniAnim = _uniObj.GetComponent<UniAnimation>();
+         _uniAnim = _uniObj.GetComponent<UniAnimation>();
         if (!reverse)
         {
             _uniAnim.UniAnim(UniAnimation.UniState.Start, _uniObj, BoardManager._instance.ToWorldPos(new Vector2Int(col + Area[0].x, row)),reverse);
@@ -48,6 +47,7 @@ public class Trap : BasicAttack
         {
             _uniAnim.UniAnim(UniAnimation.UniState.Start, _uniObj, BoardManager._instance.ToWorldPos(new Vector2Int(col - Area[0].x, row)),reverse);
         }
+        _uniObj.transform.parent = null;
     }
     public override bool isEnd()
     {

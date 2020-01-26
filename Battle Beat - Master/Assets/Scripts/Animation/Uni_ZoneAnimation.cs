@@ -22,10 +22,6 @@ public class Uni_ZoneAnimation : BasePlayerAnimation
     {
         _onUni.SetActive(false);
         PlayAnim = "Trap";
-        //ユニ単体出現
-        //Instantiate(_uniObj,transform);
-        //UniAnimation _unianim = _uniObj.GetComponent<UniAnimation>();
-        //_unianim.UniAnim(UniAnimation.UniState.Start,gameObject,);
     }
     protected override void Attack4()
     {

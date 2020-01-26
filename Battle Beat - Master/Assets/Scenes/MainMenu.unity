@@ -3563,6 +3563,106 @@ PrefabInstance:
       propertyPath: m_PlayAutomatically
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3721349364341204679, guid: a9542cc574199d240acdeb56dc1e5738,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3721349364341204679, guid: a9542cc574199d240acdeb56dc1e5738,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.98768836
+      objectReference: {fileID: 0}
+    - target: {fileID: 3721349364341204679, guid: a9542cc574199d240acdeb56dc1e5738,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3721349364341204679, guid: a9542cc574199d240acdeb56dc1e5738,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3721349364341204679, guid: a9542cc574199d240acdeb56dc1e5738,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3721349364341204679, guid: a9542cc574199d240acdeb56dc1e5738,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.1564345
+      objectReference: {fileID: 0}
+    - target: {fileID: 3721349364341204679, guid: a9542cc574199d240acdeb56dc1e5738,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 3721349364341204679, guid: a9542cc574199d240acdeb56dc1e5738,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 525
+      objectReference: {fileID: 0}
+    - target: {fileID: 3721349364341204679, guid: a9542cc574199d240acdeb56dc1e5738,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -260
+      objectReference: {fileID: 0}
+    - target: {fileID: 3721349364341204679, guid: a9542cc574199d240acdeb56dc1e5738,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 175
+      objectReference: {fileID: 0}
+    - target: {fileID: 6030036444979818062, guid: a9542cc574199d240acdeb56dc1e5738,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6030036444979818062, guid: a9542cc574199d240acdeb56dc1e5738,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6030036444979818062, guid: a9542cc574199d240acdeb56dc1e5738,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.08715578
+      objectReference: {fileID: 0}
+    - target: {fileID: 6030036444979818062, guid: a9542cc574199d240acdeb56dc1e5738,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9961947
+      objectReference: {fileID: 0}
+    - target: {fileID: 6030036444979818062, guid: a9542cc574199d240acdeb56dc1e5738,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6030036444979818062, guid: a9542cc574199d240acdeb56dc1e5738,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -190
+      objectReference: {fileID: 0}
+    - target: {fileID: 6030036444979818062, guid: a9542cc574199d240acdeb56dc1e5738,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6030036444979818062, guid: a9542cc574199d240acdeb56dc1e5738,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 523.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 431790766941229516, guid: a9542cc574199d240acdeb56dc1e5738,
+        type: 3}
+      propertyPath: m_Text
+      value: "\uFF11\uFF12\uFF13\uFF14\uFF15\uFF16\uFF17\uFF18\uFF19\uFF10\uFF11\uFF12\uFF13\uFF14\uFF15"
+      objectReference: {fileID: 0}
+    - target: {fileID: 7649287397019313480, guid: a9542cc574199d240acdeb56dc1e5738,
+        type: 3}
+      propertyPath: m_Text
+      value: "\uFF11\uFF12\uFF13\uFF14\uFF15\uFF16\uFF17\uFF18\uFF19\uFF10\uFF11\uFF12\uFF13\uFF14\uFF15"
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a9542cc574199d240acdeb56dc1e5738, type: 3}
 --- !u!1 &1564902014
