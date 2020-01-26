@@ -80,8 +80,6 @@ public class BasePlayerAnimation:MonoBehaviour
             Debug.Log(interval);
             yield return new WaitForFixedUpdate();
         } while (time < interval);
-        Debug.Log("到達" + Origin + "から" + Goal + "まで");
-        Debug.Log(obj.transform.position);
     }
 
     //アニメーション再生

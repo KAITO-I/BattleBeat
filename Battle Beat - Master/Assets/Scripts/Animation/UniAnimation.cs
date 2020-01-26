@@ -8,7 +8,8 @@ public class UniAnimation : BasePlayerAnimation
     {
         Start,
         Attack,
-        Back
+        Back,
+        Same
     }
     Vector3 _Gole;
     GameObject _uniZoneObj;
@@ -39,13 +40,13 @@ public class UniAnimation : BasePlayerAnimation
         {
             StartCoroutine(MoveColutin(gameObject, _uniZoneObj.transform.position));
         }
-        else if (_info.IsName("dashu0") || _info.IsName("naguru0") || _info.IsName("Back1"))//指定した場所に敵がいた場合
-        {
-            anim.speed *= 3;//①テンポで帰らなければならないため
-            if (_info.IsName("Back1")){
-                StartCoroutine(MoveColutin(gameObject, _uniZoneObj.transform.position));
-            }
-        }
+        //else if (_info.IsName("dashu0") || _info.IsName("naguru0") || _info.IsName("Back1"))//指定した場所に敵がいた場合
+        //{
+        //    anim.speed *= 3;//①テンポで帰らなければならないため
+        //    if (_info.IsName("Back1")){
+        //        StartCoroutine(MoveColutin(gameObject, _uniZoneObj.transform.position));
+        //    }
+        //}
     }
     //トラップの時はこの関数を呼んでもらう
     //(現在の状況、ユニのオブジェクト,目的地,どっちが出したか)
@@ -65,10 +66,14 @@ public class UniAnimation : BasePlayerAnimation
                 StartCoroutine(MoveColutin(uni,vec));//移動
                 break;
             case UniState.Attack://攻撃時は自動的に戻るアニメーションが再生される
+                if (anim == null) base.Start();
                 anim.SetTrigger("Attack");
                 break;
             case UniState.Back:
                 anim.SetTrigger("Back");
+                break;
+            case UniState.Same:
+                anim.SetTrigger("Same");
                 break;
         }
     }
