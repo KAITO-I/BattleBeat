@@ -726,17 +726,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5220559259266347824}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.1564345, w: 0.98768836}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2613922915476697507}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 18}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -324, y: 95}
-  m_SizeDelta: {x: 467, y: 314.3}
+  m_AnchoredPosition: {x: -260, y: 175}
+  m_SizeDelta: {x: 525, y: 314.3}
   m_Pivot: {x: 1, y: 0}
 --- !u!222 &1421867170799973916
 CanvasRenderer:
@@ -779,7 +779,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: "\uFF11\uFF12\uFF13\uFF14\uFF15\uFF16\uFF17\uFF18\uFF19\uFF10\uFF11\uFF12\uFF13\uFF14\uFF15"
 --- !u!1 &5315852657687652979
 GameObject:
   m_ObjectHideFlags: 0
@@ -1076,17 +1076,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6339588151242526831}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.08715578, w: 0.9961947}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7404223758017731062}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 10}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -189.1, y: -4.2}
-  m_SizeDelta: {x: 447.1, y: 300.1}
+  m_AnchoredPosition: {x: -190, y: -3}
+  m_SizeDelta: {x: 523.8, y: 300.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4555523219206734555
 CanvasRenderer:
@@ -1129,7 +1129,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: "\uFF11\uFF12\uFF13\uFF14\uFF15\uFF16\uFF17\uFF18\uFF19\uFF10\uFF11\uFF12\uFF13\uFF14\uFF15"
 --- !u!1 &6745882780693154831
 GameObject:
   m_ObjectHideFlags: 0
@@ -1607,7 +1607,7 @@ Animation:
   m_Animations:
   - {fileID: 7400000, guid: cbf40ed0221cd674b833708c9f1435c4, type: 2}
   m_WrapMode: 0
-  m_PlayAutomatically: 1
+  m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
 --- !u!1 &8312295570703261076

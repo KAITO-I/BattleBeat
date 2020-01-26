@@ -238,12 +238,12 @@ public class MainMenuManager : MonoBehaviour
                 {
                     SoundManager.Instance.PlaySE(SEID.General_Controller_Back);
                     PopupManager.Show(
-                        ("タイトルニ　　モドル", () =>
+                        ("タイトルへ\n戻ル", () =>
                             {
                                 SceneLoader.Instance.LoadScene(SceneLoader.Scenes.Title);
                             }
                         ),
-                        ("ゲームヲ\n　　オワル",() =>
+                        ("ゲームを\nヤメル",() =>
                             {
                             #if UNITY_EDITOR
                                 UnityEditor.EditorApplication.isPlaying = false;
