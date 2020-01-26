@@ -17,6 +17,10 @@ public class Yunizon : Player
         if (CoolDownCount[i] == 0 && Skill.SpCost <= Sp)
         {
             GameObject obj = Instantiate<GameObject>(SkillPrefabs[i]);
+            if (i == 2)//ユニのトラップ
+            {
+                obj.transform.GetChild(0).GetComponent<UniAnimation>().GetSetUniZoneObj = this.gameObject;
+            }
             Skill = obj.GetComponent<AttackItemBase>() as BasicAttack;
             Skill.Init(Pos.y, Pos.x, PlayerID == 1 ? false : true, PlayerID);
             CoolDownCount[i] += Skill.CoolDown + Skill.Delay;

@@ -31,8 +31,6 @@ public class Trap : BasicAttack
         transform.position += new Vector3(0, 1f, 0);
         DamagePassed = false;
 
-        
-
         canMakeDamage = true;//baseを上書きする
         //==========アニメーション処理==========//
         //エラーが起こる//トラップ発動中、リズムが来るたびに呼ばれるため注意//
@@ -51,7 +49,12 @@ public class Trap : BasicAttack
     }
     public override bool isEnd()
     {
-        return DamagePassed || NowTurn > LiftTime;
+        if (NowTurn > LiftTime)//罠にかからなかった場合
+        {
+            _uniAnim.UniAnim(UniAnimation.UniState.Back);
+            return true; 
+        }
+        return DamagePassed;
     }
     public override void TurnPreprocess()
     {

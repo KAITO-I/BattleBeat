@@ -66,7 +66,7 @@ public class BasePlayerAnimation:MonoBehaviour
     }
 
     //タイミングを同じにするため(動かすもの,到達点)
-    protected IEnumerator MoveColutin(GameObject obj, Vector3 Goal)
+    protected virtual　IEnumerator MoveColutin(GameObject obj, Vector3 Goal)
     {
         float time = 0;
         Vector3 Origin = obj.transform.position;

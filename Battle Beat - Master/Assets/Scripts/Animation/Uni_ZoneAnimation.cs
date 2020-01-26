@@ -20,7 +20,7 @@ public class Uni_ZoneAnimation : BasePlayerAnimation
     }
     protected override void Attack3()
     {
-        _onUni.SetActive(false);
+        UniDisFunction(false);
         PlayAnim = "Trap";
     }
     protected override void Attack4()
@@ -39,5 +39,10 @@ public class Uni_ZoneAnimation : BasePlayerAnimation
             default:
                 break;
         }
+    }
+
+    public void UniDisFunction(bool t)
+    {
+        _onUni.SetActive(t);
     }
 }
