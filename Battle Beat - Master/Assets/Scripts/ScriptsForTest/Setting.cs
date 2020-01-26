@@ -65,7 +65,8 @@ public class Setting : MonoBehaviour
             p2c = p2;
         }
         p1k = new Player.KeySets(LeftKey, RightKey, UpKey, DownKey, Attack_1Key, Attack_2Key, Attack_3Key, Attack_4Key);
-        p2k= new Player.KeySets(LeftKey2, RightKey2, UpKey2, DownKey2, Attack_1Key2, Attack_2Key2, Attack_3Key2, Attack_4Key2);
+        p2k = new Player.KeySets(LeftKey2, RightKey2, UpKey2, DownKey2, Attack_1Key2, Attack_2Key2, Attack_3Key2, Attack_4Key2);
+
         GameObject p1g = Instantiate<GameObject>(charaPrefabs[(int)p1c]);
         GameObject p2g = Instantiate<GameObject>(charaPrefabs[(int)p2c]);
         Player p1p = p1g.GetComponent<Player>();

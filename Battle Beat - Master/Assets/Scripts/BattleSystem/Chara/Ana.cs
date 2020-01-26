@@ -4,8 +4,43 @@ using UnityEngine;
 
 public class Ana : Player
 {
+    int bullet;
+    [SerializeField]
+    int bulletMax;
+    [SerializeField]
+    GameObject bulletCounterPrefab;
 
-    private void ClassicAttackProcess(int i)
+    Ana_BulletCounter bulletCounter;
+    private void Start()
+    {
+        IStart();
+
+    }
+    protected override void IStart()
+    {
+        base.IStart();
+        bulletCounter = Instantiate<GameObject>(bulletCounterPrefab).GetComponent<Ana_BulletCounter>();
+        bulletCounter.Init(PlayerID, 32, bulletMax);
+        bullet = bulletMax;
+    }
+    void SetBullet(bool Sub)
+    {
+        if (Sub)
+        {
+            bullet--;
+            bulletCounter.SubBullet();
+        }
+        else
+        {
+            for(int i = 0; i < bulletMax - bullet; i++)
+            {
+                bulletCounter.AddBullet();
+            }
+            bullet = bulletMax;
+        }
+    } 
+
+    private bool ClassicAttackProcess(int i)
     {
         var Skill = SkillPrefabs[i].GetComponent<AttackItemBase>() as BasicAttack;
         if (CoolDownCount[i] == 0 && Skill.SpCost <= Sp)
@@ -22,9 +57,11 @@ public class Ana : Player
             }
             nowAttack = Skill;
             AttackManager._instance.Add(Skill);
+            return true;
         }
+        return false;
     }
-    private void AttackProcess_HyperBeam(int i)
+    private bool AttackProcess_HyperBeam(int i)
     {
         var Skill = SkillPrefabs[i].GetComponent<AttackItemBase>() as BasicAttack;
         if (CoolDownCount[i] == 0 && Skill.SpCost <= Sp)
@@ -41,20 +78,37 @@ public class Ana : Player
             }
             nowAttack = Skill;
             AttackManager._instance.Add(Skill);
+            return true;
         }
+        return false;
     }
 
     protected override void Attack_1()
     {
-        ClassicAttackProcess(0);
+        if (bullet > 0)
+        {
+            if (ClassicAttackProcess(0))
+            {
+                SetBullet(true);
+            }
+        }
     }
     protected override void Attack_2()
     {
-        ClassicAttackProcess(1);
+        if (bullet > 0)
+        {
+            if (ClassicAttackProcess(1))
+            {
+                SetBullet(true);
+            }
+        }
     }
     protected override void Attack_3()
     {
-        ClassicAttackProcess(2);
+        if (ClassicAttackProcess(2))
+        {
+            SetBullet(false);
+        }
     }
     protected override void Attack_4()
     {
