@@ -65,7 +65,7 @@ public class UniAnimation : BasePlayerAnimation
     }
     protected override IEnumerator MoveColutin(GameObject obj, Vector3 Goal)
     {
-        base.MoveColutin(obj, Goal);
+        yield return StartCoroutine(base.MoveColutin(obj,Goal));
         gameObject.transform.Rotate(0, 180, 0);
         yield return new WaitForFixedUpdate();
     }
