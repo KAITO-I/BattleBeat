@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace CoreManager
 {
-    delegate void CalloutProcess();
+    public delegate void CalloutProcess();
 
     public class PopupManager
     {
