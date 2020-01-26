@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class CameraDamage : MonoBehaviour
 {
-    [SerializeField]
-    private ShakeCamera shake = null;
+    private ShakeCamera shake = new ShakeCamera();
 
     private void Update()
     {
         //ダメージを受けた
         if (Input.GetMouseButtonDown(0))
         {
-            shake.Shake();
+            StartCoroutine(shake.ShakeCoroutine());
         }
     }
 }

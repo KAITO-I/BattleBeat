@@ -6,10 +6,12 @@ public class ShakeCamera
     private const float shakeTime = 0.2f;
     private const float shakeWidth = 0.15f;
 
+    public ShakeCamera() { }
+
     /// <summary>
     /// 揺れ処理を行うコルーチン
     /// </summary>
-    private IEnumerator ShakeCoroutine()
+    public IEnumerator ShakeCoroutine()
     {
         float measure = 0; //時間計測用
         Vector3 defaultCameraPos = Camera.main.transform.position; //元々のカメラ位置
