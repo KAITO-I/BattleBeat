@@ -13,6 +13,8 @@ public class Trap : BasicAttack
     {
         base.PassDamage(player);
         DamagePassed = true;
+        //======アニメーション処理==========//
+        _uniAnim.UniAnim(UniAnimation.UniState.Attack);
     }
     public override void Init(int row, int col, bool reverse, int root)
     {
@@ -39,11 +41,11 @@ public class Trap : BasicAttack
         UniAnimation _uniAnim = _uniObj.GetComponent<UniAnimation>();
         if (!reverse)
         {
-            _uniAnim.UniAnim(UniAnimation.UniState.Start, _uniObj, BoardManager._instance.ToWorldPos(new Vector2Int(col + Area[0].x, row)));
+            _uniAnim.UniAnim(UniAnimation.UniState.Start, _uniObj, BoardManager._instance.ToWorldPos(new Vector2Int(col + Area[0].x, row)),reverse);
         }
         else
         {
-            _uniAnim.UniAnim(UniAnimation.UniState.Start, _uniObj, BoardManager._instance.ToWorldPos(new Vector2Int(col - Area[0].x, row)));
+            _uniAnim.UniAnim(UniAnimation.UniState.Start, _uniObj, BoardManager._instance.ToWorldPos(new Vector2Int(col - Area[0].x, row)),reverse);
         }
     }
     public override bool isEnd()

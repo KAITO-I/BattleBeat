@@ -8,7 +8,6 @@ public class Uni_ZoneAnimation : BasePlayerAnimation
     [SerializeField]
     GameObject _onUni;//上のユニを非表示
     [SerializeField]
-    GameObject _uniObj;
     protected override void Attack1()
     {
         anim.SetTrigger("Wait");
@@ -21,7 +20,6 @@ public class Uni_ZoneAnimation : BasePlayerAnimation
     }
     protected override void Attack3()
     {
-        anim.SetTrigger("Trap");
         _onUni.SetActive(false);
         PlayAnim = "Trap";
         //ユニ単体出現

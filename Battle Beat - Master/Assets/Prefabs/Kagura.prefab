@@ -179,9 +179,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerObj: {fileID: 4320667415473011673}
-  _renderer: {fileID: 0}
-  AnimCheck: 0
-  interval: 0.6
+  _renderer: {fileID: 8741519042393352010}
 --- !u!1001 &1929730577720793202
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -433,6 +431,12 @@ PrefabInstance:
 --- !u!4 &8741519042391451050 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 879e128bb1494b243b25aec9bd8e3cd9,
+    type: 3}
+  m_PrefabInstance: {fileID: 8741519042391064362}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &8741519042393352010 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2300000, guid: 879e128bb1494b243b25aec9bd8e3cd9,
     type: 3}
   m_PrefabInstance: {fileID: 8741519042391064362}
   m_PrefabAsset: {fileID: 0}
