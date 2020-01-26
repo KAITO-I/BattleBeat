@@ -24,6 +24,7 @@ public class UniAnimation : BasePlayerAnimation
         if (_info.IsName("Attack") || _info.IsName("Back"))//「攻撃」と「戻る」のをワンテンポで行うため
         {
             anim.speed *= 2;
+
             if (_info.IsName("Back"))
             {
                 StartCoroutine(MoveColutin(gameObject, _Gole));
@@ -47,7 +48,7 @@ public class UniAnimation : BasePlayerAnimation
                 else vec += new Vector3(-1, 0, -1);
                 StartCoroutine(MoveColutin(uni,vec));//移動
                 break;
-            case UniState.Attack:
+            case UniState.Attack://攻撃時は自動的に戻るアニメーションが再生される
                 anim.SetTrigger("Attack");
                 break;
             case UniState.Back:
