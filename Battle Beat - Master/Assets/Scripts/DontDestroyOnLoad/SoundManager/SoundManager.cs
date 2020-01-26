@@ -19,28 +19,56 @@ public enum BGMID {
 
 // SEで使う音源のリスト
 public enum SEID {
+    // 0 - 3
     General_Controller_Select,
     General_Controller_Decision,
     General_Controller_Back,
     General_Siren,
+
+    // 4 - 6
     Shutter_Down,
     Shutter_Close,
     Shutter_Up,
+
+    // 7
     CharacterSelect_GameStart,
+
+    // 8 - 9
     Game_Countdown,
     Game_Ready,
+
+    // 10 - 14
     Game_Character_General_Slash,
-    Game_Character_General_Smash,
+    Game_Character_General_Smash, // ユニゾンの罠が当たった時もこの音
     Game_Character_General_Change,
     Game_Character_General_Finish,
     Game_Character_General_Move,
+
+    // 15 - 18 ホーミー
     Game_Character_Homie_Guitar,
     Game_Character_Homie_GuitarSwing,
     Game_Character_Homie_GuitarSP,
     Game_Character_Homie_Buff,
+
+    // 19 - 21 カグラ
     Game_Character_Kagura_Sword,
     Game_Character_Kagura_SwordSP,
     Game_Character_Kagura_Chain,
+
+    // 22 - 25 アナ
+    Game_Character_Ana_HandGun,
+    Game_Character_Ana_Sniper,
+    Game_Character_Ana_Reload,
+    Game_Character_Ana_BeamGun,
+
+    // 26 - 30 ユニｱﾝﾄﾞゾーン
+    Game_Character_UniZone_Bombing,
+    Game_Character_UniZone_RocketLaunch,
+    Game_Character_UniZone_RocketHit,
+    Game_Character_UniZone_TrapGenerate,
+    Game_Character_UniZone_Repair,
+
+    // 31
     Game_Countdown2
 }
 
