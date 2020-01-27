@@ -76,107 +76,9 @@ public class ControllerManager : MonoBehaviour
 
     private void LateUpdate()
     {
-        /*
-        foreach (Axis axis in Enum.GetValues(typeof(Axis)))
-        {
-            if (Player1 != null && !Mathf.Approximately(Player1.GetAxis(axis), 0f)) Debug.Log("P1 " + axis.ToString() + ":" + Player1.GetAxis(axis));
-            if (Player2 != null && !Mathf.Approximately(Player2.GetAxis(axis), 0f)) Debug.Log("P2 " + axis.ToString() + ":" + Player2.GetAxis(axis));
-        }
-
-        foreach (Button button in Enum.GetValues(typeof(Button)))
-        {
-            if (Player1 != null && Player1.GetButton(button) != false) Debug.Log("P1 " + button.ToString() + ":" + Player1.GetButton(button));
-            if (Player2 != null && Player2.GetButton(button) != false) Debug.Log("P2 " + button.ToString() + ":" + Player2.GetButton(button));
-        }*/
         Player1.UpdateAxes();
         Player2.UpdateAxes();
     }
-
-    //コントローラー操作
-    /*void InputCheck(Controller key,PlayerController player)
-    {
-        switch (player.controllerNum)
-        {
-            case 1:
-                switch (key)
-                {
-                    case Controller.A:
-                        Debug.Log("A");
-                        break;
-                    case Controller.B:
-                        Debug.Log("B");
-                        break;
-                    case Controller.DpadX:
-                        float h = Input.GetAxisRaw(player.axes[(int)key]);
-                        if(h>0) Debug.Log("←");
-                        else Debug.Log("→");
-                        break;
-                    case Controller.DpadY:
-                        float v = Input.GetAxisRaw(player.axes[(int)key]);
-                        if (v > 0) Debug.Log("↑");
-                        else Debug.Log("↓");
-                        break;
-                    case Controller.X:
-                        Debug.Log("X");
-                        break;
-                    case Controller.Y:
-                        Debug.Log("Y");
-                        break;
-                }
-                break;
-            case 2:
-                switch (key)
-                {
-                    case Controller.A:
-                        Debug.Log("A");
-                        break;
-                    case Controller.B:
-                        Debug.Log("B");
-                        break;
-                    case Controller.DpadX:
-                        float h = Input.GetAxisRaw(player.axes[(int)key]);
-                        if (h > 0) Debug.Log("←");
-                        else Debug.Log("→");
-                        break;
-                    case Controller.DpadY:
-                        float v = Input.GetAxisRaw(player.axes[(int)key]);
-                        if (v > 0) Debug.Log("↑");
-                        else Debug.Log("↓");
-                        break;
-                    case Controller.X:
-                        Debug.Log("X");
-                        break;
-                    case Controller.Y:
-                        Debug.Log("Y");
-                        break;
-                }
-                break;
-        }
-    }*/
-
-    //Playerの紐づけ
-    /*bool himoduke = false;
-    void ControllerChange()
-    {
-        if (Input.anyKeyDown)
-        {
-            switch (Input.GetButtonDown("A_1"))
-            {
-                case true:
-                    Player1 = new Controller(1);
-                    //Player2 = new Controller(2);
-                    himoduke = true;
-                    break;
-
-                case false:
-                    //Player1 = new Controller(2);
-                    Player2 = new Controller(1);
-                    himoduke = true;
-                    break;
-            }
-            Debug.Log("ControllerChange");
-        }
-    }*/
 
     public int GetAxis_Menu(Axis axis)
     {
@@ -222,6 +124,20 @@ public class ControllerManager : MonoBehaviour
         return false;
     }
 
+    private void OnGUI()
+    {
+        Button p1b = Button.Select;
+        Button p2b = Button.Select;
+        foreach (Button button in Enum.GetValues(typeof(Button)))
+        {
+            if (Player1.GetButton(button)) p1b = button;
+            if (Player2.GetButton(button)) p2b = button;
+        }
+
+        GUI.Label(new Rect(50, 50, 1000, 100), "P1: " + p1b.ToString());
+        GUI.Label(new Rect(50, 100, 1000, 100), "P2: " + p2b.ToString());
+    }
+
     //==============================
     // プレイヤーのコントローラーのクラス
     //==============================
@@ -241,20 +157,36 @@ public class ControllerManager : MonoBehaviour
             "D-padY_"
         };
 
-        private string[] buttonAxes = {
-            "A_",
-            "B_",
-            "X_",
-            "Y_",
-            "L_",
-            "R_",
-            "Select_",
-            "Start_"
-        };
+        private string[] buttonAxes;
 
         public Controller(int controllerNum)
         {
             this.controllerNum = controllerNum;
+
+#if UNITY_EDITOR && UNITY_STANDALONE
+            buttonAxes = new string[]{
+                "MacOS_A_",
+                "MacOS_B_",
+                "MacOS_X_",
+                "MacOS_Y_",
+                "MacOS_L_",
+                "MacOS_R_",
+                "MacOS_Select_",
+                "MacOS_Start_"
+            };
+#endif
+#if UNITY_EDITOR_OSX && UNITY_STANDALONE_OSX
+            buttonAxes = new string[]{
+                "MacOS_A_",
+                "MacOS_B_",
+                "MacOS_X_",
+                "MacOS_Y_",
+                "MacOS_L_",
+                "MacOS_R_",
+                "MacOS_Select_",
+                "MacOS_Start_"
+            };
+#endif
 
             for (int i = 0; i < this.axisAxes.Length; i++) this.axisAxes[i] += this.controllerNum.ToString();
             for (int i = 0; i < this.buttonAxes.Length; i++) this.buttonAxes[i] += this.controllerNum.ToString();
