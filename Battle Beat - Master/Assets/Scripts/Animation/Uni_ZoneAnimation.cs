@@ -7,7 +7,7 @@ public class Uni_ZoneAnimation : BasePlayerAnimation
 {
     [SerializeField]
     GameObject _onUni;//上のユニを非表示
-    [SerializeField]
+    bool _specialChack = false;
     protected override void Attack1()
     {
         anim.SetTrigger("Wait");
@@ -27,6 +27,7 @@ public class Uni_ZoneAnimation : BasePlayerAnimation
     {
         anim.SetTrigger("Special");
         PlayAnim = "Special";
+        _specialChack = true;
     }
     public override void AttackWaitEnd(int waitAttackId)
     {
@@ -44,5 +45,15 @@ public class Uni_ZoneAnimation : BasePlayerAnimation
     public void UniDisFunction(bool t)
     {
         _onUni.SetActive(t);
+    }
+
+    public override void Damage()
+    {
+        //base.Damage();
+        if (_specialChack)
+        {
+            anim.SetTrigger("SpecialStop");
+            _specialChack = false;
+        }
     }
 }

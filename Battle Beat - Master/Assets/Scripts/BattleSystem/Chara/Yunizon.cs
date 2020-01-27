@@ -89,6 +89,7 @@ public class Yunizon : Player
     }
     public override void TakeDamage(float Damage)
     {
+        AnimationController.Damage();
         if (!Guard)
         {
             base.TakeDamage(Damage);
