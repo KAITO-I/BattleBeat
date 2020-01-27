@@ -65,7 +65,7 @@ public abstract class BaseSelect: MonoBehaviour
     {
         int old = _charactorID;
         if (PopupManager.IsActive) return;//ポップアップが表示されている時雄
-        if (!_playerOK&&!_playerDecritionOK)//選択されていないとき,説明画面が表示されていないとき
+        if (!_playerOK)//選択されていないとき
         {
             if (_controller.GetAxisUp(ControllerManager.Axis.DpadY) < 0)//下入力
             {
@@ -93,13 +93,6 @@ public abstract class BaseSelect: MonoBehaviour
 
         if (_controller.GetAxisUp(ControllerManager.Axis.DpadX) < 0)//左入力
         {
-            if (_playerDecritionOK)//キャラ説明が表示されている
-            {
-                _charactorDecritionID = (_charactorDecritionID - 1 + discritions[_charactorID]._discritionSprites.Count) % discritions[_charactorID]._discritionSprites.Count;
-
-            }
-            else//普通の選択移動
-            {
                 _charactorDecritionID = 0;//最初から見るように初期化
                 if (!_playerOK)
                 {
@@ -108,17 +101,10 @@ public abstract class BaseSelect: MonoBehaviour
                     _controll.CharaObj[_charactorID].charaSelect(_ID, true);
                     _soundManager.PlaySE(SEID.General_Controller_Select);
                 }
-            }
 
         }
         else if (_controller.GetAxisUp(ControllerManager.Axis.DpadX) > 0)//右入力
         {
-            if (_playerDecritionOK)
-            {//キャラ説明が表示されている
-                _charactorDecritionID = (_charactorDecritionID + 1) % discritions[_charactorID]._discritionSprites.Count;
-            }
-            else
-            {
                 _charactorDecritionID = 0;//最初から見るように初期化
                 if (!_playerOK)
                 {
@@ -127,7 +113,6 @@ public abstract class BaseSelect: MonoBehaviour
                     _controll.CharaObj[_charactorID].charaSelect(_ID, true);
                     _soundManager.PlaySE(SEID.General_Controller_Select);
                 }
-            }
         }
     }
     //=============ボタン操作関数================
@@ -153,26 +138,40 @@ public abstract class BaseSelect: MonoBehaviour
         {
             //キャラ選択時は選択を外す
             //戻る画面をホップアップで表示
-            if (!_playerOK)
+            if (!_playerOK && !_playerDecritionOK)
             {
                 PopupManager.Show(
-                    ("メニューへ戻ル", () => { SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainMenu); }),
+                    ("メニューへ戻ル", () => { SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainMenu); }
+                ),
                     ("キャンセル", () => { PopupManager.Hide(); }
                 ));
             }
-            else _playerOK = false;
+            else if (_playerDecritionOK)
+            {
+                _playerDecritionOK = false;
+            }
+            else
+                _playerOK = false;
         }
         //説明画面
         if (_controller.GetButtonDown(ControllerManager.Button.X))
         {
             if (_playerDecritionOK) _playerDecritionOK = false;
-            else _playerDecritionOK = true;
+            else
+                _playerDecritionOK = true;
         }
         _playerDescrition.enabled = _playerDecritionOK;
 
+        //説明画面の左右移動
+        if (_playerDecritionOK && _controller.GetButtonDown(ControllerManager.Button.L)){
+            _charactorDecritionID = (_charactorDecritionID - 1 + discritions[_charactorID]._discritionSprites.Count) % discritions[_charactorID]._discritionSprites.Count;
+        }
+        if (_playerDecritionOK && _controller.GetButtonDown(ControllerManager.Button.R)){
+            _charactorDecritionID = (_charactorDecritionID + 1) % discritions[_charactorID]._discritionSprites.Count;
+        }
     }
-    //==============テープを動かす処理============
-    protected float ReadyBerMove(bool _Chack, float _MoveTime)
+        //==============テープを動かす処理============
+        protected float ReadyBerMove(bool _Chack, float _MoveTime)
     {
         if (_MoveTime <= 1)
         {
