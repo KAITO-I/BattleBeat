@@ -46,12 +46,15 @@ namespace CoreManager
         //==============================
         // Update
         //==============================
-        public static void Update()
+        public static void LateUpdate()
         {
-            // IsActive情報(false)は1F後に更新する
-            PopupManager.IsActive = PopupManager.isActive;
+            if (!PopupManager.isActive) return;
 
-            if (!PopupManager.IsActive) return;
+            if (!PopupManager.IsActive)
+            {
+                PopupManager.IsActive = PopupManager.isActive;
+                return;
+            }
 
             //===== 表示中の処理 =====
             // 上下入力
@@ -98,7 +101,8 @@ namespace CoreManager
             PopupManager.callouts[0].SetButtonData(upCallout.text, upCallout.process);
             PopupManager.callouts[1].SetButtonData(downCallout.text, downCallout.process);
 
-            PopupManager.popupObject.SetActive(PopupManager.IsActive = PopupManager.isActive = true);
+            PopupManager.popupObject.SetActive(PopupManager.isActive = true);
+            PopupManager.selectedCalloutNum = 0;
             PopupManager.callouts[0].Select(true);
             PopupManager.callouts[1].Select(false);
         }
@@ -108,7 +112,7 @@ namespace CoreManager
         //==============================
         internal static void Hide()
         {
-            PopupManager.popupObject.SetActive(PopupManager.isActive = false);
+            PopupManager.popupObject.SetActive(PopupManager.IsActive = PopupManager.isActive = false);
         }
     }
 

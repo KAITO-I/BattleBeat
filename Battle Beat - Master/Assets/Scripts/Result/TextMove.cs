@@ -34,7 +34,7 @@ public class TextMove : BaseResultState
         _charaNameImg = Moves[1].GetComponent<Image>();
         _charaNameImg.sprite = _date.CharaTextImage;                    //キャラの名前を表示
 
-        Debug.Log(_updateMove);
+        //Debug.Log(_updateMove);
     }
 
     public override bool Update()

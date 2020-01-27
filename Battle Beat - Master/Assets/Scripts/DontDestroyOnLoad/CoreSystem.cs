@@ -49,9 +49,9 @@ namespace CoreManager
 
         }
 
-        void Update()
+        void LateUpdate()
         {
-            PopupManager.Update();
+            PopupManager.LateUpdate();
         }
     }
 }

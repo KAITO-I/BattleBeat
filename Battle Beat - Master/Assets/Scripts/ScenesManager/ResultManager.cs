@@ -108,9 +108,11 @@ public class ResultManager : MonoBehaviour
     }
     void Update()
     {
+        if (SceneLoader.Instance.isLoading) return; // シーン読み込み中は実行しない
+
         if (_stateid == 4)//すべて終わり次第
         {
-            if(!PopupManager.IsActive) OnClick();
+            OnClick();
             return;
         }
         //===========終わり次第falseが来る===========//
@@ -123,16 +125,14 @@ public class ResultManager : MonoBehaviour
     //==============シーン移動するため==================//
     void OnClick()
     {
-        if (Input.anyKey)
-        {
-            //SceneLoader.Instance.LoadScene(SceneLoader.Scenes.CharacterSelect);
-            //_soundManager.PlaySE(SEID.General_Controller_Decision);
-            PopupManager.Show(
-                ("モウ一度　遊ブ", () => { SceneLoader.Instance.LoadScene(SceneLoader.Scenes.CharacterSelect); }
-            ),
-                ("タイトルへ戻ル", () => { SceneLoader.Instance.LoadScene(SceneLoader.Scenes.Title); }
-            ));
-        }
+        if (PopupManager.IsActive) return;
+        if (Input.anyKey) PopupManager.Show(
+            ("モウ一度　遊ブ", () => { SceneLoader.Instance.LoadScene(SceneLoader.Scenes.CharacterSelect); }),
+            ("タイトルへ戻ル", () => { SceneLoader.Instance.LoadScene(SceneLoader.Scenes.Title); })
+        );
+
+        //SceneLoader.Instance.LoadScene(SceneLoader.Scenes.CharacterSelect);
+        //_soundManager.PlaySE(SEID.General_Controller_Decision);
     }
     //==================================================//
 }
