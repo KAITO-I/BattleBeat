@@ -1619,7 +1619,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3c5667b2c3ed76c4b87ad55421311ea0, type: 3}
   - {fileID: 21300000, guid: 18a9598fe5e7914408dca06eba91bba9, type: 3}
   - {fileID: 21300000, guid: 9ca0c66b97421054daf20b8a6431db71, type: 3}
-  CharaSprite: {fileID: 21300000, guid: 1fdca0415bbf55d47a21b5d9be3865b5, type: 3}
+  CharaSprite: {fileID: 21300000, guid: 92c95ff9e1d57e3498cd0f7dfe92a005, type: 3}
 --- !u!1 &777427734
 GameObject:
   m_ObjectHideFlags: 0
@@ -2574,7 +2574,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3c5667b2c3ed76c4b87ad55421311ea0, type: 3}
   - {fileID: 21300000, guid: 18a9598fe5e7914408dca06eba91bba9, type: 3}
   - {fileID: 21300000, guid: 9ca0c66b97421054daf20b8a6431db71, type: 3}
-  CharaSprite: {fileID: 21300000, guid: 1fdca0415bbf55d47a21b5d9be3865b5, type: 3}
+  CharaSprite: {fileID: 21300000, guid: 92c95ff9e1d57e3498cd0f7dfe92a005, type: 3}
 --- !u!1 &1329113689
 GameObject:
   m_ObjectHideFlags: 0
@@ -2772,8 +2772,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 97edc4613de313f43b40fc4a0234c8ab, type: 3}
   - {fileID: 21300000, guid: e7f062e03c25829448011fb78c1b6874, type: 3}
   - {fileID: 21300000, guid: e48c1e1b2534eb74b9dc986af3a82cae, type: 3}
-  - {fileID: 21300000, guid: e48c1e1b2534eb74b9dc986af3a82cae, type: 3}
-  - {fileID: 21300000, guid: e48c1e1b2534eb74b9dc986af3a82cae, type: 3}
+  - {fileID: 21300000, guid: 9ca0c66b97421054daf20b8a6431db71, type: 3}
+  - {fileID: 21300000, guid: 9ca0c66b97421054daf20b8a6431db71, type: 3}
   discritions:
   - Name: Homi
     _discritionSprites:
@@ -2832,8 +2832,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 97edc4613de313f43b40fc4a0234c8ab, type: 3}
   - {fileID: 21300000, guid: e7f062e03c25829448011fb78c1b6874, type: 3}
   - {fileID: 21300000, guid: e48c1e1b2534eb74b9dc986af3a82cae, type: 3}
-  - {fileID: 21300000, guid: e48c1e1b2534eb74b9dc986af3a82cae, type: 3}
-  - {fileID: 21300000, guid: e48c1e1b2534eb74b9dc986af3a82cae, type: 3}
+  - {fileID: 21300000, guid: 9ca0c66b97421054daf20b8a6431db71, type: 3}
+  - {fileID: 21300000, guid: 9ca0c66b97421054daf20b8a6431db71, type: 3}
   discritions:
   - Name: Homi
     _discritionSprites:
