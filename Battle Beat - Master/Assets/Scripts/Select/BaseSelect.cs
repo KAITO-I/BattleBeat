@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using CoreManager;
 
 public abstract class BaseSelect: MonoBehaviour
 {
@@ -63,6 +64,7 @@ public abstract class BaseSelect: MonoBehaviour
     protected void InputProcess(int _ID)
     {
         int old = _charactorID;
+        if (PopupManager.IsActive) return;//ポップアップが表示されている時雄
         if (!_playerOK&&!_playerDecritionOK)//選択されていないとき,説明画面が表示されていないとき
         {
             if (_controller.GetAxisUp(ControllerManager.Axis.DpadY) < 0)//下入力
@@ -131,6 +133,7 @@ public abstract class BaseSelect: MonoBehaviour
     //=============ボタン操作関数================
     protected void ButtonInput()
     {
+        if (PopupManager.IsActive) return;//ポップアップが表示されているとき
         //決定ボタンの処理
         if (_controller.GetButtonDown(ControllerManager.Button.A))
         {
@@ -152,7 +155,10 @@ public abstract class BaseSelect: MonoBehaviour
             //戻る画面をホップアップで表示
             if (!_playerOK)
             {
-                //if (true) SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainMenu);
+                PopupManager.Show(
+                    ("メニューへ戻ル", () => { SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainMenu); }),
+                    ("キャンセル", () => { PopupManager.Hide(); }
+                ));
             }
             else _playerOK = false;
         }

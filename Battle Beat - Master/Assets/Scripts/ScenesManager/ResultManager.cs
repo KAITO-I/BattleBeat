@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using CoreManager;
 
 public class ResultManager : MonoBehaviour
 {
@@ -109,7 +110,7 @@ public class ResultManager : MonoBehaviour
     {
         if (_stateid == 4)//すべて終わり次第
         {
-            OnClick();
+            if(!PopupManager.IsActive) OnClick();
             return;
         }
         //===========終わり次第falseが来る===========//
@@ -122,15 +123,15 @@ public class ResultManager : MonoBehaviour
     //==============シーン移動するため==================//
     void OnClick()
     {
-        if (_1Pcontroller.GetButtonDown(ControllerManager.Button.A)|| _2Pcontroller.GetButtonDown(ControllerManager.Button.A))
+        if (Input.anyKey)
         {
-            SceneLoader.Instance.LoadScene(SceneLoader.Scenes.CharacterSelect);
-            _soundManager.PlaySE(SEID.General_Controller_Decision);
-        }
-        else if (_1Pcontroller.GetButtonDown(ControllerManager.Button.B) || _2Pcontroller.GetButtonDown(ControllerManager.Button.B))
-        {
-            SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainMenu);
-            _soundManager.PlaySE(SEID.General_Controller_Decision);
+            //SceneLoader.Instance.LoadScene(SceneLoader.Scenes.CharacterSelect);
+            //_soundManager.PlaySE(SEID.General_Controller_Decision);
+            PopupManager.Show(
+                ("モウ一度　遊ブ", () => { SceneLoader.Instance.LoadScene(SceneLoader.Scenes.CharacterSelect); }
+            ),
+                ("タイトルへ戻ル", () => { SceneLoader.Instance.LoadScene(SceneLoader.Scenes.Title); }
+            ));
         }
     }
     //==================================================//

@@ -165,14 +165,14 @@ public class ControllerManager : MonoBehaviour
 
 #if UNITY_EDITOR && UNITY_STANDALONE
             buttonAxes = new string[]{
-                "MacOS_A_",
-                "MacOS_B_",
-                "MacOS_X_",
-                "MacOS_Y_",
-                "MacOS_L_",
-                "MacOS_R_",
-                "MacOS_Select_",
-                "MacOS_Start_"
+                "Windows_A_",
+                "Windows_B_",
+                "Windows_X_",
+                "Windows_Y_",
+                "Windows_L_",
+                "Windows_R_",
+                "Windows_Select_",
+                "Windows_Start_"
             };
 #endif
 #if UNITY_EDITOR_OSX && UNITY_STANDALONE_OSX
