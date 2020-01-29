@@ -16,7 +16,7 @@ public class BasePlayerAnimation:MonoBehaviour
     protected GameObject PlayerObj;
     protected Player _playerClass;
     AnimatorStateInfo info_;
-    RythmManager rythm;
+    protected RythmManager rythm;
 
     //自分のとぐろ
     public MeshRenderer _renderer;

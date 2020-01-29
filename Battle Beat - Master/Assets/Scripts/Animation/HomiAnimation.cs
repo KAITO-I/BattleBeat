@@ -5,6 +5,8 @@ using UnityEngine;
 //攻撃は違うのでクラスを分ける
 public class HomiAnimation : BasePlayerAnimation
 {
+    [SerializeField]
+    GameObject Anp;
     protected override void Start()
     {
         base.Start();
@@ -38,6 +40,20 @@ public class HomiAnimation : BasePlayerAnimation
         {
             case 1:
                 anim.SetTrigger("MusicAttack");
+                Vector3 vec = gameObject.transform.position;
+                if (_playerClass.PlayerID == 1)
+                {
+                    vec += new Vector3(-2, 0, 0);
+                    GameObject Object = Instantiate(Anp, vec, Quaternion.identity);
+                    Destroy(Object, rythm.getbps);
+                }
+                else
+                {
+                    vec += new Vector3(2, 0, 0);
+                    GameObject Object = Instantiate(Anp, vec, Quaternion.identity);
+                    Object.gameObject.transform.Rotate(0, 180, 0);
+                    Destroy(Object, rythm.getbps);
+                }
                 PlayAnim = "MusicAttack";
                 break;
             case 3:
