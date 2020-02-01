@@ -1305,7 +1305,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 6e-45, y: 1.02e-43, z: 6.01e-43, w: 9.947517e-14}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -1523,7 +1523,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 506df347591ad0e428e616cb321b1c64, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 441406324d4390e4cbbd12f48ebb763a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2517,16 +2517,10 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 7482855ac8c2a614085fa73f53f3f59e, type: 3}
   - Name: Speed
     _discritionSprites:
-    - {fileID: 21300000, guid: f8f2aea621fe5b34f90417d732fbb06c, type: 3}
-    - {fileID: 21300000, guid: b819e586df5c42a4e870da9e7e9c2056, type: 3}
-    - {fileID: 21300000, guid: e638b1d8ca37e774186ee2374ebfe14a, type: 3}
-    - {fileID: 21300000, guid: 431009ed422b3d14bba2614f35b4f543, type: 3}
+    - {fileID: 21300000, guid: eb312a08d1fae2b438587e4a73b52888, type: 3}
   - Name: Debuf
     _discritionSprites:
-    - {fileID: 21300000, guid: f8f2aea621fe5b34f90417d732fbb06c, type: 3}
-    - {fileID: 21300000, guid: b819e586df5c42a4e870da9e7e9c2056, type: 3}
-    - {fileID: 21300000, guid: e638b1d8ca37e774186ee2374ebfe14a, type: 3}
-    - {fileID: 21300000, guid: 431009ed422b3d14bba2614f35b4f543, type: 3}
+    - {fileID: 21300000, guid: cc811004efd11cf4fa5fb519cf41a816, type: 3}
   Teap: {fileID: 1673245589}
 --- !u!114 &1356310776
 MonoBehaviour:
@@ -2570,16 +2564,10 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 7482855ac8c2a614085fa73f53f3f59e, type: 3}
   - Name: Speed
     _discritionSprites:
-    - {fileID: 21300000, guid: f8f2aea621fe5b34f90417d732fbb06c, type: 3}
-    - {fileID: 21300000, guid: b819e586df5c42a4e870da9e7e9c2056, type: 3}
-    - {fileID: 21300000, guid: e638b1d8ca37e774186ee2374ebfe14a, type: 3}
-    - {fileID: 21300000, guid: 431009ed422b3d14bba2614f35b4f543, type: 3}
+    - {fileID: 21300000, guid: eb312a08d1fae2b438587e4a73b52888, type: 3}
   - Name: Debuf
     _discritionSprites:
-    - {fileID: 21300000, guid: f8f2aea621fe5b34f90417d732fbb06c, type: 3}
-    - {fileID: 21300000, guid: b819e586df5c42a4e870da9e7e9c2056, type: 3}
-    - {fileID: 21300000, guid: e638b1d8ca37e774186ee2374ebfe14a, type: 3}
-    - {fileID: 21300000, guid: 431009ed422b3d14bba2614f35b4f543, type: 3}
+    - {fileID: 21300000, guid: cc811004efd11cf4fa5fb519cf41a816, type: 3}
   Teap: {fileID: 83256378}
 --- !u!1001 &1362050577
 PrefabInstance:
@@ -3077,7 +3065,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 1728d24fd0aa2ae458bcedd0062ff0cf, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a519ce67fccbdab43ba08f9f2b203000, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
