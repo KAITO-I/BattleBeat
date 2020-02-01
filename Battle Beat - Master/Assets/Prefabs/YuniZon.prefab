@@ -180,6 +180,7 @@ MonoBehaviour:
   PlayerObj: {fileID: 4320667415473011673}
   _renderer: {fileID: 4551820116402990842}
   _onUni: {fileID: 5585238248082747835}
+  _onGogle: {fileID: 5585238248082747793}
 --- !u!1001 &4551820116400961178
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -281,6 +282,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 100028, guid: 27fa46310d7f6e249aaa1301ed99004d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100038, guid: 27fa46310d7f6e249aaa1301ed99004d, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -418,6 +423,12 @@ PrefabInstance:
 --- !u!4 &5585238248082517421 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400122, guid: 27fa46310d7f6e249aaa1301ed99004d,
+    type: 3}
+  m_PrefabInstance: {fileID: 5585238248082650967}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5585238248082747793 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100038, guid: 27fa46310d7f6e249aaa1301ed99004d,
     type: 3}
   m_PrefabInstance: {fileID: 5585238248082650967}
   m_PrefabAsset: {fileID: 0}
