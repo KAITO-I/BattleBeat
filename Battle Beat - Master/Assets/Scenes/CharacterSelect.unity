@@ -1305,7 +1305,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 6e-45, y: 1.02e-43, z: 6.01e-43, w: 9.947517e-14}
+  m_BoundingSphereOverride: {x: 5.628e-42, y: 1.05e-43, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -1453,7 +1453,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3c5667b2c3ed76c4b87ad55421311ea0, type: 3}
   - {fileID: 21300000, guid: 18a9598fe5e7914408dca06eba91bba9, type: 3}
   - {fileID: 21300000, guid: 9ca0c66b97421054daf20b8a6431db71, type: 3}
-  CharaSprite: {fileID: 21300000, guid: 65a9080c4808465478537ae6d34bbb9c, type: 3}
+  CharaSprite: {fileID: 21300000, guid: 59d5500273519bd42bd83de1911013fc, type: 3}
 --- !u!1 &777427734
 GameObject:
   m_ObjectHideFlags: 0
@@ -2183,7 +2183,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &1210252616
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2230,7 +2230,7 @@ SpriteRenderer:
   m_Size: {x: 6, y: 8.08}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &1210252617
@@ -2297,7 +2297,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3c5667b2c3ed76c4b87ad55421311ea0, type: 3}
   - {fileID: 21300000, guid: 18a9598fe5e7914408dca06eba91bba9, type: 3}
   - {fileID: 21300000, guid: 9ca0c66b97421054daf20b8a6431db71, type: 3}
-  CharaSprite: {fileID: 21300000, guid: ab3a3da3706fa85469575705dbab4136, type: 3}
+  CharaSprite: {fileID: 21300000, guid: 59d5500273519bd42bd83de1911013fc, type: 3}
 --- !u!1 &1329113689
 GameObject:
   m_ObjectHideFlags: 0
@@ -2741,7 +2741,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &1521728606
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2788,7 +2788,7 @@ SpriteRenderer:
   m_Size: {x: 6, y: 8.08}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &1521728607
@@ -3169,7 +3169,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1715705472
 MonoBehaviour:
   m_ObjectHideFlags: 0
