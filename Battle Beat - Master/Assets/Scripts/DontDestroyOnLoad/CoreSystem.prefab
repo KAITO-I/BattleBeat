@@ -1435,6 +1435,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d6b70a24cb38ede4db3dad86b00216a1, type: 3}
   - {fileID: 8300000, guid: 020e534791afde74496f6ec5a80ab971, type: 3}
   - {fileID: 8300000, guid: e6e3d0bb0a4e7477ebee08759797796a, type: 3}
+  - {fileID: 8300000, guid: 0d783b44c7458814ba8d528ecbc81ec3, type: 3}
   canPlaySECount: 10
 --- !u!1 &8222755677167755527
 GameObject:

@@ -203,7 +203,7 @@ public class BattleManager : MonoBehaviour
                 
                 break;
             case 88 - 4:
-                SoundManager.Instance.PlaySE(SEID.Game_Countdown);
+                SoundManager.Instance.PlaySE(SEID.Game_Countdown_113);
                 ShowImage._instance.ShowImages(new string[] { "3", "2", "1", "TempoUp" }, 60f / 113f, 0.0f);
                 break;
 

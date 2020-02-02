@@ -71,7 +71,8 @@ public enum SEID {
     Game_Character_UniZone_Repair,
 
     // 31
-    Game_Countdown_First_Only
+    Game_Countdown_First_Only,
+    Game_Countdown_113
 }
 
 public class SoundManager : MonoBehaviour {
