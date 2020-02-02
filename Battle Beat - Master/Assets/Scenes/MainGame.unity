@@ -3781,6 +3781,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23539e8a345ff5c4bb6419b55d9f44d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lagTime1: 0.1
+  lagTime2: 0.1
   rythmManager: {fileID: 1394099312}
   timeSetter: {fileID: 2116163967}
   TotalTime: 90
@@ -5513,37 +5515,37 @@ PrefabInstance:
     - target: {fileID: -8980944854386829289, guid: e68d98e3acec75c4b9ae2a041aa1a5f4,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.38825
+      value: 0.5280511
       objectReference: {fileID: 0}
     - target: {fileID: -8980944854386829289, guid: e68d98e3acec75c4b9ae2a041aa1a5f4,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: -0.002718654
       objectReference: {fileID: 0}
     - target: {fileID: -8980944854386829289, guid: e68d98e3acec75c4b9ae2a041aa1a5f4,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -1
+      value: -0.9508243
       objectReference: {fileID: 0}
     - target: {fileID: -8980944854386829289, guid: e68d98e3acec75c4b9ae2a041aa1a5f4,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0.3096063
       objectReference: {fileID: 0}
     - target: {fileID: -8980944854386829289, guid: e68d98e3acec75c4b9ae2a041aa1a5f4,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.0029999972
+      value: -0.009274351
       objectReference: {fileID: 0}
     - target: {fileID: -8980944854386829289, guid: e68d98e3acec75c4b9ae2a041aa1a5f4,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.12121426
+      value: 0.39219627
       objectReference: {fileID: 0}
     - target: {fileID: -8980944854386829289, guid: e68d98e3acec75c4b9ae2a041aa1a5f4,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: -0.008349191
       objectReference: {fileID: 0}
     - target: {fileID: -7747681458746750811, guid: e68d98e3acec75c4b9ae2a041aa1a5f4,
         type: 3}
