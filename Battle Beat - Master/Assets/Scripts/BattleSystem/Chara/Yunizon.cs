@@ -31,7 +31,7 @@ public class Yunizon : Player
                 waitAttackId = i;
             }
             nowAttack = Skill;
-            AttackManager._instance.Add(Skill);
+            TurnManager._instance.Add(Skill);
             return true;
         }
         else
@@ -79,7 +79,7 @@ public class Yunizon : Player
             {
                 waitAttackId = 3;
             }
-            AttackManager._instance.Add(Skill);
+            TurnManager._instance.Add(Skill);
             base.Attack_4();
         }
     }

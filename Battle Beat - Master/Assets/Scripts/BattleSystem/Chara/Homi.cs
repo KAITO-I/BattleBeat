@@ -27,7 +27,7 @@ public class Homi : Player
                 waitAttackId = i;
             }
             nowAttack = Skill;
-            AttackManager._instance.Add(Skill);
+            TurnManager._instance.Add(Skill);
             return true;
         }
         else
@@ -67,7 +67,7 @@ public class Homi : Player
             onBuff += Skill.Duration;
             buffPower += Skill.Power;
             nowAttack = Skill;
-            AttackManager._instance.Add(Skill);
+            TurnManager._instance.Add(Skill);
             base.Attack_3();
         }
     }

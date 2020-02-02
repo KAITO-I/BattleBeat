@@ -91,7 +91,7 @@ public class RythmManager : MonoBehaviour
                     if (this.bpm >= this.maxBpm) this.tempoUpCount = -1;
                 }*/
             }
-            notesManager.MoveNotes(time+0.1f);
+            notesManager.MoveNotes(time + 0.1f);
             notesManager2.MoveNotes(time + 0.1f);
         }
     }
@@ -107,6 +107,6 @@ public class RythmManager : MonoBehaviour
     public bool IsTiming()
     {
         //return true;
-        return (this.time > this.bps - 0.32f);
+        return (Mathf.Abs(this.time - this.bps)< 0.25f);
     }
 }

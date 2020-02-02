@@ -55,11 +55,11 @@ public class ChainAttack : AttackItemBase
             }
             ChangeFloorColor(fColor, 0);
 
-            var RootPlayer = AttackManager._instance.GetPlayer(RootID) as Kagura;
+            var RootPlayer = TurnManager._instance.GetPlayer(RootID) as Kagura;
 
             int OpponentID = 3 - RootID;
 
-            Player Opponent = AttackManager._instance.GetPlayer(OpponentID);
+            Player Opponent = TurnManager._instance.GetPlayer(OpponentID);
 
             if (RootPlayer.ChainAttackHit == true && RootPlayer.IsStuned != true)
             {
@@ -88,11 +88,11 @@ public class ChainAttack : AttackItemBase
 
         if(turn ==1)
         {
-            var RootPlayer = AttackManager._instance.GetPlayer(RootID) as Kagura;
+            var RootPlayer = TurnManager._instance.GetPlayer(RootID) as Kagura;
 
             int OpponentID = 3 - RootID;
 
-            Player Opponent = AttackManager._instance.GetPlayer(OpponentID);
+            Player Opponent = TurnManager._instance.GetPlayer(OpponentID);
 
             //Hitした場合
             if (RootPlayer.ChainAttackHit == true)

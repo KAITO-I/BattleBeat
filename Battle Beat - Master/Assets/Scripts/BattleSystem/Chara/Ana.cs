@@ -56,7 +56,7 @@ public class Ana : Player
                 waitAttackId = i;
             }
             nowAttack = Skill;
-            AttackManager._instance.Add(Skill);
+            TurnManager._instance.Add(Skill);
             return true;
         }
         return false;
@@ -77,7 +77,7 @@ public class Ana : Player
                 waitAttackId = i;
             }
             nowAttack = Skill;
-            AttackManager._instance.Add(Skill);
+            TurnManager._instance.Add(Skill);
             return true;
         }
         return false;

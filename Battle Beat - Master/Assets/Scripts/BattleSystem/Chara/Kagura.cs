@@ -22,7 +22,7 @@ public class Kagura : Player
                 waitAttackId = i;
             }
             nowAttack = Skill;
-            AttackManager._instance.Add(Skill);
+            TurnManager._instance.Add(Skill);
             return true;
         }
         else
@@ -62,7 +62,7 @@ public class Kagura : Player
             wait = 1;
             waitAttackId = 2;
             nowAttack = Skill;
-            AttackManager._instance.Add(Skill);
+            TurnManager._instance.Add(Skill);
         }
     }
     protected override void Attack_4()

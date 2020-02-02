@@ -57,7 +57,7 @@ public class Setting : MonoBehaviour
     //debug
     public DebugText dt1;
     public DebugText dt2;
-    private void Start()
+    private void Awake()
     {
         if (testMode)
         {
@@ -83,7 +83,7 @@ public class Setting : MonoBehaviour
         p2p.Init();
         p1p.controller = ControllerManager.Instance.Player1;
         p2p.controller = ControllerManager.Instance.Player2;
-        AttackManager._instance.SetPlayers(p1p, p2p);
+        TurnManager._instance.SetPlayers(p1p, p2p);
 
         //Set Gauge
         var gl = GaugeLeft.GetComponents<Gauge>();
@@ -115,11 +115,11 @@ public class Setting : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
-            AttackManager._instance.GetPlayer(1).Sp = 100;
+            TurnManager._instance.GetPlayer(1).Sp = 100;
         }
         if (Input.GetKeyUp(KeyCode.RightShift))
         {
-            AttackManager._instance.GetPlayer(2).Sp = 100;
+            TurnManager._instance.GetPlayer(2).Sp = 100;
         }
     }
 }

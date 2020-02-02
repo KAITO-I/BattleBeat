@@ -132,7 +132,7 @@ public class HyperBeam : BasicAttack
                 Vector2Int pos = AreaProcess(p);
                 int OpponentID = 3 - RootID;
 
-                Player Opponent = AttackManager._instance.GetPlayer(OpponentID);
+                Player Opponent = TurnManager._instance.GetPlayer(OpponentID);
                 if (pos == Opponent.Pos)
                 {
                     PassDamage(Opponent);

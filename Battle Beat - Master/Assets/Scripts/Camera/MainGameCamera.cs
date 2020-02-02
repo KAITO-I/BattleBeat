@@ -49,7 +49,7 @@ public class MainGameCamera : MonoBehaviour
     }
     public void ChangeAndZoomUp(int playerId){
         Vector3 originPos = Camera.main.transform.position;
-        GameObject loserObj = AttackManager._instance.GetPlayer(playerId).gameObject;
+        GameObject loserObj = TurnManager._instance.GetPlayer(playerId).gameObject;
         GameObject loserCenter = new GameObject();
         loserCenter.transform.position = loserObj.transform.position + new Vector3(0f, 1f, 0f);
         virtualCamera2.LookAt = loserCenter.transform;

@@ -36,11 +36,11 @@ public class AttackItemBase : MonoBehaviour
         Reverse = reverse;
         RootID = root;
         isCancel = false;
-        RootPlayer = AttackManager._instance.GetPlayer(RootID);
+        RootPlayer = TurnManager._instance.GetPlayer(RootID);
 
         int OpponentID = 3 - RootID;
 
-        Opponent = AttackManager._instance.GetPlayer(OpponentID);
+        Opponent = TurnManager._instance.GetPlayer(OpponentID);
 
         transform.SetParent(RootPlayer.transform);
         transform.localPosition = Vector3.zero;
@@ -82,7 +82,7 @@ public class AttackItemBase : MonoBehaviour
                     {
                         pos = BoardManager._instance.ToWorldPos(boardPos) + skillEffectSetting.offSet;
                     }
-                    AttackManager._instance.AddEffect(pos, Reverse, skillEffectSetting.effect, Quaternion.Euler(skillEffectSetting.rotation),false, skillEffectSetting.scale, skillEffectSetting.speed);
+                    TurnManager._instance.AddEffect(pos, Reverse, skillEffectSetting.effect, Quaternion.Euler(skillEffectSetting.rotation),false, skillEffectSetting.scale, skillEffectSetting.speed);
                 }
             }
 
