@@ -12,6 +12,8 @@ public class Ana_BulletCounter : MonoBehaviour
     float offset;
     [SerializeField]
     string[] exSlotName;
+    [SerializeField]
+    GameObject backGround;
     List<GameObject> bullets;
 
     int PlayerId;
@@ -22,7 +24,11 @@ public class Ana_BulletCounter : MonoBehaviour
         this.PlayerId = PlayerId;
         string ObjName = exSlotName[PlayerId - 1];
         GameObject exSlotObj = GameObject.Find(ObjName);
+        GameObject backGroundObj = Instantiate<GameObject>(backGround);
+        
         ExSlot = exSlotObj.transform;
+        backGroundObj.transform.parent = ExSlot;
+        backGroundObj.transform.localPosition = Vector3.zero;
         _offset = PlayerId==1?offset:-offset;
         bullets = new List<GameObject>();
         for(int i = 0; i < maxBullets; i++)

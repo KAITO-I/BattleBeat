@@ -32,6 +32,10 @@ public class TrainingMode : BattleManager
         }
         public override GameState Run()
         {
+            if (ControllerManager.Instance.GetButtonUp_Menu(ControllerManager.Button.Select))
+            {
+                SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainMenu);
+            }
             return this;
         }
     }

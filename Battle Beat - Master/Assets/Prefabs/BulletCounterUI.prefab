@@ -49,7 +49,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 1939779057243893838, guid: c9cf4073582978843b9356875def71f9, type: 3}
-  offset: 32
+  offset: 64
   exSlotName:
   - P1Extra
   - P2Extra
+  backGround: {fileID: 3764731890050624524, guid: aeec8454fbcdcbb4a973dcac763cb542,
+    type: 3}

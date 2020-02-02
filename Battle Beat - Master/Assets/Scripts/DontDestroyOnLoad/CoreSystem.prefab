@@ -1396,8 +1396,8 @@ MonoBehaviour:
   bgmClips:
   - {fileID: 8300000, guid: c5264a8a4f90a2f4298e0c9bb2526c7c, type: 3}
   - {fileID: 8300000, guid: c28baa250c56e0c43b86d16eeeaee824, type: 3}
-  - {fileID: 8300000, guid: 32b2424ff1fc1eb47a936bf005c69248, type: 3}
-  - {fileID: 8300000, guid: d48c2cfaecc2b094ab816475758c7557, type: 3}
+  - {fileID: 8300000, guid: 76224a5e84c01a04ea7dc79a29d5f24c, type: 3}
+  - {fileID: 8300000, guid: bf3bfcca5697ffb4db766cc511464e5b, type: 3}
   - {fileID: 8300000, guid: bcb834898e70b854880d5192e607c306, type: 3}
   - {fileID: 8300000, guid: 02f9979a62bdded49a38bb8b3c5d552d, type: 3}
   seObjectParent: {fileID: 7296762785727379927}
@@ -1411,7 +1411,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 456dd09d3ca194b7d9c4cc63c0d5b5b8, type: 3}
   - {fileID: 8300000, guid: 38f6c6a41448b4fa4a616f8f47dc0ef3, type: 3}
   - {fileID: 8300000, guid: b48f577cb96c24b7689254819b6c056b, type: 3}
-  - {fileID: 8300000, guid: e6e3d0bb0a4e7477ebee08759797796a, type: 3}
+  - {fileID: 8300000, guid: 1d539ac8dbfcc574ea67b83585df2ec5, type: 3}
   - {fileID: 8300000, guid: d992dd9a717ac46649d8c65f17623e67, type: 3}
   - {fileID: 8300000, guid: 0a4d083197faa4a99834a8cf0877a29c, type: 3}
   - {fileID: 8300000, guid: fa022f2f59eca4a6f9e200bfed2ed534, type: 3}
@@ -1434,7 +1434,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 9dde74ba3c8dee547a6588ac20e96a1a, type: 3}
   - {fileID: 8300000, guid: d6b70a24cb38ede4db3dad86b00216a1, type: 3}
   - {fileID: 8300000, guid: 020e534791afde74496f6ec5a80ab971, type: 3}
-  - {fileID: 8300000, guid: 27774f58e36a8dc498556c645602f004, type: 3}
+  - {fileID: 8300000, guid: e6e3d0bb0a4e7477ebee08759797796a, type: 3}
+  - {fileID: 8300000, guid: 0d783b44c7458814ba8d528ecbc81ec3, type: 3}
   canPlaySECount: 10
 --- !u!1 &8222755677167755527
 GameObject:

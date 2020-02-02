@@ -310,7 +310,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 8.98e-42, y: 1.366586e-27, z: 1e-45, w: 1.0072645e+26}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -3739,7 +3739,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testMode: 1
-  p1: 0
+  p1: 2
   p2: 3
   charaPrefabs:
   - {fileID: 2616607855929116335, guid: 74688a5cca0977841b1253a5d3ff96da, type: 3}
@@ -3781,6 +3781,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23539e8a345ff5c4bb6419b55d9f44d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lagTime1: 0.1
+  lagTime2: 0.1
   rythmManager: {fileID: 1394099312}
   timeSetter: {fileID: 2116163967}
   TotalTime: 90
