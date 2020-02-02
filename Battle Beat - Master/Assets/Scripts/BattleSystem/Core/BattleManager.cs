@@ -34,7 +34,7 @@ public class BattleManager : MonoBehaviour
     }
     private IEnumerator startGameLoop()
     {
-        SoundManager.Instance.PlayBGM(BGMID.InGame0);
+        
         MainGameCamera._instance.GameStart();
         ShowImage._instance.ShowImages(new string[] {  "void", "void", "void", "void" }, 0.8f, 0.0f);
         while (true){
@@ -42,6 +42,7 @@ public class BattleManager : MonoBehaviour
             {
                 if (readyFlag == false)
                 {
+                    SoundManager.Instance.PlayBGM(BGMID.InGame0);
                     SoundManager.Instance.PlaySE(SEID.Game_Ready);
                     ShowImage._instance.ShowImages(new string[] { "READY" }, 3.2f, 0f);
                     readyFlag = true;
