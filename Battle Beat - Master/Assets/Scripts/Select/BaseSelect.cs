@@ -11,7 +11,9 @@ public abstract class BaseSelect: MonoBehaviour
     protected ControllerManager.Controller _controller;
 
     [SerializeField]
-    protected SpriteRenderer _playerPicture, _playerDescrition;
+    protected GameObject _charactorObj;
+    [SerializeField]
+    protected SpriteRenderer _charactorPicture, _charactorDescrition;
     [SerializeField]
     protected Image _playerNameImg;
     [SerializeField]
@@ -34,14 +36,18 @@ public abstract class BaseSelect: MonoBehaviour
         0.7f,
         0.4f,
         0.3f,
-        0.35f
+        0.3f,
+        2f,
+        2f
     };
     protected float[] _ySize =
     {
         0.7f,
         0.4f,
         0.3f,
-        0.35f
+        0.3f,
+        2f,
+        2f
     };
 
     public virtual void Inctance(SelectCountroll c, SoundManager s)
@@ -52,10 +58,10 @@ public abstract class BaseSelect: MonoBehaviour
         _playerOK = false;
         _playerDecritionOK = false;
         _playerNameImg.sprite = _charaName[_charactorID];
-        _playerPicture.sprite = _controll.CharaObj[_charactorID].GetCharaSprite;
-        //Player01_Obj.transform.localScale = new Vector3(_xSize[_Player1], _ySize[_Player1], 1);
-        _playerDescrition.sprite = discritions[_charactorID]._discritionSprites[_charactorDecritionID];
-        _playerDescrition.enabled = _playerDecritionOK;
+        _charactorPicture.sprite = _controll.CharaObj[_charactorID].GetCharaSprite;
+        _charactorObj.transform.localScale = new Vector3(_xSize[_charactorID], _ySize[_charactorID], 1);
+        _charactorDescrition.sprite = discritions[_charactorID]._discritionSprites[_charactorDecritionID];
+        _charactorDescrition.enabled = _playerDecritionOK;
         length = _charaName.Length;
         _teapMoveTime = 0f;
     }
@@ -75,8 +81,9 @@ public abstract class BaseSelect: MonoBehaviour
                 if (old >= 2 && old <= 3) _charactorID += 2;
                 else if (old >= 4 && old <= 5) _charactorID += 4;
                 _controll.CharaObj[_charactorID].charaSelect(_ID, true);
-                //Player_Obj.transform.localScale = new Vector3(_xSize[_Player], _ySize[_Player], 1);
+                _charactorObj.transform.localScale = new Vector3(_xSize[_charactorID], _ySize[_charactorID], 1);
                 _soundManager.PlaySE(SEID.General_Controller_Select);
+
             }
             else if (_controller.GetAxisUp(ControllerManager.Axis.DpadY) > 0)//上入力
             {
@@ -86,33 +93,33 @@ public abstract class BaseSelect: MonoBehaviour
                 if (old >= 2 && old <= 3) _charactorID += 2;
                 else if (old >= 4 && old <= 5) _charactorID += 4;
                 _controll.CharaObj[_charactorID].charaSelect(_ID, true);
-                //Player_Obj.transform.localScale = new Vector3(_xSize[_Player], _ySize[_Player], 1);
+                _charactorObj.transform.localScale = new Vector3(_xSize[_charactorID], _ySize[_charactorID], 1);
                 _soundManager.PlaySE(SEID.General_Controller_Select);
             }
-        }
-
-        if (_controller.GetAxisUp(ControllerManager.Axis.DpadX) < 0)//左入力
-        {
+            if (_controller.GetAxisUp(ControllerManager.Axis.DpadX) < 0)//左入力
+            {
                 _charactorDecritionID = 0;//最初から見るように初期化
                 if (!_playerOK)
                 {
                     _controll.CharaObj[_charactorID].charaSelect(_ID, false);
                     _charactorID = (_charactorID - 2 + 6) % 6;
                     _controll.CharaObj[_charactorID].charaSelect(_ID, true);
+                    _charactorObj.transform.localScale = new Vector3(_xSize[_charactorID], _ySize[_charactorID], 1);
                     _soundManager.PlaySE(SEID.General_Controller_Select);
                 }
-
-        }
-        else if (_controller.GetAxisUp(ControllerManager.Axis.DpadX) > 0)//右入力
-        {
+            }
+            else if (_controller.GetAxisUp(ControllerManager.Axis.DpadX) > 0)//右入力
+            {
                 _charactorDecritionID = 0;//最初から見るように初期化
                 if (!_playerOK)
                 {
                     _controll.CharaObj[_charactorID].charaSelect(_ID, false);
                     _charactorID = (_charactorID + 2) % 6;
                     _controll.CharaObj[_charactorID].charaSelect(_ID, true);
+                    _charactorObj.transform.localScale = new Vector3(_xSize[_charactorID], _ySize[_charactorID], 1);
                     _soundManager.PlaySE(SEID.General_Controller_Select);
                 }
+            }
         }
     }
     //=============ボタン操作関数================
@@ -123,7 +130,7 @@ public abstract class BaseSelect: MonoBehaviour
         if (_controller.GetButtonDown(ControllerManager.Button.A))
         {
             //キャラがないところを決定した際の処理
-            if (_charactorID == 4 && _charactorID == 5)
+            if (_charactorID == 4 || _charactorID == 5)
             {
                 _playerOK = false;
             }
@@ -160,7 +167,7 @@ public abstract class BaseSelect: MonoBehaviour
             else
                 _playerDecritionOK = true;
         }
-        _playerDescrition.enabled = _playerDecritionOK;
+        _charactorDescrition.enabled = _playerDecritionOK;
 
         //説明画面の左右移動
         if (_playerDecritionOK && _controller.GetButtonDown(ControllerManager.Button.L)){
@@ -171,7 +178,7 @@ public abstract class BaseSelect: MonoBehaviour
         }
     }
         //==============テープを動かす処理============
-        protected float ReadyBerMove(bool _Chack, float _MoveTime)
+    protected float ReadyBerMove(bool _Chack, float _MoveTime)
     {
         if (_MoveTime <= 1)
         {
@@ -189,9 +196,9 @@ public abstract class BaseSelect: MonoBehaviour
         {
             if (item == "player")
             {
-                return (T)(object)_playerPicture;
+                return (T)(object)_charactorPicture;
             }
-            return (T)(object)_playerDescrition;
+            return (T)(object)_charactorDescrition;
         }
         else if (typeof(T) == typeof(int))
         {

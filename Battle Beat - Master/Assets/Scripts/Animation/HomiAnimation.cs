@@ -5,6 +5,9 @@ using UnityEngine;
 //攻撃は違うのでクラスを分ける
 public class HomiAnimation : BasePlayerAnimation
 {
+    [SerializeField]
+    GameObject Anp;
+    GameObject obj;
     protected override void Start()
     {
         base.Start();
@@ -30,6 +33,18 @@ public class HomiAnimation : BasePlayerAnimation
     protected override void Attack4()
     {
         anim.SetTrigger("Wait");
+        Vector3 vec = gameObject.transform.position;
+        if (_playerClass.PlayerID == 1)
+        {
+            vec += new Vector3(-2, 0, 0);
+            obj = Instantiate(Anp, vec, Quaternion.identity);
+        }
+        else
+        {
+            vec += new Vector3(2, 0, 0);
+            obj = Instantiate(Anp, vec, Quaternion.identity);
+            obj.gameObject.transform.Rotate(0, 180, 0);
+        }
         PlayAnim = "Wait";
     }
     public override void AttackWaitEnd(int waitAttackId)
@@ -42,6 +57,7 @@ public class HomiAnimation : BasePlayerAnimation
                 break;
             case 3:
                 anim.SetTrigger("Special");
+                Destroy(obj, rythm.getbps);
                 PlayAnim = "Special";
                 break;
             default:

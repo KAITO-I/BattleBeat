@@ -6,7 +6,7 @@ using UnityEngine;
 public class Uni_ZoneAnimation : BasePlayerAnimation
 {
     [SerializeField]
-    GameObject _onUni;//上のユニを非表示
+    GameObject _onUni,_onGogle;//上のユニを非表示
     bool _specialChack = false;
     protected override void Attack1()
     {
@@ -45,6 +45,7 @@ public class Uni_ZoneAnimation : BasePlayerAnimation
     public void UniDisFunction(bool t)
     {
         _onUni.SetActive(t);
+        _onGogle.SetActive(t);
     }
 
     public override void Damage()
