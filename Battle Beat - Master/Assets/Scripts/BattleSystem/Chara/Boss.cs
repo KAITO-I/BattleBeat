@@ -34,7 +34,7 @@ public class Boss : Player
                 waitAttackId = i;
             }
             nowAttack = Skill;
-            AttackManager._instance.Add(Skill);
+            TurnManager._instance.Add(Skill);
             return true;
         }
         else
@@ -83,7 +83,7 @@ public class Boss : Player
             onBuff += Skill.Duration;
             buffPower += Skill.Power;
             nowAttack = Skill;
-            AttackManager._instance.Add(Skill);
+            TurnManager._instance.Add(Skill);
             base.Attack_4();
         }
     }

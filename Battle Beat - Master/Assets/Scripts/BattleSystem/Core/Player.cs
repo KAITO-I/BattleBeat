@@ -62,6 +62,8 @@ public class Player : MonoBehaviour
         }
 
         //ここにやられたアニメーション再生
+
+        MainGameCamera._instance.ShakeCamera();
         //タメのリセット
         wait = 0;
         SetSp(Damage* DamageToSPFactor+GetSp());
@@ -78,6 +80,8 @@ public class Player : MonoBehaviour
     
     public int[] CoolDownCount = new int[4];
 
+    [SerializeField]
+    GameObject noteResultPrefab;
 
     public enum MoveComand
     {
@@ -91,11 +95,18 @@ public class Player : MonoBehaviour
         Attack_3,
         Attack_4
     }
+    public enum InputState
+    {
+        WAITFORINPUT,
+        MISS,
+        GOOD
+    }
 
     private MoveComand input = MoveComand.None;
-    private bool canInput = true;
 
     public bool onGame = false;
+
+    private InputState inputState;
 
     //入力キーの射影
     public class KeySets
@@ -150,9 +161,10 @@ public class Player : MonoBehaviour
         wait = 0;
         nowAttack = null;
         StunTurn = 0;
+        inputState = InputState.WAITFORINPUT;
+        noteResultPrefab = Resources.Load("Prefabs/noteResult") as GameObject;
 
 
-       
     }
     public virtual void TurnPreprocess() {
         if (wait > 0)
@@ -171,7 +183,7 @@ public class Player : MonoBehaviour
             }
         }
     }
-    public virtual void TurnPostprocess() {  canInput = true; input = MoveComand.None;  }
+    public virtual void TurnPostprocess() { inputState = InputState.WAITFORINPUT; input = MoveComand.None;  }
     void Update()
     {
         if (!onGame)
@@ -179,27 +191,50 @@ public class Player : MonoBehaviour
             return;
         }
         //プレーヤー入力
-        if (canInput&&wait==0)
+        if (inputState == InputState.WAITFORINPUT)
         {
-            /*
-            if (Input.GetKeyDown(keySets.LeftKey)) input = MoveComand.Left;
-            else if (Input.GetKeyDown(keySets.RightKey)) input = MoveComand.Right;
-            else if (Input.GetKeyDown(keySets.UpKey)) input = MoveComand.Up;
-            else if (Input.GetKeyDown(keySets.DownKey)) input = MoveComand.Down;
-            else if (Input.GetKeyDown(keySets.Attack_1Key)) input = MoveComand.Attack_1;
-            else if (Input.GetKeyDown(keySets.Attack_2Key)) input = MoveComand.Attack_2;
-            else if (Input.GetKeyDown(keySets.Attack_3Key)) input = MoveComand.Attack_3;
-            else if (Input.GetKeyDown(keySets.Attack_4Key)) input = MoveComand.Attack_4;
-            */
-            if (input != MoveComand.None) canInput = false;
-            else if (controller.GetAxis(ControllerManager.Axis.DpadX) < 0) input = MoveComand.Left;
-            else if (controller.GetAxis(ControllerManager.Axis.DpadX) > 0) input = MoveComand.Right;
-            else if (controller.GetAxis(ControllerManager.Axis.DpadY) > 0) input = MoveComand.Up;
-            else if (controller.GetAxis(ControllerManager.Axis.DpadY) < 0) input = MoveComand.Down;
-            else if (controller.GetButtonDown(ControllerManager.Button.Y)) input = MoveComand.Attack_1;
-            else if (controller.GetButtonDown(ControllerManager.Button.X)) input = MoveComand.Attack_2;
-            else if (controller.GetButtonDown(ControllerManager.Button.A)) input = MoveComand.Attack_3;
-            else if (controller.GetButtonDown(ControllerManager.Button.B)) input = MoveComand.Attack_4;
+            if (wait == 0)
+            {
+                if (Input.GetKeyDown(keySets.LeftKey)) input = MoveComand.Left;
+                else if (Input.GetKeyDown(keySets.RightKey)) input = MoveComand.Right;
+                else if (Input.GetKeyDown(keySets.UpKey)) input = MoveComand.Up;
+                else if (Input.GetKeyDown(keySets.DownKey)) input = MoveComand.Down;
+                else if (Input.GetKeyDown(keySets.Attack_1Key)) input = MoveComand.Attack_1;
+                else if (Input.GetKeyDown(keySets.Attack_2Key)) input = MoveComand.Attack_2;
+                else if (Input.GetKeyDown(keySets.Attack_3Key)) input = MoveComand.Attack_3;
+                else if (Input.GetKeyDown(keySets.Attack_4Key)) input = MoveComand.Attack_4;
+
+
+                //if (input != MoveComand.None) canInput = false;
+                //else 
+
+                //if (controller.GetAxis(ControllerManager.Axis.DpadX) < 0) input = MoveComand.Left;
+                //else if (controller.GetAxis(ControllerManager.Axis.DpadX) > 0) input = MoveComand.Right;
+                //else if (controller.GetAxis(ControllerManager.Axis.DpadY) > 0) input = MoveComand.Up;
+                //else if (controller.GetAxis(ControllerManager.Axis.DpadY) < 0) input = MoveComand.Down;
+                //else if (controller.GetButtonDown(ControllerManager.Button.Y)) input = MoveComand.Attack_1;
+                //else if (controller.GetButtonDown(ControllerManager.Button.X)) input = MoveComand.Attack_2;
+                //else if (controller.GetButtonDown(ControllerManager.Button.A)) input = MoveComand.Attack_3;
+                //else if (controller.GetButtonDown(ControllerManager.Button.B)) input = MoveComand.Attack_4;
+                if (input != MoveComand.None)
+                {
+                    inputState = RythmManager.instance.IsTiming() ? InputState.GOOD : InputState.MISS;
+                    GameObject g = Instantiate<GameObject>(noteResultPrefab);
+                    if (inputState == InputState.MISS)
+                    {
+                        Debug.Log("Miss");
+                        input = MoveComand.None;
+                        g.GetComponent<NoteResult>().Show(NoteResult.type.MISS, transform);
+
+                    }
+                    else if (inputState == InputState.GOOD)
+                    {
+                        Debug.Log("Good");
+                        g.GetComponent<NoteResult>().Show(NoteResult.type.GREAT, transform);
+                    }
+                }
+
+            }
         }
 
         //Spが時間経過で増やす

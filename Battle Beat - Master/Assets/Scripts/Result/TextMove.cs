@@ -30,7 +30,7 @@ public class TextMove : BaseResultState
         _start = Moves[flag].transform.position;      //初期位置を保存する
         //勝利したほうを表示
         _playerDisImg = Moves[0].GetComponent<Image>();
-        _playerDisImg.sprite = im[(int)AttackManager.winner - 1];   //Playerのどっちが勝ったかを表示
+        _playerDisImg.sprite = im[(int)TurnManager.winner - 1];   //Playerのどっちが勝ったかを表示
         _charaNameImg = Moves[1].GetComponent<Image>();
         _charaNameImg.sprite = _date.CharaTextImage;                    //キャラの名前を表示
 

@@ -6,41 +6,35 @@ using System;
 public class BattleManager : MonoBehaviour
 {
     [SerializeField]
-    RythmManager rythmManager;
+    protected RythmManager rythmManager;
 
     [SerializeField]
-    TimeSetter timeSetter;
+    protected TimeSetter timeSetter;
     [SerializeField]
-    float TotalTime = 60f;
+    float TotalTime = 90f;
 
-    bool onGame;
+    protected bool onGame;
 
-    bool readyFlag = false;
-    bool readyEndFlag = false;
+    protected uint winner = 0;
+
+    public bool readyFlag = false;
+    public bool readyEndFlag = false;
     static int winPlayerId;
     static int LosePlayerId;
+
+    protected GameState gameState;
     private void Start()
     {
         onGame = false;
         rythmManager.Init();
         timeSetter.TimeSetUP(TotalTime);
 
-        startGame();
-    }
-    public void startGame()
-    {
-        StartCoroutine(startGameLoop());
-        //MainGameCamera._instance.GameStart();
-        //onGame = true;
-        //AttackManager._instance.GetPlayer(1).onGame = true;
-        //AttackManager._instance.GetPlayer(2).onGame = true;
-        //timeSetter.startTimer();
-        //rythmManager.StartRythm();
-    }
+        gameState = new CountDownState(this);
 
-    IEnumerator startGameLoop()
+    }
+    private IEnumerator startGameLoop()
     {
-        SoundManager.Instance.PlayBGM(BGMID.InGame);
+        SoundManager.Instance.PlayBGM(BGMID.InGame0);
         MainGameCamera._instance.GameStart();
         ShowImage._instance.ShowImages(new string[] {  "void", "void", "void", "void" }, 0.8f, 0.0f);
         while (true){
@@ -62,8 +56,8 @@ public class BattleManager : MonoBehaviour
                     else
                     {
                         onGame = true;
-                        AttackManager._instance.GetPlayer(1).onGame = true ;
-                        AttackManager._instance.GetPlayer(2).onGame = true;
+                        TurnManager._instance.GetPlayer(1).onGame = true ;
+                        TurnManager._instance.GetPlayer(2).onGame = true;
                         timeSetter.startTimer();
                         rythmManager.StartRythm();
                         break;
@@ -75,6 +69,7 @@ public class BattleManager : MonoBehaviour
                 yield return new WaitForFixedUpdate();
             }
         }
+        onGame = true;
     }
 
     private class CountUp
@@ -91,58 +86,69 @@ public class BattleManager : MonoBehaviour
     int rltwinner = 0;
     private void Update()
     {
-        if (onGame)
+        gameState = gameState?.Run();
+    }
+
+    private bool CheckGameOver()
+    {
+        
+        if (timeSetter.isTimeOut())
         {
-            uint winner = 0;
-            if (timeSetter.isTimeOut())
-            {
 
-                winner = AttackManager._instance.CheckWinnerTimeOut();
-            }
-            else
-            {
-                winner = AttackManager._instance.GetWinner();
-            }
-            if (winner != 0)
-            {
-                SoundManager.Instance.StopBGM();
-                switch (winner)
-                {
-                    case 1:
-                        //P1Win
-                        rltwinner = 1;
-                        ShowImage._instance.ShowImages(new string[] { "GAME" }, 4f, 0f);
-                        StartCoroutine(WaitAndJumpScene());
-                        SoundManager.Instance.PlaySE(SEID.Game_Character_General_Finish);
-                        break;
-                    case 2:
-                        //P2Win
-                        rltwinner = 2;
-                        ShowImage._instance.ShowImages(new string[] { "GAME" }, 4f, 0f);
-                        StartCoroutine(WaitAndJumpScene());
-                        SoundManager.Instance.PlaySE(SEID.Game_Character_General_Finish);
-                        break;
-                    case 3:
-                        //DRAW
-                        rltwinner = 3;
-                        ShowImage._instance.ShowImages(new string[] { "Draw" }, 4f, 0f);
-                        StartCoroutine(WaitAndJumpScene());
-                        SoundManager.Instance.PlaySE(SEID.General_Siren);
-                        break;
-                }
-
-                //playerの動きを停止させる
-                StopPlayer();
-                onGame = false;
-            }
+            winner = TurnManager._instance.CheckWinnerTimeOut();
         }
+        else
+        {
+            winner = TurnManager._instance.GetWinner();
+        }
+        if (winner != 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    private void GameOverProcess()
+    {
+        SoundManager.Instance.StopBGM();
+        switch (winner)
+        {
+            case 1:
+                //P1Win
+                rltwinner = 1;
+                ShowImage._instance.ShowImages(new string[] { "GAME" }, 4f, 0f);
+                StartCoroutine(WaitAndJumpScene());
+                SoundManager.Instance.PlaySE(SEID.Game_Character_General_Finish);
+                break;
+            case 2:
+                //P2Win
+                rltwinner = 2;
+                ShowImage._instance.ShowImages(new string[] { "GAME" }, 4f, 0f);
+                StartCoroutine(WaitAndJumpScene());
+                SoundManager.Instance.PlaySE(SEID.Game_Character_General_Finish);
+                break;
+            case 3:
+                //DRAW
+                rltwinner = 3;
+                ShowImage._instance.ShowImages(new string[] { "Draw" }, 4f, 0f);
+                StartCoroutine(WaitAndJumpScene());
+                SoundManager.Instance.PlaySE(SEID.General_Siren);
+                break;
+        }
+
+        //playerの動きを停止させる
+        StopPlayer();
+        onGame = false;
     }
 
     private static void StopPlayer()
     {
         Behaviour[] pauseBehavs = null;
-        GameObject p1g = AttackManager._instance.GetPlayer(1).gameObject;
-        GameObject p2g = AttackManager._instance.GetPlayer(2).gameObject;
+        GameObject p1g = TurnManager._instance.GetPlayer(1).gameObject;
+        GameObject p2g = TurnManager._instance.GetPlayer(2).gameObject;
         pauseBehavs = Array.FindAll(p1g.GetComponentsInChildren<Behaviour>(), (obj) =>
         {
             if (obj == null)
@@ -168,6 +174,34 @@ public class BattleManager : MonoBehaviour
         foreach (var com in pauseBehavs)
         {
             com.enabled = false;
+        }
+    }
+
+    public virtual void TurnProcess()
+    {
+        switch (TurnManager._instance.totalTurn)
+        {
+            case 24:
+
+                rythmManager.TempoUp(113);
+                
+
+                break;
+            case 24 - 4:
+                
+                SoundManager.Instance.PlaySE(SEID.Game_Countdown);
+                ShowImage._instance.ShowImages(new string[] { "3", "2", "1", "TempoUp" }, 0.8f, 0.0f);
+                break;
+
+            case 93:
+                rythmManager.TempoUp(150);
+                
+                break;
+            case 93 - 4:
+                SoundManager.Instance.PlaySE(SEID.Game_Countdown2);
+                ShowImage._instance.ShowImages(new string[] { "3", "2", "1", "TempoUp" }, 60f / 113f, 0.0f);
+                break;
+
         }
     }
 
@@ -197,13 +231,95 @@ public class BattleManager : MonoBehaviour
                 yield return new WaitForFixedUpdate();
             }
         }
-        if (AttackManager._instance.GetWinner() == 3)
+        if (TurnManager._instance.GetWinner() == 3)
         {
             SceneLoader.Instance.LoadScene(SceneLoader.Scenes.MainMenu);
         }
         else
         {
             SceneLoader.Instance.LoadScene(SceneLoader.Scenes.Result);
+        }
+    }
+    protected class GameState
+    {
+        protected BattleManager manager;
+        public GameState(BattleManager manager) { this.manager = manager; }
+        public virtual GameState Run() { return null; }
+    }
+    protected class CountDownState : GameState
+    {
+        bool isStarted = false;
+        public CountDownState(BattleManager manager) : base(manager)
+        {
+
+        }
+        public override GameState Run()
+        {
+            if (!isStarted)
+            {
+                manager.StartCoroutine(manager.startGameLoop());
+                isStarted = true;
+            }
+            if (manager.onGame)
+            {
+                return new OnGameState(manager);
+            }
+            else
+            {
+                return this;
+            }
+        }
+    }
+    protected class OnGameState : GameState
+    {
+        int bgmId = 0;
+        public OnGameState(BattleManager manager) : base(manager)
+        {
+
+        }
+        public override GameState Run()
+        {
+            if(manager.CheckGameOver())
+            {
+                return new EndGameState(manager);
+            }
+            else
+            {
+                switch (bgmId)
+                {
+                    case 0:
+                        if (Time.time > 19.2f + 9.56f)
+                        {
+                            bgmId = 1;
+                            SoundManager.Instance.PlayBGM(BGMID.InGame1);
+                        }
+                        break;
+                    case 1:
+                        if (Time.time > 90f-33.982300885f + 9.58f)
+                        {
+                            bgmId = 2;
+                            SoundManager.Instance.PlayBGM(BGMID.InGame2);
+                        }
+                        break;
+                }
+                return this;
+            }
+        }
+    }
+    protected class EndGameState : GameState
+    {
+        public EndGameState(BattleManager manager) : base(manager)
+        {
+
+        }
+
+        public override GameState Run()
+        {
+            if (manager.onGame)
+            {
+                manager.GameOverProcess();
+            }
+            return null;
         }
     }
 }

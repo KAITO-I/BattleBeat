@@ -56,7 +56,7 @@ public class ResultManager : MonoBehaviour
     {
         //==========立ち絵がちゃんとできていたら消す=========
         //プレイヤー情報
-        WinPlayerID = (int)AttackManager.winner;
+        WinPlayerID = (int)TurnManager.winner;
         if (WinPlayerID == 1)
         {
             winChara = Setting.p1c;

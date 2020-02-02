@@ -23,7 +23,7 @@ public abstract class BaseResultState
     protected BaseResultState(SoundManager sound)
     {
         //勝者を保存
-        int _id = (int)AttackManager.winner;
+        int _id = (int)TurnManager.winner;
         if (_id == 1)
         {
             winChara = Setting.p1c;

@@ -1,15 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class AttackManager : MonoBehaviour
+public class TurnManager : MonoBehaviour
 {
-    static public AttackManager _instance;
+    static public TurnManager _instance;
     //攻撃オブジェクトが保存されるリスト
     [SerializeField]
     List<AttackItemBase> attackItems;
     //プレイヤーが保存されるリスト
     [SerializeField]
     List<Player> players;
+
+    [SerializeField]
+    BattleManager battleManager;
 
     [SerializeField]
     List<GameObject> stages;
@@ -141,31 +144,11 @@ public class AttackManager : MonoBehaviour
         }
         attackItems.RemoveAll(AttackItemIsEnd);
 
+        battleManager.TurnProcess();
 
         totalTurn++;
-        //tempo up 判定
-        switch (totalTurn)
-        {
-            case 17:
-                
-                rythmManager.TempoUp(113);
-                
-                break;
-            case 17 - 4:
-                SoundManager.Instance.PlaySE(SEID.Game_Countdown);
-                ShowImage._instance.ShowImages(new string[] { "3", "2", "1", "TempoUp" }, 0.8f, 0.0f);
-                break;
 
-            case 80:
-                rythmManager.TempoUp(150);
-                break;
-            case 80- 4:
-                SoundManager.Instance.PlaySE(SEID.Game_Countdown2);
-                ShowImage._instance.ShowImages(new string[] { "3", "2", "1", "TempoUp" }, 60f/113f, 0.0f);
-                break;
-                
-        }
-
+        
     }
 
     private void CheckWinner()
@@ -206,11 +189,11 @@ public class AttackManager : MonoBehaviour
     }
     private void Update()
     {
-        //test
-        if (Input.GetKeyUp(KeyCode.Return))
-        {
-            NextTurn();
-        }
+        ////test
+        //if (Input.GetKeyUp(KeyCode.Return))
+        //{
+        //    NextTurn();
+        //}
     }
     static bool AttackItemIsEnd(AttackItemBase attackItem)
     {

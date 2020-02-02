@@ -1,5 +1,5 @@
 ﻿//==============================
-// Created by KAITO-I
+// Created by KAITO-I  (20200202->BGM追加 by きん)
 //==============================
 using System.Collections;
 using System.Collections.Generic;
@@ -13,7 +13,9 @@ public enum BGMID {
     None = -1,
     MainMenu,
     CharacterSelect,
-    InGame,
+    InGame0,
+    InGame1,
+    InGame2,
     Result
 }
 
