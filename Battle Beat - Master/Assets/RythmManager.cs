@@ -143,7 +143,9 @@ public class RythmManager : MonoBehaviour
         foreach (float s in s[1])
         {
             str += s.ToString() + ",";
+            f += s;
         }
+        Debug.Log(str);
         Debug.Log("average:" + f / s[1].Count);
         Debug.Log("終盤:");
         str = string.Empty;
@@ -151,7 +153,9 @@ public class RythmManager : MonoBehaviour
         foreach (float s in s[2])
         {
             str += s.ToString() + ",";
+            f += s;
         }
+        Debug.Log(str);
         Debug.Log("average:" + f / s[2].Count);
     }
 }
