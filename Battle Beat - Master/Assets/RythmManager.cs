@@ -113,7 +113,7 @@ public class RythmManager : MonoBehaviour
 
         s[phase].Add(this.time - this.bps);
 
-        return (Mathf.Abs(this.time - this.bps)< 0.25f);
+        return (Mathf.Min(Mathf.Abs(this.time - this.bps),this.time)< 0.25f);
     }
     int phase = 0;
     private List<List<float>> s = new List<List<float>>();
