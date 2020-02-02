@@ -76,7 +76,7 @@ public class RythmManager : MonoBehaviour
         {
             // リズム
             this.time += Time.deltaTime;
-            if (this.time >= this.bps)
+            if (this.time >= this.bps+0.1f)
             {
                 this.time -= this.bps;
 
