@@ -96,34 +96,30 @@ public abstract class BaseSelect: MonoBehaviour
                 _charactorObj.transform.localScale = new Vector3(_xSize[_charactorID], _ySize[_charactorID], 1);
                 _soundManager.PlaySE(SEID.General_Controller_Select);
             }
-            Debug.Log(_charactorID);
-        }
-
-        if (_controller.GetAxisUp(ControllerManager.Axis.DpadX) < 0)//左入力
-        {
-            _charactorDecritionID = 0;//最初から見るように初期化
-            if (!_playerOK)
+            if (_controller.GetAxisUp(ControllerManager.Axis.DpadX) < 0)//左入力
             {
-                _controll.CharaObj[_charactorID].charaSelect(_ID, false);
-                _charactorID = (_charactorID - 2 + 6) % 6;
-                _controll.CharaObj[_charactorID].charaSelect(_ID, true);
-                _charactorObj.transform.localScale = new Vector3(_xSize[_charactorID], _ySize[_charactorID], 1);
-                _soundManager.PlaySE(SEID.General_Controller_Select);
+                _charactorDecritionID = 0;//最初から見るように初期化
+                if (!_playerOK)
+                {
+                    _controll.CharaObj[_charactorID].charaSelect(_ID, false);
+                    _charactorID = (_charactorID - 2 + 6) % 6;
+                    _controll.CharaObj[_charactorID].charaSelect(_ID, true);
+                    _charactorObj.transform.localScale = new Vector3(_xSize[_charactorID], _ySize[_charactorID], 1);
+                    _soundManager.PlaySE(SEID.General_Controller_Select);
+                }
             }
-            Debug.Log(_charactorID);
-        }
-        else if (_controller.GetAxisUp(ControllerManager.Axis.DpadX) > 0)//右入力
-        {
-            _charactorDecritionID = 0;//最初から見るように初期化
-            if (!_playerOK)
+            else if (_controller.GetAxisUp(ControllerManager.Axis.DpadX) > 0)//右入力
             {
-                _controll.CharaObj[_charactorID].charaSelect(_ID, false);
-                _charactorID = (_charactorID + 2) % 6;
-                _controll.CharaObj[_charactorID].charaSelect(_ID, true);
-                _charactorObj.transform.localScale = new Vector3(_xSize[_charactorID], _ySize[_charactorID], 1);
-                _soundManager.PlaySE(SEID.General_Controller_Select);
+                _charactorDecritionID = 0;//最初から見るように初期化
+                if (!_playerOK)
+                {
+                    _controll.CharaObj[_charactorID].charaSelect(_ID, false);
+                    _charactorID = (_charactorID + 2) % 6;
+                    _controll.CharaObj[_charactorID].charaSelect(_ID, true);
+                    _charactorObj.transform.localScale = new Vector3(_xSize[_charactorID], _ySize[_charactorID], 1);
+                    _soundManager.PlaySE(SEID.General_Controller_Select);
+                }
             }
-            Debug.Log(_charactorID);
         }
     }
     //=============ボタン操作関数================
@@ -134,7 +130,7 @@ public abstract class BaseSelect: MonoBehaviour
         if (_controller.GetButtonDown(ControllerManager.Button.A))
         {
             //キャラがないところを決定した際の処理
-            if (_charactorID == 4 && _charactorID == 5)
+            if (_charactorID == 4 || _charactorID == 5)
             {
                 _playerOK = false;
             }
