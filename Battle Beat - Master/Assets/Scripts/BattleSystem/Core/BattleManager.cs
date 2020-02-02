@@ -193,11 +193,11 @@ public class BattleManager : MonoBehaviour
                 ShowImage._instance.ShowImages(new string[] { "3", "2", "1", "TempoUp" }, 0.8f, 0.0f);
                 break;
 
-            case 93:
+            case 89:
                 rythmManager.TempoUp(150);
                 
                 break;
-            case 93 - 4:
+            case 89 - 4:
                 SoundManager.Instance.PlaySE(SEID.Game_Countdown2);
                 ShowImage._instance.ShowImages(new string[] { "3", "2", "1", "TempoUp" }, 60f / 113f, 0.0f);
                 break;
@@ -295,7 +295,7 @@ public class BattleManager : MonoBehaviour
                         }
                         break;
                     case 1:
-                        if (Time.time > 90f-33.982300885f + 9.58f)
+                        if (Time.time > 90f-36.8f + 9.58f)
                         {
                             bgmId = 2;
                             SoundManager.Instance.PlayBGM(BGMID.InGame2);

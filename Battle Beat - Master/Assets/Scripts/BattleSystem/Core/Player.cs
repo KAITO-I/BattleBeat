@@ -206,7 +206,7 @@ public class Player : MonoBehaviour
 
 
                 //if (input != MoveComand.None) canInput = false;
-                //else 
+                //else
 
                 //if (controller.GetAxis(ControllerManager.Axis.DpadX) < 0) input = MoveComand.Left;
                 //else if (controller.GetAxis(ControllerManager.Axis.DpadX) > 0) input = MoveComand.Right;
