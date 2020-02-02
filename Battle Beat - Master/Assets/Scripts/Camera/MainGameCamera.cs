@@ -11,6 +11,7 @@ public class MainGameCamera : MonoBehaviour
     Cinemachine.CinemachineVirtualCamera virtualCamera2;
 
     Cinemachine.CinemachineTrackedDolly trackedDolly;
+    Cinemachine.CinemachineBasicMultiChannelPerlin noise;
     [SerializeField]
     float startTime = 0.8f * 4;
     float time0 = 0f;
@@ -19,6 +20,9 @@ public class MainGameCamera : MonoBehaviour
     float zoomTime=0.5f;
     [SerializeField]
     float zoomDistance=10f;
+    [SerializeField]
+    float shakeTimeAmp = 2f;
+
     private void Awake()
     {
         if(_instance == null)
@@ -26,6 +30,7 @@ public class MainGameCamera : MonoBehaviour
             _instance = this;
         }
         trackedDolly = virtualCamera.GetCinemachineComponent<Cinemachine.CinemachineTrackedDolly>();
+        noise = virtualCamera.GetCinemachineComponent<Cinemachine.CinemachineBasicMultiChannelPerlin>();
     }
     public void GameStart()
     {
@@ -64,5 +69,20 @@ public class MainGameCamera : MonoBehaviour
             Vector3 newPos = Vector3.Lerp(pos, pos2, x);
             virtualCamera2.transform.position = newPos;
         }
+    }
+    public void ShakeCamera()
+    {
+        StartCoroutine(shake());
+    }
+    public void Noise(float amplitudeGain, float frequencyGain)
+    {
+        noise.m_AmplitudeGain = amplitudeGain;
+        noise.m_FrequencyGain = frequencyGain;
+    }
+    public IEnumerator shake()
+    {
+        Noise(1f, noise.m_FrequencyGain);
+        yield return new WaitForSeconds(RythmManager.instance.getbps/ shakeTimeAmp);
+        Noise(0f, noise.m_FrequencyGain);
     }
 }
