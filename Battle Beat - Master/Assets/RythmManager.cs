@@ -57,6 +57,7 @@ public class RythmManager : MonoBehaviour
 
         notesManager.nextDuration = bps;
         notesManager2.nextDuration = bps;
+        StatisticsInit();
     }
     public void StartRythm()
     {
@@ -109,6 +110,7 @@ public class RythmManager : MonoBehaviour
     public bool IsTiming()
     {
         //return true;
+
         s[phase].Add(this.time - this.bps);
 
         return (Mathf.Abs(this.time - this.bps)< 0.25f);
