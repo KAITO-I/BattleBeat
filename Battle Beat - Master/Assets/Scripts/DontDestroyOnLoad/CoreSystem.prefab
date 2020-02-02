@@ -1396,7 +1396,7 @@ MonoBehaviour:
   bgmClips:
   - {fileID: 8300000, guid: c5264a8a4f90a2f4298e0c9bb2526c7c, type: 3}
   - {fileID: 8300000, guid: c28baa250c56e0c43b86d16eeeaee824, type: 3}
-  - {fileID: 8300000, guid: 32b2424ff1fc1eb47a936bf005c69248, type: 3}
+  - {fileID: 8300000, guid: 6b648fc96d3012546a9857ac01c779f9, type: 3}
   - {fileID: 8300000, guid: d48c2cfaecc2b094ab816475758c7557, type: 3}
   - {fileID: 8300000, guid: bcb834898e70b854880d5192e607c306, type: 3}
   - {fileID: 8300000, guid: 02f9979a62bdded49a38bb8b3c5d552d, type: 3}
