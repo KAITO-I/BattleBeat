@@ -16,7 +16,6 @@ public class BasePlayerAnimation:MonoBehaviour
     protected GameObject PlayerObj;
     protected Player _playerClass;
     AnimatorStateInfo info_;
-    protected RythmManager rythm;
 
     //自分のとぐろ
     public MeshRenderer _renderer;
@@ -33,19 +32,19 @@ public class BasePlayerAnimation:MonoBehaviour
         if (PlayerObj != null)//ユニアニメーション時には必要ないため
         {
             _playerClass = PlayerObj.GetComponent<Player>();
+            RythmManager.instance.Init();
         }
         _renderer.enabled = false;
-        rythm = GameObject.Find("Manager").GetComponent<RythmManager>();
-        interval = rythm.getbps/2;
-        oldbps = rythm.getbps;
+        interval = RythmManager.instance.getbps /2;
+        oldbps = RythmManager.instance.getbps;
     }
 
     protected virtual void Update()
     {
         //rythm:0.8->0.5
-        interval = rythm.getbps / 2;
+        interval = RythmManager.instance.getbps / 2;
         //リズムの値が大きくなるため、ずれる
-        float dif = oldbps - rythm.getbps;
+        float dif = oldbps - RythmManager.instance.getbps;
         anim.speed = (oldbps + dif) * 2.0f;
     }
     //（プレイヤーの場所,目的地,コマンド）

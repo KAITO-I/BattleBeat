@@ -57,7 +57,7 @@ public class HomiAnimation : BasePlayerAnimation
                 break;
             case 3:
                 anim.SetTrigger("Special");
-                Destroy(obj, rythm.getbps);
+                Destroy(obj, RythmManager.instance.getbps);
                 PlayAnim = "Special";
                 break;
             default:
