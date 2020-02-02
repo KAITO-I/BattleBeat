@@ -3746,7 +3746,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testMode: 1
-  p1: 2
+  p1: 3
   p2: 3
   charaPrefabs:
   - {fileID: 2616607855929116335, guid: 74688a5cca0977841b1253a5d3ff96da, type: 3}
@@ -3823,6 +3823,7 @@ MonoBehaviour:
   startTime: 1.6
   zoomTime: 0.1
   zoomDistance: 10
+  shakeTimeAmp: 2
 --- !u!1 &1408994288
 GameObject:
   m_ObjectHideFlags: 0
@@ -5399,6 +5400,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: StageObject
       objectReference: {fileID: 0}
+    - target: {fileID: -5100113378641241840, guid: e68d98e3acec75c4b9ae2a041aa1a5f4,
+        type: 3}
+      propertyPath: m_TagString
+      value: MainCamera
+      objectReference: {fileID: 0}
+    - target: {fileID: -730926943810434960, guid: e68d98e3acec75c4b9ae2a041aa1a5f4,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: -6350523986856521310, guid: e68d98e3acec75c4b9ae2a041aa1a5f4,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.12
+      objectReference: {fileID: 0}
     - target: {fileID: -8980944854386829289, guid: e68d98e3acec75c4b9ae2a041aa1a5f4,
         type: 3}
       propertyPath: m_LocalPosition.z
@@ -5469,21 +5485,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: b9e59558a30ab7b4eaae84eec8dc70a1, type: 2}
-    - target: {fileID: -6350523986856521310, guid: e68d98e3acec75c4b9ae2a041aa1a5f4,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.12
-      objectReference: {fileID: 0}
     - target: {fileID: -5714540982244418699, guid: e68d98e3acec75c4b9ae2a041aa1a5f4,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 915be486d916a214fa38947a3811b3d8, type: 2}
-    - target: {fileID: -5100113378641241840, guid: e68d98e3acec75c4b9ae2a041aa1a5f4,
-        type: 3}
-      propertyPath: m_TagString
-      value: MainCamera
-      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: e68d98e3acec75c4b9ae2a041aa1a5f4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5559,11 +5565,6 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 85e136dcb69738e4395485fed0951325, type: 2}
-    - target: {fileID: -730926943810434960, guid: e68d98e3acec75c4b9ae2a041aa1a5f4,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.12
-      objectReference: {fileID: 0}
     - target: {fileID: -27050838044577988, guid: e68d98e3acec75c4b9ae2a041aa1a5f4,
         type: 3}
       propertyPath: m_Materials.Array.data[0]

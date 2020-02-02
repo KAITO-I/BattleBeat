@@ -80,6 +80,8 @@ public class Player : MonoBehaviour
     
     public int[] CoolDownCount = new int[4];
 
+    [SerializeField]
+    GameObject noteResultPrefab;
 
     public enum MoveComand
     {
@@ -160,7 +162,7 @@ public class Player : MonoBehaviour
         nowAttack = null;
         StunTurn = 0;
         inputState = InputState.WAITFORINPUT;
-
+        noteResultPrefab = Resources.Load("Prefabs/noteResult") as GameObject;
 
 
     }
@@ -217,14 +219,18 @@ public class Player : MonoBehaviour
                 if (input != MoveComand.None)
                 {
                     inputState = RythmManager.instance.IsTiming() ? InputState.GOOD : InputState.MISS;
+                    GameObject g = Instantiate<GameObject>(noteResultPrefab);
                     if (inputState == InputState.MISS)
                     {
                         Debug.Log("Miss");
                         input = MoveComand.None;
+                        g.GetComponent<NoteResult>().Show(NoteResult.type.MISS, transform);
+
                     }
                     else if (inputState == InputState.GOOD)
                     {
                         Debug.Log("Good");
+                        g.GetComponent<NoteResult>().Show(NoteResult.type.GREAT, transform);
                     }
                 }
 
