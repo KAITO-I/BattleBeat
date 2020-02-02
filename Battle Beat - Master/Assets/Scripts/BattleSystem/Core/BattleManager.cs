@@ -54,7 +54,7 @@ public class BattleManager : MonoBehaviour
                 else{
                     if (readyEndFlag == false)
                     {
-                        SoundManager.Instance.PlaySE(SEID.Game_Countdown);
+                        SoundManager.Instance.PlaySE(SEID.Game_Countdown_First_Only);
                         ShowImage._instance.ShowImages(new string[] { "3", "2", "1", "GO" }, 0.8f, 0f);
                         readyEndFlag = true;
                     }
@@ -203,7 +203,7 @@ public class BattleManager : MonoBehaviour
                 
                 break;
             case 88 - 4:
-                SoundManager.Instance.PlaySE(SEID.Game_Countdown2);
+                SoundManager.Instance.PlaySE(SEID.Game_Countdown);
                 ShowImage._instance.ShowImages(new string[] { "3", "2", "1", "TempoUp" }, 60f / 113f, 0.0f);
                 break;
 
