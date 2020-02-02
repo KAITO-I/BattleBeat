@@ -35,6 +35,7 @@ public class RythmManager : MonoBehaviour
     NotesManager notesManager;
     [SerializeField]
     NotesManager notesManager2;
+
     public float getbps
     {
         get { return bps; }
@@ -102,11 +103,53 @@ public class RythmManager : MonoBehaviour
         this.bps = 60 / (float)bpm;
         notesManager.nextDuration = bps;
         notesManager2.nextDuration = bps;
+        phase++;
     }
 
     public bool IsTiming()
     {
         //return true;
+        s[phase].Add(this.time - this.bps);
+
         return (Mathf.Abs(this.time - this.bps)< 0.25f);
+    }
+    int phase = 0;
+    private List<List<float>> s = new List<List<float>>();
+    void StatisticsInit()
+    {
+        for(int i = 0; i < 3; i++)
+        {
+            s.Add(new List<float>());
+        }
+
+    }
+    public  void PrintStatistics()
+    {
+        Debug.Log("序盤:");
+        string str = string.Empty;
+        float f = 0;
+        foreach(float s in s[0])
+        {
+            str += s.ToString() + ",";
+            f += s;
+        }
+        Debug.Log(str);
+        Debug.Log("average:" + f / s[0].Count);
+        Debug.Log("中盤:");
+        str = string.Empty;
+        f = 0;
+        foreach (float s in s[1])
+        {
+            str += s.ToString() + ",";
+        }
+        Debug.Log("average:" + f / s[1].Count);
+        Debug.Log("終盤:");
+        str = string.Empty;
+        f = 0;
+        foreach (float s in s[2])
+        {
+            str += s.ToString() + ",";
+        }
+        Debug.Log("average:" + f / s[2].Count);
     }
 }

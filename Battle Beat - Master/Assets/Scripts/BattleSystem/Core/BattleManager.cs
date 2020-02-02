@@ -6,6 +6,10 @@ using System;
 public class BattleManager : MonoBehaviour
 {
     [SerializeField]
+    float lagTime1 = 0.1f;
+    [SerializeField]
+    float lagTime2 = 0.1f;
+    [SerializeField]
     protected RythmManager rythmManager;
 
     [SerializeField]
@@ -139,7 +143,7 @@ public class BattleManager : MonoBehaviour
                 SoundManager.Instance.PlaySE(SEID.General_Siren);
                 break;
         }
-
+        RythmManager.instance.PrintStatistics();
         //playerの動きを停止させる
         StopPlayer();
         onGame = false;
@@ -194,11 +198,11 @@ public class BattleManager : MonoBehaviour
                 ShowImage._instance.ShowImages(new string[] { "3", "2", "1", "TempoUp" }, 0.8f, 0.0f);
                 break;
 
-            case 89:
+            case 88:
                 rythmManager.TempoUp(150);
                 
                 break;
-            case 89 - 4:
+            case 88 - 4:
                 SoundManager.Instance.PlaySE(SEID.Game_Countdown2);
                 ShowImage._instance.ShowImages(new string[] { "3", "2", "1", "TempoUp" }, 60f / 113f, 0.0f);
                 break;
@@ -289,14 +293,14 @@ public class BattleManager : MonoBehaviour
                 switch (bgmId)
                 {
                     case 0:
-                        if (Time.time > 19.2f + 9.56f)
+                        if (Time.time > 19.2f + 9.6f-manager.lagTime1)
                         {
                             bgmId = 1;
                             SoundManager.Instance.PlayBGM(BGMID.InGame1);
                         }
                         break;
                     case 1:
-                        if (Time.time > 90f-36.8f + 9.58f)
+                        if (Time.time > 90f-36.8f + 9.6f - manager.lagTime2)
                         {
                             bgmId = 2;
                             SoundManager.Instance.PlayBGM(BGMID.InGame2);
