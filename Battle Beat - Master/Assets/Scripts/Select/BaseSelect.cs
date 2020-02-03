@@ -73,7 +73,7 @@ public abstract class BaseSelect: MonoBehaviour
         if (PopupManager.IsActive) return;//ポップアップが表示されている時雄
         if (!_playerOK)//選択されていないとき
         {
-            if (_controller.GetAxisUp(ControllerManager.Axis.DpadY) < 0)//下入力
+            if (_controller.GetAxisDown(ControllerManager.Axis.DpadY) < 0)//下入力
             {
                 _controll.CharaObj[_charactorID].charaSelect(_ID, false);
                 _charactorID = (_charactorID + 1) % 2;
@@ -85,7 +85,7 @@ public abstract class BaseSelect: MonoBehaviour
                 _soundManager.PlaySE(SEID.General_Controller_Select);
 
             }
-            else if (_controller.GetAxisUp(ControllerManager.Axis.DpadY) > 0)//上入力
+            else if (_controller.GetAxisDown(ControllerManager.Axis.DpadY) > 0)//上入力
             {
                 _controll.CharaObj[_charactorID].charaSelect(_ID, false);
                 _charactorID = (_charactorID - 1 + 2) % 2;
@@ -96,7 +96,7 @@ public abstract class BaseSelect: MonoBehaviour
                 _charactorObj.transform.localScale = new Vector3(_xSize[_charactorID], _ySize[_charactorID], 1);
                 _soundManager.PlaySE(SEID.General_Controller_Select);
             }
-            if (_controller.GetAxisUp(ControllerManager.Axis.DpadX) < 0)//左入力
+            if (_controller.GetAxisDown(ControllerManager.Axis.DpadX) < 0)//左入力
             {
                 _charactorDecritionID = 0;//最初から見るように初期化
                 if (!_playerOK)
@@ -108,7 +108,7 @@ public abstract class BaseSelect: MonoBehaviour
                     _soundManager.PlaySE(SEID.General_Controller_Select);
                 }
             }
-            else if (_controller.GetAxisUp(ControllerManager.Axis.DpadX) > 0)//右入力
+            else if (_controller.GetAxisDown(ControllerManager.Axis.DpadX) > 0)//右入力
             {
                 _charactorDecritionID = 0;//最初から見るように初期化
                 if (!_playerOK)

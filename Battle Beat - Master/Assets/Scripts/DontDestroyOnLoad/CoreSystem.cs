@@ -37,6 +37,7 @@ namespace CoreManager
             this.controllerManager.Init();
             this.sceneLoader.Init();
 
+
             PopupManager.Init(
                 this.popup,
                 (this.upCalloutSelectLocalPos, this.upCalloutUnelectLocalPos),
@@ -44,8 +45,9 @@ namespace CoreManager
                 this.unselectLocalScale
             );
 
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+
+            //Cursor.lockState = CursorLockMode.Locked;
+            //Cursor.visible = false;
 
         }
 

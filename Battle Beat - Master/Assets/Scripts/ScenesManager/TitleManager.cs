@@ -14,8 +14,8 @@ public class TitleManager : MonoBehaviour
 
     private void Start()
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
 
         // アニメーション再生
         (this.vp = GetComponent<VideoPlayer>()).Play();

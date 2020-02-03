@@ -267,7 +267,7 @@ public class MainMenuManager : MonoBehaviour
                     switch (this.selectedNum)
                     {
                         case 0: SceneLoader.Instance.LoadScene(SceneLoader.Scenes.CharacterSelect); break;
-                        case 1: break;
+                        case 1: SceneLoader.Instance.LoadScene(SceneLoader.Scenes.Training); break;
                         case 2:
                             this.displayState = DisplayState.Tutorial;
                             this.tutorialImageChanger.Init();

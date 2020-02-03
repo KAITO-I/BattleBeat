@@ -76,7 +76,7 @@ public class RythmManager : MonoBehaviour
         {
             // リズム
             this.time += Time.deltaTime;
-            if (this.time >= this.bps+0.1f)
+            if (this.time >= this.bps/*+0.1f*/)
             {
                 this.time -= this.bps;
 
@@ -113,7 +113,7 @@ public class RythmManager : MonoBehaviour
 
         s[phase].Add(this.time - this.bps);
 
-        return (Mathf.Min(Mathf.Abs(this.time - this.bps),this.time)< 0.1f);
+        return (Mathf.Min(Mathf.Abs(this.time - this.bps),this.time)< 0.15f);
     }
     int phase = 0;
     private List<List<float>> s = new List<List<float>>();

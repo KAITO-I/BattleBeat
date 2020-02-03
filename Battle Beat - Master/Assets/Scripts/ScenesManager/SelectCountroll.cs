@@ -21,10 +21,10 @@ public class SelectCountroll : MonoBehaviour
 
     public List<CharaSelectObj> CharaObj;//中央を動かしている
 
-    ControllerManager.Controller _1Pcontroller = ControllerManager.Instance.Player1;
-    ControllerManager.Controller _2Pcontroller = ControllerManager.Instance.Player2;
-    SceneLoader loader = SceneLoader.Instance;
-    SoundManager _soundManager=SoundManager.Instance;
+    ControllerManager.Controller _1Pcontroller;
+    ControllerManager.Controller _2Pcontroller;
+    SceneLoader loader;
+    SoundManager _soundManager;
 
     //テキストの透明度変更
     float time;
@@ -52,6 +52,13 @@ public class SelectCountroll : MonoBehaviour
 
     void Start()
     {
+        _1Pcontroller = ControllerManager.Instance.Player1;
+        _2Pcontroller = ControllerManager.Instance.Player2;
+
+        loader = SceneLoader.Instance;
+
+        _soundManager = SoundManager.Instance;
+
         CharaObj = new List<CharaSelectObj>();
         foreach (Transform v in FlameObj.transform)
         {

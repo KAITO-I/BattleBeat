@@ -115,8 +115,14 @@ public class SoundManager : MonoBehaviour {
     // Startより前に初期化
     //------------------------------
     private void Awake() {
-        if (instance != null) return;
-        instance = this;
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
 
         this.playingBGMID = BGMID.None;
 

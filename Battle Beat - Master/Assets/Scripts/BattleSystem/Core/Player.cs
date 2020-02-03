@@ -209,9 +209,9 @@ public class Player : MonoBehaviour
                 //else
 
                 if (controller.GetAxis(ControllerManager.Axis.DpadX) < 0) input = MoveComand.Left;
-                else if (controller.GetAxis(ControllerManager.Axis.DpadX) > 0) input = MoveComand.Right;
-                else if (controller.GetAxis(ControllerManager.Axis.DpadY) > 0) input = MoveComand.Up;
-                else if (controller.GetAxis(ControllerManager.Axis.DpadY) < 0) input = MoveComand.Down;
+                else if (controller.GetAxisDown(ControllerManager.Axis.DpadX) > 0) input = MoveComand.Right;
+                else if (controller.GetAxisDown(ControllerManager.Axis.DpadY) > 0) input = MoveComand.Up;
+                else if (controller.GetAxisDown(ControllerManager.Axis.DpadY) < 0) input = MoveComand.Down;
                 else if (controller.GetButtonDown(ControllerManager.Button.Y)) input = MoveComand.Attack_1;
                 else if (controller.GetButtonDown(ControllerManager.Button.X)) input = MoveComand.Attack_2;
                 else if (controller.GetButtonDown(ControllerManager.Button.A)) input = MoveComand.Attack_3;

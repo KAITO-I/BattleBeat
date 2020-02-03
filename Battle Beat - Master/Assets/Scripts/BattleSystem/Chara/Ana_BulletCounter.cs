@@ -29,6 +29,10 @@ public class Ana_BulletCounter : MonoBehaviour
         ExSlot = exSlotObj.transform;
         backGroundObj.transform.parent = ExSlot;
         backGroundObj.transform.localPosition = Vector3.zero;
+        if (PlayerId == 2)
+        {
+            backGroundObj.transform.localScale = new Vector3(-1f, 1f, 1f);
+        }
         _offset = PlayerId==1?offset:-offset;
         bullets = new List<GameObject>();
         for(int i = 0; i < maxBullets; i++)

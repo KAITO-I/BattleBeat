@@ -6,9 +6,9 @@ using CoreManager;
 
 public class ResultManager : MonoBehaviour
 {
-    ControllerManager.Controller _1Pcontroller = ControllerManager.Instance.Player1;
-    ControllerManager.Controller _2Pcontroller = ControllerManager.Instance.Player2;
-    SoundManager _soundManager = SoundManager.Instance;
+    ControllerManager.Controller _1Pcontroller;
+    ControllerManager.Controller _2Pcontroller;
+    SoundManager _soundManager;
     Setting.Chara winChara = Setting.Chara.HOMI;
     Setting.Chara loseChara = Setting.Chara.HOMI;
 
@@ -54,6 +54,10 @@ public class ResultManager : MonoBehaviour
     
     void Start()
     {
+        _1Pcontroller = ControllerManager.Instance.Player1;
+        _2Pcontroller = ControllerManager.Instance.Player2;
+        _soundManager = SoundManager.Instance;
+
         //==========立ち絵がちゃんとできていたら消す=========
         //プレイヤー情報
         WinPlayerID = (int)TurnManager.winner;

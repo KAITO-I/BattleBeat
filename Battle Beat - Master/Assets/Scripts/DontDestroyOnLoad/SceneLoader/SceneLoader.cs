@@ -16,6 +16,19 @@ using CoreManager;
 public class SceneLoader : MonoBehaviour
 {
     private static SceneLoader instance;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+
+    }
     public static SceneLoader Instance
     {
         get
@@ -74,8 +87,6 @@ public class SceneLoader : MonoBehaviour
     //------------------------------
     public void Init()
     {
-        if (SceneLoader.instance != null) return;
-        SceneLoader.instance = this;
 
         Screen.SetResolution(1920, 1080, true);
 

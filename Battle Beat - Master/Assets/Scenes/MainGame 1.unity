@@ -2005,6 +2005,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CoreSystem
       objectReference: {fileID: 0}
+    - target: {fileID: 2694987349732319567, guid: a9542cc574199d240acdeb56dc1e5738,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2694987349732319566, guid: a9542cc574199d240acdeb56dc1e5738,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2119,6 +2124,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_sharedMaterial
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1302119431850140085, guid: a9542cc574199d240acdeb56dc1e5738,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a9542cc574199d240acdeb56dc1e5738, type: 3}
@@ -3738,7 +3748,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb861cbface225045b2fc14f2dc47b48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testMode: 1
+  testMode: 0
   p1: 3
   p2: 3
   charaPrefabs:
@@ -3781,6 +3791,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17103d999a030954294626e3eba8500e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lagTime1: 0.1
+  lagTime2: 0.1
   rythmManager: {fileID: 1394099312}
   timeSetter: {fileID: 2116163967}
   TotalTime: 60
@@ -5903,7 +5915,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fromRightToLeft: 1
   nextDuration: 0
-  totalNotes: 4
+  totalNotes: 3
   notePrefab: {fileID: 5760875097863146050, guid: c970651b30b7abb4b8348e8a9fb85222,
     type: 3}
   goalPrefab: {fileID: 294035123, guid: 92fac1e446f05f6418938e105dfb93d2, type: 3}
@@ -6036,7 +6048,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fromRightToLeft: 0
   nextDuration: 0
-  totalNotes: 4
+  totalNotes: 3
   notePrefab: {fileID: 5760875097863146050, guid: c970651b30b7abb4b8348e8a9fb85222,
     type: 3}
   goalPrefab: {fileID: 294035123, guid: 92fac1e446f05f6418938e105dfb93d2, type: 3}

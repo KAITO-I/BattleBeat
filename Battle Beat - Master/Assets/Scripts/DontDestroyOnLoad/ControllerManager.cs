@@ -14,6 +14,11 @@ public class ControllerManager : MonoBehaviour
     // static class
     //==============================
     private static ControllerManager instance;
+    private void Awake()
+    {
+        if (instance != null) return;
+        instance = this;
+    }
     public static ControllerManager Instance
     {
         get
@@ -64,9 +69,6 @@ public class ControllerManager : MonoBehaviour
     //------------------------------
     public void Init()
     {
-        if (ControllerManager.instance != null) return;
-        ControllerManager.instance = this;
-
         if (this.forcedSpecificationed)
         {
             Player1 = new Controller(this.player1ID);
@@ -124,19 +126,19 @@ public class ControllerManager : MonoBehaviour
         return false;
     }
 
-    private void OnGUI()
-    {
-        Button p1b = Button.Select;
-        Button p2b = Button.Select;
-        foreach (Button button in Enum.GetValues(typeof(Button)))
-        {
-            if (Player1.GetButton(button)) p1b = button;
-            if (Player2.GetButton(button)) p2b = button;
-        }
+    //private void OnGUI()
+    //{
+    //    Button p1b = Button.Select;
+    //    Button p2b = Button.Select;
+    //    foreach (Button button in Enum.GetValues(typeof(Button)))
+    //    {
+    //        if (Player1.GetButton(button)) p1b = button;
+    //        if (Player2.GetButton(button)) p2b = button;
+    //    }
 
-        GUI.Label(new Rect(50, 50, 1000, 100), "P1: " + p1b.ToString());
-        GUI.Label(new Rect(50, 100, 1000, 100), "P2: " + p2b.ToString());
-    }
+    //    GUI.Label(new Rect(50, 50, 1000, 100), "P1: " + p1b.ToString());
+    //    GUI.Label(new Rect(50, 100, 1000, 100), "P2: " + p2b.ToString());
+    //}
 
     //==============================
     // プレイヤーのコントローラーのクラス
@@ -206,7 +208,7 @@ public class ControllerManager : MonoBehaviour
             }
             return result;
         }
-        public int GetAxisUp(Axis axis) //1フレームずつ呼び出すこと
+        public int GetAxisDown(Axis axis) //1フレームずつ呼び出すこと
         {
             var temp = Input.GetAxis(this.axisAxes[(int)axis]);
             int result = 0;
@@ -219,6 +221,25 @@ public class ControllerManager : MonoBehaviour
                 result = -1;
             }
             if (result == (axis==Axis.DpadX?preAxes.x:preAxes.y))
+            {
+                result = 0;
+            }
+            return result;
+        }
+        
+        public int GetAxisUp(Axis axis) 
+        {
+            var temp = Input.GetAxis(this.axisAxes[(int)axis]);
+            int result = 0;
+            if (temp < inputThreshold&&temp > 0)
+            {
+                result = 1;
+            }
+            else if (temp >-inputThreshold&&temp<0)
+            {
+                result = -1;
+            }
+            if (result == (axis == Axis.DpadX ? preAxes.x : preAxes.y))
             {
                 result = 0;
             }

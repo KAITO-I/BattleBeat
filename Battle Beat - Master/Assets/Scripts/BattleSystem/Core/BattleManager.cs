@@ -25,8 +25,13 @@ public class BattleManager : MonoBehaviour
     public bool readyEndFlag = false;
     static int winPlayerId;
     static int LosePlayerId;
-
+    float SceneStartTime;
     protected GameState gameState;
+    private void Awake()
+    {
+        SceneStartTime = Time.time;
+    }
+
     private void Start()
     {
         onGame = false;
@@ -184,25 +189,26 @@ public class BattleManager : MonoBehaviour
 
     public virtual void TurnProcess()
     {
+        Debug.Log(TurnManager._instance.totalTurn);
         switch (TurnManager._instance.totalTurn)
         {
-            case 24:
+            case 24+2:
 
                 rythmManager.TempoUp(113);
                 
 
                 break;
-            case 24 - 4:
+            case 24 - 4+2:
                 
                 SoundManager.Instance.PlaySE(SEID.Game_Countdown);
                 ShowImage._instance.ShowImages(new string[] { "3", "2", "1", "TempoUp" }, 0.8f, 0.0f);
                 break;
 
-            case 88:
+            case 88+2:
                 rythmManager.TempoUp(150);
                 
                 break;
-            case 88 - 4:
+            case 88 - 4+2:
                 SoundManager.Instance.PlaySE(SEID.Game_Countdown_113);
                 ShowImage._instance.ShowImages(new string[] { "3", "2", "1", "TempoUp" }, 60f / 113f, 0.0f);
                 break;
@@ -293,14 +299,14 @@ public class BattleManager : MonoBehaviour
                 switch (bgmId)
                 {
                     case 0:
-                        if (Time.time > 19.2f + 9.6f-manager.lagTime1)
+                        if (Time.time - manager.SceneStartTime > 19.2f + 9.6f-manager.lagTime1)
                         {
                             bgmId = 1;
                             SoundManager.Instance.PlayBGM(BGMID.InGame1);
                         }
                         break;
                     case 1:
-                        if (Time.time > 90f-36.8f + 9.6f - manager.lagTime2)
+                        if (Time.time - manager.SceneStartTime > 90f-36.8f + 9.6f - manager.lagTime2)
                         {
                             bgmId = 2;
                             SoundManager.Instance.PlayBGM(BGMID.InGame2);
